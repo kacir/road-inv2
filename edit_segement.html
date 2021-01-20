@@ -1,0 +1,487 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Jquery and associated pre-dependences -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+        <!-- Bootstrap core library -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <!-- for testing -->
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+        <link rel="stylesheet" href="css/style.css">
+
+        <title>Roadway Inventory</title>
+        
+        <style>
+            button.segment-button {
+                background-color: grey;
+                color:white;
+                border-color: black;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-expand-lg">
+
+            <a class="navbar-brand" href="index.html">
+                <img src="img/ARDOT_Logo.png" width="100">
+
+                Roadway Inventory Database</a>
+            <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="segements.html">Segements <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            System Changes
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="system_changes/nhs.html">NHS</a>
+                            <a class="dropdown-item" href="system_changes/func.html">Functional Class</a>
+                            <a class="dropdown-item" href="system_changes/aphn.html">APHN</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quality_control.html">Quality Control</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="RI_Cheat_Sheet.pdf">RI Cheatsheet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="help.pdf">Help</a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <div class="segment-title"><h1>Road Segement <span>00x000x000xA <br> BLM:0 - ELM 4.5</span></h1></div>
+        <div class="main-content">
+            <div class="master-grid">
+                <div id="box-coreChar" class='property-box'>
+                    <h6>Core Characteristics</h6>
+                    <div class=grid-container>
+
+                        <DIV>
+                            <label data-toggle="tooltip" data-placement="top" title="ArDOT District">Distict</label>
+                            <select>
+                                <option></option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                            </select>
+
+                        </DIV>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="ArDOT County Number. Not to be confused with FHWA County Numbers.">County</label>
+                            <select>
+                                <option></option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="ARNOLD compliant Route Name. limited to 150 characters and only be alphnumberic characters">Route</label>
+                            <input id="input-route" type="text"/>
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="ARNOLD section number. 3 digit sections are typically reserved for Y leg segments" >Section</label>
+                            <input id='input-section' type="text"/>
+                        </div>
+                        <div data-toggle="tooltip" data-placement="top" title="A character prefix for the section that identifies a characteristic of the road such as one way cuplet. Rarely used">
+                            Section Code: <br /> XXXXX
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="The log direction of the road. Most roads are log direction with anti-log roads being part of dual carrageways">Direction</label>
+                            <select id='input-direction' > 
+                                <option value="A">A - Log Direction</option>
+                                <option value="B">B - Anti-Log Direction</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="The Begining Log Mile of the segment">BLM</label>
+                            <input id='input-blm' type="text" /> 
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="The ending Log Mile of the segment">ELM</label>
+                            <input id='input-elm' type="text" /> 
+                        </div>
+                        <div>
+                            <span>Road Length <br /> XXXXX</span>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="box-history" class='property-box'>
+                    <h6>History</h6>
+                    <DIV>
+                        input
+                        <input type="text"/>
+                    </DIV>
+                </div>
+            </div>
+
+
+            <div class="master-grid">
+                <div id="box-nest" >
+                    <div class="master-grid">
+                        <div class="property-box">
+                            <h6>Classification Properties</h6>
+                            <div class="grid-container">
+                                <div>
+                                    <label data-toggle="tooltip" data-placement="top" title="The Route Sign designation of the segement. County and City designations are dependent on the municipal boundary rather than the managment or ownership of the road">Route Sign</label>
+                                    <select>
+                                        <option></option>
+                                        <option value="1">1 - Interstate</option>
+                                        <option value="2">2 - US</option>
+                                        <option value="3">3 - State</option>
+                                        <option value="4">4 - City</option>
+                                        <option value="5">5 - County</option>
+                                        <option value="6">6 - Private</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label data-toggle="tooltip" data-placement="top" title="Indicates based on its function in the vacinity">Type Road</label>
+                                    <select>
+                                        <option></option>
+                                        <option value="1" >1 - Mainlane </option>
+                                        <option value="3" >3 - Frontage Road </option>
+                                        <option value="5" >5 - Cross Connection </option>
+                                        <option value="6" >6 - Ramp </option>
+                                        <option value="7" >7 - Self-Contained Facility </option>
+                                        <option value="8" >7 - Collector Distributor </option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label data-toggle="tooltip" data-placement="top" title="Indicates if the segement in located inside of an ajusted urbanized area boundary">Rural Urban Area</label>
+                                    <select>
+                                        <option></option>
+                                        <option value="1">1 - Rural Population &lt; 5,000</option>
+                                        <option value="2">2 - Population 5,000 to 49,999</option>
+                                        <option value="3">3 - Small Urbanized - Population 50,000 to 199,999</option>
+                                        <option value="4">4 - Urbanized - Population > 200,000</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label data-toggle="tooltip" data-placement="top" title="Dicates which census urbanized area of segement is part of. Default is 0000 for not in a designated area">Urban Code</label>
+                                    <select>
+                                        <option>00000 - N/A</option>
+                                        <option>30925 - Fort Smith</option>
+                                        <option>43345 - Jonesboro</option>
+                                        <option>56116 - West Memphis</option>
+                                        <option>87193 - Texarkana</option>
+                                        <option>29494 - Fayetteville/Springdale</option>
+                                        <option>40213 - Hot Springs</option>
+                                        <option>50392 - Little Rock</option>
+                                        <option>69454 - Pine Bluff</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="box-shoulder" class="property-box">
+                            <h6>Shoulder Properties</h6>
+                            <div class="grid-container">
+                                <div>
+                                    <label data-toggle="tooltip" data-placement="top" title="width of the left road shoulder. Does not include bike lanes or sidewalks">Left Shoulder <br /> Width</label>
+                                    <input type="text" />
+                                </div>
+                                <div>
+                                    <label data-toggle="tooltip" data-placement="top" title="The predominant surface type of the road shoulder. Does not include bike lanes or sidewalks">Left Shoulder <br /> Surface</label>
+                                    <select>
+                                        <option></option>
+                                        <option value="0">0 - No shoulder</option>
+                                        <option value="1">1 - Asphalt</option>
+                                        <option value="2">2 - Concrete</option>
+                                        <option value="3">3 - Curb</option>
+                                        <option value="4">4 - Gravel</option>
+                                        <option value="5">5 - Earth</option>
+                                        <option value="6">6 - Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label data-toggle="tooltip" data-placement="top" title="width of the right road shoulder. Does not include bike lanes or sidewalks">Right Shoulder <br /> Width</label>
+                                    <input type="text" />
+                                </div>
+                                <div>
+                                    <label data-toggle="tooltip" data-placement="top" title="The predominant surface type of the road shoulder. Does not include bike lanes or sidewalks">Right Shoulder <br /> Surface</label>
+                                    <select>
+                                        <option></option>
+                                        <option value="0">0 - No shoulder</option>
+                                        <option value="1">1 - Asphalt</option>
+                                        <option value="2">2 - Concrete</option>
+                                        <option value="3">3 - Curb</option>
+                                        <option value="4">4 - Gravel</option>
+                                        <option value="5">5 - Earth</option>
+                                        <option value="6">6 - Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="box-physical" class="property-box">
+                    <h6>Physical Properties</h6>
+                    <div class="grid-container">
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="The predominant surface type for the road">Surface <br /> Type</label>
+                            <select>
+                                <option></option>
+                                <option>0 - unpaved</option>
+                                <option>1 - Asphalt</option>
+                                <option>2 - Concrete - JPCP</option>
+                                <option>4 - Concrete - CRCP</option>
+                                <option>5 - Asphalt Over Concrete</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="The predominant lane width the road. Must be a whole number">Lane <br /> Width</label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="non-thu traffic lanes like turn lanes">Extra <br /> Lanes</label>
+                            <select>
+                                <option></option>
+                                <option>0 - None</option>
+                                <option>1 - Center Turn Lane</option>
+                                <option>2 - Parking</option>
+                                <option>3 - Passing</option>
+                                <option>4 - Combination</option>
+                                <option>5 - Right turn only</option>
+                                <option>6 - Left turn only</option>
+                                <option>7 - Auxiliary Lane</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Surface <br /> Width</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="grid-container">
+                        <div>
+                            <label>Type <br /> Operation</label>
+                            <select>
+                                <option></option>
+                                <option>1 - One way</option>
+                                <option>2 - Two Way Undivided</option>
+                                <option>3 - Part of a one-way couplet</option>
+                                <option>4 - Divided multi-lane</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Access</label>
+                            <select>
+                                <option></option>
+                                <option value="1">1 - Full Control</option>
+                                <option value="2">2 - Partial Control</option>
+                                <option value="3">3 - No Control</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Median <br /> Type</label>
+                            <select>
+                                <option></option>
+                                <option>0 - No median</option>
+                                <option>1 - Curbed</option>
+                                <option>2 - Positive Barrier</option>
+                                <option>3 - Unprotected</option>
+                                <option>4 - Natural Barrier</option>
+                                <option>5 - Cable Barrier</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Median <br /> Width</label>
+                            <input type="text" />
+                        </div>
+
+                    </div>
+                </div>
+                <div id="box-lanes" class="property-box">
+                    <h6>Lanes</h6>
+                    <div class="grid-container">
+                        <div>
+                            <label>One Direction Number of Lanes</label>
+                            <input type="text">
+                        </div>
+
+                    </div>
+                    <div class="grid-container">
+                        <div>
+                            <label>Both Directions Number of Lanes</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="master-grid">
+                <div id="box-system" class='property-box'>
+                    <h6>System Properties</h6>
+                    <div class="grid-container">
+                        <div>
+                            <label>Functional <br /> Class</label>
+                            <select>
+                                <option></option>
+                                <option value="1">1 - Interstate</option>
+                                <option value="2">2 - Principal Arterial</option>
+                                <option value="3">3 - Principal Arterial (other)</option>
+                                <option value="4">4 - Minor Arterial</option>
+                                <option value="5">5 - Major Collector</option>
+                                <option value="6">6 - Minor Collector</option>
+                                <option value="7">7 - Local</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>NHS</label>
+                            <select>
+                                <option></option>
+                                <option>0 - Not on NHS</option>
+                                <option>1 - On NHS (not intermodal connector)</option>
+                                <option>2 - Major Airport</option>
+                                <option>3 - Major Port Facility</option>
+                                <option>4 - Major Amtrak Station</option>
+                                <option>5 - Major Rail/Truck Facility</option>
+                                <option>6 - Major Intercity bus Terminal</option>
+                                <option>7 - Major Public transit</option>
+                                <option>8 - Major Pipeline</option>
+                                <option>9 - Major Ferry Terminal</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>APHN<br> </label>
+                            <select>
+                                <option></option>
+                                <option>0 - Not on APHN</option>
+                                <option>1 - National Highway System</option>
+                                <option>2 - Other Arterials</option>
+                                <option>3 - Critical Service Routes</option>
+                                <option>4 - Other High Traffic Routes</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Goverment <br /> Code</label>
+                            <select>
+                                <option></option>
+                                <option>01 - State Highway</option>
+                                <option>02 - County</option>
+                                <option>04 - City</option>
+                                <option>60 - Other Fed. Agency</option>
+                                <option>63 - Fish & Wildlife</option>
+                                <option>64 - US Forest Service</option>
+                                <option>66 - National Park Service</option>
+                                <option>70 - Corps of Engineers</option>
+                                <option>72 - Air force</option>
+                                <option>73 - Navy/marines</option>
+                                <option>74 - Army</option>
+                                <option>80 - unknown</option>
+                                <option>21 - Other State Agency</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Special <br /> Systems</label>
+                            <select>
+                                <option></option>
+                                <option>1 - Not a special System</option>
+                                <option>3 - Airport Road</option>
+                                <option>4 - Game & Fish Road</option>
+                                <option>5 - Industrail Access Road</option>
+                                <option>6 - Institutional Road</option>
+                                <option>7 - State Park Road</option>
+                                <option>9 - STRAHNET Route</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>System <br /> Status</label>
+                            <select>
+                                <option></option>
+                                <option>1 - Open</option>
+                                <option>2 - Not Open</option>
+                                <option>3 - Untracked</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="box-alternate" class='property-box'>
+                    <h6>Alternate Route Names</h6>
+                    <div>
+                        <button>-</button><input type="text" />
+                    </div>
+                    <div>
+                        <button>-</button><input type="text" />
+                    </div>
+                    <div>
+                        <button>-</button><input type="text" />
+                    </div>
+                    <div>
+                        <button>+</button><input type="text" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="master-grid">
+                <div id="box-comments">
+                    <h6>Comments</h6>
+                    <textarea></textarea>
+                </div>
+                <div id="box-dynamic" class='property-box'>
+                    <h6>Dynamic Fields</h6>
+                    <p>These Fields Automatically get added to the interface if new fields are added to the roadway inventory database table</p>
+                </div>
+
+            </div>
+
+            <div class="grid-container">
+
+                <div>
+                    <button class="segment-button">Save</button>
+                </div>
+                <div>
+                    <button class="segment-button">Reset Changes</button>
+                </div>
+                <div>
+                    <button class="segment-button">Duplicate record</button>
+                </div>
+                <div>
+                    <button class="segment-button">Mirror Record</button>
+                </div>
+                <div>
+                    <a href="#">View Segment <br> Map</a>
+                </div>
+                <div>
+                    <button class="segment-button">Manual Override</button>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+
+    </body>
+</html>

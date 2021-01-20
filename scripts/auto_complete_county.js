@@ -1,0 +1,4 @@
+var availableTags = ["Arkansas", "Ashley", "Baxter", "Benton", "Boone", "Bradley", "Calhoun", "Carroll", "Chicot", "Clark", "Clay", "Cleburne", "Cleveland", "Columbia", "Conway", "Craighead", "Crawford", "Crittenden", "Cross", "Dallas", "Desha", "Drew", "Faulkner", "Franklin", "Fulton", "Garland", "Grant", "Greene", "Hempstead", "Hot Spring", "Howard", "Independence", "Izard", "Jackson", "Jefferson", "Johnson", "Lafayette", "Lawrence", "Lee", "Lincoln", "Little River", "Logan", "Lonoke", "Madison", "Marion", "Miller", "Mississippi", "Monroe", "Montgomery", "Nevada", "Newton", "Ouachita", "Perry", "Phillips", "Pike", "Poinsett", "Polk", "Pope", "Prarie", "Pulaski", "Randolph", "Saline", "Scott", "Searcy", "Sebastian", "Sevier", "Sharp", 'St. Francis', "Stone", "Stone", "Union", "Van Buren", "Washington", "White", "Woodruff", "Yell"];
+
+
+$("#input-county").autocomplete({source: availableTags});

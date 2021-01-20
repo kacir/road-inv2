@@ -1,0 +1,352 @@
+/* navigation colors */
+nav {
+    background-color: rgb(44,51,142);
+}
+nav > a, nav div ul li a {color:white    }
+nav li {color:white; }
+
+nav li:hover {
+    font-weight: bold;
+    color:white;
+}
+nav > a:hover, nav div ul li a:hover {
+    font-weight: bold;
+    color:white;
+}
+
+.nav-item.active {
+    background-color: white;
+    border-radius: 2.5%;
+} 
+
+.nav-item.active .nav-link {
+    color: rgb(44,51,142);
+    font-weight: 500;
+}
+
+
+/* Changes the colors of the hamburger icon*/
+.custom-toggler.navbar-toggler {
+    border-color: rgb(255,255,255);
+}
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1.0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+section, footer {
+    align-content: center;
+    text-align: center;
+}
+
+img {
+    border: 5px solid white;
+    border-radius: 2.5%;
+}
+
+.dropdown-item.active {
+    background-color: rgb(44,51,142);
+}
+
+
+
+
+/*Stuff needed to get the search table working correctly*/
+#side-panel {
+    background-color: lightgray;
+    padding-bottom: 29%;
+    padding-left: 0.5%;
+    padding-right:0.5%;
+    padding-top:0.75%;
+    margin-top: 0;
+    width: 300px;
+    display: inline-grid;
+}
+
+.split-right {
+    display: inline-grid;
+    margin: 0;
+    margin-left: 1.0%;
+}
+
+#new-seg-button {
+    width: 150px;
+    margin-bottom: 1%;
+    margin-left: 50px;
+    margin-top: 12px;
+    font-size: 16px;
+    border-radius: 50px;
+    border-style: solid;
+    background-color: grey;
+    color: white;
+}
+
+#submit-search, #clear-all{
+    border-radius: 50px;
+    border-style: solid;
+    background-color: grey;
+    color: white;
+    float: right;
+    display: block;
+    margin: auto;
+}
+
+@media all and (max-width: 1450px) and (min-width: 20px) {
+    #side-panel{
+        display: block;
+        width: 100%;
+        padding-bottom : 0%;
+        text-align: center;
+    }
+
+    #submit-search, #clear-all{
+        display: inline-block;
+
+        margin-top: 5px;
+    }
+    #form-button-holder{
+        display: inline;
+        text-align: center;
+    }
+    #side-panel form div.form-group {
+        display: inline-grid;
+        padding-left: 2.5%;
+        padding-right: 2.5%;
+
+    }
+    .split-right{
+        display: table;
+        margin: auto;
+        align-content: center;
+    }
+
+}
+
+h1 {
+    text-align: center;
+    color: grey;
+}
+h5{
+    color:grey;
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    border-color: grey;
+}
+
+th, td {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+th {
+    background-color: grey;
+    color: white;
+    font-weight: normal;
+}
+
+table {
+    padding: 1%;
+    overflow:hidden
+}
+
+
+section {
+    padding: 0.5%;
+    margin: auto;
+    margin-top: 2%;
+    align-content: center;
+    text-align: center;
+}
+
+
+
+
+/* Stuff needed for new segemnt page */
+/*this part dealing mostly with grid positioning*/
+.property-box{
+    background-color: lightgrey;
+    border-color: darkgrey;
+    border-width: 1px;
+    border-radius: 30px/30px;
+    border-style: solid;
+    margin: 5px;
+    padding: 5px;
+
+    display: grid;
+}
+.master-grid{
+    display: grid;
+}
+.grid-container {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+}
+#box-coreChar, #box-system, #box-comments {
+    grid-column: 1 /8;
+}
+
+#box-nest {
+    grid-column: 1 / 3;
+}
+#box-physical{
+    grid-column: 3 / 8;
+}
+#box-lanes{
+    grid-column: 8 / 10;
+}
+
+#box-history, #box-alternate {
+    grid-column: 8 /10
+
+}
+#box-dynamic {
+    width: 200px;
+    grid-column: 12 /12
+}
+#box-comments {
+    grid-column: 1 / 12;
+}
+#input-direction {
+    width: 50px;
+}
+.grid-container label {
+    display: block
+}
+textarea{
+    width: 100%;
+    height: 80px;
+}
+.main-content{
+    margin-left: 20px;
+    margin-right: 0.5%;
+}
+.property-box select, .property-box input {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/*This part dealing more with styling of the page*/
+.property-box h6{
+    text-align: center;
+    font-weight: 500;
+}
+.segment-title{
+    background-color: #707070;
+    border-color: darkgrey;
+    border-width: 1px;
+    border-radius: 30px/30px;
+    border-style: solid;
+
+    width: 500px;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.5%;
+
+}
+.segment-title h1 {
+    color: white;
+    font-size: 25px;
+    padding: 0px;
+    margin: 5px;
+}
+
+.segment-button {
+    border-radius: 100px;
+    border-color: darkgray;
+    background-color: lightgray;
+    color: #696969;
+    border-style: solid;
+    height: 50px;
+    width: 100px;
+}
+.property-box {
+    font-size: 10px;
+}
+button:hover{
+    cursor: pointer;
+}
+
+.property-box label {
+    text-align: center;
+}
+
+.property-box  input, .property-box select {
+    width: 50px;
+}
+#input-section, #input-blm, #input-elm {
+    width: 75px;
+}
+
+#input-route{
+    width: 150px;
+}
+
+
+#box-alternate div input{
+    display: inline-block;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 70%;
+}
+#box-alternate div button {
+    margin-left: 5%;
+    border-radius: 50px;
+    background-color: darkgray;
+    color: white;
+    border-width: 1px;
+    border-style: solid;
+    width: 25px;
+}
+
+
+
+/*used to style error boxes inside of segement editing boxes*/
+div.error{
+    text-align: left;
+    background-color: #FFCCCC;
+    border-radius: 5px;
+    color: red;
+    border-color: red;
+    border-style: solid;
+    border-width: 2px;
+    padding: 2%
+}
+
+input.error, select.error{
+    border-color: red;
+    border-style: solid;
+    border-width: 2px;
+    background-color:  #FFCCCC;
+}
+
+::selection {
+    color: white;
+    background: rgb(44,51,142);
+}
+
+
+@media all and (max-width: 750px) and (min-width: 20px) {
+    .master-grid:first-of-type {
+        display: block;
+    }
+}
+
+@media all and (max-width: 600px) and (min-width: 20px) {
+    #box-coreChar .grid-container {
+        display: block;
+
+    }
+    .master-grid:first-of-type {
+        display: grid;
+    }
+    #box-nest div {
+        display: block;
+    }
+}
