@@ -1,0 +1,110 @@
+﻿@using RoadInv.Models
+@model SearchPageModel
+@{Layout = "_Layout.cshtml";}
+
+@section nav_segements {
+    active
+}
+@{
+    ViewData["Title"] = "Segements";
+}
+
+<div id="segement-search-main-content master-grid">
+    <div id="side-panel" class='split left'>
+        <h3>Search</h3>
+        <div action="/search" method="get">
+            <div class="form-group">
+                <label for='form-district'>Distict Number</label>
+                <select class="form-control" id='district'>
+                    <option></option>
+                    @foreach (var x in Model.con.AH_District)
+                    {
+                        <option @if (ViewBag.district == x.DistrictNumber) { <text> selected</text> } value="@x.DistrictNumber" >@x.DistrictNumber </option>
+                    }
+                </select>
+            </div>
+            <div class='form-group'>
+                <label>County</label>
+                <select id="county" class="form-control">
+                    <option></option>
+                    @foreach (var u in Model.con.AH_County)
+                    {
+                        <option @if (ViewBag.county == u.CountyNumber) { <text> selected</text> } value="@u.CountyNumber">@u.CountyNumber - @u.County</option>
+                    }
+                </select>
+
+            </div>
+            <div class='form-group'>
+                <label>Route</label>
+                <input id="route" class="form-control" type='text' value="@ViewBag.route" />
+            </div>
+            <div class='form-group'>
+                <label>Section</label>
+                <input id="section" class="form-control" type='text' value="@ViewBag.section" />
+            </div>
+            <div class='form-group'>
+                <label>Logmile</label>
+                <input id="logmile" class="form-control" type='text' value="@if (ViewBag.logmile != -1) { <text>@ViewBag.logmile</text>} " />
+            </div>
+            <div id="form-button-holder" class='form-group'>
+                <a id="submit-search-link" href="/search"><button type="submit" id="submit-search">Submit </button></a>
+                <a href="/search"><button id="clear-all">Clear All</button></a>
+            </div>
+
+
+        </div>
+    </div>
+    <div class='split-right'>
+        <div class="master-grid grid-container">
+            <div><h1>Roadway Inventory Segements</h1></div>
+            <div><a target="_blank" href="new_segement.html"><button id="new-seg-button">New Segement</button></a></div>
+        </div>
+
+        <table>
+            <tr>
+                <th>Status</th>
+                <th>Distict</th>
+                <th>County</th>
+                <th>Route</th>
+                <th>Section</th>
+                <th>Direction</th>
+                <th>BLM</th>
+                <th>ELM</th>
+                <th>Length</th>
+                <th>Route Sign</th>
+                <th>Type Road</th>
+                <th>Functional Class</th>
+                <th>NHS</th>
+            </tr>
+
+            @foreach (var u in Model.details)
+            {
+                <tr>
+                    <td><a href='edit_segement.html?id=@u.ID'>@u.SystemStatus</a></td>
+                    <td>@u.AH_District</td>
+                    <td>@u.AH_County</td>
+                    <td>@u.AH_Route</td>
+                    <td>@u.AH_Section</td>
+                    <td>@u.LOG_DIRECT</td>
+                    <td>@u.AH_BLM</td>
+                    <td>@u.AH_ELM</td>
+                    <td>@u.AH_Length</td>
+                    <td>@u.RouteSign</td>
+                    <td>@u.TypeRoad</td>
+                    <td>@u.FuncClass</td>
+                    <td>@u.NHS</td>
+
+                </tr>
+            }
+
+
+        </table>
+    </div>
+</div>
+<script>
+            var countyList = [];
+            @foreach (var u in ViewBag.countyList) {
+                <text>countyList.push({'label' : '@u[0]' , 'value' : '@u[1]'} );</text>
+            }
+</script>
+<script src="scripts/set_submit_search.js"></script>

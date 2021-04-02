@@ -1,0 +1,103 @@
+﻿@{Layout = "_Layout.cshtml";}
+@{
+    ViewData["Title"] = "Quality Control";
+}
+@section nav_quality {
+    active
+}
+@using RoadInv.DB;
+@using Z.EntityFramework.Plus;
+
+@model roadinvContext 
+
+<br />
+<section>
+    <h1>Quality Control</h1>
+</section>
+<section>
+    <h5>Gaps Report</h5>
+    <table>
+        <tr>
+            <th>ARNOLD ID</th>
+            <th>County</th>
+            <th>Section</th>
+            <th>Direction</th>
+            <th>BLM</th>
+            <th>ELM</th>
+            <th>Length</th>
+        </tr>
+        @foreach (var item in Model.QcGaps.FromCache())
+        {
+            
+            <tr>
+                <td>@item.AhRoadId</td>
+                <td>@item.AhRoadId.Split("x")[0]</td>
+                <td>@item.AhRoadId.Split("x")[2]</td>
+                <td>@item.AhRoadId.Split("x")[3]</td>
+                <td>@Math.Round(Convert.ToDecimal( item.AhBlm), 3)</td>
+                <td>@Math.Round(Convert.ToDecimal(item.AhElm), 3)</td>
+                <td>@Math.Round(Convert.ToDecimal( item.AhElm - item.AhBlm))</td>
+            </tr>
+        }
+
+    </table>
+</section>
+<section>
+    <h5>Overlaps Report</h5>
+    <table>
+        <tr>
+            <th>ARNOLD ID</th>
+            <th>County</th>
+            <th>Section</th>
+            <th>Direction</th>
+            <th>BLM</th>
+            <th>ELM</th>
+            <th>Length</th>
+        </tr>
+        @foreach (var item in Model.QcOverlaps.FromCache())
+        {
+            <tr>
+                <td>@item.AhRoadId1</td>
+                <td>@item.AhRoadId1.Split("x")[0]</td>
+                <td>@item.AhRoadId1.Split("x")[2]</td>
+                <td>@item.AhRoadId1.Split("x")[3]</td>
+                <td>@item.OverlapBlm</td>
+                <td>@item.OverlapElm</td>
+                <td>@Math.Round(Convert.ToDecimal(item.OverlapElm - item.OverlapBlm), 3)</td>
+            </tr>
+        }
+    </table>
+</section>
+
+<section>
+    <h5>Unnecessary Breaks</h5>
+    <table>
+        <tr>
+            <th>ARNOLD ID</th>
+            <th>County</th>
+            <th>Section</th>
+            <th>Direction</th>
+            <th>BLM</th>
+            <th>ELM</th>
+            <th>Length</th>
+        </tr>
+        @foreach (var item in Model.QcBreaks.FromCache())
+        {
+            <tr>
+                <td>@item.AhRoadId</td>
+                <td>@item.AhRoadId.Split("x")[0]</td>
+                <td>@item.AhRoadId.Split("x")[2]</td>
+                <td>@item.AhRoadId.Split("x")[3]</td>
+                <td>@Math.Round(Convert.ToDecimal(item.AhBlm), 3)</td>
+                <td>@Math.Round(Convert.ToDecimal(item.AhElm), 3)</td>
+                <td>@Math.Round(Convert.ToDecimal(item.AhElm - item.AhBlm), 3)</td>
+            </tr>
+        }
+    </table>
+</section>
+<style>
+    table {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>

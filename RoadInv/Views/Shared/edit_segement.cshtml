@@ -1,0 +1,611 @@
+﻿@using RoadInv.DB
+@using RoadInv.Models
+@model SegementDetailPageModel
+@{Layout = "_Layout.cshtml";}
+@{
+    ViewData["Title"] = "Edit Segement";
+}
+
+<div class="segment-title">
+    <h1 id="header" data="@Model.details.ID">Road Segement 
+        <span class="@FieldsListModel.AH_RoadID">@Model.details.AH_RoadID </span>
+        <br> BLM:
+        <span class="@FieldsListModel.AH_BLM" >@Model.details.AH_BLM</span> - ELM 
+        <span class="@FieldsListModel.AH_ELM">@Model.details.AH_ELM</span>
+    </h1>
+</div>
+<div class="main-content">
+    <div class="master-grid">
+        <div id="box-coreChar" class='property-box'>
+            <h6>Core Characteristics</h6>
+            <div class=grid-container>
+
+                <DIV>
+                    <label data-toggle="tooltip" data-placement="top" title="ArDOT District">Distict</label>
+                    <select id="@FieldsListModel.AH_District">
+                        <option></option>
+                        @foreach (ConstaintDistrict item in Model.con.AH_District)
+                        {
+                            <option @if (Model.details.AH_District == item.DistrictNumber) { <text> selected</text> } value="@item.DistrictNumber">@item.DistrictNumber</option>
+                        }
+                    </select>
+
+                </DIV>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="ArDOT County Number. Not to be confused with FHWA County Numbers.">County</label>
+                    <select id="@FieldsListModel.AH_County">
+
+                        <option></option>
+                        @foreach (ConstaintCounty item in Model.con.AH_County)
+                        {
+                            <option @if (Model.details.AH_County == item.CountyNumber) { <text> selected</text> } value="@item.CountyNumber">@item.CountyNumber - @item.County</option>
+
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="ARNOLD compliant Route Name. limited to 150 characters and only be alphnumberic characters">
+                    Route</label>
+                    <input id="@FieldsListModel.AH_Route" type="text" value="@Model.details.AH_Route" />
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="ARNOLD section number. 3 digit sections are typically reserved for Y leg segments">Section</label>
+                    <input id="@FieldsListModel.AH_Section" type="text" value="@Model.details.AH_Section" />
+                </div>
+                <div >
+                    <span data-toggle="tooltip" data-placement="top" title="A character prefix for the section that identifies a characteristic of 
+                          the road such as one way cuplet. Rarely used">Section Code:</span> 
+                    <br /> 
+                    <span data-placement="top"  data-toggle="tooltip" id="@FieldsListModel.SectionCode">XXXXX</span>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="The log direction of the road. Most roads are log direction with anti-log roads being part of dual carrageways">Direction</label>
+                    <select id="@FieldsListModel.LOG_DIRECT">
+                        <option></option>
+                        @foreach (var item in Model.con.LOG_DIRECT)
+                        {
+                    <option @if (Model.details.LOG_DIRECT == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="The Begining Log Mile of the segment">BLM</label>
+                    <input id="@FieldsListModel.AH_BLM" type="text" value="@Model.details.AH_BLM" />
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="The ending Log Mile of the segment">ELM</label>
+                    <input id="@FieldsListModel.AH_ELM" type="text" value="@Model.details.AH_ELM" />
+                </div>
+                <div>
+                    <span>Road Length <br /><span id="@FieldsListModel.AH_Length">@Model.details.AH_Length</span></span>
+                </div>
+
+            </div>
+        </div>
+        <div id="box-history" class='property-box'>
+            <h6>History</h6>
+            <DIV>
+                input
+                <input type="text" />
+            </DIV>
+        </div>
+    </div>
+
+
+    <div class="master-grid">
+        <div id="box-nest">
+            <div class="master-grid">
+                <div class="property-box">
+                    <h6>Classification Properties</h6>
+                    <div class="grid-container">
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="The Route Sign designation of the segement. County and City designations are dependent 
+                                   on the municipal boundary rather than the managment or ownership of the road">Route Sign</label>
+                            <select id="@FieldsListModel.RouteSign">
+                                <option></option>
+                                @foreach (var item in Model.con.RouteSign)
+                                {
+                                    <option @if (Model.details.RouteSign == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="Indicates based on its function in the vacinity">Type Road</label>
+                            <select id="@FieldsListModel.TypeRoad">
+                                <option></option>
+                                @foreach (var item in Model.con.TypeRoad)
+                                {
+                            <option @if (Model.details.RouteSign == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label </option>
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="Indicates if the segement in located inside of an ajusted urbanized area boundary">Rural Urban Area</label>
+                            <select id="@FieldsListModel.RuralUrbanArea">
+                                <option></option>
+                                @foreach (var item in Model.con.RuralUrbanArea)
+                                {
+                                    <option @if (Model.details.RuralUrbanArea == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.ValueDescription</option>
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="Dicates which census urbanized area of segement is part of. Default is 0000 for not in a designated area">Urban Code</label>
+                            <select id="@FieldsListModel.UrbanAreaCode">
+                                @foreach (var item in Model.con.UrbanAreaCode)
+                                {
+                                    <option @if (Model.details.UrbanAreaCode == item.UrbanCode) { <text> selected</text> } value="@item.UrbanCode">@item.UrbanCode - @item.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="box-shoulder" class="property-box">
+                    <h6>Shoulder Properties</h6>
+                    <div class="grid-container">
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="width of the left road shoulder. Does not include bike lanes or sidewalks">Left Shoulder <br /> Width</label>
+                            <input id="@FieldsListModel.LeftShoulderWidth" type="text" value="@Model.details.LeftShoulderWidth"/>
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="The predominant surface type of the road shoulder. Does not include bike lanes or sidewalks">Left Shoulder <br /> Surface</label>
+                            <select id="@FieldsListModel.LeftShoulderSurface">
+                                <option></option>
+                                @foreach (var item in Model.con.ShoulderSurface)
+                                {
+                                    <option @if (Model.details.LeftShoulderSurface == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="width of the right road shoulder. Does not include bike lanes or sidewalks">Right Shoulder <br /> Width</label>
+                            <input type="text" id="@FieldsListModel.RightShoulderWidth" value="@Model.details.RightShoulderWidth" />
+                        </div>
+                        <div>
+                            <label data-toggle="tooltip" data-placement="top" title="The predominant surface type of the road shoulder. Does not include bike lanes or sidewalks">Right Shoulder <br /> Surface</label>
+                            <select id="@FieldsListModel.RightShoulderSurface">
+                                <option></option>
+                                @foreach (var item in Model.con.ShoulderSurface)
+                                {
+                                    <option @if (Model.details.RightShoulderSurface == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="box-physical" class="property-box">
+            <h6>Physical Properties</h6>
+            <div class="grid-container">
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="The predominant surface type for the road">Surface <br /> Type</label>
+                    <select id="@FieldsListModel.SurfaceType">
+                        <option></option>
+                        @foreach (var item in Model.con.SurfaceType)
+                        {
+                            <option @if (Model.details.SurfaceType == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.ValueDescription</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="The predominant lane width the road. Must be a whole number">Lane <br /> Width</label>
+                    <input type="text">
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="non-thu traffic lanes like turn lanes">Extra <br /> Lanes</label>
+                    <select id="@FieldsListModel.ExtraLanes">
+                        <option></option>
+                        @foreach (var item in Model.con.ExtraLanes)
+                        {
+                            <option @if (Model.details.ExtraLanes == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label>Surface <br /> Width</label>
+                    <input type="text">
+                </div>
+            </div>
+            <div class="grid-container">
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="Indicates the operation of a road, ex: one-way, two-way, divided, etc…">Type <br /> Operation</label>
+                    <select id="@FieldsListModel.TypeOperation">
+                        <option></option>
+                        @foreach (var item in Model.con.TypeOperation)
+                        {
+                            <option @if (Model.details.TypeOperation == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="Describes access to a roadway. Example: the only way to access the Interstate is by on & off ramps, 
+                           so access is fully controlled. Most highways have no control of access because you can access the road by 
+                           side streets, driveways, etc… Partial control is when a road is divided and the access points are somewhat controlled.">Access</label>
+                    <select id="@FieldsListModel.Access">
+                        <option></option>
+                        @foreach (var item in Model.con.Access)
+                        {
+                            <option @if (Model.details.Access == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="If a road is divided then it will have some sort of median otherwise it is not considered a divided roadway. There are several 
+                           types of medians. If a median is present, it must be divided and have a median width.">Median <br /> Type</label>
+                    <select id="@FieldsListModel.MedianType">
+                        <option></option>
+                        @foreach (var item in Model.con.MedianType)
+                        {
+                    <option @if (Model.details.MedianType == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="Gives the width in feet of the median of a divided highway. Median widths can vary from just a few feet to several 
+                           hundred feet in width. In the past 999 was used to indicate an unknown median width or a median over 1,000 feet. Most 999’s 
+                           represents the unknown value">Median <br /> Width</label>
+                    <input id="@FieldsListModel.MedianWidth" type="text" value="@Model.details.MedianWidth" />
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="Width of the roadway">
+                    Roadway <br /> Width
+                    </label>
+                    <input id="@FieldsListModel.RoadwayWidth" type="text" value="@Model.details.RoadwayWidth" />
+                </div>
+
+            </div>
+        </div>
+        <div id="box-lanes" class="property-box">
+            <h6>Lanes</h6>
+            <div class="grid-container">
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="In the new system both log and antilog direction are separate records. This field contains the number of lanes for a 
+                           divided highway for the particular log direction of the segment. If the sum of the log and antilog direction information is 4 
+                           the value for this field will be 2 because each log direction individually has 2 lanes.">One Direction Number of Lanes</label>
+                    <input id="@FieldsListModel.OneDirectionNumLanes" type="text" value="@Model.details.OneDirectionNumLanes">
+                </div>
+
+            </div>
+            <div class="grid-container">
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="In the new system both log and antilog direction are separate records. This record reflects the sum of the thru lanes 
+                           on both sides of a divided highway. Currently, the number varies from 1 to 8, however, this will increase over time. We don’t 
+                           anticipate the number of lanes growing larger than 10 for several years.">Both Directions Number of Lanes</label>
+                    <input id="@FieldsListModel.BothDirectionNumLanes" type="text" value="@Model.details.BothDirectionNumLanes">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="master-grid">
+        <div id="box-system" class='property-box'>
+            <h6>System Properties</h6>
+            <div class="grid-container">
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="Indicates the level of functional classification, codes range from 1 thru 7.">Functional <br /> Class</label>
+                    <select id="@FieldsListModel.FuncClass">
+                        <option></option>
+                        @foreach (var item in Model.con.FuncClass)
+                        {
+                    <option @if (Model.details.FuncClass == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="National Highway System (NHS) is used to designate which records are part of the NHS and determines if it is the standard 
+                           NHS route or intermodal connector route.">NHS</label>
+                    <select id="@FieldsListModel.NHS">
+                        <option></option>
+                        @foreach (var item in Model.con.NHS)
+                        {
+                            <option @if (Model.details.NHS == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="Arkansas Primary Highway Network is the state’s way of prioritizing. Funding and other concerns for 
+                           the entire state highway system.">APHN<br></label>
+                    <select id="@FieldsListModel.APHN">
+                        <option></option>
+                        @foreach (var item in Model.con.APHN)
+                        {
+                            <option @if (Model.details.APHN == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="Indicates which government agency owns the roadway. State, County, City, Forest Service, Air force, etc…">Goverment <br /> Code</label>
+                    <select id="@FieldsListModel.GovermentCode">
+                        <option></option>
+                        @foreach (var item in Model.con.GovermentCode)
+                        {
+                    <option @if (Model.details.GovermentCode == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="Some roadways have a special designation; the special system code shows which category of special system the record belongs in.">Special <br /> Systems</label>
+                    <select id="@FieldsListModel.SpecialSystems">
+                        <option></option>
+                        @foreach (var item in Model.con.SpecialSystems)
+                        {
+                            <option @if (Model.details.SpecialSystems == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="Indicates if the roadway is open to traffic, built but not open to traffic, or Programmed/projected. This field value does not necessarily 
+                           match ARNOLD’s open status. ARNOLD data is updated as soon as it is built or is available to the public. Traffic Information Systems Section does not 
+                           update system status until it is officially approved by the Arkansas State Highway Commission.">System <br /> Status</label>
+                    <select id="@FieldsListModel.SystemStatus">
+                        <option></option>
+                        @foreach (var item in Model.con.SystemStatus)
+                        {
+                            <option @if (Model.details.SystemStatus == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="box-alternate" class='property-box'>
+            <h6 data-toggle="tooltip" data-placement="top" title="This field will contain a comma delignated list. Each item in the list will be an alternative route name. This was not done as a separate table to make 
+                it easier for staff members to query out information.">Alternate Route Names</h6>
+            <div>
+                <button>-</button><input type="text" />
+            </div>
+            <div>
+                <button>-</button><input type="text" />
+            </div>
+            <div>
+                <button>-</button><input type="text" />
+            </div>
+            <div>
+                <button>+</button><input type="text" />
+            </div>
+        </div>
+    </div>
+
+    <div class="master-grid">
+        <div id="box-comments">
+            <h6>Comments</h6>
+            <textarea id="@FieldsListModel.Comment1">@Model.details.Comment1</textarea>
+        </div>
+        <div id="box-dynamic" class='property-box'>
+            <h6>Dynamic Fields</h6>
+            <p>These Fields Automatically get added to the interface if new fields are added to the roadway inventory database table</p>
+        </div>
+
+    </div>
+
+    <div class="grid-container">
+
+        <div>
+            <button id="save-changes" class="segment-button">Save</button>
+        </div>
+        <div>
+            <button class="segment-button">Reset Changes</button>
+        </div>
+        <div>
+            <button class="segment-button">Duplicate record</button>
+        </div>
+        <div>
+            <button class="segment-button">Delete record</button>
+        </div>
+        <div>
+            <button class="segment-button">Mirror Record</button>
+        </div>
+        <div>
+            <a href="#">View Segment <br> Map</a>
+        </div>
+        <div>
+            <button data-toggle="tooltip" data-placement="bottom" title="disables validation error handeling. Please only use in rare and nuanced situations" id="manual-override" class="segment-button">Manual Override</button>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script>
+
+    var subjectAttributes = ["@FieldsListModel.AH_District", "@FieldsListModel.AH_County", "@FieldsListModel.AH_Section", "@FieldsListModel.AH_Route", "@FieldsListModel.AH_Section",
+            "@FieldsListModel.LOG_DIRECT", "@FieldsListModel.AH_BLM", "@FieldsListModel.AH_ELM", "@FieldsListModel.RouteSign",
+            "@FieldsListModel.TypeRoad", "@FieldsListModel.RuralUrbanArea", "@FieldsListModel.UrbanAreaCode", "@FieldsListModel.LeftShoulderWidth",
+            "@FieldsListModel.LeftShoulderSurface", "@FieldsListModel.RightShoulderWidth", "@FieldsListModel.RightShoulderSurface",
+            "@FieldsListModel.SurfaceType", "@FieldsListModel.TypeOperation", "@FieldsListModel.LaneWidth", "@FieldsListModel.ExtraLanes",
+            "@FieldsListModel.SurfaceWidth", "@FieldsListModel.Access",
+            "@FieldsListModel.MedianType", "@FieldsListModel.MedianWidth", "@FieldsListModel.OneDirectionNumLanes",
+            "@FieldsListModel.BothDirectionNumLanes", "@FieldsListModel.FuncClass", "@FieldsListModel.NHS", "@FieldsListModel.APHN", "@FieldsListModel.GovermentCode",
+            "@FieldsListModel.SpecialSystems", "@FieldsListModel.SystemStatus", "@FieldsListModel.Alternative_Route_Name", "@FieldsListModel.RoadwayWidth"];
+
+    function gatherInput() {
+        inputs = {};
+
+
+
+        subjectAttributes.forEach(function (x) {
+            var raw = $("#" + x).val();
+            if (raw != "") {
+                inputs[x] = raw;
+            }
+        });
+
+        var altNames = $("#box-alternate div input").map((_, el) => el.value).get();
+        var altNamesFilter = [];
+
+        altNames.forEach(function (x) {
+            if (x != "") {
+                altNamesFilter.push(x);
+            }
+        })
+
+        return inputs;
+    }
+
+    $("input, select").on("keyup, change", submitInputs)
+
+    function submitInputs() {
+        var inputs = gatherInput();
+        var constructString = "";
+
+        //fill in the ID attribute because the user has no control over this variable. Hidden from user
+        inputs["ID"] = $("#Header").attr("data");
+
+        $.post("api/validate", inputs, errorPost, "json");
+
+    }
+
+    //apply tag class error-flag to everything that has an error asscoaited with it.
+    function errorPost(data) {
+
+        console.log(data);
+        //zero out all attributes errors
+        $(".error-flag")
+            .removeAttr("title")
+            .tooltip('disable');
+
+        for (i = 0; i < subjectAttributes.length; i++ ) {
+            var raw = $("#" + subjectAttributes[i]).removeClass("error-flag");
+        }
+        // populate fields accordingly
+        // data-placement="top"
+        data.forEach(function (item) {
+            item.fields.forEach(function (field) {
+                console.log(item);
+                $("#" + field)
+                    .addClass("error-flag")
+                    .attr("title", item.errorMessageLong)
+                    .attr("data-placement", "bottom")
+                    .tooltip('enable');
+            });
+
+        });
+    }
+
+    //submit after editing was completed
+    $("#save-changes").click(function () {
+        var inputs = gatherInput();
+
+        $("#save-changes").fadeOut();
+
+        $.post("api/update", inputs, function (data) {
+            console.log("results have been saved");
+            console.log(data);
+            $("#save-changes").text("Changes saved!").fadeIn(1000, function () {
+                $("#save-changes").text("Save");
+            });
+        })
+    });
+
+
+
+    //contrain these corrections to Manual Override mode off
+    //make sure BLM and ELM always have 3 digit
+    $("#@FieldsListModel.AH_BLM").focusout(function () {
+        //force BLM and ELM to be zero decimal places
+        var BLM = $("#@FieldsListModel.AH_BLM").val();
+        if (!isNaN(BLM) && BLM != "" && BLM != null && BLM != undefined) {
+            console.log(BLM);
+            BLM = parseFloat(BLM).toFixed(3);
+            //console.log("New BLM");
+            //console.log(BLM);
+            $("#@FieldsListModel.AH_BLM").val(BLM);
+        }
+    });
+
+    $("#@FieldsListModel.AH_ELM").focusout(function () {
+        //force BLM and ELM to be zero decimal places
+        var ELM = $("#@FieldsListModel.AH_ELM").val();
+        if (!isNaN(ELM) && ELM != "" && ELM != null && ELM != undefined) {
+            //console.log(ELM);
+            ELM = parseFloat(ELM).toFixed(3);
+            $("#@FieldsListModel.AH_ELM").val(ELM);
+        }
+    });
+
+    //change the read only length field accordingly
+    $("#@FieldsListModel.AH_ELM, #@FieldsListModel.AH_BLM").focusout(function () {
+        var length = $("#@FieldsListModel.AH_ELM").val() - $("#@FieldsListModel.AH_BLM").val();
+        length = parseFloat(length).toFixed(3)
+        console.log("New Length!");
+        console.log(length);
+        $("#@FieldsListModel.AH_Length").html(length);
+    });
+
+    $(document).ready(function () {
+        //$("#button-save").click(parameterCheckEventLoop);
+    })
+
+
+    //change the section code label when section field changes
+    $("#@FieldsListModel.AH_Section").focusout(function () {
+        var sectionCodeList = @Html.Raw( Model.sectionCodeJson);
+        var currentSection = $("#@FieldsListModel.AH_Section").val();
+        $("#@FieldsListModel.SectionCode")
+            .html("None")
+            .removeAttr("title");
+
+        sectionCodeList.forEach(function (x) {
+            if (currentSection.toUpperCase().includes(x.SectionCode)) {
+                $("#@FieldsListModel.SectionCode")
+                    .html(x.Name)
+                    .attr("title", x.Description)
+                    .tooltip();
+            }
+        });
+
+    });
+
+    //force AH_Section, and AH_Route to upper case after being edited
+    $("#@FieldsListModel.AH_Route").focusout(function () {
+        var routeString = $("#@FieldsListModel.AH_Route")
+            .val()
+            .toUpperCase();
+        $("#@FieldsListModel.AH_Route").val(routeString);
+    });
+
+    $("#@FieldsListModel.AH_Section").focusout(function(){
+        var sectionString = $("#@FieldsListModel.AH_Section")
+            .val()
+            .toUpperCase();
+
+        $("#@FieldsListModel.AH_Section").val(sectionString);
+
+    });
+
+    //force title to change its id and logmiles accordingly
+    $("#@FieldsListModel.AH_County, #@FieldsListModel.AH_Route, #@FieldsListModel.AH_Section, #@FieldsListModel.LOG_DIRECT")
+        .on("keyup change" ,function () {
+            var county = $("#@FieldsListModel.AH_County").val();
+            var section = $("#@FieldsListModel.AH_Section").val();
+            var route = $("#@FieldsListModel.AH_Route").val();
+            var direction = $("#@FieldsListModel.LOG_DIRECT").val();
+            var roadid = county + "x" + route + "x" + section + "x" + direction;
+
+            console.log("New RoadID " + roadid);
+
+            $(".@FieldsListModel.AH_RoadID").text(roadid);
+            $(".@FieldsListModel.AH_BLM").text($("#@FieldsListModel.AH_BLM").val());
+            $(".@FieldsListModel.AH_ELM").text( $("#@FieldsListModel.AH_ELM").val() );
+    });
+
+
+    //allow enable and disable of manual override
+    $("#manual-override").click(function () {
+        var button = $("#manual-override");
+
+        if (button.hasClass("override-active")) {
+            button.removeClass("override-active");
+        } else {
+            button.addClass("override-active");
+        }
+    });
+
+</script>
