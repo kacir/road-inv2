@@ -9,10 +9,12 @@ using System.Data;
 namespace RoadInv.Models
 {
     public class SearchDatabaseModel
+        //class is used to perform SQL database interactions that cannot be performed using entity framework
     {
-        //private static string connectionString = "Data Source=invsql-dev;Initial Catalog=roadinv;User ID=roadinv_program;Password=yellow99_ZZ$";
+        
         private string _connection;
         public List<SegmentModel> search(string district = "", int county = 0, string route = "", string section = "", string direction = "", decimal logmile = -1)
+            //method performs a simple search used for the segment search page in the website.
         {
             SqlConnection cnn = new SqlConnection(_connection);
             cnn.Open();
@@ -80,28 +82,8 @@ namespace RoadInv.Models
             return output3;
         }
 
-        public ArrayList CountyList() {
-            //first time is county name string, second is the ArDOT number
-            SqlConnection cnn = new SqlConnection(_connection);
-            cnn.Open();
-
-            string queryString = "SELECT [County], [CountyNumber] FROM [roadinv].[dbo].[Constaint_County]";
-            SqlCommand command = new SqlCommand(queryString, cnn);
-            SqlDataReader dataReader = command.ExecuteReader();
-
-            ArrayList temp = new ArrayList();
-            while (dataReader.Read())
-            {
-                string[] record = {dataReader.GetString(0), dataReader.GetString(1)};
-                temp.Add(record);
-            }
-
-            cnn.Close();
-
-
-            return temp;
-        }
         public SegmentModel segementDetails(int ID)
+            //gathers all relivant data about a give segement into a segmentModel class and hands it off. takes the segment id as a parameter
         {
             SegmentModel resultSegement = new SegmentModel();
 

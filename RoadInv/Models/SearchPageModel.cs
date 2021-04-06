@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace RoadInv.Models
 {
     public class SearchPageModel
+        //class does not perform any functionality beyond holding data for the markup page to use
     {
         public ValidationModel con;
         public List<SegmentModel> details;

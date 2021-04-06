@@ -24,7 +24,8 @@ namespace RoadInv
             services.AddControllers();
             services.AddMvc();
 
-            //used for entity framework connection
+            //both entity framework and SQL Client are needed for project
+            //used for entity framework database connection
             services.AddDbContext<roadinvContext>
                 (options => options.UseSqlServer(this.configuration["EntityConnectinString"]));
 
@@ -44,8 +45,6 @@ namespace RoadInv
 
             app.UseFileServer();
             app.UseRouting();
-
-
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();

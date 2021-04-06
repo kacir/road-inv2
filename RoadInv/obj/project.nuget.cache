@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qhI9DUzy+2xI0GX0ZJeLRTQQuQrMmxrGVih1+AocgWWR15KJ1Hne7Tp/LQkZ4CTHytlgivJgxWYDRlWBdDbOYw==",
+  "dgSpecHash": "I/zLEbi92dMkt9Wo65a0Yoc2we1ACxzRlW1sIfZ2dQJSKXpHcWnTeLL8ieEOhWXq9Pzkw/wWjyVjLA6YbNHB6g==",
   "success": true,
-  "projectFilePath": "E:\\scratch\\RoadInv_Overhaul\\WebServer\\RoadInv\\RoadInv\\RoadInv.csproj",
+  "projectFilePath": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\RoadInv.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rk42861\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

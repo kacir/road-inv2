@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 namespace RoadInv.Models
 {
     public class FieldsListModel
+        //class contains string values that are used to assign html tag ids and field names in error validation
+        //only exisits to ensure consistancy in IDs between html tag id and error validation through autocompletion.
     {
         public const string ID = "ID";
         public const string AH_District = "AH_District";

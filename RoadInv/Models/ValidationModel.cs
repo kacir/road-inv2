@@ -7,6 +7,7 @@ using Z.EntityFramework.Plus;
 namespace RoadInv.Models
 {
     public class ValidationModel
+        //performs all validation of segment models.
     {
         public static char[] validCharacters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0' , '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
@@ -39,6 +40,7 @@ namespace RoadInv.Models
         public List<ConstraintUrbanAreaCounty> PairUrbanAreaCounty;
 
         public static List<string> checkInvalidCharacters(string focusString)
+            //AH_Route and AH_Section can only contain A-Z and 0-9 characters. All others are invalid
         {
             List<string> temp = new List<string>();
             foreach (char focusChar in focusString)
@@ -58,8 +60,8 @@ namespace RoadInv.Models
 
             _dbContext = dbContext;
 
+            //copy all the dropdown options into attributes. Do this from cache to avoid the page taking a long time to load every time.
             var countyUnsorted = _dbContext.ConstaintCounties.FromCache().ToList();
-
             AH_County = countyUnsorted.OrderBy(o => int.Parse(o.CountyNumber)).ToList();
             AH_District = _dbContext.ConstaintDistricts.FromCache().OrderBy(x => int.Parse(x.DistrictNumber)).ToList();
             LOG_DIRECT = _dbContext.ConstraintGenerals.FromCache().Where(s => s.DomainName == "LogDirection").ToList();
