@@ -258,6 +258,16 @@ textarea{
 }
 
 .segment-button {
+    border-radius: 50px;
+    border-style: solid;
+    background-color: grey;
+    color: white;
+
+    height: 50px;
+    width: 100px;
+}
+
+.segment-button:disabled {
     border-radius: 100px;
     border-color: darkgray;
     background-color: lightgray;

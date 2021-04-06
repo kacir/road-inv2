@@ -17,14 +17,16 @@ namespace RoadInv.Models
         public SegmentModel details;
         public Type Fields;
         public string sectionCodeJson;
+        public bool newSegment;
 
 
-        public SegementDetailPageModel(SegmentModel details1, ValidationModel con1)
+        public SegementDetailPageModel(SegmentModel details1, ValidationModel con1, bool newSegment)
         {
             this.con = con1; //contains all the field dropdown information
             this.details = details1;//contains all field values for the particular segment
 
             this.sectionCodeJson = JsonConvert.SerializeObject(con.SectionCode);
+            this.newSegment = newSegment;
         }
         
 

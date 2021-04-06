@@ -38,15 +38,9 @@ namespace RoadInv.Controllers
                 output = _search.search(district: district, county : 0, route : route, section : section, direction : direction, logmile: logmile);
             }
 
-            ArrayList countyList = _search.CountyList();
-            string[] blankArray = { "", "" };
-            countyList.Insert(0, blankArray);//Blank option must be avaliable
-
             var val = new ValidationModel(_dbContext);
             var pageModel = new SearchPageModel(val, details: output);
 
-
-            ViewBag.countyList = countyList;
             ViewBag.county = county;
             ViewBag.route = route;
             ViewBag.section = section;
@@ -70,7 +64,14 @@ namespace RoadInv.Controllers
         [Route("new_segement")]
         public IActionResult new_segment()
         {
-            return View("new_segement");
+            var segmentDetails = new SegmentModel();
+            segmentDetails.ID = -1;
+            var val = new ValidationModel(this._dbContext);
+
+            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, true);
+
+
+            return View("edit_segement", segementPageObj);
         }
 
         [Route("edit_segement")]
@@ -79,7 +80,7 @@ namespace RoadInv.Controllers
         {
             var segmentDetails = this._search.segementDetails(ID);
             var val = new ValidationModel(this._dbContext);
-            var segementPageObj = new SegementDetailPageModel(segmentDetails, val);
+            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, false);
 
             return View("edit_segement", segementPageObj);
         }
