@@ -6,12 +6,152 @@
     ViewData["Title"] = "Edit Segement";
 }
 
+<script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+                <h2 id="modal-1-title">
+                    Mirror Duplicate Segment
+                </h2>
+            </header>
+            <main class="modal__content" id="modal-1-content">
+                <p>
+                    Please choose modify the following core attributes to continue to mirror process
+                </p>
+                <form>
+                    <div class="modal-form-group">
+                        <label for="m-@FieldsListModel.AH_County">County:</label>
+                        <select id="m-@FieldsListModel.AH_County" class="form-control">
+                            <option></option>
+                            @foreach (ConstaintCounty item in Model.con.AH_County)
+                            {
+                                <option @if (Model.details.AH_County == item.CountyNumber) { <text> selected</text> } value="@item.CountyNumber">@item.CountyNumber - @item.County</option>
+
+                            }
+                        </select>
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="m-@FieldsListModel.AH_Route">Route:</label>
+                        <input id="m-@FieldsListModel.AH_Route" value="@Model.details.AH_Route" class="form-control" />
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="m-@FieldsListModel.AH_Section">Section:</label>
+                        <input id="m-@FieldsListModel.AH_Section" value="@Model.details.AH_Section" class="form-control"/>
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="m-@FieldsListModel.LOG_DIRECT">Direction:</label>
+                        <span id="m-@FieldsListModel.LOG_DIRECT" class="form-control">
+                            @if (Model.details.LOG_DIRECT == "A")
+                            {
+                                <text>B</text>
+                            }
+                            else if (Model.details.LOG_DIRECT == "B")
+                            {
+                                <text>A</text>
+                            }
+                        </span>
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="m-@FieldsListModel.AH_BLM">BLM:</label>
+                        <input id="m-@FieldsListModel.AH_BLM" value="@Model.details.AH_BLM" class="form-control" />
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="m-@FieldsListModel.AH_ELM">ELM:</label>
+                        <input id="m-@FieldsListModel.AH_ELM" value="@Model.details.AH_ELM" class="form-control" />
+                    </div>
+
+                </form>
+            </main>
+            <footer class="modal__footer">
+                <button class="segment-button">Continue Mirror</button>
+                <button class="segment-button" data-micromodal-close aria-label="Close this dialog window">Caneel</button>
+            </footer>
+        </div>
+    </div>
+</div>
+
+<div class="modal micromodal-slide" id="modal-2" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+                <h2 id="modal-1-title">
+                    Duplicate Segment
+                </h2>
+            </header>
+            <main class="modal__content" id="modal-1-content">
+                <form>
+                    <div class="modal-form-group">
+                        <label for="d-@FieldsListModel.AH_County">County:</label>
+                        <select id="d-@FieldsListModel.AH_County" class="form-control">
+                            <option></option>
+                            @foreach (ConstaintCounty item in Model.con.AH_County)
+                            {
+                                <option @if (Model.details.AH_County == item.CountyNumber) { <text> selected</text> } value="@item.CountyNumber">@item.CountyNumber - @item.County</option>
+
+                            }
+                        </select>
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="d-@FieldsListModel.AH_Route">Route:</label>
+                        <input id="d-@FieldsListModel.AH_Route" value="@Model.details.AH_Route" class="form-control" />
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="d-@FieldsListModel.AH_Section">Section:</label>
+                        <input id="d-@FieldsListModel.AH_Section" value="@Model.details.AH_Section" class="form-control" />
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="d-@FieldsListModel.LOG_DIRECT">Direction:</label>
+                        <select id="d-@FieldsListModel.LOG_DIRECT" data="@Model.details.LOG_DIRECT">
+                            <option></option>
+                            @foreach (var item in Model.con.LOG_DIRECT)
+                            {
+                                <option @if (Model.details.LOG_DIRECT == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="d-@FieldsListModel.AH_BLM">BLM:</label>
+                        <input id="d-@FieldsListModel.AH_BLM" value="@Model.details.AH_BLM" class="form-control" />
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="d-@FieldsListModel.AH_ELM">ELM:</label>
+                        <input id="d-@FieldsListModel.AH_ELM" value="@Model.details.AH_ELM" class="form-control" />
+                    </div>
+
+                </form>
+            </main>
+            <footer class="modal__footer">
+                <button class="segment-button">Continue Mirror</button>
+                <button class="segment-button" data-micromodal-close aria-label="Close this dialog window">Caneel</button>
+            </footer>
+        </div>
+    </div>
+</div>
+
+<script>
+    MicroModal.init();
+</script>
+
 <div class="segment-title">
     <h1 id="header" data="@Model.details.ID">
-        @if (Model.newSegment)
-        {<text>New Segment</text> }
-    else
-    { <text>Road Segement</text>}
+        @if (Model.editStatus == SegementDetailPageModel.editSegment)
+        {
+            <text>New Segment</text>
+        }
+        else if (Model.editStatus == SegementDetailPageModel.mirrorSegment)
+        {
+            <text>Mirrored Segment</text>
+        }
+        else if (Model.editStatus == SegementDetailPageModel.duplicateSegment)
+        {
+            <text>Duplicate Segment</text>
+        }
+        else
+        {
+            <text>Road Segement</text>
+        }
         <span class="@FieldsListModel.AH_RoadID">@Model.details.AH_RoadID </span>
         <br> BLM:
         <span class="@FieldsListModel.AH_BLM">@Model.details.AH_BLM</span> - ELM
@@ -30,7 +170,7 @@
                         <option></option>
                         @foreach (ConstaintDistrict item in Model.con.AH_District)
                         {
-                            <option @if (Model.details.AH_District == item.DistrictNumber) { <text> selected</text> } value="@item.DistrictNumber">@item.DistrictNumber</option>
+                            <option @if (Model.details.AH_District == item.DistrictNumber) { <text>selected</text> } value="@item.DistrictNumber">@item.DistrictNumber</option>
                         }
                     </select>
 
@@ -195,7 +335,7 @@
                 </div>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="The predominant lane width the road. Must be a whole number">Lane <br /> Width</label>
-                    <input type="text">
+                    <input id="@FieldsListModel.LaneWidth" type="text" data="@Model.details.LaneWidth" value="@Model.details.LaneWidth">
                 </div>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="non-thu traffic lanes like turn lanes">Extra <br /> Lanes</label>
@@ -208,8 +348,8 @@
                     </select>
                 </div>
                 <div>
-                    <label>Surface <br /> Width</label>
-                    <input type="text">
+                    <label data-toggle="tooltip" data-placement="top" title="Width of the surface">Surface <br /> Width</label>
+                    <input id="@FieldsListModel.SurfaceWidth" type="text" data="@Model.details.SurfaceWidth" value="@Model.details.SurfaceWidth">
                 </div>
             </div>
             <div class="grid-container">
@@ -391,22 +531,34 @@
             <button title="Save reset to whatever you have before changes were made" data-toggle="tooltip" data-placement="bottom" id="reset-changes" class="segment-button" disabled>Reset Changes</button>
         </div>
         <div>
-            <button title="create a duplicate of this exact record" data-toggle="tooltip" data-placement="bottom" class="segment-button" @if (Model.newSegment) {<text>disabled</text>}> Duplicate record</button>
-
-</div>
+                <button onclick="MicroModal.show('modal-2')" title="create a duplicate of this exact record" data-toggle="tooltip" data-placement="bottom" class="segment-button"
+                        @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment | Model.editStatus == SegementDetailPageModel.newSegment) { <text> disabled</text>
+                    }>
+                    Duplicate record
+                </button>
+        </div>
 
 <div>
 
-<button title="Delete this segment permanatly from the database" data-toggle="tooltip" data-placement="bottom" class="segment-button"  @if (Model.newSegment) {<text>disabled</text>} >Delete record</button>
+<button title="Delete this segment permanatly from the database" data-toggle="tooltip" data-placement="bottom" class="segment-button"  
+        @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment | Model.editStatus == SegementDetailPageModel.newSegment) 
+        {
+            <text>disabled</text>
+        } >Delete record</button>
         </div>
         <div>
-            <button data-toggle="tooltip" data-placement="bottom" @if (Model.newSegment) {<text>disabled</text>} class="segment-button">Mirror Record</button>
+            <button onclick="MicroModal.show('modal-1')" data-toggle="tooltip" data-placement="bottom" @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment | Model.editStatus == SegementDetailPageModel.newSegment) 
+            {
+                <text>disabled</text>
+            } class="segment-button">Mirror Record</button>
         </div>
         <div>
             <a title="New a map of the segment according to the most recent ARNOLD data"  data-toggle="tooltip" data-placement="bottom" href="#">View Segment <br> Map</a>
         </div>
         <div>
-            <button data-toggle="tooltip" data-placement="bottom" title="disables validation error handeling. Please only use in rare and nuanced situations" id="manual-override" class="segment-button">Manual Override</button>
+            <button data-toggle="tooltip" data-placement="bottom" title="disables validation error handeling. Please only use in rare and nuanced situations" id="manual-override" class="segment-button">
+                Manual Override
+            </button>
         </div>
     </div>
 
@@ -457,7 +609,7 @@
 
 
 
-
+    //Check to see if the attributes are valid
     function submitInputs() {
         var inputs = gatherInput();
         var constructString = "";
@@ -472,50 +624,54 @@
         subjectAttributes.forEach(function (x) {
             if (originalValues[x] == inputs[x]) {
                 //do nothing
-                console.log()
             } else {
                 $("#save-changes, #reset-changes").removeAttr("disabled");
             }
         });
-
     }
 
     //apply tag class error-flag to everything that has an error asscoaited with it.
     function errorPost(data) {
+        if(!$("#manual-override").hasClass("override-active")) {
+            console.log(data);
+            //zero out all attributes errors
+            $(".error-flag")
+                .removeAttr("title")
+                .tooltip('disable');
 
-        console.log(data);
-        //zero out all attributes errors
-        $(".error-flag")
-            .removeAttr("title")
-            .tooltip('disable');
+            for (i = 0; i < subjectAttributes.length; i++) {
+                var raw = $("#" + subjectAttributes[i]).removeClass("error-flag");
+            }
+            data.forEach(function (item) {
+                item.fields.forEach(function (field) {
+                    console.log(item);
+                    $("#" + field)
+                        .addClass("error-flag")
+                        .attr("title", item.errorMessageLong)
+                        .attr("data-placement", "bottom")
+                        .tooltip('enable');
+                });
 
-        for (i = 0; i < subjectAttributes.length; i++ ) {
-            var raw = $("#" + subjectAttributes[i]).removeClass("error-flag");
-        }
-        // populate fields accordingly
-        // data-placement="top"
-        data.forEach(function (item) {
-            item.fields.forEach(function (field) {
-                console.log(item);
-                $("#" + field)
-                    .addClass("error-flag")
-                    .attr("title", item.errorMessageLong)
-                    .attr("data-placement", "bottom")
-                    .tooltip('enable');
             });
 
-        });
+            //change style of save change button if there area errors
+            if (data.length > 0) {
+                $("#save-changes").addClass("override-active").text("Can't Save, Errors");
+            } else {
+                $("#save-changes").removeClass("override-active").text("Save");
+            }
+
+        }
     }
 
-    //submit after editing was completed
+    //submit so save the changes
     $("#save-changes").click(function () {
         var inputs = gatherInput();
-
         $("#save-changes").fadeOut();
-
         $.post("api/update", inputs, function (data) {
             console.log("results have been saved");
             console.log(data);
+            originalValues = gatherInput();//update values used to determine if changes have been made
             $("#save-changes").text("Changes saved!").fadeIn(1000, function () {
                 $("#save-changes").text("Save");
             });
@@ -527,25 +683,29 @@
     //contrain these corrections to Manual Override mode off
     //make sure BLM and ELM always have 3 digit
     $("#@FieldsListModel.AH_BLM").focusout(function () {
-        //force BLM and ELM to be zero decimal places
-        var BLM = $("#@FieldsListModel.AH_BLM").val();
-        if (!isNaN(BLM) && BLM != "" && BLM != null && BLM != undefined) {
-            console.log(BLM);
-            BLM = parseFloat(BLM).toFixed(3);
-            //console.log("New BLM");
-            //console.log(BLM);
-            $("#@FieldsListModel.AH_BLM").val(BLM);
+        if (!$("#manual-override").hasClass("override-active")) {
+            //force BLM and ELM to be zero decimal places
+            var BLM = $("#@FieldsListModel.AH_BLM").val();
+            if (!isNaN(BLM) && BLM != "" && BLM != null && BLM != undefined) {
+                console.log(BLM);
+                BLM = parseFloat(BLM).toFixed(3);
+                $("#@FieldsListModel.AH_BLM").val(BLM);
+            }
         }
+
     });
 
     $("#@FieldsListModel.AH_ELM").focusout(function () {
-        //force BLM and ELM to be zero decimal places
-        var ELM = $("#@FieldsListModel.AH_ELM").val();
-        if (!isNaN(ELM) && ELM != "" && ELM != null && ELM != undefined) {
-            //console.log(ELM);
-            ELM = parseFloat(ELM).toFixed(3);
-            $("#@FieldsListModel.AH_ELM").val(ELM);
+        if(!$("#manual-override").hasClass("override-active")){
+            //force BLM and ELM to be zero decimal places
+            var ELM = $("#@FieldsListModel.AH_ELM").val();
+            if (!isNaN(ELM) && ELM != "" && ELM != null && ELM != undefined) {
+                //console.log(ELM);
+                ELM = parseFloat(ELM).toFixed(3);
+                $("#@FieldsListModel.AH_ELM").val(ELM);
+            }
         }
+
     });
 
     //change the read only length field accordingly
@@ -559,8 +719,14 @@
 
     $(document).ready(function () {
         //$("#button-save").click(parameterCheckEventLoop);
-        
+
     })
+
+    $("#@FieldsListModel.AH_ELM, #@FieldsListModel.AH_BLM").change(function () {
+        console.log("ELM and BLM changing")
+        $("#m-@FieldsListModel.AH_ELM, #d-@FieldsListModel.AH_ELM").val( $("#@FieldsListModel.AH_ELM").val() );
+        $("#m-@FieldsListModel.AH_BLM, #d-@FieldsListModel.AH_BLM").val( $("#@FieldsListModel.AH_BLM").val() );
+    });
 
 
     //change the section code label when section field changes
@@ -582,24 +748,32 @@
 
     });
 
-    //force AH_Section, and AH_Route to upper case after being edited
+    //force AH_Section to upper case after being edited
     $("#@FieldsListModel.AH_Route").focusout(function () {
-        var routeString = $("#@FieldsListModel.AH_Route")
-            .val()
-            .toUpperCase();
-        $("#@FieldsListModel.AH_Route").val(routeString);
-    });
+        if (!$("#manual-override").hasClass("override-active")) {
+            var routeString = $("#@FieldsListModel.AH_Route")
+                .val()
+                .toUpperCase();
 
-    $("#@FieldsListModel.AH_Section").focusout(function(){
-        var sectionString = $("#@FieldsListModel.AH_Section")
-            .val()
-            .toUpperCase();
-
-        $("#@FieldsListModel.AH_Section").val(sectionString);
+            $("#@FieldsListModel.AH_Route").val(routeString);
+        }
 
     });
 
-    //force title to change its id and logmiles accordingly
+    //force AH_Section to upper case after being edited
+    $("#@FieldsListModel.AH_Section").focusout(function () {
+        if (! $("#manual-override").hasClass("override-active")) {
+            var sectionString = $("#@FieldsListModel.AH_Section")
+                .val()
+                .toUpperCase();
+
+            $("#@FieldsListModel.AH_Section").val(sectionString);
+        }
+
+
+    });
+
+    //force title to change its road id and logmiles accordingly
     $("#@FieldsListModel.AH_County, #@FieldsListModel.AH_Route, #@FieldsListModel.AH_Section, #@FieldsListModel.LOG_DIRECT")
         .on("keyup change" ,function () {
             var county = $("#@FieldsListModel.AH_County").val();
@@ -612,7 +786,20 @@
 
             $(".@FieldsListModel.AH_RoadID").text(roadid);
             $(".@FieldsListModel.AH_BLM").text($("#@FieldsListModel.AH_BLM").val());
-            $(".@FieldsListModel.AH_ELM").text( $("#@FieldsListModel.AH_ELM").val() );
+            $(".@FieldsListModel.AH_ELM").text($("#@FieldsListModel.AH_ELM").val());
+
+            $("#d-@FieldsListModel.AH_County, #m-@FieldsListModel.AH_County ").val(county);
+            $("#d-@FieldsListModel.AH_Route, #m-@FieldsListModel.AH_Route ").val(route);
+            $("#d-@FieldsListModel.AH_Section, #m-@FieldsListModel.AH_Section ").val(section);
+
+
+            $("#d-@FieldsListModel.LOG_DIRECT").val(direction);
+            if (direction == "A") {
+                var opposite = "B";
+            } else {
+                var opposite = "A"
+            }
+            $("#m-@FieldsListModel.LOG_DIRECT").val(opposite)
     });
 
 
@@ -628,5 +815,7 @@
     });
 
     var originalValues = gatherInput();
+
+
 
 </script>

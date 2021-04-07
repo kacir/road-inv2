@@ -68,8 +68,34 @@ namespace RoadInv.Controllers
             segmentDetails.ID = -1;
             var val = new ValidationModel(this._dbContext);
 
-            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, true);
+            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.newSegment);
 
+            return View("edit_segement", segementPageObj);
+        }
+
+        [Route("dup_segement")]
+        [Route("dup_segement.html")]
+        public IActionResult DuplicateSegment(int ID)
+        {
+            var segmentDetails = this._search.segementDetails(ID);
+            segmentDetails.ID = -1;
+            var val = new ValidationModel(this._dbContext);
+
+            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.duplicateSegment);
+
+            return View("edit_segement", segementPageObj);
+        }
+
+        [Route("mirror_segement")]
+        [Route("mirror_segement.html")]
+        public IActionResult MirrorSegment(int ID)
+        {
+            var segmentDetails = this._search.segementDetails(ID);
+            segmentDetails.ID = -1;
+            //var mos = segmentDetails.Mirror();
+            var val = new ValidationModel(this._dbContext);
+
+            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.duplicateSegment);
 
             return View("edit_segement", segementPageObj);
         }
@@ -80,7 +106,7 @@ namespace RoadInv.Controllers
         {
             var segmentDetails = this._search.segementDetails(ID);
             var val = new ValidationModel(this._dbContext);
-            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, false);
+            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.editSegment);
 
             return View("edit_segement", segementPageObj);
         }

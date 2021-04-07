@@ -508,7 +508,7 @@ namespace RoadInv.Models
             {
                 if (this.ValidGovermentCode(segment))
                 {
-                    if ((segment.RouteSign == "1" | segment.RouteSign == "2" | segment.RouteSign == "3") & segment.GovermentCode != "01" | !(segment.RouteSign == "1" | segment.RouteSign == "2" | segment.RouteSign == "3") & segment.GovermentCode == "01")
+                    if ((segment.RouteSign == "1" | segment.RouteSign == "2" | segment.RouteSign == "3") & segment.GovermentCode != "1" | !(segment.RouteSign == "1" | segment.RouteSign == "2" | segment.RouteSign == "3") & segment.GovermentCode == "1")
                     {
                         List<string> temp = new List<string>();
                         temp.Add(FieldsListModel.RouteSign);
