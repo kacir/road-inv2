@@ -29,10 +29,6 @@ namespace RoadInv
             services.AddDbContext<roadinvContext>
                 (options => options.UseSqlServer(this.configuration["EntityConnectinString"]));
 
-            //used for strait sql queries
-            services.AddSingleton<SearchDatabaseModel>
-                (option => new SearchDatabaseModel(this.configuration["ConnectionString"]));; 
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +37,9 @@ namespace RoadInv
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            } else
+            {
+                app.UseExceptionHandler("error");
             }
 
             app.UseFileServer();

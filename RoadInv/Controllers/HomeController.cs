@@ -15,18 +15,16 @@ namespace RoadInv.Controllers
 
     public class HomeController : Controller
     {
-        private SearchDatabaseModel _search;
         private roadinvContext _dbContext;
-        public HomeController(SearchDatabaseModel search, roadinvContext dbContext)
+        public HomeController(roadinvContext dbContext)
         {
-            this._search = search;
             this._dbContext = dbContext;
         }
 
 
-        [Route("error")]
         [Route("error.html")]
-        public IActionResult Error()
+        [Route("error")]
+        public IActionResult error()
         {
             return View("error");
         }
@@ -36,15 +34,19 @@ namespace RoadInv.Controllers
         [Route("segments")]
         public IActionResult SearchTable(string district= "", string county = "", string route = "", string section = "", string direction = "", decimal logmile = -1)
         {
-            List<SegmentModel> output;
-            if (int.TryParse(county, out int county_num))
-            {
-                output = _search.search(district : district, county : county_num, route : route, section: section, direction : direction, logmile : logmile);
-            }
-            else
-            {
-                output = _search.search(district: district, county : 0, route : route, section : section, direction : direction, logmile: logmile);
-            }
+            IQueryable<DB.RoadInv> output;
+
+            output = this._dbContext.RoadInvs.Where(b => (b.AhDistrict == district | district == "") &
+                (b.AhCounty == county | county == "") &
+                (b.AhRoute == route | route == "") &
+                (b.LogDirect == direction | direction == "") &
+                ((b.AhBlm >= logmile & b.AhElm <= logmile) | logmile == -1));
+
+            output = output.OrderBy(x => x.RouteSign)
+                .ThenBy(x => x.AhRoadId)
+                .ThenBy(x => x.AhBlm)
+                .Take(1000);
+
 
             var val = new ValidationModel(_dbContext);
             var pageModel = new SearchPageModel(val, details: output);
@@ -60,9 +62,9 @@ namespace RoadInv.Controllers
             return View("SearchTable", pageModel);
         }
         
-        [Route("index.html")]
-        [Route("index")]
         [Route("/")]
+        [Route("/index")]
+        [Route("/index.html")]
         public IActionResult Index()
         {
             return View("index");
@@ -72,8 +74,8 @@ namespace RoadInv.Controllers
         [Route("new_segement")]
         public IActionResult new_segment()
         {
-            var segmentDetails = new SegmentModel();
-            segmentDetails.ID = -1;
+            var segmentDetails = new DB.RoadInv();
+            segmentDetails.Id = -1;
             var val = new ValidationModel(this._dbContext);
 
             var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.newSegment);
@@ -81,13 +83,13 @@ namespace RoadInv.Controllers
             return View("edit_segement", segementPageObj);
         }
 
-
-        [Route("duplicateSegment.html")]
-        [Route("duplicateSegment")]
+        [Route("dup_segement")]
+        [Route("dup_segement.html")]
         public IActionResult DuplicateSegment(int ID)
         {
-            var segmentDetails = this._search.segementDetails(ID);
-            segmentDetails.ID = -1;
+            
+            var segmentDetails = this._dbContext.RoadInvs.Find(ID);
+            segmentDetails.Id = -1;
             var val = new ValidationModel(this._dbContext);
 
             var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.duplicateSegment);
@@ -95,13 +97,12 @@ namespace RoadInv.Controllers
             return View("edit_segement", segementPageObj);
         }
 
-        [Route("mirror_segement.html")]
         [Route("mirror_segement")]
+        [Route("mirror_segement.html")]
         public IActionResult MirrorSegment(int ID)
         {
-            var segmentDetails = this._search.segementDetails(ID);
-            segmentDetails.ID = -1;
-            //var mos = segmentDetails.Mirror();
+            var segmentDetails = this._dbContext.RoadInvs.Find(ID);
+            segmentDetails.Id = -1;
             var val = new ValidationModel(this._dbContext);
 
             var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.duplicateSegment);
@@ -109,20 +110,19 @@ namespace RoadInv.Controllers
             return View("edit_segement", segementPageObj);
         }
 
-
-        [Route("edit_segement.html")]
         [Route("edit_segement")]
+        [Route("edit_segement.html")]
         public IActionResult edit_segement(int ID = -1)
         {
-            var segmentDetails = this._search.segementDetails(ID);
+            var segmentDetails = this._dbContext.RoadInvs.Find(ID);
             var val = new ValidationModel(this._dbContext);
             var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.editSegment);
 
             return View("edit_segement", segementPageObj);
         }
 
-        [Route("quality_control.html")]
         [Route("quality_control")]
+        [Route("quality_control.html")]
         public IActionResult quality_control()
         {           
             return View("quality_control", _dbContext);
