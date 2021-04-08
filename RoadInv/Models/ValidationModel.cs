@@ -9,284 +9,12 @@ namespace RoadInv.Models
     public class ValidationModel
         //performs all validation of segment models.
     {
-        public static void CleanAttr(DB.RoadInv seg)
-        {
-            if (seg.Access is null)
-            {
-                seg.Access = "";
-            } else
-            {
-                seg.Access = seg.Access.Trim();
-            }
-
-            if (seg.AhBlm is null)
-            {
-                seg.AhBlm = 0;
-            }
-
-            if (seg.AhCounty is null)
-            {
-                seg.AhCounty = "";
-            } else
-            {
-                seg.AhCounty = seg.AhCounty.Trim();
-            }
-
-            if (seg.AhDistrict is null)
-            {
-                seg.AhDistrict = "";
-            } else
-            {
-                seg.AhDistrict = seg.AhDistrict.Trim();
-            }
-
-            if (seg.AhElm is null)
-            {
-                seg.AhElm = 0;
-            } 
-
-            if (seg.AhRoute is null)
-            {
-                seg.AhRoute = "";
-            } else
-            {
-                seg.AhRoute = seg.AhRoute.Trim();
-            }
-
-            if (seg.AhSection is null)
-            {
-                seg.AhSection = "";
-            } else
-            {
-                seg.AhSection = seg.AhSection.Trim();
-            }
-
-            if (seg.AlternativeRouteName is null)
-            {
-                seg.AlternativeRouteName = "";
-            } else
-            {
-                seg.AlternativeRouteName = seg.AlternativeRouteName.Trim();
-            }
-
-            if (seg.Aphn is null)
-            {
-                seg.Aphn = "";
-            } else
-            {
-                seg.Aphn = seg.Aphn.Trim();
-            }
-
-            if (seg.BothDirectionNumLanes is null)
-            {
-                seg.BothDirectionNumLanes = "";
-            } else
-            {
-                seg.BothDirectionNumLanes = seg.BothDirectionNumLanes.Trim();
-            }
-
-            if (seg.Comment1 is null)
-            {
-                seg.Comment1 = "";
-            } else
-            {
-                seg.Comment1 = seg.Comment1;
-            }
-
-            if(seg.ExtraLanes is null)
-            {
-                seg.ExtraLanes = "";
-            } else
-            {
-                seg.ExtraLanes = seg.ExtraLanes.Trim();
-            }
-
-            if (seg.FuncClass is null)
-            {
-                seg.FuncClass = "";
-            } else
-            {
-                seg.FuncClass = seg.FuncClass.Trim();
-            }
-
-            if (seg.GovermentCode is null)
-            {
-                seg.GovermentCode = "";
-            } else
-            {
-                seg.GovermentCode = seg.GovermentCode.Trim();
-            }
-
-            if (seg.LaneWidth is null)
-            {
-                seg.LaneWidth = 0;
-            }
-
-            if (seg.LeftShoulderSurface is null)
-            {
-                seg.LeftShoulderSurface = "";
-            } else
-            {
-                seg.LeftShoulderSurface = seg.LeftShoulderSurface.Trim();
-            }
-
-            if (seg.LeftShoulderWidth is null)
-            {
-                seg.LeftShoulderWidth = 0;
-            }
-
-            if (seg.LogDirect is null)
-            {
-                seg.LogDirect = "";
-            } else
-            {
-                seg.LogDirect = seg.LogDirect.Trim();
-            }
-
-            if (seg.MedianType is null)
-            {
-                seg.MedianType = "";
-            } else
-            {
-                seg.MedianType = seg.MedianType.Trim();
-            }
-
-            if (seg.MedianWidth is null)
-            {
-                seg.MedianWidth = "";
-            } else
-            {
-                seg.MedianWidth = seg.MedianWidth.Trim();
-            }
-
-            if (seg.Nhs is null)
-            {
-                seg.Nhs = "";
-            } else
-            {
-                seg.Nhs = seg.Nhs.Trim();
-            }
-
-            if (seg.OneDirectionNumLanes is null)
-            {
-                seg.OneDirectionNumLanes = "";
-            } else
-            {
-                seg.OneDirectionNumLanes = seg.OneDirectionNumLanes.Trim();
-            }
-
-            if (seg.RightShoulderSurface is null)
-            {
-                seg.RightShoulderSurface = "";
-            } else
-            {
-                seg.RightShoulderSurface = seg.RightShoulderSurface.Trim();
-            }
-
-            if (seg.RightShoulderWidth is null)
-            {
-                seg.RightShoulderWidth = 0;
-            }
-
-            if (seg.RoadwayWidth is null)
-            {
-                seg.RoadwayWidth = 0;
-            }
-
-            if (seg.RouteSign is null)
-            {
-                seg.RouteSign = "";
-            } else
-            {
-                seg.RouteSign = seg.RouteSign.Trim();
-            }
-
-            if (seg.RuralUrbanArea is null)
-            {
-                seg.RuralUrbanArea = "";
-            } else
-            {
-                seg.RuralUrbanArea = seg.RuralUrbanArea.Trim();
-            }
-
-            if (seg.SpecialSystems is null)
-            {
-                seg.SpecialSystems = "";
-            } else
-            {
-                seg.SpecialSystems = seg.SpecialSystems.Trim();
-            }
-
-            if (seg.SurfaceType is null)
-            {
-                seg.SurfaceType = "";
-            } else
-            {
-                seg.SurfaceType = seg.SurfaceType.Trim();
-            }
-
-            if (seg.SurfaceWidth is null)
-            {
-                seg.SurfaceWidth = 0;
-            }
-            
-            if (seg.SystemStatus is null)
-            {
-                seg.SystemStatus = "";
-            } else
-            {
-                seg.SystemStatus = seg.SystemStatus.Trim();
-            }
-
-            if (seg.TypeOperation is null)
-            {
-                seg.TypeOperation = "";
-            } else
-            {
-                seg.TypeOperation = seg.TypeOperation.Trim();
-            }
-
-            if (seg.TypeRoad is null)
-            {
-                seg.TypeRoad = "";
-            } else
-            {
-                seg.TypeRoad = seg.TypeRoad.Trim();
-            }
-
-            if (seg.UrbanAreaCode is null)
-            {
-                seg.UrbanAreaCode = "";
-            } else
-            {
-                seg.UrbanAreaCode = seg.UrbanAreaCode.Trim();
-            }
-
-            if (seg.YearBuilt is null)
-            {
-                seg.YearBuilt = "";
-            } else
-            {
-                seg.YearBuilt = seg.YearBuilt.Trim();
-            }
-
-            if (seg.YearRecon is null)
-            {
-                seg.YearRecon = "";
-            } else
-            {
-                seg.YearRecon = seg.YearRecon.Trim();
-            }
-
-        }
-
-
         public static char[] validCharacters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0' , '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
 
         public roadinvContext _dbContext;
         public List<ConstaintCounty> AH_County;
-        public DB.RoadInv details;
+        public SegmentModel details;
         public List<ConstaintDistrict> AH_District;
         public List<ConstraintGeneral> LOG_DIRECT;
         public List<ConstraintGeneral> RouteSign;
@@ -361,12 +89,12 @@ namespace RoadInv.Models
 
         }
 
-        public bool ValidAH_District(DB.RoadInv seg)
+        public bool ValidAH_District(SegmentModel seg)
         {
             bool valid = false;
             foreach (var item in this.AH_District)
             {
-                if (item.DistrictNumber == seg.AhDistrict)
+                if (item.DistrictNumber == seg.AH_District)
                 {
                     valid = true;
                 }
@@ -374,12 +102,12 @@ namespace RoadInv.Models
             return valid;
         }
 
-        public bool ValidAH_County(DB.RoadInv seg)
+        public bool ValidAH_County(SegmentModel seg)
         {
             bool valid = false;
             foreach (var item in this.AH_County)
             {
-                if (item.CountyNumber == seg.AhCounty)
+                if (item.CountyNumber == seg.AH_County)
                 {
                     valid = true;
                 }
@@ -387,13 +115,13 @@ namespace RoadInv.Models
             return valid;
         }
 
-        public bool ValidCountyDistrictPair(DB.RoadInv seg)
+        public bool ValidCountyDistrictPair(SegmentModel seg)
         {
             foreach (var item in this.PairCountyDistrict)
             {
-                if (item.CountyNumber.Equals(seg.AhCounty))
+                if (item.CountyNumber.Equals(seg.AH_County))
                 {
-                    if (item.DistrictNumber.Equals(seg.AhDistrict))
+                    if (item.DistrictNumber.Equals(seg.AH_District))
                     {
                         return true;
                     }
@@ -403,7 +131,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidGovermentCode(DB.RoadInv seg)
+        public bool ValidGovermentCode(SegmentModel seg)
         {
             foreach (var item in this.GovermentCode)
             {
@@ -415,7 +143,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidRouteSign(DB.RoadInv seg)
+        public bool ValidRouteSign(SegmentModel seg)
         {
             foreach (var item in this.RouteSign)
             {
@@ -427,7 +155,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidRuralUrbanArea(DB.RoadInv seg)
+        public bool ValidRuralUrbanArea(SegmentModel seg)
         {
             foreach(var item in this.RuralUrbanArea)
             {
@@ -439,7 +167,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidUrbanAreaCode(DB.RoadInv seg)
+        public bool ValidUrbanAreaCode(SegmentModel seg)
         {
             foreach(var item in this.UrbanAreaCode)
             {
@@ -451,11 +179,11 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidUrbanCodeCountyPair(DB.RoadInv seg)
+        public bool ValidUrbanCodeCountyPair(SegmentModel seg)
         {
             foreach(var item in this.PairUrbanAreaCounty)
             {
-                if (item.CountyNumber == seg.AhCounty & item.UrbanCode == seg.UrbanAreaCode)
+                if (item.CountyNumber == seg.AH_County & item.UrbanCode == seg.UrbanAreaCode)
                 {
                     return true;
                 }
@@ -463,7 +191,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidFuncClass(DB.RoadInv seg)
+        public bool ValidFuncClass(SegmentModel seg)
         {
             foreach(var item in this.FuncClass)
             {
@@ -475,7 +203,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidSystemStatus(DB.RoadInv seg)
+        public bool ValidSystemStatus(SegmentModel seg)
         {
             foreach(var item in this.SystemStatus)
             {
@@ -487,7 +215,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidTypeRoad(DB.RoadInv seg)
+        public bool ValidTypeRoad(SegmentModel seg)
         {
             foreach(var item in this.TypeRoad)
             {
@@ -499,7 +227,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidMedianType(DB.RoadInv seg)
+        public bool ValidMedianType(SegmentModel seg)
         {
             foreach(var item in this.MedianType)
             {
@@ -511,7 +239,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidTypeOperation(DB.RoadInv seg)
+        public bool ValidTypeOperation(SegmentModel seg)
         {
             foreach(var item in this.TypeOperation)
             {
@@ -523,7 +251,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidAccess(DB.RoadInv seg)
+        public bool ValidAccess(SegmentModel seg)
         {
             foreach(var item in this.Access)
             {
@@ -535,11 +263,11 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidAPHN(DB.RoadInv seg)
+        public bool ValidAPHN(SegmentModel seg)
         {
             foreach(var item in this.APHN)
             {
-                if (item.Domainvalue == seg.Aphn)
+                if (item.Domainvalue == seg.APHN)
                 {
                     return true;
                 }
@@ -547,11 +275,11 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidNHS(DB.RoadInv seg)
+        public bool ValidNHS(SegmentModel seg)
         {
             foreach(var item in this.NHS)
             {
-                if (item.Domainvalue == seg.Nhs)
+                if (item.Domainvalue == seg.NHS)
                 {
                     return true;
                 }
@@ -559,7 +287,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidSpecialSystems(DB.RoadInv seg)
+        public bool ValidSpecialSystems(SegmentModel seg)
         {
             foreach(var item in this.SpecialSystems)
             {
@@ -571,7 +299,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidExtraLanes(DB.RoadInv seg)
+        public bool ValidExtraLanes(SegmentModel seg)
         {
             foreach(var item in this.ExtraLanes)
             {
@@ -583,7 +311,7 @@ namespace RoadInv.Models
             return false;
         }
 
-        public bool ValidSurfaceType(DB.RoadInv seg)
+        public bool ValidSurfaceType(SegmentModel seg)
         {
             foreach(var item in this.SurfaceType)
             {
@@ -596,39 +324,39 @@ namespace RoadInv.Models
         }
 
 
-        public List<ErrorItemModel> FindErrors(DB.RoadInv segment)
+        public List<ErrorItemModel> FindErrors(SegmentModel segment)
         {
             List<ErrorItemModel> masterErrorsList = new List<ErrorItemModel>();
 
             //look for missing properties in first few standard properties
             List<string> missingProperties = new List<string>();
 
-            if (segment.AhCounty is null | segment.AhCounty.Length == 0)
+            if (segment.AH_County is null | segment.AH_County.Length == 0)
             {
                 missingProperties.Add(FieldsListModel.AH_County);
             }
 
-            if (segment.AhRoute is null | segment.AhRoute.Length == 0)
+            if (segment.AH_Route is null | segment.AH_Route.Length == 0)
             {
                 missingProperties.Add(FieldsListModel.AH_Route);
             }
 
-            if (segment.AhSection is null | segment.AhSection.Length == 0)
+            if (segment.AH_Section is null | segment.AH_Section.Length == 0)
             {
                 missingProperties.Add(FieldsListModel.AH_Section);
             }
 
-            if (segment.LogDirect is null | segment.LogDirect.Length == 0)
+            if (segment.LOG_DIRECT is null | segment.LOG_DIRECT.Length == 0)
             {
                 missingProperties.Add(FieldsListModel.LOG_DIRECT);
             }
 
-            if (segment.AhBlm < 0)
+            if (segment.AH_BLM < 0)
             {
                 missingProperties.Add(FieldsListModel.AH_BLM);
             }
 
-            if (segment.AhElm < 0)
+            if (segment.AH_ELM < 0)
             {
                 missingProperties.Add(FieldsListModel.AH_ELM);
             }
@@ -640,7 +368,7 @@ namespace RoadInv.Models
             }
 
             //check to make sure district is valid $
-            if (!(segment.AhDistrict is null) & !(segment.AhDistrict == "") & !this.ValidAH_District(segment))
+            if (!(segment.AH_District is null) & !(segment.AH_District == "") & !this.ValidAH_District(segment))
             {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.AH_District);
@@ -649,7 +377,7 @@ namespace RoadInv.Models
 
 
             //BLM and ELM validation
-            if (segment.AhElm == segment.AhBlm)
+            if (segment.AH_ELM == segment.AH_BLM)
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.AH_BLM);
@@ -657,7 +385,7 @@ namespace RoadInv.Models
                 ErrorItemModel extentError = new ErrorItemModel("BLM = ELM", "Begining log mile is same as ending logmile", temp);
                 masterErrorsList.Add(extentError);
             }
-            if (segment.AhBlm > segment.AhElm)
+            if (segment.AH_BLM > segment.AH_ELM)
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.AH_BLM);
@@ -667,7 +395,7 @@ namespace RoadInv.Models
             }
 
             //checking other core attributes
-            if (segment.AhRoute.Length > 100)
+            if (segment.AH_Route.Length > 100)
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.AH_Route);
@@ -675,14 +403,14 @@ namespace RoadInv.Models
                 masterErrorsList.Add(routeError);
             }
 
-            if (ValidationModel.checkInvalidCharacters(segment.AhRoute).Count > 0)
+            if (ValidationModel.checkInvalidCharacters(segment.AH_Route).Count > 0)
             {
-                segment.AhRoute = segment.AhRoute.ToUpper();
+                segment.AH_Route = segment.AH_Route.ToUpper();
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.AH_Route);
 
                 string longError = "";
-                foreach (var item in ErrorItemModel.checkInvalidCharacters(segment.AhRoute))
+                foreach (var item in ErrorItemModel.checkInvalidCharacters(segment.AH_Route))
                 {
                     longError = longError + item + ", ";
                 }
@@ -692,14 +420,14 @@ namespace RoadInv.Models
                 masterErrorsList.Add(routeError);
 
             }
-            if (ErrorItemModel.checkInvalidCharacters(segment.AhSection).Count > 0)
+            if (ErrorItemModel.checkInvalidCharacters(segment.AH_Section).Count > 0)
             {
-                segment.AhSection = segment.AhSection.ToUpper();
+                segment.AH_Section = segment.AH_Section.ToUpper();
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.AH_Section);
                 string longError = "";
 
-                var invalidChars = ErrorItemModel.checkInvalidCharacters(segment.AhSection);
+                var invalidChars = ErrorItemModel.checkInvalidCharacters(segment.AH_Section);
 
                 foreach (var item in invalidChars)
                 {
@@ -715,7 +443,7 @@ namespace RoadInv.Models
 
             }
             //Check if direction is valid
-            if (!(segment.LogDirect.ToUpper() == "A" | segment.LogDirect.ToUpper() == "B"))
+            if (!(segment.LOG_DIRECT.ToUpper() == "A" | segment.LOG_DIRECT.ToUpper() == "B"))
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.LOG_DIRECT);
@@ -725,7 +453,7 @@ namespace RoadInv.Models
             }
 
             //check section field is not too long
-            if (segment.AhSection.Length > 3)
+            if (segment.AH_Section.Length > 3)
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.AH_Section);
@@ -1013,7 +741,7 @@ road is divided so it should have a median but the median type indicates there i
                 }
             }
 
-            if (!(segment.Aphn is null) & segment.Aphn != "" & ! this.ValidAPHN(segment))
+            if (!(segment.APHN is null) & segment.APHN != "" & ! this.ValidAPHN(segment))
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.APHN);
@@ -1021,7 +749,7 @@ road is divided so it should have a median but the median type indicates there i
                 masterErrorsList.Add(error);
             }
 
-            if (!(segment.Nhs is null) & segment.Nhs != "" & !this.ValidNHS(segment))
+            if (!(segment.NHS is null) & segment.NHS != "" & !this.ValidNHS(segment))
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.NHS);
@@ -1031,7 +759,7 @@ road is divided so it should have a median but the median type indicates there i
             //Highy compound check on a few attributes
             if (segment.RouteSign == "1" & segment.TypeRoad == "1")
             {
-                if (this.ValidNHS(segment) & segment.Nhs != "1")
+                if (this.ValidNHS(segment) & segment.NHS != "1")
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.NHS);
@@ -1039,7 +767,7 @@ road is divided so it should have a median but the median type indicates there i
                     masterErrorsList.Add(error);
                 }
 
-                if (this.ValidAPHN(segment) & segment.Aphn != "1")
+                if (this.ValidAPHN(segment) & segment.APHN != "1")
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.APHN);
@@ -1048,7 +776,7 @@ road is divided so it should have a median but the median type indicates there i
                 }
             }
 
-            if (segment.RouteSign == "2" | segment.RouteSign == "3" & segment.TypeRoad == "1" && segment.Nhs != "0")
+            if (segment.RouteSign == "2" | segment.RouteSign == "3" & segment.TypeRoad == "1" && segment.NHS != "0")
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.RouteSign);
@@ -1061,24 +789,24 @@ road is divided so it should have a median but the median type indicates there i
 
             if (this.ValidRouteSign(segment) & this.ValidTypeRoad(segment) )
             {
-                if (!(segment.Nhs == "1" & segment.Aphn == "1"))
+                if (!(segment.NHS == "1" & segment.APHN == "1"))
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.NHS);
                     temp.Add(FieldsListModel.APHN);
-                    if (segment.Nhs == "1" & segment.Aphn == "0")
+                    if (segment.NHS == "1" & segment.APHN == "0")
                     {
                         ErrorItemModel error = new ErrorItemModel("NHS/APHN invalid", "Routes not on the NHS can't be placed under AHPN status NHS (1). 99", temp);
                         masterErrorsList.Add(error);
                     }
 
-                    if (segment.Nhs == "1" & segment.Aphn != "1")
+                    if (segment.NHS == "1" & segment.APHN != "1")
                     {
                         ErrorItemModel error = new ErrorItemModel("NHS/APHN invalid", "Routes on the NHS must be placed under AHPN status NHS (1)", temp);
                         masterErrorsList.Add(error);
                     }
 
-                    if (segment.Nhs == "0" & segment.Aphn == "1")
+                    if (segment.NHS == "0" & segment.APHN == "1")
                     {
                         ErrorItemModel error = new ErrorItemModel("NHS/APHN invalid", "Routes not on the NHS can't be placed under AHPN status NHS (1) 98", temp);
                         masterErrorsList.Add(error);
@@ -1097,7 +825,7 @@ road is divided so it should have a median but the median type indicates there i
                 selctedFunctionalClass.Add("3");
                 selctedFunctionalClass.Add("4");
 
-                if (segment.Aphn == "2" & selctedFunctionalClass.Contains(segment.FuncClass))
+                if (segment.APHN == "2" & selctedFunctionalClass.Contains(segment.FuncClass))
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.FuncClass);
@@ -1263,11 +991,11 @@ greater than one direction number of lanes, then the road must have a median and
                 }
             }
 
-            if (segment.YearRecon != "" & !(segment.YearRecon is null))
+            if (segment.yearRecon != "" & !(segment.yearRecon is null))
             {
-                if (int.TryParse(segment.YearRecon, out _))
+                if (int.TryParse(segment.yearRecon, out _))
                 {
-                    int yearReconInt = int.Parse(segment.YearRecon);
+                    int yearReconInt = int.Parse(segment.yearRecon);
                     if (yearReconInt > 1800 & yearReconInt < 2100)
                     {
                         List<string> temp = new List<string>();

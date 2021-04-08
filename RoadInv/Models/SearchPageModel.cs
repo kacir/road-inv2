@@ -9,9 +9,9 @@ namespace RoadInv.Models
         //class does not perform any functionality beyond holding data for the markup page to use
     {
         public ValidationModel con;
-        public IQueryable<DB.RoadInv> details;
+        public List<SegmentModel> details;
 
-        public SearchPageModel(ValidationModel con, IQueryable<DB.RoadInv> details)
+        public SearchPageModel(ValidationModel con, List<SegmentModel> details)
         {
             this.con = con;
             this.details = details;

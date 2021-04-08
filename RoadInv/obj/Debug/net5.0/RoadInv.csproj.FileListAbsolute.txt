@@ -165,4 +165,3 @@ E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.Views.pdb
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.csproj.CopyComplete
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.genruntimeconfig.cache
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Views\web.config
-E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\error.cshtml.g.cs

@@ -19,12 +19,12 @@ namespace RoadInv.Models
         public static string mirrorSegment = "mirrorSegment";
 
         public ValidationModel con;
-        public DB.RoadInv details;
+        public SegmentModel details;
         public Type Fields;
         public string sectionCodeJson;
         public string editStatus;
 
-        public SegementDetailPageModel(DB.RoadInv details1, ValidationModel con1, string editStatus)
+        public SegementDetailPageModel(SegmentModel details1, ValidationModel con1, string editStatus)
         {
             this.con = con1; //contains all the field dropdown information
             this.details = details1;//contains all field values for the particular segment

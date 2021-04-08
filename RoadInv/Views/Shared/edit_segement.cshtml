@@ -27,27 +27,27 @@
                             <option></option>
                             @foreach (ConstaintCounty item in Model.con.AH_County)
                             {
-                                <option @if (Model.details.AhCounty == item.CountyNumber) { <text> selected</text> } value="@item.CountyNumber">@item.CountyNumber - @item.County</option>
+                                <option @if (Model.details.AH_County == item.CountyNumber) { <text> selected</text> } value="@item.CountyNumber">@item.CountyNumber - @item.County</option>
 
                             }
                         </select>
                     </div>
                     <div class="modal-form-group">
                         <label for="m-@FieldsListModel.AH_Route">Route:</label>
-                        <input id="m-@FieldsListModel.AH_Route" value="@Model.details.AhRoute" class="form-control" />
+                        <input id="m-@FieldsListModel.AH_Route" value="@Model.details.AH_Route" class="form-control" />
                     </div>
                     <div class="modal-form-group">
                         <label for="m-@FieldsListModel.AH_Section">Section:</label>
-                        <input id="m-@FieldsListModel.AH_Section" value="@Model.details.AhSection" class="form-control"/>
+                        <input id="m-@FieldsListModel.AH_Section" value="@Model.details.AH_Section" class="form-control"/>
                     </div>
                     <div class="modal-form-group">
                         <label for="m-@FieldsListModel.LOG_DIRECT">Direction:</label>
                         <span id="m-@FieldsListModel.LOG_DIRECT" class="form-control">
-                            @if (Model.details.LogDirect == "A")
+                            @if (Model.details.LOG_DIRECT == "A")
                             {
                                 <text>B</text>
                             }
-                            else if (Model.details.LogDirect == "B")
+                            else if (Model.details.LOG_DIRECT == "B")
                             {
                                 <text>A</text>
                             }
@@ -55,18 +55,18 @@
                     </div>
                     <div class="modal-form-group">
                         <label for="m-@FieldsListModel.AH_BLM">BLM:</label>
-                        <input id="m-@FieldsListModel.AH_BLM" value="@Model.details.AhBlm" class="form-control" />
+                        <input id="m-@FieldsListModel.AH_BLM" value="@Model.details.AH_BLM" class="form-control" />
                     </div>
                     <div class="modal-form-group">
                         <label for="m-@FieldsListModel.AH_ELM">ELM:</label>
-                        <input id="m-@FieldsListModel.AH_ELM" value="@Model.details.AhElm" class="form-control" />
+                        <input id="m-@FieldsListModel.AH_ELM" value="@Model.details.AH_ELM" class="form-control" />
                     </div>
 
                 </form>
             </main>
             <footer class="modal__footer">
                 <button class="segment-button">Continue Mirror</button>
-                <button class="segment-button" data-micromodal-close aria-label="Close this dialog window">Cancel</button>
+                <button class="segment-button" data-micromodal-close aria-label="Close this dialog window">Caneel</button>
             </footer>
         </div>
     </div>
@@ -88,43 +88,43 @@
                             <option></option>
                             @foreach (ConstaintCounty item in Model.con.AH_County)
                             {
-                                <option @if (Model.details.AhCounty == item.CountyNumber) { <text> selected</text> } value="@item.CountyNumber">@item.CountyNumber - @item.County</option>
+                                <option @if (Model.details.AH_County == item.CountyNumber) { <text> selected</text> } value="@item.CountyNumber">@item.CountyNumber - @item.County</option>
 
                             }
                         </select>
                     </div>
                     <div class="modal-form-group">
                         <label for="d-@FieldsListModel.AH_Route">Route:</label>
-                        <input id="d-@FieldsListModel.AH_Route" value="@Model.details.AhRoute" class="form-control" />
+                        <input id="d-@FieldsListModel.AH_Route" value="@Model.details.AH_Route" class="form-control" />
                     </div>
                     <div class="modal-form-group">
                         <label for="d-@FieldsListModel.AH_Section">Section:</label>
-                        <input id="d-@FieldsListModel.AH_Section" value="@Model.details.AhSection" class="form-control" />
+                        <input id="d-@FieldsListModel.AH_Section" value="@Model.details.AH_Section" class="form-control" />
                     </div>
                     <div class="modal-form-group">
                         <label for="d-@FieldsListModel.LOG_DIRECT">Direction:</label>
-                        <select id="d-@FieldsListModel.LOG_DIRECT" data="@Model.details.LogDirect">
+                        <select id="d-@FieldsListModel.LOG_DIRECT" data="@Model.details.LOG_DIRECT">
                             <option></option>
                             @foreach (var item in Model.con.LOG_DIRECT)
                             {
-                                <option @if (Model.details.LogDirect == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                                <option @if (Model.details.LOG_DIRECT == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
                             }
                         </select>
                     </div>
                     <div class="modal-form-group">
                         <label for="d-@FieldsListModel.AH_BLM">BLM:</label>
-                        <input id="d-@FieldsListModel.AH_BLM" value="@Model.details.AhBlm" class="form-control" />
+                        <input id="d-@FieldsListModel.AH_BLM" value="@Model.details.AH_BLM" class="form-control" />
                     </div>
                     <div class="modal-form-group">
                         <label for="d-@FieldsListModel.AH_ELM">ELM:</label>
-                        <input id="d-@FieldsListModel.AH_ELM" value="@Model.details.AhElm" class="form-control" />
+                        <input id="d-@FieldsListModel.AH_ELM" value="@Model.details.AH_ELM" class="form-control" />
                     </div>
 
                 </form>
             </main>
             <footer class="modal__footer">
-                <button class="segment-button">Continue Duplicate</button>
-                <button class="segment-button" data-micromodal-close aria-label="Close this dialog window">Cancel</button>
+                <button class="segment-button">Continue Mirror</button>
+                <button class="segment-button" data-micromodal-close aria-label="Close this dialog window">Caneel</button>
             </footer>
         </div>
     </div>
@@ -135,7 +135,7 @@
 </script>
 
 <div class="segment-title">
-    <h1 id="header" data="@Model.details.Id">
+    <h1 id="header" data="@Model.details.ID">
         @if (Model.editStatus == SegementDetailPageModel.editSegment)
         {
             <text>New Segment</text>
@@ -152,10 +152,10 @@
         {
             <text>Road Segement</text>
         }
-        <span class="@FieldsListModel.AH_RoadID">@Model.details.AhRoadId </span>
+        <span class="@FieldsListModel.AH_RoadID">@Model.details.AH_RoadID </span>
         <br> BLM:
-        <span class="@FieldsListModel.AH_BLM">@Model.details.AhBlm</span> - ELM
-        <span class="@FieldsListModel.AH_ELM">@Model.details.AhElm</span>
+        <span class="@FieldsListModel.AH_BLM">@Model.details.AH_BLM</span> - ELM
+        <span class="@FieldsListModel.AH_ELM">@Model.details.AH_ELM</span>
     </h1>
 </div>
 <div class="main-content">
@@ -166,23 +166,23 @@
 
                 <DIV>
                     <label data-toggle="tooltip" data-placement="top" title="ArDOT District">Distict</label>
-                    <select id="@FieldsListModel.AH_District" data="@Model.details.AhDistrict">
+                    <select id="@FieldsListModel.AH_District" data="@Model.details.AH_District">
                         <option></option>
                         @foreach (ConstaintDistrict item in Model.con.AH_District)
                         {
-                            <option @if (Model.details.AhDistrict == item.DistrictNumber) { <text>selected</text> } value="@item.DistrictNumber">@item.DistrictNumber</option>
+                            <option @if (Model.details.AH_District == item.DistrictNumber) { <text>selected</text> } value="@item.DistrictNumber">@item.DistrictNumber</option>
                         }
                     </select>
 
                 </DIV>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="ArDOT County Number. Not to be confused with FHWA County Numbers.">County</label>
-                    <select id="@FieldsListModel.AH_County" data="@Model.details.AhCounty">
+                    <select id="@FieldsListModel.AH_County" data="@Model.details.AH_County">
 
                         <option></option>
                         @foreach (ConstaintCounty item in Model.con.AH_County)
                         {
-                            <option @if (Model.details.AhCounty == item.CountyNumber) { <text> selected</text> } value="@item.CountyNumber">@item.CountyNumber - @item.County</option>
+                            <option @if (Model.details.AH_County == item.CountyNumber) { <text> selected</text> } value="@item.CountyNumber">@item.CountyNumber - @item.County</option>
 
                         }
                     </select>
@@ -190,38 +190,38 @@
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="ARNOLD compliant Route Name. limited to 150 characters and only be alphnumberic characters">
                     Route</label>
-                    <input id="@FieldsListModel.AH_Route" type="text" value="@Model.details.AhRoute" data="@Model.details.AhRoute" />
+                    <input id="@FieldsListModel.AH_Route" type="text" value="@Model.details.AH_Route" data="@Model.details.AH_Route" />
                 </div>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="ARNOLD section number. 3 digit sections are typically reserved for Y leg segments">Section</label>
-                    <input id="@FieldsListModel.AH_Section" type="text" value="@Model.details.AhSection" data="@Model.details.AhSection" />
+                    <input id="@FieldsListModel.AH_Section" type="text" value="@Model.details.AH_Section" data="@Model.details.AH_Section" />
                 </div>
                 <div >
                     <span data-toggle="tooltip" data-placement="top" title="A character prefix for the section that identifies a characteristic of 
                           the road such as one way cuplet. Rarely used">Section Code:</span> 
                     <br /> 
-                    <span data-placement="top"  data-toggle="tooltip" id="@FieldsListModel.SectionCode" data="">XXXXX</span>
+                    <span data-placement="top"  data-toggle="tooltip" id="@FieldsListModel.SectionCode" data="@Model.details.SectionCode">XXXXX</span>
                 </div>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="The log direction of the road. Most roads are log direction with anti-log roads being part of dual carrageways">Direction</label>
-                    <select id="@FieldsListModel.LOG_DIRECT" data="@Model.details.LogDirect">
+                    <select id="@FieldsListModel.LOG_DIRECT" data="@Model.details.LOG_DIRECT">
                         <option></option>
                         @foreach (var item in Model.con.LOG_DIRECT)
                         {
-                    <option @if (Model.details.LogDirect == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                    <option @if (Model.details.LOG_DIRECT == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
                         }
                     </select>
                 </div>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="The Begining Log Mile of the segment">BLM</label>
-                    <input id="@FieldsListModel.AH_BLM" data="@Model.details.AhBlm" type="text" value="@Model.details.AhBlm" />
+                    <input id="@FieldsListModel.AH_BLM" data="@Model.details.AH_BLM" type="text" value="@Model.details.AH_BLM" />
                 </div>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="The ending Log Mile of the segment">ELM</label>
-                    <input id="@FieldsListModel.AH_ELM" data="@Model.details.AhElm" type="text" value="@Model.details.AhElm" />
+                    <input id="@FieldsListModel.AH_ELM" data="@Model.details.AH_ELM" type="text" value="@Model.details.AH_ELM" />
                 </div>
                 <div>
-                    <span>Road Length <br /><span id="@FieldsListModel.AH_Length">@Model.details.AhLength</span></span>
+                    <span>Road Length <br /><span id="@FieldsListModel.AH_Length">@Model.details.AH_Length</span></span>
                 </div>
 
             </div>
@@ -439,22 +439,22 @@
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="National Highway System (NHS) is used to designate which records are part of the NHS and determines if it is the standard 
                            NHS route or intermodal connector route.">NHS</label>
-                    <select data="@Model.details.Nhs" id="@FieldsListModel.NHS">
+                    <select data="@Model.details.NHS" id="@FieldsListModel.NHS">
                         <option></option>
                         @foreach (var item in Model.con.NHS)
                         {
-                            <option @if (Model.details.Nhs == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            <option @if (Model.details.NHS == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
                         }
                     </select>
                 </div>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="Arkansas Primary Highway Network is the state’s way of prioritizing. Funding and other concerns for 
                            the entire state highway system.">APHN<br></label>
-                    <select data="@Model.details.Aphn" id="@FieldsListModel.APHN">
+                    <select data="@Model.details.APHN" id="@FieldsListModel.APHN">
                         <option></option>
                         @foreach (var item in Model.con.APHN)
                         {
-                            <option @if (Model.details.Aphn == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            <option @if (Model.details.APHN == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
                         }
                     </select>
                 </div>
@@ -574,24 +574,24 @@
 
 <script>
 
-    var subjectAttributes = ["@FieldsListModel.AH_District", "@FieldsListModel.AH_County", "@FieldsListModel.AH_Section", "@FieldsListModel.AH_Route",
-        "@FieldsListModel.AH_Section", "@FieldsListModel.LOG_DIRECT", "@FieldsListModel.AH_BLM", "@FieldsListModel.AH_ELM", "@FieldsListModel.RouteSign",
+    var subjectAttributes = ["@FieldsListModel.AH_District", "@FieldsListModel.AH_County", "@FieldsListModel.AH_Section", "@FieldsListModel.AH_Route", "@FieldsListModel.AH_Section",
+            "@FieldsListModel.LOG_DIRECT", "@FieldsListModel.AH_BLM", "@FieldsListModel.AH_ELM", "@FieldsListModel.RouteSign",
             "@FieldsListModel.TypeRoad", "@FieldsListModel.RuralUrbanArea", "@FieldsListModel.UrbanAreaCode", "@FieldsListModel.LeftShoulderWidth",
             "@FieldsListModel.LeftShoulderSurface", "@FieldsListModel.RightShoulderWidth", "@FieldsListModel.RightShoulderSurface",
             "@FieldsListModel.SurfaceType", "@FieldsListModel.TypeOperation", "@FieldsListModel.LaneWidth", "@FieldsListModel.ExtraLanes",
-        "@FieldsListModel.SurfaceWidth", "@FieldsListModel.Access", "@FieldsListModel.MedianType", "@FieldsListModel.MedianWidth",
-        "@FieldsListModel.OneDirectionNumLanes", "@FieldsListModel.BothDirectionNumLanes", "@FieldsListModel.FuncClass", "@FieldsListModel.NHS",
-        "@FieldsListModel.APHN", "@FieldsListModel.GovermentCode", "@FieldsListModel.SpecialSystems", "@FieldsListModel.SystemStatus",
-        "@FieldsListModel.Alternative_Route_Name", "@FieldsListModel.RoadwayWidth", "@FieldsListModel.Comment1", "@FieldsListModel.ID"];
+            "@FieldsListModel.SurfaceWidth", "@FieldsListModel.Access",
+            "@FieldsListModel.MedianType", "@FieldsListModel.MedianWidth", "@FieldsListModel.OneDirectionNumLanes",
+            "@FieldsListModel.BothDirectionNumLanes", "@FieldsListModel.FuncClass", "@FieldsListModel.NHS", "@FieldsListModel.APHN", "@FieldsListModel.GovermentCode",
+            "@FieldsListModel.SpecialSystems", "@FieldsListModel.SystemStatus", "@FieldsListModel.Alternative_Route_Name", "@FieldsListModel.RoadwayWidth"];
 
     function gatherInput() {
         inputs = {};
         subjectAttributes.forEach(function (x) {
             var raw = $("#" + x).val();
-            inputs[x] = raw;
+            if (raw != "") {
+                inputs[x] = raw;
+            }
         });
-
-        inputs["ID"] = @Model.details.Id;
 
         var altNames = $("#box-alternate div input").map((_, el) => el.value).get();
         var altNamesFilter = [];
@@ -605,7 +605,7 @@
         return inputs;
     }
 
-    $("input, select, textarea").on("keyup, change", submitInputs)
+    $("input, select").on("keyup, change", submitInputs)
 
 
 
@@ -615,6 +615,7 @@
         var constructString = "";
 
         //fill in the ID attribute because the user has no control over this variable. Hidden from user
+        inputs["ID"] = $("#Header").attr("data");
 
         $.post("api/validate", inputs, errorPost, "json");
 
@@ -798,7 +799,7 @@
             } else {
                 var opposite = "A"
             }
-            $("#m-@FieldsListModel.LOG_DIRECT").text(opposite)
+            $("#m-@FieldsListModel.LOG_DIRECT").val(opposite)
     });
 
 
@@ -815,33 +816,6 @@
 
     var originalValues = gatherInput();
 
-
-    $("#reset-changes").click(function () {
-        //reset values in the main form
-        subjectAttributes.forEach(function (x) {
-            $("#" + x).val(originalValues[x]);
-
-        //reset values in the modal windows
-        $("#m-@FieldsListModel.AH_ELM, #d-@FieldsListModel.AH_ELM").val( $("#@FieldsListModel.AH_ELM").val());
-        $("#m-@FieldsListModel.AH_BLM, #d-@FieldsListModel.AH_BLM").val( $("#@FieldsListModel.AH_BLM").val());
-        });
-
-        $("#d-@FieldsListModel.AH_County, #m-@FieldsListModel.AH_County ").val(originalValues["@FieldsListModel.AH_County"]);
-        $("#d-@FieldsListModel.AH_Route, #m-@FieldsListModel.AH_Route ").val(originalValues["@FieldsListModel.AH_Route"]);
-        $("#d-@FieldsListModel.AH_Section, #m-@FieldsListModel.AH_Section ").val(originalValues["@FieldsListModel.AH_Section"]);
-        $("#d-@FieldsListModel.LOG_DIRECT").val(originalValues["@FieldsListModel.LOG_DIRECT"]);
-
-        var direction = $("#@FieldsListModel.LOG_DIRECT").val();
-        if (direction == "A") {
-            var opposite = "B";
-        } else {
-            var opposite = "A"
-        }
-        $("#m-@FieldsListModel.LOG_DIRECT").text(opposite);
-        $("#save-changes").attr("disabled", "");
-        $("#reset-changes").attr("disabled", "");
-
-    });
 
 
 </script>
