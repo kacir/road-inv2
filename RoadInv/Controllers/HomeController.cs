@@ -22,16 +22,12 @@ namespace RoadInv.Controllers
         }
 
 
-        [Route("error.html")]
-        [Route("error")]
         public IActionResult error()
         {
             return View("error");
         }
 
 
-        [Route("segments.html")]
-        [Route("segments")]
         public IActionResult SearchTable(string district= "", string county = "", string route = "", string section = "", string direction = "", decimal logmile = -1)
         {
             IQueryable<DB.RoadInv> output;
@@ -62,16 +58,11 @@ namespace RoadInv.Controllers
             return View("SearchTable", pageModel);
         }
         
-        [Route("/")]
-        [Route("/index")]
-        [Route("/index.html")]
         public IActionResult Index()
         {
             return View("index");
         }
 
-        [Route("new_segement.html")]
-        [Route("new_segement")]
         public IActionResult new_segment()
         {
             var segmentDetails = new DB.RoadInv();
@@ -83,8 +74,7 @@ namespace RoadInv.Controllers
             return View("edit_segement", segementPageObj);
         }
 
-        [Route("dup_segement")]
-        [Route("dup_segement.html")]
+
         public IActionResult DuplicateSegment(int ID)
         {
             
@@ -97,8 +87,7 @@ namespace RoadInv.Controllers
             return View("edit_segement", segementPageObj);
         }
 
-        [Route("mirror_segement")]
-        [Route("mirror_segement.html")]
+
         public IActionResult MirrorSegment(int ID)
         {
             var segmentDetails = this._dbContext.RoadInvs.Find(ID);
@@ -110,8 +99,7 @@ namespace RoadInv.Controllers
             return View("edit_segement", segementPageObj);
         }
 
-        [Route("edit_segement")]
-        [Route("edit_segement.html")]
+
         public IActionResult edit_segement(int ID = -1)
         {
             var segmentDetails = this._dbContext.RoadInvs.Find(ID);
@@ -121,8 +109,7 @@ namespace RoadInv.Controllers
             return View("edit_segement", segementPageObj);
         }
 
-        [Route("quality_control")]
-        [Route("quality_control.html")]
+
         public IActionResult quality_control()
         {           
             return View("quality_control", _dbContext);

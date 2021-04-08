@@ -32,7 +32,7 @@ namespace RoadInv.Controllers
         }
 
 
-        [Route("api/update")]
+        
         public IActionResult Update(int ID,
             string AH_District = "",
             string AH_County = "",
@@ -119,7 +119,7 @@ namespace RoadInv.Controllers
         }
 
 
-        [Route("api/delete")]
+        
         public IActionResult Delete(int ID)
         {
             //one if successfull, zero if unsuccessfull
@@ -133,7 +133,7 @@ namespace RoadInv.Controllers
         }
 
 
-        [Route("api/validate")]
+        
         public IActionResult Validate(string AH_District = "",
             string AH_County = "",
             string AH_Route = "",

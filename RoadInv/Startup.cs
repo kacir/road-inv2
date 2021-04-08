@@ -46,7 +46,9 @@ namespace RoadInv
             app.UseRouting();
 
             app.UseEndpoints(endpoints => {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}");
+                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}.html");
+                //endpoints.MapControllers();
             });
         }
     }
