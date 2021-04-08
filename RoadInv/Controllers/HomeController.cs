@@ -24,20 +24,16 @@ namespace RoadInv.Controllers
         }
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        public IActionResult error()
+        [Route("error")]
+        [Route("error.html")]
+        public IActionResult Error()
         {
             return View("error");
         }
 
 
-=======
-=======
->>>>>>> parent of 17b2ebd (Switch RoadInv to Entity Framework)
         [Route("segments.html")]
         [Route("segments")]
->>>>>>> parent of 17b2ebd (Switch RoadInv to Entity Framework)
         public IActionResult SearchTable(string district= "", string county = "", string route = "", string section = "", string direction = "", decimal logmile = -1)
         {
             List<SegmentModel> output;
@@ -64,11 +60,16 @@ namespace RoadInv.Controllers
             return View("SearchTable", pageModel);
         }
         
+        [Route("index.html")]
+        [Route("index")]
+        [Route("/")]
         public IActionResult Index()
         {
             return View("index");
         }
 
+        [Route("new_segement.html")]
+        [Route("new_segement")]
         public IActionResult new_segment()
         {
             var segmentDetails = new SegmentModel();
@@ -81,6 +82,8 @@ namespace RoadInv.Controllers
         }
 
 
+        [Route("duplicateSegment.html")]
+        [Route("duplicateSegment")]
         public IActionResult DuplicateSegment(int ID)
         {
             var segmentDetails = this._search.segementDetails(ID);
@@ -92,7 +95,8 @@ namespace RoadInv.Controllers
             return View("edit_segement", segementPageObj);
         }
 
-
+        [Route("mirror_segement.html")]
+        [Route("mirror_segement")]
         public IActionResult MirrorSegment(int ID)
         {
             var segmentDetails = this._search.segementDetails(ID);
@@ -106,6 +110,8 @@ namespace RoadInv.Controllers
         }
 
 
+        [Route("edit_segement.html")]
+        [Route("edit_segement")]
         public IActionResult edit_segement(int ID = -1)
         {
             var segmentDetails = this._search.segementDetails(ID);
@@ -115,7 +121,8 @@ namespace RoadInv.Controllers
             return View("edit_segement", segementPageObj);
         }
 
-
+        [Route("quality_control.html")]
+        [Route("quality_control")]
         public IActionResult quality_control()
         {           
             return View("quality_control", _dbContext);

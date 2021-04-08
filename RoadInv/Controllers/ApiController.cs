@@ -26,7 +26,8 @@ namespace RoadInv.Controllers
         }
 
 
-        
+        [Route("api/update")]
+        [Route("/api/update")]
         public IActionResult Update(int ID,
             string AH_District = "",
             string AH_County = "",
@@ -112,13 +113,16 @@ namespace RoadInv.Controllers
         }
 
 
-        
+        [Route("api/Delete.html")]
+        [Route("api/Delete")]
         public IActionResult Delete(int ID)
         {
             //one if successfull, zero if unsuccessfull
             return Json(0);
         }
 
+        [Route("api/update.html")]
+        [Route("api/update")]
         public IActionResult SaveNew(int ID)
         {
             //one if successfull, zero if unsuccessfull
@@ -126,7 +130,8 @@ namespace RoadInv.Controllers
         }
 
 
-        
+        [Route("api/validate.html")]
+        [Route("api/validate")]
         public IActionResult Validate(string AH_District = "",
             string AH_County = "",
             string AH_Route = "",

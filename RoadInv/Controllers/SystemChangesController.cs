@@ -16,17 +16,22 @@ namespace RoadInv.Controllers
         }
 
 
+        [Route("system_changes/aphn")]
+        [Route("system_changes/aphn.html")]
         public IActionResult APHN()
         {
             return View("system_changes_aphn");
         }
 
-
+        [Route("system_changes/nhs")]
+        [Route("system_changes/nhs.html")]
         public IActionResult NHS()
         {
             return View("system_changes_nhs");
         }
 
+        [Route("system_changes/func")]
+        [Route("system_changes/func.html")]
         public IActionResult Func()
         {
             return View("system_changes_func");
