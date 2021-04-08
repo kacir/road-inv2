@@ -16,13 +16,19 @@ namespace RoadInv.Controllers
     
     public class ApiController : Controller
     {
-        public SearchDatabaseModel _search;
         public roadinvContext _dbContext;
 
-        public ApiController(SearchDatabaseModel search, roadinvContext dbContext)
+        public ApiController(roadinvContext dbContext)
         {
-            _search = search;
             _dbContext = dbContext;
+        }
+
+        public IActionResult test(int ID)
+        {
+            var segment = this._dbContext.RoadInvs.Find(ID);
+
+
+            return Json(0);
         }
 
 
@@ -66,18 +72,18 @@ namespace RoadInv.Controllers
             decimal AH_ELM = 0)
         {
 
-            SegmentModel segment = new SegmentModel();
-            segment.ID = ID;
-            segment.AH_District = AH_District;
-            segment.AH_County = AH_County;
-            segment.AH_Route = AH_Route;
-            segment.AH_Section = AH_Section;
-            segment.LOG_DIRECT = LOG_DIRECT;
+            var segment = this._dbContext.RoadInvs.Find(ID);
+            segment.Id = ID;
+            segment.AhDistrict = AH_District;
+            segment.AhCounty = AH_County;
+            segment.AhRoute = AH_Route;
+            segment.AhSection = AH_Section;
+            segment.LogDirect = LOG_DIRECT;
             segment.GovermentCode = GovermentCode;
             segment.RuralUrbanArea = RuralUrbanArea;
             segment.UrbanAreaCode = UrbanAreaCode;
             segment.FuncClass = FuncClass;
-            segment.NHS = NHS;
+            segment.Nhs = NHS;
             segment.SystemStatus = SystemStatus;
             segment.SpecialSystems = SpecialSystems;
             segment.BothDirectionNumLanes = BothDirectionNumLanes;
@@ -85,11 +91,11 @@ namespace RoadInv.Controllers
             segment.Comment1 = Comment1;
             segment.TypeRoad = TypeRoad;
             segment.RouteSign = RouteSign;
-            segment.APHN = APHN;
+            segment.Aphn = APHN;
             segment.Access = Access;
             segment.TypeOperation = TypeOperation;
             segment.YearBuilt = YearBuilt;
-            segment.yearRecon = yearRecon;
+            segment.YearRecon = yearRecon;
             segment.MedianWidth = MedianWidth;
             segment.SurfaceWidth = SurfaceWidth;
             segment.RightShoulderSurface = RightShoulderSurface;
@@ -98,13 +104,14 @@ namespace RoadInv.Controllers
             segment.ExtraLanes = ExtraLanes;
             segment.MedianType = MedianType;
             segment.SurfaceType = SurfaceType;
-            segment.Alternative_Route_Name = Alternative_Route_Name;
-            segment.AH_BLM = AH_BLM;
-            segment.AH_ELM = AH_ELM;
+            segment.AlternativeRouteName = Alternative_Route_Name;
+            segment.AhBlm = AH_BLM;
+            segment.AhElm = AH_ELM;
 
-            segment.CleanAttr();//clean white space and get everything in uppercase
+            ValidationModel.CleanAttr(segment);
+            
 
-            int newRecordCount = this._search.NewRecord(segment);
+            int newRecordCount = this._dbContext.SaveChanges();
 
             //submit new database for 
 
@@ -166,17 +173,17 @@ namespace RoadInv.Controllers
             )
         {
 
-            SegmentModel segment = new SegmentModel();
-            segment.AH_District = AH_District;
-            segment.AH_County = AH_County;
-            segment.AH_Route = AH_Route;
-            segment.AH_Section = AH_Section;
-            segment.LOG_DIRECT = LOG_DIRECT;
+            DB.RoadInv segment = new DB.RoadInv();
+            segment.AhDistrict = AH_District;
+            segment.AhCounty = AH_County;
+            segment.AhRoute = AH_Route;
+            segment.AhSection = AH_Section;
+            segment.LogDirect = LOG_DIRECT;
             segment.GovermentCode = GovermentCode;
             segment.RuralUrbanArea = RuralUrbanArea;
             segment.UrbanAreaCode = UrbanAreaCode;
             segment.FuncClass = FuncClass;
-            segment.NHS = NHS;
+            segment.Nhs = NHS;
             segment.SystemStatus = SystemStatus;
             segment.SpecialSystems = SpecialSystems;
             segment.BothDirectionNumLanes = BothDirectionNumLanes;
@@ -184,11 +191,11 @@ namespace RoadInv.Controllers
             segment.Comment1 = Comment1;
             segment.TypeRoad = TypeRoad;
             segment.RouteSign = RouteSign;
-            segment.APHN = APHN;
+            segment.Aphn = APHN;
             segment.Access = Access;
             segment.TypeOperation = TypeOperation;
             segment.YearBuilt = YearBuilt;
-            segment.yearRecon = yearRecon;
+            segment.YearRecon = yearRecon;
             segment.MedianWidth = MedianWidth;
             segment.SurfaceWidth = SurfaceWidth;
             segment.RightShoulderSurface = RightShoulderSurface;
@@ -197,11 +204,11 @@ namespace RoadInv.Controllers
             segment.ExtraLanes = ExtraLanes;
             segment.MedianType = MedianType;
             segment.SurfaceType = SurfaceType;
-            segment.Alternative_Route_Name = Alternative_Route_Name;
-            segment.AH_BLM = AH_BLM;
-            segment.AH_ELM = AH_ELM;
+            segment.AlternativeRouteName = Alternative_Route_Name;
+            segment.AhBlm = AH_BLM;
+            segment.AhElm = AH_ELM;
 
-            segment.CleanAttr();//clean white space and get everything in uppercase
+            ValidationModel.CleanAttr(segment);
             var val = new ValidationModel(_dbContext);
             var errorList = val.FindErrors(segment);
 
