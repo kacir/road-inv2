@@ -25,6 +25,7 @@ namespace RoadInv.Controllers
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public IActionResult error()
         {
             return View("error");
@@ -32,6 +33,8 @@ namespace RoadInv.Controllers
 
 
 =======
+=======
+>>>>>>> parent of 17b2ebd (Switch RoadInv to Entity Framework)
         [Route("segments.html")]
         [Route("segments")]
 >>>>>>> parent of 17b2ebd (Switch RoadInv to Entity Framework)
