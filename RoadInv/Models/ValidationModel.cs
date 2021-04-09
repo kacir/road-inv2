@@ -686,10 +686,14 @@ namespace RoadInv.Models
                 {
                     longError = longError + item + ", ";
                 }
-                longError = longError.Substring(longError.Length - 2);
-                ErrorItemModel routeError = new ErrorItemModel(@"AH_Route- invalid character(s)", "AH_Route field only allows " +
-                    "numeric (1-9) and aphabet letters (A-Z). The following invalid characters were found it the AH_Route field" + longError, temp);
-                masterErrorsList.Add(routeError);
+
+                if (longError != "")
+                {
+                    longError = longError.Substring(longError.Length - 2);
+                    ErrorItemModel routeError = new ErrorItemModel(@"AH_Route- invalid character(s)", "AH_Route field only allows " +
+                        "numeric (1-9) and aphabet letters (A-Z). The following invalid characters were found it the AH_Route field" + longError, temp);
+                    masterErrorsList.Add(routeError);
+                }
 
             }
             if (ErrorItemModel.checkInvalidCharacters(segment.AhSection).Count > 0)
@@ -706,7 +710,7 @@ namespace RoadInv.Models
                     longError = longError + item + ", ";
                 }
                 longError = longError.Substring(longError.Length - 2);
-                if (longError != ", ")
+                if (longError != ", " & longError != "")
                 {
                     ErrorItemModel routeError = new ErrorItemModel(@"AH_Section invalid character(s)", "AH_Section field only allows " +
 "numeric (1-9) and aphabet letters (A-Z). The following invalid characters were found it the AH_Route field" + longError, temp);

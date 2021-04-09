@@ -8,6 +8,24 @@
 
 <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
 
+<div class="modal micromodal-slide" id="modal-delete" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+                <h2 id="modal-1-title">
+                    Record has been deleted
+                </h2>
+            </header>
+            <main class="modal__content" id="modal-1-content">
+                <p>
+                    re-directing you to main screen.
+                </p>
+            </main>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
@@ -65,7 +83,7 @@
                 </form>
             </main>
             <footer class="modal__footer">
-                <button class="segment-button">Continue Mirror</button>
+                <button id="continue-mirror" class="segment-button">Continue Mirror</button>
                 <button class="segment-button" data-micromodal-close aria-label="Close this dialog window">Cancel</button>
             </footer>
         </div>
@@ -123,7 +141,7 @@
                 </form>
             </main>
             <footer class="modal__footer">
-                <button class="segment-button">Continue Duplicate</button>
+                <button id="continue-duplicate" class="segment-button">Continue Duplicate</button>
                 <button class="segment-button" data-micromodal-close aria-label="Close this dialog window">Cancel</button>
             </footer>
         </div>
@@ -136,7 +154,7 @@
 
 <div class="segment-title">
     <h1 id="header" data="@Model.details.Id">
-        @if (Model.editStatus == SegementDetailPageModel.editSegment)
+        @if (Model.editStatus == SegementDetailPageModel.newSegment)
         {
             <text>New Segment</text>
         }
@@ -525,38 +543,47 @@
     <div class="grid-container">
 
         <div>
-            <button title="Save changes you have made to the segment" data-toggle="tooltip" data-placement="bottom" id="save-changes" disabled class="segment-button">Save</button>
+            <button title="Save changes you have made to the segment" 
+                    data-toggle="tooltip" data-placement="bottom" id="save-changes" disabled class="segment-button">Save</button>
         </div>
         <div>
-            <button title="Save reset to whatever you have before changes were made" data-toggle="tooltip" data-placement="bottom" id="reset-changes" class="segment-button" disabled>Reset Changes</button>
+            <button title="Save reset to whatever you have before changes were made" 
+                    data-toggle="tooltip" data-placement="bottom" id="reset-changes" class="segment-button" disabled>Reset Changes</button>
         </div>
         <div>
-                <button onclick="MicroModal.show('modal-2')" title="create a duplicate of this exact record" data-toggle="tooltip" data-placement="bottom" class="segment-button"
-                        @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment | Model.editStatus == SegementDetailPageModel.newSegment) { <text> disabled</text>
-                    }>
+                <button onclick="MicroModal.show('modal-2')" title="create a duplicate of this exact record" 
+                        data-toggle="tooltip" data-placement="bottom" class="segment-button"
+                        @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment |
+  Model.editStatus == SegementDetailPageModel.newSegment) { <text> disabled</text>
+                        }>
                     Duplicate record
                 </button>
         </div>
 
 <div>
 
-<button title="Delete this segment permanatly from the database" data-toggle="tooltip" data-placement="bottom" class="segment-button"  
-        @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment | Model.editStatus == SegementDetailPageModel.newSegment) 
+<button id="delete-segment" title="Delete this segment permanatly from the database" data-toggle="tooltip" data-placement="bottom" class="segment-button"  
+        @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment |
+  Model.editStatus == SegementDetailPageModel.newSegment)
         {
             <text>disabled</text>
         } >Delete record</button>
         </div>
         <div>
-            <button onclick="MicroModal.show('modal-1')" data-toggle="tooltip" data-placement="bottom" @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment | Model.editStatus == SegementDetailPageModel.newSegment) 
-            {
+            <button onclick="MicroModal.show('modal-1')" data-toggle="tooltip" data-placement="bottom" 
+                    @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment |
+  Model.editStatus == SegementDetailPageModel.newSegment)
+                    {
                 <text>disabled</text>
-            } class="segment-button">Mirror Record</button>
+                    } class="segment-button">Mirror Record</button>
         </div>
         <div>
-            <a title="New a map of the segment according to the most recent ARNOLD data"  data-toggle="tooltip" data-placement="bottom" href="#">View Segment <br> Map</a>
+            <a title="New a map of the segment according to the most recent ARNOLD data"  
+               data-toggle="tooltip" data-placement="bottom" href="#">View Segment <br> Map</a>
         </div>
         <div>
-            <button data-toggle="tooltip" data-placement="bottom" title="disables validation error handeling. Please only use in rare and nuanced situations" id="manual-override" class="segment-button">
+            <button data-toggle="tooltip" data-placement="bottom" 
+                    title="disables validation error handeling. Please only use in rare and nuanced situations" id="manual-override" class="segment-button">
                 Manual Override
             </button>
         </div>
@@ -667,14 +694,31 @@
     $("#save-changes").click(function () {
         var inputs = gatherInput();
         $("#save-changes").fadeOut();
-        $.post("api/update", inputs, function (data) {
-            console.log("results have been saved");
-            console.log(data);
-            originalValues = gatherInput();//update values used to determine if changes have been made
-            $("#save-changes").text("Changes saved!").fadeIn(1000, function () {
-                $("#save-changes").text("Save");
+
+        var newRecord = "@Model.editStatus";
+
+        if ("@Model.editStatus" == "@SegementDetailPageModel.newSegment") {
+            $.post("api/new_segement", inputs, function (data) {
+                console.log("new results have been saved");
+                console.log(data);
+                originalValues = gatherInput();//update values used to determine if changes have been made
+                $("#save-changes").text("Changes saved!").fadeIn(1000, function () {
+                    $("#save-changes").text("Save");
+                    window.location.href = "edit_segement.html?ID=" + String(data);
+                });
             });
-        })
+        } else {
+            $.post("api/update", inputs, function (data) {
+                console.log("results have been saved");
+                console.log(data);
+                originalValues = gatherInput();//update values used to determine if changes have been made
+                $("#save-changes").text("Changes saved!").fadeIn(1000, function () {
+                    $("#save-changes").text("Save");
+                });
+            });
+        }
+
+
     });
 
 
@@ -730,7 +774,7 @@
 
     //change the section code label when section field changes
     $("#@FieldsListModel.AH_Section").focusout(function () {
-        var sectionCodeList = @Html.Raw( Model.sectionCodeJson);
+        var sectionCodeList = @Html.Raw(Model.sectionCodeJson);
         var currentSection = $("#@FieldsListModel.AH_Section").val();
         $("#@FieldsListModel.SectionCode")
             .html("None")
@@ -842,6 +886,78 @@
         $("#reset-changes").attr("disabled", "");
 
     });
+
+    //logic to delete segment
+    $("#delete-segment").click(function () {
+        //submit id to be deleted
+        //show a confirmation page
+        //re-direct user to homepage
+
+        $.post("api/delete", { ID : @Model.details.Id } , function (data) {
+            MicroModal.show("modal-delete");
+            function sleep(time) {
+                return new Promise((resolve) => setTimeout(resolve, time));
+            }
+            //wait roughly 2 seconds before redirecting the page
+            sleep(2000).then(() => {
+                window.location.href = "/index.html";
+            });
+        }, "json");
+    });
+
+    //logic to duplicate segment
+    $("#continue-duplicate").click(function () {
+        var AH_County = $("#d-@FieldsListModel.AH_County").val();
+        var AH_Route = $("#d-@FieldsListModel.AH_Route").val();
+        var AH_Section = $("#d-@FieldsListModel.AH_Section").val();
+        var direction = $("#d-@FieldsListModel.LOG_DIRECT").val();
+        var AH_BLM = $("#d-@FieldsListModel.AH_BLM").val();
+        var AH_ELM = $("#d-@FieldsListModel.AH_ELM").val();
+
+        var parameters = {};
+        parameters["@FieldsListModel.ID"] = @Model.details.Id;
+        parameters["@FieldsListModel.AH_County"] = AH_County;
+        parameters["@FieldsListModel.AH_Route"] = AH_Route;
+        parameters["@FieldsListModel.AH_Section"] = AH_Section;
+        parameters["@FieldsListModel.LOG_DIRECT"] = direction;
+        parameters["@FieldsListModel.AH_BLM"] = AH_BLM;
+        parameters["@FieldsListModel.AH_ELM"] = AH_ELM;
+
+        $.post("api/dup_segement", parameters, function (data) {
+            MicroModal.close("modal-2");
+            window.location.href = "edit_segement?ID=" + String(data);
+        });
+
+    });
+
+    $("#continue-mirror").click(function () {
+        var AH_County = $("#m-@FieldsListModel.AH_County").val();
+        var AH_Route = $("#m-@FieldsListModel.AH_Route").val();
+        var AH_Section = $("#m-@FieldsListModel.AH_Section").val();
+        var direction = $("#m-@FieldsListModel.LOG_DIRECT").val();
+        var AH_BLM = $("#m-@FieldsListModel.AH_BLM").val();
+        var AH_ELM = $("#m-@FieldsListModel.AH_ELM").val();
+
+        var parameters = {};
+        parameters["@FieldsListModel.ID"] = @Model.details.Id;
+        parameters["@FieldsListModel.AH_County"] = AH_County;
+        parameters["@FieldsListModel.AH_Route"] = AH_Route;
+        parameters["@FieldsListModel.AH_Section"] = AH_Section;
+        parameters["@FieldsListModel.LOG_DIRECT"] = direction;
+        parameters["@FieldsListModel.AH_BLM"] = AH_BLM;
+        parameters["@FieldsListModel.AH_ELM"] = AH_ELM;
+
+        console.log(parameters);
+
+        $.post("api/mirror_segement", parameters, function (data) {
+            MicroModal.close("modal-1");
+            window.location.href = "edit_segement?ID=" + String(data);
+        });
+
+    });
+
+    //logic for mirror segment
+
 
 
 </script>

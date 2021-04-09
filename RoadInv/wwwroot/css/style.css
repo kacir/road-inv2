@@ -283,6 +283,10 @@ button:hover{
     cursor: pointer;
 }
 
+button:disabled{
+    cursor:not-allowed;
+}
+
 .property-box label {
     text-align: center;
 }

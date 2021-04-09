@@ -97,19 +97,6 @@ namespace RoadInv.Controllers
             return View("edit_segement", segementPageObj);
         }
 
-        [Route("mirror_segement")]
-        [Route("mirror_segement.html")]
-        public IActionResult MirrorSegment(int ID)
-        {
-            var segmentDetails = this._dbContext.RoadInvs.Find(ID);
-            segmentDetails.Id = -1;
-            var val = new ValidationModel(this._dbContext);
-
-            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.duplicateSegment);
-
-            return View("edit_segement", segementPageObj);
-        }
-
         [Route("edit_segement")]
         [Route("edit_segement.html")]
         public IActionResult edit_segement(int ID = -1)

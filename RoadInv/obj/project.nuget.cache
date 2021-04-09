@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "I/zLEbi92dMkt9Wo65a0Yoc2we1ACxzRlW1sIfZ2dQJSKXpHcWnTeLL8ieEOhWXq9Pzkw/wWjyVjLA6YbNHB6g==",
+  "dgSpecHash": "zVWYrFK9KaBAsuHG2b/f0BVjf1RUVi5UTtsTlM0bRKE4gVXE/cgfqun9aNVAbHtLpCKQUPsNga9pTy5m+Nslyw==",
   "success": true,
   "projectFilePath": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\RoadInv.csproj",
   "expectedPackageFiles": [
@@ -8,9 +8,9 @@
     "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
     "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.0.1\\microsoft.data.sqlclient.sni.runtime.2.0.1.nupkg.sha512",
-    "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.4\\microsoft.entityframeworkcore.5.0.4.nupkg.sha512",
-    "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.4\\microsoft.entityframeworkcore.abstractions.5.0.4.nupkg.sha512",
-    "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.4\\microsoft.entityframeworkcore.analyzers.5.0.4.nupkg.sha512",
+    "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.5\\microsoft.entityframeworkcore.5.0.5.nupkg.sha512",
+    "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.5\\microsoft.entityframeworkcore.abstractions.5.0.5.nupkg.sha512",
+    "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.5\\microsoft.entityframeworkcore.analyzers.5.0.5.nupkg.sha512",
     "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.entityframeworkcore.design\\5.0.4\\microsoft.entityframeworkcore.design.5.0.4.nupkg.sha512",
     "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\5.0.4\\microsoft.entityframeworkcore.relational.5.0.4.nupkg.sha512",
     "C:\\Users\\rk42861\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\5.0.4\\microsoft.entityframeworkcore.sqlserver.5.0.4.nupkg.sha512",
@@ -108,9 +108,9 @@
     "C:\\Users\\rk42861\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\rk42861\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "C:\\Users\\rk42861\\.nuget\\packages\\system.xml.xpath\\4.3.0\\system.xml.xpath.4.3.0.nupkg.sha512",
-    "C:\\Users\\rk42861\\.nuget\\packages\\z.entityframework.extensions.efcore\\5.1.29\\z.entityframework.extensions.efcore.5.1.29.nupkg.sha512",
-    "C:\\Users\\rk42861\\.nuget\\packages\\z.entityframework.plus.efcore\\5.1.29\\z.entityframework.plus.efcore.5.1.29.nupkg.sha512",
-    "C:\\Users\\rk42861\\.nuget\\packages\\z.expressions.eval\\4.0.37\\z.expressions.eval.4.0.37.nupkg.sha512"
+    "C:\\Users\\rk42861\\.nuget\\packages\\z.entityframework.extensions.efcore\\5.1.30\\z.entityframework.extensions.efcore.5.1.30.nupkg.sha512",
+    "C:\\Users\\rk42861\\.nuget\\packages\\z.entityframework.plus.efcore\\5.1.30\\z.entityframework.plus.efcore.5.1.30.nupkg.sha512",
+    "C:\\Users\\rk42861\\.nuget\\packages\\z.expressions.eval\\4.0.38\\z.expressions.eval.4.0.38.nupkg.sha512"
   ],
   "logs": []
 }
