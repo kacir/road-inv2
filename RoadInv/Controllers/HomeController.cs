@@ -34,18 +34,41 @@ namespace RoadInv.Controllers
         [Route("segments")]
         public IActionResult SearchTable(string district= "", string county = "", string route = "", string section = "", string direction = "", decimal logmile = -1)
         {
+            //clean attributes to make the query more likely to success if there is a typo of some kind
+            if (district is not null)
+            {
+                district = district.Trim();
+            }
+            if (county is not null)
+            {
+                county = county.Trim();
+            }
+            if (route is not null)
+            {
+                route = route.Trim();
+            }
+            if (section is not null)
+            {
+                section = section.Trim();
+            }
+            if (direction is not null)
+            {
+                direction = direction.Trim();
+            }
+
             IQueryable<DB.RoadInv> output;
 
-            output = this._dbContext.RoadInvs.Where(b => (b.AhDistrict == district | district == "") &
-                (b.AhCounty == county | county == "") &
-                (b.AhRoute == route | route == "") &
-                (b.LogDirect == direction | direction == "") &
-                ((b.AhBlm >= logmile & b.AhElm <= logmile) | logmile == -1));
+            output = from record in this._dbContext.RoadInvs where 
+                          (record.AhDistrict == district | district == "" | district == null) & 
+                          (record.AhCounty == county | county == "" | county == null) & 
+                          (record.AhRoute == route | route == "" | route == null) &
+                          (record.AhSection == section | section == "" | section == null) &
+                          (record.LogDirect == direction | direction == "" | direction == null) &
+                          ((record.AhBlm <= logmile & record.AhElm >= logmile) | logmile == -1)
+                          orderby record.RouteSign ascending, record.AhRoadId ascending, record.AhBlm ascending 
+                          select record;
 
-            output = output.OrderBy(x => x.RouteSign)
-                .ThenBy(x => x.AhRoadId)
-                .ThenBy(x => x.AhBlm)
-                .Take(1000);
+            output = output.Take(1000);
 
 
             var val = new ValidationModel(_dbContext);

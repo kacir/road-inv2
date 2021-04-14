@@ -511,19 +511,31 @@
             </div>
         </div>
         <div id="box-alternate" class='property-box'>
-            <h6 data-toggle="tooltip" data-placement="top" title="This field will contain a comma delignated list. Each item in the list will be an alternative route name. This was not done as a separate table to make 
-                it easier for staff members to query out information.">Alternate Route Names</h6>
-            <div>
-                <button>-</button><input type="text" />
-            </div>
-            <div>
-                <button>-</button><input type="text" />
-            </div>
-            <div>
-                <button>-</button><input type="text" />
-            </div>
-            <div>
-                <button>+</button><input type="text" />
+            <h6 data-toggle="tooltip" data-placement="top" title="This field will contain a comma delignated list. Each item in the list will be an alternative route name. This was not done as a separate table to make
+                it easier for staff members to query out information.">
+                Alternate Route Names
+            </h6>
+            @if (!(Model.details.AlternativeRouteName is null))
+            {
+                @if (Model.details.AlternativeRouteName.Contains(";"))
+                {
+                    @foreach (var item in Model.details.AlternativeRouteName.Split(";"))
+                    {
+                        <div>
+                            <button tabindex="-1" class="alt-route-name-item">-</button><input type="text" value="@item" />
+                        </div>
+                    }
+                }
+                else if (Model.details.AlternativeRouteName.Length > 0)
+                {
+                    <div>
+                        <button tabindex="-1" class="alt-route-name-item">-</button><input type="text" value="@Model.details.AlternativeRouteName" />
+                    </div>
+                }
+            }
+
+            <div id="plus-div">
+                <button tabindex="-1" id="new-alt-name">+</button>
             </div>
         </div>
     </div>
@@ -609,25 +621,39 @@
         "@FieldsListModel.SurfaceWidth", "@FieldsListModel.Access", "@FieldsListModel.MedianType", "@FieldsListModel.MedianWidth",
         "@FieldsListModel.OneDirectionNumLanes", "@FieldsListModel.BothDirectionNumLanes", "@FieldsListModel.FuncClass", "@FieldsListModel.NHS",
         "@FieldsListModel.APHN", "@FieldsListModel.GovermentCode", "@FieldsListModel.SpecialSystems", "@FieldsListModel.SystemStatus",
-        "@FieldsListModel.Alternative_Route_Name", "@FieldsListModel.RoadwayWidth", "@FieldsListModel.Comment1", "@FieldsListModel.ID"];
+        "@FieldsListModel.RoadwayWidth", "@FieldsListModel.Comment1", "@FieldsListModel.ID", "@FieldsListModel.Alternative_Route_Name"];
 
     function gatherInput() {
         inputs = {};
-        subjectAttributes.forEach(function (x) {
-            var raw = $("#" + x).val();
-            inputs[x] = raw;
-        });
+
+        var i;
+        for (i = 0; i < subjectAttributes.length; i++) {
+            var raw = $("#" + subjectAttributes[i]).val();
+            inputs[subjectAttributes[i]] = raw;
+        }
 
         inputs["ID"] = @Model.details.Id;
 
         var altNames = $("#box-alternate div input").map((_, el) => el.value).get();
-        var altNamesFilter = [];
+        console.log(altNames);
+        inputs["@FieldsListModel.Alternative_Route_Name"] = "";
 
-        altNames.forEach(function (x) {
-            if (x != "") {
-                altNamesFilter.push(x);
+
+        if (altNames.length > 0) {
+            var i;
+            for (i = 0; i < altNames.length; i++) {
+                if (altNames[i] != "" && altNames[i] != undefined) {
+                    if (i === 0) {
+                        inputs["@FieldsListModel.Alternative_Route_Name"] = altNames[i].trim();
+                    } else {
+                        inputs["@FieldsListModel.Alternative_Route_Name"] = inputs["@FieldsListModel.Alternative_Route_Name"] + ";" + altNames[i].trim();
+                    }
+                }
             }
-        })
+        }
+
+
+
 
         return inputs;
     }
@@ -638,6 +664,7 @@
 
     //Check to see if the attributes are valid
     function submitInputs() {
+        console.log("SubmitInputs");
         var inputs = gatherInput();
         var constructString = "";
 
@@ -689,6 +716,7 @@
 
         }
     }
+
 
     //submit so save the changes
     $("#save-changes").click(function () {
@@ -956,7 +984,26 @@
 
     });
 
-    //logic for mirror segment
+    //deal with changes in alternate route name
+    $("#new-alt-name").click(function () {
+        //add new items to its siblings
+        var newElementText = '<div><button class="alt-route-name-item">-</button><input type="text" /></div>';
+        $(newElementText).insertBefore("#plus-div");
+
+        //rebind every time elements are added
+        $(".alt-route-name-item").click(function () {
+            $(this).parent().remove();
+        });
+
+        $("#box-alternate div input").on("keyup, change", submitInputs);
+
+    });
+
+    $(".alt-route-name-item").click(function () {
+        $(this).parent().remove();
+    });
+    $("#box-alternate div input").on("keyup, change", submitInputs);
+
 
 
 

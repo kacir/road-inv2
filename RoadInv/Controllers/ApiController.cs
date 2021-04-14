@@ -240,7 +240,7 @@ namespace RoadInv.Controllers
             string YearBuilt = "",
             string yearRecon = "",
             string MedianWidth = "",
-            string LaneWidth = "",
+            int LaneWidth = 0,
             int SurfaceWidth = 0,
             string RightShoulderSurface = "",
             string LeftShoulderSurface = "",
@@ -278,10 +278,13 @@ namespace RoadInv.Controllers
             segment.TypeOperation = TypeOperation;
             segment.YearBuilt = YearBuilt;
             segment.YearRecon = yearRecon;
+            segment.LaneWidth = LaneWidth;
             segment.MedianWidth = MedianWidth;
             segment.SurfaceWidth = SurfaceWidth;
             segment.RightShoulderSurface = RightShoulderSurface;
             segment.LeftShoulderSurface = LeftShoulderSurface;
+            segment.RightShoulderWidth = RightShoulderWidth;
+            segment.LeftShoulderWidth = LeftShoulderWidth;
             segment.RoadwayWidth = RoadwayWidth;
             segment.ExtraLanes = ExtraLanes;
             segment.MedianType = MedianType;
