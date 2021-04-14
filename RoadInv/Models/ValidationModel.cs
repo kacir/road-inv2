@@ -845,7 +845,7 @@ namespace RoadInv.Models
             }
 
             //main functional class checks
-            if (!(segment.FuncClass is null) & (segment.FuncClass == "") & ! this.ValidFuncClass(segment))
+            if (!(segment.FuncClass is null) & segment.FuncClass != "" & ! this.ValidFuncClass(segment))
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.FuncClass);
