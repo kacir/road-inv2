@@ -233,6 +233,10 @@ namespace roadInvUnitTest
         [Theory]
         [InlineData("A", true)]
         [InlineData("B", true)]
+        [InlineData("X", false)]
+        [InlineData("z", false)]
+        [InlineData("Z", false)]
+        [InlineData("12B", false)]
         [InlineData("", false)]
         [InlineData(" ", false)]
         [InlineData(null, false)]
@@ -638,6 +642,131 @@ namespace roadInvUnitTest
             {
                 Assert.False(exists);
             }
+        }
+
+        [Theory]
+        [InlineData("60", "6", true)]//pulaski county and district 6
+        [InlineData("60", "1", false)]
+        [InlineData("60", "2", false)]
+        [InlineData("60", "3", false)]
+        [InlineData("60", "4", false)]
+        [InlineData("60", "5", false)]
+        public void CountyDistrictPair(string county, string district, bool expected)
+        {
+            var exists = false;
+            foreach(var pair in validation.PairCountyDistrict)
+            {
+                if (pair.CountyNumber == county & pair.DistrictNumber == district)
+                {
+                    exists = true;
+                }
+            }
+
+            if (expected)
+            {
+                Assert.True(exists);
+            } else
+            {
+                Assert.False(exists);
+            }
+        }
+
+        [Theory]
+        [InlineData("1", true)]
+        [InlineData("2", true)]
+        [InlineData("3", true)]
+        [InlineData("4", true)]
+        [InlineData("0", false)]
+        [InlineData("8", false)]
+        [InlineData(" ", false)]
+        [InlineData("", false)]
+        [InlineData(null, false)]
+        [InlineData("undefined", false)]
+        public void UrbanArea(string urbanArea, bool expected)
+        {
+            var exists = false;
+            foreach(var urban in validation.RuralUrbanArea)
+            {
+                if (urban.Domainvalue == urbanArea)
+                {
+                    exists = true;
+                }
+            }
+            if (expected)
+            {
+                Assert.True(exists);
+            } else 
+            {
+                Assert.False(exists);    
+            }
+        }
+
+        [Theory]
+        [InlineData("A", true)]
+        [InlineData("B", true)]
+        [InlineData("C", true)]
+        [InlineData("E", true)]
+        [InlineData("N", true)]
+        [InlineData("P", true)]
+        [InlineData("S", true)]
+        [InlineData("L", true)]
+        [InlineData("Y", true)]
+        [InlineData("W", true)]
+        [InlineData("T", true)]
+        [InlineData("1", false)]
+        [InlineData("2", false)]
+        [InlineData("3", false)]
+        [InlineData("4", false)]
+        [InlineData("0", false)]
+        [InlineData("8", false)]
+        [InlineData(" ", false)]
+        [InlineData("", false)]
+        [InlineData(null, false)]
+        [InlineData("undefined", false)]
+        public void SectionCode(string codeString, bool expected)
+        {
+            var exists = false;
+            foreach(var code in validation.SectionCode)
+            {
+                if (code.SectionCode == codeString)
+                {
+                    exists = true;
+                }
+            }
+
+            if (expected)
+            {
+                Assert.True(exists);
+            } else
+            {
+                Assert.False(exists);
+            }
+        }
+
+        [Theory]
+        [InlineData("40213", "26", true)]
+        [InlineData("40213", "70", false)]
+        [InlineData("69454", "35", true)]
+        [InlineData("69454", "2", false)]
+        public void UrbanAreaCodeCountyPair(string urbanAreaCode, string county, bool expected)
+        {
+            var exists = false;
+            foreach(var pair in validation.PairUrbanAreaCounty)
+            {
+                if (pair.CountyNumber == county & pair.UrbanCode == urbanAreaCode)
+                {
+                    exists = true;
+                }
+            }
+
+            if (expected)
+            {
+                Assert.True(exists);
+            } else
+            {
+                Assert.False(exists);
+            }
+            
         }
 
     }
