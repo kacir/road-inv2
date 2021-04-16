@@ -25,8 +25,6 @@ namespace RoadInv.Controllers
         [Route("system_changes/nhs.html")]
         public async Task<IActionResult> system_changes_nhs(string sortOrder, string currentFilter, string currentFilter1, string currentFilter2, string currentFilter3, string currentFilter4, int? page, string County, string Route, string Section, string Logmile, string District)
         {
-            
-            
             int pageSize = 16;
             int pageNumber = (page ?? 1);
 
@@ -38,7 +36,7 @@ namespace RoadInv.Controllers
 
             roads = roads.OrderBy(r => r.Nhs);
 
-            if (District != null)//need all search fields to persist
+            if (District != null)//need all search fields to persist while paging
             {
                 page = 1;
             }

@@ -3,8 +3,6 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @*Need to addTagHelper globally*@
 
-@*@model IEnumerable<RoadInv.DB.RoadInv>*@
-
 @{Layout = "_Layout.cshtml";}
 
 @section nav_nhs {
@@ -41,26 +39,24 @@
                     new SelectListItem{Text = "4", Value = "4" },
                     new SelectListItem{Text = "5", Value = "5" },
                     new SelectListItem{Text = "6", Value = "6" }
-
-                })
+                },"Select District", new { @class="form-control" })
 
             </div>
             <div class='form-group'>
                 <label>County</label>
-                @Html.TextBox("County")
-
+                @Html.TextBox("County", "", new { @class="form-control" })
             </div>
             <div class='form-group'>
                 <label>Route</label>
-                @Html.TextBox("Route")
+                @Html.TextBox("Route", "", new { @class="form-control" })
             </div>
             <div class='form-group'>
                 <label>Section</label>
-                @Html.TextBox("Section")
+                @Html.TextBox("Section", "", new { @class = "form-control" })
             </div>
             <div class='form-group'>
                 <label>Logmile</label>
-                @Html.TextBox("Logmile")
+                @Html.TextBox("Logmile", "", new { @class = "form-control" })
             </div>
             <div id="form-button-holder" class='form-group'>
                 <input type="submit" value="Search" />
@@ -110,8 +106,6 @@
             </table>
             <br />
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-            @*@Html.PagedListPager(Model, page => Url.Action("system_changes_nhs", new { page = page }))*@
             @Html.PagedListPager(Model, page => Url.Action("system_changes_nhs",
             new
             {
@@ -122,11 +116,8 @@
                 currentFilter2 = ViewBag.CurrentFilter2,
                 currentFilter3 = ViewBag.CurrentFilter3,
                 currentFilter4 = ViewBag.CurrentFilter4
-            }))
+            }), new X.PagedList.Web.Common.PagedListRenderOptionsBase { ActiveLiElementClass="form-control"})
 
-            @*@@Html.PagedListPager(Model, page => Url.Action("system_changes_nhs",
-                new { page, sortOrder = ViewBag.CurrentSort}),
-                new X.PagedList.Web.Common.PagedListRenderOptionsBase() { Display = X.PagedList.Web.Common.PagedListDisplayMode.IfNeeded })*@
         </section>
         <section>
             <h5>Non-NHS Segements on NHS Routes</h5>
