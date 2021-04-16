@@ -1,16 +1,26 @@
-﻿@{Layout = "_Layout.cshtml";}
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<RoadInv.DB.RoadInv>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*Need to addTagHelper globally*@
+
+@*@model IEnumerable<RoadInv.DB.RoadInv>*@
+
+@{Layout = "_Layout.cshtml";}
 
 @section nav_nhs {
     active
 }
+
 @{
     ViewData["Title"] = "NHS";
     ViewData["slash"] = "/";
+    ViewBag.Title = "NHS";
 }
 
 <div id="segement-search-main-content master-grid">
     <div id="side-panel" class='split left'>
         <h3>Search</h3>
+
         <form>
             <div class="form-group">
                 <label for='form-dissolve-method'>Dissolve</label>
@@ -22,35 +32,38 @@
             </div>
             <div class="form-group">
                 <label for='form-district'>Distict Number</label>
-                <select class="form-control" id='form-distict'>
-                    <option></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                </select>
+                @Html.DropDownList("District", new List<SelectListItem>
+                {
+                    new SelectListItem{Text = "", Value = "" },
+                    new SelectListItem{Text = "1", Value = "1" },
+                    new SelectListItem{Text = "2", Value = "2" },
+                    new SelectListItem{Text = "3", Value = "3" },
+                    new SelectListItem{Text = "4", Value = "4" },
+                    new SelectListItem{Text = "5", Value = "5" },
+                    new SelectListItem{Text = "6", Value = "6" }
+
+                })
+
             </div>
             <div class='form-group'>
                 <label>County</label>
-                <input id="input-county" class="form-control" type="text" />
+                @Html.TextBox("County")
+
             </div>
             <div class='form-group'>
                 <label>Route</label>
-                <input class="form-control" type='text' />
+                @Html.TextBox("Route")
             </div>
             <div class='form-group'>
                 <label>Section</label>
-                <input class="form-control" type='text' />
+                @Html.TextBox("Section")
             </div>
             <div class='form-group'>
                 <label>Logmile</label>
-                <input class="form-control" type='text' />
+                @Html.TextBox("Logmile")
             </div>
             <div id="form-button-holder" class='form-group'>
-                <button id="submit-search">Submit </button>
-                <button id="clear-all">Clear All</button>
+                <input type="submit" value="Search" />
             </div>
 
 
@@ -59,7 +72,8 @@
     <div class='split-right'>
         <div class="master-grid grid-container" style="align-content: center; text-align: center;">
             <div><h1>System Change: NHS</h1> </div>
-            <div><a target="_blank" href="..//new_segement.html"><button id="new-seg-button">New NHS Segement</button></a></div>
+            <div><a target="_blank" href="../new_segement"><button id="new-seg-button">New NHS Segement</button></a></div>
+
 
         </div>
         <section>
@@ -75,67 +89,44 @@
                     <th>Length</th>
                     <th>NHS</th>
                 </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>N/A</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhLength)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nhs)</td>
+                        <td>
+                            <a asp-action="NHS_Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
+                }
+
             </table>
+            <br />
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @*@Html.PagedListPager(Model, page => Url.Action("system_changes_nhs", new { page = page }))*@
+            @Html.PagedListPager(Model, page => Url.Action("system_changes_nhs",
+            new
+            {
+                page,
+                sortOrder = ViewBag.CurrentSort,
+                currentFilter = ViewBag.CurrentFilter,
+                currentFilter1 = ViewBag.CurrentFilter1,
+                currentFilter2 = ViewBag.CurrentFilter2,
+                currentFilter3 = ViewBag.CurrentFilter3,
+                currentFilter4 = ViewBag.CurrentFilter4
+            }))
+
+            @*@@Html.PagedListPager(Model, page => Url.Action("system_changes_nhs",
+                new { page, sortOrder = ViewBag.CurrentSort}),
+                new X.PagedList.Web.Common.PagedListRenderOptionsBase() { Display = X.PagedList.Web.Common.PagedListDisplayMode.IfNeeded })*@
         </section>
         <section>
             <h5>Non-NHS Segements on NHS Routes</h5>
