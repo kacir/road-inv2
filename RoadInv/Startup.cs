@@ -6,6 +6,7 @@ using RoadInv.Models;
 using Microsoft.Extensions.Configuration;
 using RoadInv.DB;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace RoadInv
 {
@@ -17,12 +18,21 @@ namespace RoadInv
             this.configuration = configuration;
         }
 
+        public IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
             services.AddMvc();
+
+            //services.AddSession(options => 
+            //{
+            //    options.IdleTimeout = TimeSpan.FromMinutes(30); //sets session expire time
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.IsEssential = true;
+            //});
 
             //both entity framework and SQL Client are needed for project
             //used for entity framework database connection
@@ -44,6 +54,7 @@ namespace RoadInv
 
             app.UseFileServer();
             app.UseRouting();
+            //app.UseSession();
             
 
             app.UseEndpoints(endpoints => 

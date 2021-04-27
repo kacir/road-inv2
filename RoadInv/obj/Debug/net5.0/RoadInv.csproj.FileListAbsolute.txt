@@ -333,6 +333,5 @@ C:\Users\MW42705\Source\Repos\road-inv2\RoadInv\bin\Debug\net5.0\X.PagedList.dll
 C:\Users\MW42705\Source\Repos\road-inv2\RoadInv\bin\Debug\net5.0\X.PagedList.Mvc.Core.dll
 C:\Users\MW42705\Source\Repos\road-inv2\RoadInv\bin\Debug\net5.0\X.PagedList.Web.Common.dll
 C:\Users\MW42705\Source\Repos\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\MW42705\Source\Repos\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\NHS_Edit.cshtml.g.cs
 C:\Users\MW42705\Source\Repos\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.csprojAssemblyReference.cache
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\Details.cshtml.g.cs

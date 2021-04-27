@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using RoadInv.DB;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
-
-//TODO: add bulk edits
+using RoadInv.Models;
+using System.Dynamic;
 
 namespace RoadInv.Controllers
 {
@@ -23,93 +23,76 @@ namespace RoadInv.Controllers
         // GET: 
         [Route("system_changes/nhs")]
         [Route("system_changes/nhs.html")]
-        public async Task<IActionResult> system_changes_nhs(string sortOrder, string currentFilter, string currentFilter1, string currentFilter2, string currentFilter3, string currentFilter4, int? page, string County, string Route, string Section, string Logmile, string District)
+        public async Task<IActionResult> system_changes_nhs(string sortOrder, string district, string county, string route, string section, string logmile, int? page)
         {
-            int pageSize = 16;
+            int pageSize = 50;
             int pageNumber = (page ?? 1);
 
             var roads = from r in _context.RoadInvs
                         where r.Nhs != "0"
                         select r;
 
+            var diss = from r in _context.DissolveNhsViews
+                       select r;
+
+            var excNh = from r in _context.ExcludeNhs
+                        select r;
+
             ViewBag.CurrentSort = sortOrder;
 
             roads = roads.OrderBy(r => r.Nhs);
 
-            if (District != null)//need all search fields to persist while paging
+            var mymodel = new SystemChangesPageModel();
+
+            if (district != null)
             {
                 page = 1;
+                mymodel.District = district;
             }
-            else
-            {
-                District = currentFilter;//There has to be a better way to do this
 
-            }
-            ViewBag.currentFilter = District; //saving filters
-
-            if (County != null)
+            if (county != null)
             {
                 page = 1;
+                mymodel.County = county;
             }
-            else
-            {
-                County = currentFilter1;
 
-            }
-            ViewBag.currentFilter1 = County;//need to find better way to do this
-
-            if (Route != null)
+            if (route != null)
             {
                 page = 1;
+                mymodel.Route = route;
             }
-            else
-            {
-                Route = currentFilter2;
 
-            }
-            ViewBag.currentFilter2 = Route;//need to find better way to do this
-
-            if (Section != null)
+            if (section != null)
             {
                 page = 1;
+                mymodel.Section = section;
             }
-            else
-            {
-                Section = currentFilter3;
 
-            }
-            ViewBag.currentFilter3 = Section;//need to find better way to do this
-
-            if (Logmile != null)
+            if (logmile != null)
             {
                 page = 1;
+                mymodel.Logmile = logmile;
             }
-            else
-            {
-                Logmile = currentFilter4;
 
-            }
-            ViewBag.currentFilter4 = Logmile;//need to find better way to do this
-
-            if (!String.IsNullOrEmpty(County))
+            if (!String.IsNullOrEmpty(district))
             {
-                roads = roads.Where(r => r.AhCounty.Equals(County));
+                roads = roads.Where(r => r.AhDistrict.Equals(district));
             }
-            if (!String.IsNullOrEmpty(Route))
+            if (!String.IsNullOrEmpty(county)) 
             {
-                roads = roads.Where(r => r.AhRoute.Equals(Route));
+                roads = roads.Where(r => r.AhCounty.Equals(county));
             }
-            if (!String.IsNullOrEmpty(Section))
+            if (!String.IsNullOrEmpty(route))
             {
-                roads = roads.Where(r => r.AhSection.Equals(Section));
+                roads = roads.Where(r => r.AhRoute.Equals(route));
             }
-            if (!String.IsNullOrEmpty(Logmile))
+            if (!String.IsNullOrEmpty(section))
             {
-                roads = roads.Where(r => r.AhBlm.Equals(Convert.ToDecimal(Logmile)) || r.AhElm.Equals(Convert.ToDecimal(Logmile)));
+                roads = roads.Where(r => r.AhSection.Equals(section));
             }
-            if (!String.IsNullOrEmpty(District))
+            if (!String.IsNullOrEmpty(logmile))
             {
-                roads = roads.Where(r => r.AhDistrict.Equals(District));
+                roads = roads.Where(r => r.AhBlm.Equals(Convert.ToDecimal(logmile)) || r.AhElm.Equals(Convert.ToDecimal(logmile)));
             }
 
             switch (sortOrder)
@@ -122,10 +105,12 @@ namespace RoadInv.Controllers
                     break;
             }
 
-            return View(await roads.ToPagedListAsync(pageNumber, pageSize));
-            //return View(await roads.ToListAsync());
+            mymodel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
+            //mymodel.DissolveNhsViews = await diss.ToPagedListAsync(pageNumber, pageSize);
+            mymodel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize);
+            //return View(await roads.ToPagedListAsync(pageNumber, pageSize));
+            return View(mymodel);
         }
-
 
         // GET: 
         [Route("system_changes/nhs/Details")]
@@ -163,60 +148,6 @@ namespace RoadInv.Controllers
             {
                 _context.Add(roadInv);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(roadInv);
-        }
-
-        [Route("system_changes/nhs/NHS_Edit/{id:int}")]
-        
-        public async Task<IActionResult> NHS_Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var roadInv = await _context.RoadInvs.FindAsync(id);
-            if (roadInv == null)
-            {
-                return NotFound();
-            }
-            return View(roadInv);
-        }
-
-        // POST: 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Route("system_changes/nhs/NHS_Edit")]
-        [Route("system_changes/nhs/NHS_Edit.html")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> NHS_Edit(int id, [Bind("Id,AhDistrict,AhCounty,AhRoute,AhSection,LogDirect,AhRoadId,GovermentCode,RuralUrbanArea,UrbanAreaCode,FuncClass,Nhs,SystemStatus,SpecialSystems,BothDirectionNumLanes,OneDirectionNumLanes,Comment1,TypeRoad,RouteSign,Aphn,Access,TypeOperation,YearBuilt,YearRecon,MedianWidth,LaneWidth,SurfaceWidth,RightShoulderSurface,LeftShoulderSurface,RightShoulderWidth,LeftShoulderWidth,RoadwayWidth,ExtraLanes,YearAdt,MedianType,SurfaceType,AlternativeRouteName,LegacyId,LegacyBlm,LegacyElm,UpdateUserId,UpdateDate,Gisid,GiscreateDate,GiscreatedUser,GislastEditedUser,GislastEditedDate,ArnoldConv,AhBlm,AhElm,AhLength")] DB.RoadInv roadInv)
-        {
-            if (id != roadInv.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(roadInv);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RoadInvExists(roadInv.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
                 return RedirectToAction(nameof(Index));
             }
             return View(roadInv);

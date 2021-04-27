@@ -33,6 +33,9 @@ namespace RoadInv.DB
         public virtual DbSet<DissolveNhsView> DissolveNhsViews { get; set; }
         public virtual DbSet<DissolveRouteSignView> DissolveRouteSignViews { get; set; }
         public virtual DbSet<DissolveSpecialSystemsView> DissolveSpecialSystemsViews { get; set; }
+        public virtual DbSet<ExcludeAphn> ExcludeAphns { get; set; }
+        public virtual DbSet<ExcludeNh> ExcludeNhs { get; set; }
+        public virtual DbSet<ExcludeSpecialSystem> ExcludeSpecialSystems { get; set; }
         public virtual DbSet<Gisexport> Gisexports { get; set; }
         public virtual DbSet<LegacyDatum> LegacyData { get; set; }
         public virtual DbSet<OutmileageA> OutmileageAs { get; set; }
@@ -48,7 +51,6 @@ namespace RoadInv.DB
         public virtual DbSet<Sysdiagram> Sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
-        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -57,7 +59,6 @@ namespace RoadInv.DB
                 optionsBuilder.UseSqlServer("Server=INVSQL-DEV;Database=roadinv;Trusted_Connection=True;");
             }
         }
-        */
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -722,6 +723,69 @@ namespace RoadInv.DB
                 entity.Property(e => e.SpecialSystems)
                     .HasMaxLength(3)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ExcludeAphn>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("excludeAPHN");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .IsRequired()
+                    .HasMaxLength(273)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+            });
+
+            modelBuilder.Entity<ExcludeNh>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("excludeNHS");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .IsRequired()
+                    .HasMaxLength(273)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+            });
+
+            modelBuilder.Entity<ExcludeSpecialSystem>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("excludeSpecialSystems");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .IsRequired()
+                    .HasMaxLength(273)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
             });
 
             modelBuilder.Entity<Gisexport>(entity =>
@@ -1850,12 +1914,6 @@ namespace RoadInv.DB
                 entity.Property(e => e.AhLength)
                     .HasColumnType("decimal(19, 3)")
                     .HasColumnName("AH_Length");
-
-                entity.Property(e => e.AhRoadId)
-                    .IsRequired()
-                    .HasMaxLength(273)
-                    .IsUnicode(false)
-                    .HasColumnName("AH_RoadID");
 
                 entity.Property(e => e.AhRoute)
                     .HasMaxLength(255)
