@@ -14,6 +14,8 @@ namespace RoadInv.Models
         public IPagedList<RoadInv.DB.ExcludeNh> ExcludeNhs { get; set; }
         public IEnumerable<SelectListItem>Counties{ get; set; }
         public IEnumerable<SelectListItem> Districts { get; set; }
+        
+
 
         public string District { get; set; }
         public string County { get; set; }

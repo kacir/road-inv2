@@ -30,22 +30,11 @@
             </div>
             <div class="form-group">
                 <label for='form-district'>Distict Number</label>
-                @Html.DropDownListFor(m=>m.District, Model.Districts, new {@class ="form-control" })
-                @*@Html.DropDownList("District", new List<SelectListItem>
-                {
-                    new SelectListItem{Text = "", Value = "" },
-                    new SelectListItem{Text = "1", Value = "1" },
-                    new SelectListItem{Text = "2", Value = "2" },
-                    new SelectListItem{Text = "3", Value = "3" },
-                    new SelectListItem{Text = "4", Value = "4" },
-                    new SelectListItem{Text = "5", Value = "5" },
-                    new SelectListItem{Text = "6", Value = "6" }
-                }, "Select District", new { @class = "form-control"})*@
-
+                @Html.DropDownListFor(m=>m.District, Model.Districts," ", new {@class ="form-control" })
             </div>
             <div class='form-group'>
                 <label>County</label>
-                @Html.DropDownListFor(m => m.County, Model.Counties, new { @class = "form-control"})
+                @Html.DropDownListFor(m => m.County,Model.Counties, " ", new { @class = "form-control", })
                 @*@Html.TextBox("County", "", new { @class = "form-control" })*@
             </div>
             <div class='form-group'>
@@ -62,6 +51,7 @@
             </div>
             <div id="form-button-holder" class='form-group'>
                 <input type="submit" value="Search" />
+                <input type="submit" value="Clear" />
             </div>
 
 
@@ -118,7 +108,13 @@
                 route = Model.Route,
                 section = Model.Section,
                 logmile = Model.Logmile
-            }), new X.PagedList.Web.Common.PagedListRenderOptionsBase { ActiveLiElementClass = "form-control" })
+            }), new X.PagedList.Web.Common.PagedListRenderOptionsBase
+            {
+                DisplayItemSliceAndTotal = false,
+                ContainerDivClasses = new[] { "navigation" },
+                LiElementClasses = new[] { "page-item" },
+                PageClasses = new[] { "page-link" }
+            })
 
         </section>
         <section>
