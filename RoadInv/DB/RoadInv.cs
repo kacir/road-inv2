@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -55,8 +56,11 @@ namespace RoadInv.DB
         public string GislastEditedUser { get; set; }
         public DateTime? GislastEditedDate { get; set; }
         public string ArnoldConv { get; set; }
+        [DisplayFormat(DataFormatString = "{0:F3}")]
         public decimal? AhBlm { get; set; }
+        [DisplayFormat(DataFormatString = "{0:F3}")]
         public decimal? AhElm { get; set; }
+        [DisplayFormat(DataFormatString = "{0:F3}")]
         public decimal? AhLength { get; set; }
     }
 }

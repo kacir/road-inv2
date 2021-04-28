@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
@@ -16,12 +17,13 @@ namespace RoadInv.Models
         public IEnumerable<SelectListItem> Districts { get; set; }
         
 
-
         public string District { get; set; }
         public string County { get; set; }
         public string Route { get; set; }
         public string Section { get; set; }
-        public string Logmile { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:F3}")]
+        public decimal? Logmile { get; set; }
 
     }
 }

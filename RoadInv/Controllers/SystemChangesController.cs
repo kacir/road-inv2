@@ -24,7 +24,7 @@ namespace RoadInv.Controllers
         // GET: 
         [Route("system_changes/nhs")]
         [Route("system_changes/nhs.html")]
-        public async Task<IActionResult> system_changes_nhs(string sortOrder, string district, string county, string route, string section, string logmile, int? page)
+        public async Task<IActionResult> system_changes_nhs(string sortOrder, string district, string county, string route, string section, decimal? logmile, int? page)
         {
             int pageSize = 50;
             int pageNumber = (page ?? 1); //TODO: separate paging for excludeNHS table
@@ -95,9 +95,9 @@ namespace RoadInv.Controllers
             {
                 roads = roads.Where(r => r.AhSection.Equals(section));
             }
-            if (!String.IsNullOrEmpty(logmile))
+            if (!logmile.Equals(null))
             {
-                roads = roads.Where(r => r.AhBlm.Equals(Convert.ToDecimal(logmile)) || r.AhElm.Equals(Convert.ToDecimal(logmile)));
+                roads = roads.Where(r => r.AhBlm.Equals(logmile) || r.AhElm.Equals(logmile));
             }
 
             switch (sortOrder)
