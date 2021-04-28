@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 using RoadInv.Models;
 using System.Dynamic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RoadInv.Controllers
 {
@@ -32,17 +33,20 @@ namespace RoadInv.Controllers
                         where r.Nhs != "0"
                         select r;
 
-            var diss = from r in _context.DissolveNhsViews
-                       select r;
-
             var excNh = from r in _context.ExcludeNhs
                         select r;
 
-            ViewBag.CurrentSort = sortOrder;
-
-            roads = roads.OrderBy(r => r.Nhs);
+            //var diss = from r in _context.DissolveNhsViews
+            //           select r;
 
             var mymodel = new SystemChangesPageModel();
+
+            mymodel.Counties = GetAllCounties(); //populates drop down
+            mymodel.Districts = GetAllDistricts();
+
+            ViewBag.CurrentSort = sortOrder;
+
+            roads = roads.OrderBy(r => r.Nhs); 
 
             if (district != null)
             {
@@ -100,16 +104,42 @@ namespace RoadInv.Controllers
                 case "name_desc":
                     roads = roads.OrderByDescending(r => r.Nhs);
                     break;
-                default:  // NHS ascending 
+                default: 
                     roads = roads.OrderBy(r => r.Nhs);
                     break;
             }
-
-            mymodel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
+            mymodel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize); //TODO: the page number variable is shared between models
+            mymodel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize); 
             //mymodel.DissolveNhsViews = await diss.ToPagedListAsync(pageNumber, pageSize);
-            mymodel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize);
-            //return View(await roads.ToPagedListAsync(pageNumber, pageSize));
             return View(mymodel);
+        }
+
+        private IEnumerable<SelectListItem> GetAllCounties() //TODO: need to move this function to a seperate class
+        {
+            IEnumerable<SelectListItem> list = from s in _context.RoadInvs
+                                               select new SelectListItem
+                                               {
+                                                   Selected = false,
+                                                   Text = s.AhCounty,
+                                                   Value = s.AhCounty
+                                               };
+            list = list.GroupBy(x => x.Text).Select(x => x.First()).ToList();
+            list = list.OrderBy(x => x.Value); //funky order. TODO: figure out why conversion doesn't work
+            return list; 
+        }
+
+        private IEnumerable<SelectListItem> GetAllDistricts()//TODO: need to move this function to a seperate class
+        {
+            IEnumerable<SelectListItem> list = from s in _context.RoadInvs
+                                               select new SelectListItem
+                                               {
+                                                   Selected = false,
+                                                   Text = s.AhDistrict,
+                                                   Value = s.AhDistrict
+                                               };
+            list = list.GroupBy(x => x.Text).Select(x => x.First()).ToList();
+            list = list.OrderBy(x => Convert.ToInt32(x.Value));
+            return list; 
         }
 
         // GET: 

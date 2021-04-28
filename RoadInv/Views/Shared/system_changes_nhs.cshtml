@@ -30,7 +30,8 @@
             </div>
             <div class="form-group">
                 <label for='form-district'>Distict Number</label>
-                @Html.DropDownList("District", new List<SelectListItem>
+                @Html.DropDownListFor(m=>m.District, Model.Districts, new {@class ="form-control" })
+                @*@Html.DropDownList("District", new List<SelectListItem>
                 {
                     new SelectListItem{Text = "", Value = "" },
                     new SelectListItem{Text = "1", Value = "1" },
@@ -39,13 +40,13 @@
                     new SelectListItem{Text = "4", Value = "4" },
                     new SelectListItem{Text = "5", Value = "5" },
                     new SelectListItem{Text = "6", Value = "6" }
-                }, "Select District", new { @class = "form-control"})
-                
+                }, "Select District", new { @class = "form-control"})*@
 
             </div>
             <div class='form-group'>
                 <label>County</label>
-                @Html.TextBox("County", "", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.County, Model.Counties, new { @class = "form-control"})
+                @*@Html.TextBox("County", "", new { @class = "form-control" })*@
             </div>
             <div class='form-group'>
                 <label>Route</label>
@@ -84,23 +85,24 @@
                     <th>Length</th>
                     <th>NHS</th>
                 </tr>
+    
                 @foreach (var item in Model.roadInvs)
                 {
-            <tr>
-                <td>N/A</td>
-                <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
-                <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
-                <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
-                <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
-                <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
-                <td>@Html.DisplayFor(modelItem => item.AhLength)</td>
-                <td>@Html.DisplayFor(modelItem => item.Nhs)</td>
-                <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>
-                <td>
-                    
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                </td>
-            </tr>
+                    <tr>
+                        <td>N/A</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhLength)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nhs)</td>
+                        <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>
+                        <td>
+
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
                 }
 
             </table>

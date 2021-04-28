@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,8 +10,10 @@ namespace RoadInv.Models
     public class SystemChangesPageModel
     {
         public IPagedList<RoadInv.DB.RoadInv> roadInvs { get; set; }
-        //public IPagedList<RoadInv.DB.DissolveNhsView> DissolveNhsViews { get; set; }
+        public IPagedList<RoadInv.DB.DissolveNhsView> DissolveNhsViews { get; set; }
         public IPagedList<RoadInv.DB.ExcludeNh> ExcludeNhs { get; set; }
+        public IEnumerable<SelectListItem>Counties{ get; set; }
+        public IEnumerable<SelectListItem> Districts { get; set; }
 
         public string District { get; set; }
         public string County { get; set; }
