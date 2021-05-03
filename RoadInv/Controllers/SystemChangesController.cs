@@ -24,7 +24,7 @@ namespace RoadInv.Controllers
         // GET: 
         [Route("system_changes/nhs")]
         [Route("system_changes/nhs.html")]
-        public async Task<IActionResult> system_changes_nhs(string sortOrder, string district, string county, string route, string section, decimal? logmile, int? page)
+        public async Task<IActionResult> system_changes_nhs(string sortOrder, string district, string county, string route, string section, decimal? logmile, int? page,string dissolve)
         {
             int pageSize = 50;
             int pageNumber = (page ?? 1); //TODO: separate paging for excludeNHS table
@@ -36,14 +36,15 @@ namespace RoadInv.Controllers
             var excNh = from r in _context.ExcludeNhs
                         select r;
 
-            //var diss = from r in _context.DissolveNhsViews
-            //           select r;
+            var diss = from r in _context.DissolveNhsViews
+                       select r;
 
             var mymodel = new SystemChangesPageModel();
             var validationModel = new ValidationModel(_context);
             
             mymodel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; }) ;
             mymodel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - "+ a.County, Value = a.CountyNumber, Selected = false }; });
+            mymodel.Dissolve = dissolve;
 
             ViewBag.CurrentSort = sortOrder;
 
@@ -110,8 +111,13 @@ namespace RoadInv.Controllers
                     break;
             }
             mymodel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize); 
-            mymodel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize); 
-            //mymodel.DissolveNhsViews = await diss.ToPagedListAsync(pageNumber, pageSize);
+            mymodel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize);
+            //mymodel.Dissolve = mymodel.DissolveSelect.;
+            if(mymodel.Dissolve=="Segment")
+            {
+                mymodel.DissolveNhsViews = await diss.ToPagedListAsync(pageNumber, pageSize);
+            }
+
             return View(mymodel);
         }
 

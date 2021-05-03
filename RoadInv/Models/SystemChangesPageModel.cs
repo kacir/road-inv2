@@ -8,6 +8,7 @@ using X.PagedList;
 
 namespace RoadInv.Models
 {
+
     public class SystemChangesPageModel
     {
         public IPagedList<RoadInv.DB.RoadInv> roadInvs { get; set; }
@@ -21,9 +22,13 @@ namespace RoadInv.Models
         public string County { get; set; }
         public string Route { get; set; }
         public string Section { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:F3}")]
         public decimal? Logmile { get; set; }
-
+        public string SortOrder { get; set; }
+        public string Dissolve { get; set; }
+        public enum DissolveSelect
+        {
+            Segment,
+            ARNOLD_ID
+        }
     }
 }
