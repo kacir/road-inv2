@@ -81,9 +81,29 @@
                             <td>@Html.DisplayFor(modelItem => item.NhsSummary)</td>
                         </tr>
                     }
-                }
-                else
-                {
+                    
+                    @Html.PagedListPager(Model.DissolveNhsViews, page => Url.Action("system_changes_nhs",
+                    new
+                    {
+                        page,
+                        sortOrder = ViewBag.CurrentSort,
+                        district = Model.District,
+                        county = Model.County,
+                        route = Model.Route,
+                        section = Model.Section,
+                        logmile = Model.Logmile,
+                        dissolve = Model.Dissolve
+                    }), new X.PagedList.Web.Common.PagedListRenderOptionsBase
+                    {
+                        DisplayItemSliceAndTotal = false,
+                        ContainerDivClasses = new[] { "navigation" },
+                        LiElementClasses = new[] { "page-item" },
+                        PageClasses = new[] { "page-link" }
+                    })
+
+                    }
+                    else
+                    {
                     <tr>
                         <th>ARNOLD ID</th>
                         <th>County</th>
