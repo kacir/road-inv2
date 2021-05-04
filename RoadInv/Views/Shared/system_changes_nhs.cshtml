@@ -2,36 +2,86 @@
 @model RoadInv.Models.SystemChangesPageModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @*Need to addTagHelper globally*@
-
 @{Layout = "_Layout.cshtml";}
-
 @section nav_nhs {
     active
 }
-
 @{
     ViewData["Title"] = "NHS";
     ViewData["slash"] = "/";
     ViewBag.Title = "NHS";
 }
 
-<div id="segement-search-main-content master-grid"> 
+<link rel="stylesheet" href="http://localhost:65424/css/micromodal.css">@*need to fix this*@
+<script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+
+<script>
+    MicroModal.init();
+    console.log('modal inititalized')
+</script>
+
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+                <h2 class="modal__title" id="modal-1-title">
+                    NHS Bulk Redesignation
+                </h2>
+                <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+            </header>
+            <main class="modal__content" id="modal-1-content">
+                <form id="BulkEdit">
+                    <div class='form-group'>
+                        <label>County</label>
+                        @Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })
+                    </div>
+                    <div class='form-group'>
+                        <label>Route</label>
+                        @Html.TextBox("Route", "", new { @class = "form-control" })
+                    </div>
+                    <div class='form-group'>
+                        <label>Direction</label>
+                        @Html.DropDownListFor(m => m.Direction, Model.Directions, " ", new { @class = "form-control" })
+                    </div>
+                    <div class='form-group'>
+                        <label>BLM</label>
+                        @Html.TextBox("BLM", "", new { @class = "form-control" })
+                    </div>
+                    <div class='form-group'>
+                        <label>ELM</label>
+                        @Html.TextBox("ELM", "", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for='form-district'>NHS</label>
+                        @Html.DropDownListFor(m => m.NHS, Model.NHS_vals, " ", new { @class = "form-control" })
+                    </div>
+                </form>
+            </main>
+            <footer class="modal__footer">
+                <button class="modal__btn modal__btn-primary" form="BulkEdit" type="submit">Submit for Validation</button>
+                <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
+            </footer>
+        </div>
+    </div>
+</div>
+
+<div id="segement-search-main-content master-grid">
     <div id="side-panel" class='split left'>
         <h3>Search</h3>
 
         <form>
             <div class="form-group">
                 <label for='form-dissolve-method'>Dissolve</label>
-                @Html.DropDownListFor(model => model.Dissolve, Enum.GetNames(typeof(RoadInv.Models.SystemChangesPageModel.DissolveSelect)).Select(e => new SelectListItem { Text = e })," ", new {@class="form-control" })
+                @Html.DropDownListFor(model => model.Dissolve, Enum.GetNames(typeof(RoadInv.Models.SystemChangesPageModel.DissolveSelect)).Select(e => new SelectListItem { Text = e }), " ", new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label for='form-district'>Distict Number</label>
-                @Html.DropDownListFor(m=>m.District, Model.Districts," ", new {@class ="form-control" })
+                @Html.DropDownListFor(m => m.District, Model.Districts, " ", new { @class = "form-control" })
             </div>
             <div class='form-group'>
                 <label>County</label>
                 @Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })
-                @*@Html.TextBox("County", "", new { @class = "form-control" })*@
             </div>
             <div class='form-group'>
                 <label>Route</label>
@@ -57,6 +107,7 @@
         <div class="master-grid grid-container" style="align-content: center; text-align: center;">
             <div><h1>System Change: NHS</h1> </div>
             <div><a target="_blank" href="../new_segement"><button id="new-seg-button">New NHS Segement</button></a></div>
+            <div><button class="segment-button" data-micromodal-trigger="modal-1" href='javascript:void(0);'>Apply Bulk Redesignation</button></div>
         </div>
         <section>
             <h5>NHS Designation Summarized by: <span>ARNOLD ID</span> </h5>
@@ -81,7 +132,7 @@
                             <td>@Html.DisplayFor(modelItem => item.NhsSummary)</td>
                         </tr>
                     }
-                    
+
                     @Html.PagedListPager(Model.DissolveNhsViews, page => Url.Action("system_changes_nhs",
                     new
                     {
@@ -92,6 +143,10 @@
                         route = Model.Route,
                         section = Model.Section,
                         logmile = Model.Logmile,
+                        direction = Model.Direction,
+                        blm = Model.BLM,
+                        elm = Model.ELM,
+                        nhs = Model.NHS,
                         dissolve = Model.Dissolve
                     }), new X.PagedList.Web.Common.PagedListRenderOptionsBase
                     {
@@ -101,9 +156,9 @@
                         PageClasses = new[] { "page-link" }
                     })
 
-                    }
-                    else
-                    {
+                }
+                else
+                {
                     <tr>
                         <th>ARNOLD ID</th>
                         <th>County</th>
@@ -147,7 +202,11 @@
                 county = Model.County,
                 route = Model.Route,
                 section = Model.Section,
-                logmile = Model.Logmile
+                logmile = Model.Logmile,
+                direction = Model.Direction,
+                blm = Model.BLM,
+                elm = Model.ELM,
+                nhs = Model.NHS
             }), new X.PagedList.Web.Common.PagedListRenderOptionsBase
             {
                 DisplayItemSliceAndTotal = false,
@@ -180,3 +239,79 @@
         </section>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        try {
+            MicroModal.init({
+                awaitCloseAnimation: true, // set to false, to remove close animation
+                onShow: function (modal) {
+                    console.log("micromodal open");
+                    addModalContentHeight('short');
+                    /**************************
+                      For full screen scrolling modal,
+                      uncomment line below & comment line above
+                     **************************/
+                    //addModalContentHeight('tall');
+                },
+                onClose: function (modal) {
+                    console.log("micromodal close");
+                }
+            });
+        } catch (e) {
+            console.log("micromodal error: ", e);
+        }
+    });
+
+    function addModalContentHeight(type) {
+        var type = (arguments[0] != null) ? arguments[0] : 'short';
+        var modalContainer = $("#modal-container");
+        var modalHeader = $("#modal-header");
+        var modalContentContent = $("#modal-content-content");
+        var modalContent = $("#modal-content");
+        var modalFooter = $("#modal-footer");
+
+        var modalIsDefined =
+            modalContainer.length &&
+            modalHeader.length &&
+            modalContent.length &&
+            modalFooter.length;
+
+        if (modalIsDefined) {
+            var modalContainerHeight = modalContainer.outerHeight();
+            var modalHeaderHeight = modalHeader.outerHeight();
+            var modalFooterHeight = modalFooter.outerHeight();
+
+            console.log("modalContainerHeight: ", modalContainerHeight);
+            console.log("modalHeaderHeight: ", modalHeaderHeight);
+            console.log("modalFooterHeight: ", modalFooterHeight);
+
+            var offset = 80;
+
+            var height = modalContainerHeight - (modalHeaderHeight + modalFooterHeight + offset);
+
+            console.log('height: ', height);
+
+            if (!isNaN(height)) {
+                height = height > 0 ? height : 20;
+                if (type == 'short') {
+                    modalContent.css({ 'height': height + 'px' });
+                }
+                else {
+                    modalContainer.css({ 'height': '100%', 'overflow-y': 'hidden', 'margin-top': '40px' });
+                    modalContentContent.css({ 'height': '100%', 'overflow-y': 'auto' });
+                    modalContent.css({ 'overflow-y': 'visible' });
+                    modalFooter.css({ 'margin-bottom': '120px' });
+                }
+                setTimeout(function () {
+                    modalContent.css({ 'display': 'block' });
+                    var modalContentDOM = document.querySelector('#modal-content');
+                    modalContentDOM.scrollTop = 0;
+                });
+            }
+
+        }
+
+    }
+
+</script>

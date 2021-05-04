@@ -24,7 +24,7 @@ namespace RoadInv.Controllers
         // GET: 
         [Route("system_changes/nhs")]
         [Route("system_changes/nhs.html")]
-        public async Task<IActionResult> system_changes_nhs(string sortOrder, string district, string county, string route, string section, decimal? logmile, int? page,string dissolve)
+        public async Task<IActionResult> system_changes_nhs(string sortOrder, string district, string county, string route, string section, decimal? logmile, decimal? blm, decimal? elm, string direction, string nhs, int? page, string dissolve)
         {
             int pageSize = 50;
             int pageNumber = (page ?? 1); //TODO: separate paging for excludeNHS table
@@ -44,7 +44,11 @@ namespace RoadInv.Controllers
             
             mymodel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; }) ;
             mymodel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - "+ a.County, Value = a.CountyNumber, Selected = false }; });
+            mymodel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            mymodel.NHS_vals = validationModel.NHS.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
             mymodel.Dissolve = dissolve;
+          
+
 
             ViewBag.CurrentSort = sortOrder;
 
@@ -55,29 +59,45 @@ namespace RoadInv.Controllers
                 page = 1;
                 mymodel.District = district;
             }
-
             if (county != null)
             {
                 page = 1;
                 mymodel.County = county;
             }
-
             if (route != null)
             {
                 page = 1;
                 mymodel.Route = route;
             }
-
             if (section != null)
             {
                 page = 1;
                 mymodel.Section = section;
             }
-
             if (logmile != null)
             {
                 page = 1;
                 mymodel.Logmile = logmile;
+            }
+            if(blm != null)
+            {
+                page = 1;
+                mymodel.BLM = blm;
+            }
+            if (blm != null)
+            {
+                page = 1;
+                mymodel.ELM = elm;
+            }
+            if(direction != null)
+            {
+                page = 1;
+                mymodel.Direction = direction;
+            }
+            if(nhs != null)
+            {
+                page = 1;
+                mymodel.NHS = nhs;
             }
 
             if (!String.IsNullOrEmpty(district))
@@ -100,6 +120,22 @@ namespace RoadInv.Controllers
             {
                 roads = roads.Where(r => r.AhBlm.Equals(logmile) || r.AhElm.Equals(logmile));
             }
+            if (!blm.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(blm));//redundant
+            }
+            if (!elm.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(elm));
+            }
+            if (!String.IsNullOrEmpty(direction))
+            {
+                roads = roads.Where(r => r.LogDirect.Equals(direction));
+            }
+            if (!String.IsNullOrEmpty(nhs))
+            {
+                roads = roads.Where(r => r.Nhs.Equals(nhs));
+            }
 
             switch (sortOrder)
             {
@@ -120,6 +156,25 @@ namespace RoadInv.Controllers
 
             return View(mymodel);
         }
+
+        //[HttpGet] // this action result returns the partial containing the modal
+        //public ActionResult EditDesignation(int id)
+        //{
+        //    var viewModel = new BulkRedesignationPageModel();
+        //    viewModel.Id = id;
+        //    return PartialView("_EditDesignationPartial", viewModel);
+        //}
+
+        //[HttpPost] // this action takes the viewModel from the modal
+        //public ActionResult EditDesignation(BulkRedesignationPageModel viewModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //update
+        //        return View();
+        //    }
+        //    return View();
+        //}
 
         // GET: 
         [Route("system_changes/nhs/Details")]
