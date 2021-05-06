@@ -19,7 +19,7 @@ namespace RoadInv.Models
         public IEnumerable<SelectListItem> Directions { get; set; }
         public IEnumerable<SelectListItem> NHS_vals { get; set; }
 
-
+        public string RoadID { get; set; }
         public string District { get; set; }
         public string County { get; set; }
         public string Route { get; set; }
@@ -27,12 +27,11 @@ namespace RoadInv.Models
         public decimal? Logmile { get; set; }
         public string SortOrder { get; set; }
         public string Dissolve { get; set; }
-
         public string Direction { get; set; }
         public decimal? BLM { get; set; }
         public decimal? ELM { get; set; }
         public string NHS { get; set; }
-
+        public int? Page { get; set; }
         public enum DissolveSelect
         {
             Segment,

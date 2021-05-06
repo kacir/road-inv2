@@ -30,37 +30,40 @@
                 <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
             </header>
             <main class="modal__content" id="modal-1-content">
-                <form id="BulkEdit">
-                    <div class='form-group'>
-                        <label>County</label>
-                        @Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })
-                    </div>
-                    <div class='form-group'>
-                        <label>Route</label>
-                        @Html.TextBox("Route", "", new { @class = "form-control" })
-                    </div>
-                    <div class='form-group'>
-                        <label>Direction</label>
-                        @Html.DropDownListFor(m => m.Direction, Model.Directions, " ", new { @class = "form-control" })
-                    </div>
-                    <div class='form-group'>
-                        <label>BLM</label>
-                        @Html.TextBox("BLM", "", new { @class = "form-control" })
-                    </div>
-                    <div class='form-group'>
-                        <label>ELM</label>
-                        @Html.TextBox("ELM", "", new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label for='form-district'>NHS</label>
-                        @Html.DropDownListFor(m => m.NHS, Model.NHS_vals, " ", new { @class = "form-control" })
-                    </div>
-                </form>
+                @using (Html.BeginForm("nhs_update", "system_changes", FormMethod.Post))
+                {
+                        <div class='form-group'>
+                            <label>County</label>
+                            @Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })
+                        </div>
+                        <div class='form-group'>
+                            <label>Route</label>
+                            @Html.TextBox("Route", "", new { @class = "form-control" })
+                        </div>
+                        <div class='form-group'>
+                            <label>Direction</label>
+                            @Html.DropDownListFor(m => m.Direction, Model.Directions, " ", new { @class = "form-control" })
+                        </div>
+                        <div class='form-group'>
+                            <label>BLM</label>
+                            @Html.TextBox("BLM", "", new { @class = "form-control" })
+                        </div>
+                        <div class='form-group'>
+                            <label>ELM</label>
+                            @Html.TextBox("ELM", "", new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label for='form-district'>NHS</label>
+                            @Html.DropDownListFor(m => m.NHS, Model.NHS_vals, " ", new { @class = "form-control" })
+                        </div>
+                    <footer class="modal__footer">
+                        <button class="modal__btn modal__btn-primary" type="submit" value="Update">Submit for Validation</button>
+                        @*<input class="modal__btn modal__btn-primary" type="button" value="Submit for Validation" onclick="location.href='@Url.Action("nhs_update", "system_changes")'" />*@
+                        <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
+                    </footer>
+                }
             </main>
-            <footer class="modal__footer">
-                <button class="modal__btn modal__btn-primary" form="BulkEdit" type="submit">Submit for Validation</button>
-                <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
-            </footer>
+
         </div>
     </div>
 </div>
@@ -171,7 +174,7 @@
                     @foreach (var item in Model.roadInvs)
                     {
                         <tr>
-                            <td>N/A</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
                             <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
@@ -205,7 +208,8 @@
                 direction = Model.Direction,
                 blm = Model.BLM,
                 elm = Model.ELM,
-                nhs = Model.NHS
+                nhs = Model.NHS,
+                dissolve = Model.Dissolve
             }), new X.PagedList.Web.Common.PagedListRenderOptionsBase
             {
                 DisplayItemSliceAndTotal = false,
@@ -220,14 +224,12 @@
             <table>
                 <tr>
                     <th>ARNOLD ID</th>
-                    <th>RoadID</th>
                     <th>BLM</th>
                     <th>ELM</th>
                 </tr>
                 @foreach (var item in Model.ExcludeNhs)
                 {
                     <tr>
-                        <td>N/A</td>
                         <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                         <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                         <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
