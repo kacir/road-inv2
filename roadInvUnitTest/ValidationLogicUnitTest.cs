@@ -178,14 +178,16 @@ namespace roadInvUnitTest
         }
 
         [Theory]
-        [InlineData(5, 12, true)]
-        [InlineData(5, 999, true)]
-        [InlineData(900, 999, true)]
-        [InlineData(1001, 1002, false)]
-        [InlineData(1001, 100000000, false)]
-        [InlineData(0, 9999999999, false)]
+        [InlineData(5, 12, 0)]
+        [InlineData(5, 999, 0)]
+        [InlineData(5, 99999, 1)]
+        [InlineData(500, 99999, 1)]
+        [InlineData(900, 999, 0)]
+        [InlineData(1001, 1002, 2)]
+        [InlineData(1001, 100000000, 2)]
+        [InlineData(0, 9999999999, 1)]
         //logmile greater than 999.999
-        public void LogmileMassive(decimal blm, decimal elm, bool expected)
+        public void LogmileMassive(decimal blm, decimal elm, int erroCount)
         {
             var segment = new RoadInv.DB.RoadInv();
             segment.AhCounty = "2";
@@ -199,13 +201,8 @@ namespace roadInvUnitTest
             var results = validation.FindErrors(segment);
             var errorFields = AffectedFields(results);
 
-            if (expected)
-            {
-                Assert.True(results.Count == 0, AffectedFieldsMessage(errorFields));
-            } else
-            {
-                Assert.True(results.Count == 1, AffectedFieldsMessage(errorFields));
-            }
+            Assert.True(results.Count == erroCount, AffectedFieldsMessage(errorFields));
+ 
         }
 
 
@@ -241,6 +238,7 @@ namespace roadInvUnitTest
         [InlineData("XMASTRAIL", true)]
         [InlineData("140", true)]
         [InlineData("100", true)]
+        [InlineData("107", true)]
         [InlineData("XXX", true)]
         [InlineData("100BIZ", true)]
         [InlineData("~CIRCLE", false)]
@@ -250,7 +248,7 @@ namespace roadInvUnitTest
         [InlineData("", false)]
         [InlineData(" ", false)]
         [InlineData(null, false)]
-        public void validRouteChar(string route, bool expected)
+        public void ValidRouteChar(string route, bool expected)
         {
             var segment = new RoadInv.DB.RoadInv();
             segment.AhCounty = "2";
@@ -526,21 +524,23 @@ namespace roadInvUnitTest
             ValidationModel.CleanAttr(segment);
             var results = validation.FindErrors(segment);
             var errorFields = AffectedFields(results);
+            var errormessage = ValidationLogicUnitTest.AffectedFieldsMessage(errorFields);
 
             if (expected)
             {
-                Assert.True(results.Count == 0, AffectedFieldsMessage(errorFields));
+                Assert.True(results.Count == 0, errormessage);
             } else
             {
-                Assert.True(results.Count == 1, AffectedFieldsMessage(errorFields));
+                Assert.True(results.Count == 1, errormessage);
                 Assert.Contains(FieldsListModel.FuncClass, errorFields);
                 Assert.Contains(FieldsListModel.RouteSign, errorFields);
-                Assert.True(errorFields.Count == 2);
+                Assert.True(errorFields.Count == 2, errormessage);
             }
 
         }
 
 
+        //I do not understand this validation. I think it is supposed to mean all functional class 2 routes are multilane divided roads
         [Theory]
         [InlineData("2", "4", true)]
         [InlineData("2", "1", false)]
@@ -561,16 +561,17 @@ namespace roadInvUnitTest
             ValidationModel.CleanAttr(segment);
             var results = validation.FindErrors(segment);
             var errorFields = AffectedFields(results);
+            var errormessage = ValidationLogicUnitTest.AffectedFieldsMessage(errorFields);
 
             if (expected)
             {
-                Assert.True(results.Count == 0);
+                Assert.True(results.Count == 0, errormessage);
             } else
             {
-                Assert.False(results.Count == 1);
+                Assert.True(results.Count == 1, errormessage);
                 Assert.Contains(FieldsListModel.FuncClass, errorFields);
                 Assert.Contains(FieldsListModel.TypeOperation, errorFields);
-                Assert.True(errorFields.Count == 2);
+                Assert.True(errorFields.Count == 2, errormessage);
             }
 
         }

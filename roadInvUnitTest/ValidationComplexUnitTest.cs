@@ -77,12 +77,12 @@ namespace roadInvUnitTest
         [InlineData("2", false)]
         [InlineData("3", false)]
         [InlineData("4", false)]
-        public void rulePG43A1(string NHS, bool expected )
+        public void RulePG43A1(string NHS, bool expected )
         {
             var segment = new RoadInv.DB.RoadInv();
             segment.AhCounty = "60";
             segment.AhRoute = "ARNOLDDRIVE1";
-            segment.AhSection = "12X";
+            segment.AhSection = "12";
             segment.LogDirect = "A";
             segment.AhBlm = 0;
             segment.AhElm = (decimal?)0.5;
@@ -93,16 +93,16 @@ namespace roadInvUnitTest
             ValidationModel.CleanAttr(segment);
             var results = validation.FindErrors(segment);
             var errorFields = AffectedFields(results);
+            ;
 
             if (expected)
             {
-                Assert.True(errorFields.Count == 0);
+                Assert.True(errorFields.Count == 0,  AffectedFieldsMessage(errorFields));
             } else
             {
-                Assert.True(errorFields.Count == 3);
+                Assert.True(errorFields.Count == 2, results.Count.ToString() + ": " +  AffectedFieldsMessage(errorFields));
                 Assert.Contains(FieldsListModel.NHS, errorFields);
                 Assert.Contains(FieldsListModel.RouteSign, errorFields);
-                Assert.Contains(FieldsListModel.TypeRoad, errorFields);
             }
         }
 
@@ -111,7 +111,7 @@ namespace roadInvUnitTest
         [InlineData("2", false)]
         [InlineData("3", false)]
         [InlineData("4", false)]
-        public void rulePG43A2(string APHN, bool expected)
+        public void RulePG43A2(string APHN, bool expected)
         {
             var segment = new RoadInv.DB.RoadInv();
             segment.AhCounty = "60";
@@ -149,7 +149,7 @@ namespace roadInvUnitTest
         [InlineData("2", false)]
         [InlineData("3", false)]
         [InlineData("4", false)]
-        public void rulePG34B(string APHN, bool expected)
+        public void RulePG34B(string APHN, bool expected)
         {
             var segment = new RoadInv.DB.RoadInv();
             segment.AhCounty = "60";
@@ -185,7 +185,7 @@ namespace roadInvUnitTest
         /* If NHS = 0 the APHN <> 1 */
         [Theory]
         [InlineData("1", false)]
-        public void ruleGP34C(string APHN, bool expected)
+        public void RuleGP34C(string APHN, bool expected)
         {
             var segment = new RoadInv.DB.RoadInv();
             segment.AhCounty = "60";
@@ -201,6 +201,8 @@ namespace roadInvUnitTest
 
         /* If specialSystem = 9 then NHS must be 1 */
         [Theory]
+        [InlineData("5", "1", true)]
+        [InlineData("1", "1", true)]
         [InlineData("9", "1", true)]
         [InlineData("9", "2", false)]
         [InlineData("9", "3", false)]
@@ -230,7 +232,7 @@ namespace roadInvUnitTest
 
             if (expected)
             {
-                Assert.True(results.Count == 0);
+                Assert.True(results.Count == 0, ValidationComplexUnitTest.AffectedFieldsMessage(errorFields));
             } else
             {
                 Assert.True(results.Count == 1);

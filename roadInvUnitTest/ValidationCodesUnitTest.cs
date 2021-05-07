@@ -769,5 +769,25 @@ namespace roadInvUnitTest
             
         }
 
+        [Theory]
+        [InlineData("104", true)]
+        [InlineData("14", true)]
+        [InlineData("YELLOW45", true)]
+        [InlineData("##", false)]
+        [InlineData("55", true)]
+        [InlineData("0", true)]
+        public void validCharacters(string testString, bool expected)
+        {
+            var invalidChars = ValidationModel.checkInvalidCharacters(testString);
+
+            if (expected)
+            {
+                Assert.True(invalidChars.Count == 0);
+            } else
+            {
+                Assert.False(invalidChars.Count == 0);
+            }
+        }
+
     }
 }
