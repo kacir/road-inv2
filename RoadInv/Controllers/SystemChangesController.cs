@@ -241,9 +241,34 @@ namespace RoadInv.Controllers
 
         [Route("system_changes/special")]
         [Route("system_changes/special.html")]
-        public IActionResult Special()
+        public async Task<IActionResult> system_changes_special(SystemChangesPageModel pageModel)
         {
-            return View("system_changes_special");
+            int pageSize = 50;
+            int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
+
+            var roads = from r in _context.RoadInvs
+                        where r.Nhs != "0"
+                        select r;
+
+            var excNh = from r in _context.ExcludeNhs
+                        select r;
+
+            var diss = from r in _context.DissolveNhsViews
+                       select r;
+
+            var validationModel = new ValidationModel(_context);
+
+            pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
+            pageModel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - " + a.County, Value = a.CountyNumber, Selected = false }; });
+            pageModel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            pageModel.NHS_vals = validationModel.NHS.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+
+            ViewBag.CurrentSort = pageModel.SortOrder;
+
+            roads = roads.OrderBy(r => r.Nhs);
+            pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
+            pageModel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize);
+            return View(pageModel);
         }
     }
 }

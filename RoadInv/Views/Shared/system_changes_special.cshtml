@@ -31,7 +31,7 @@
                 <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
             </header>
             <main class="modal__content" id="modal-1-content">
-                @*@using (Html.BeginForm("nhs_update", "system_changes", FormMethod.Post))
+                @using (Html.BeginForm("nhs_update", "system_changes", FormMethod.Post))
                 {
                     <div class='form-group'>
                         <label>County</label>
@@ -61,7 +61,7 @@
                         <button class="modal__btn modal__btn-primary" type="submit" value="Update">Submit for Validation</button>
                         <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
                     </footer>
-                }*@
+                }
             </main>
 
         </div>
@@ -75,27 +75,27 @@
         <form>
             <div class="form-group">
                 <label for='form-dissolve-method'>Dissolve</label>
-                @*@Html.DropDownListFor(model => model.Dissolve, Enum.GetNames(typeof(RoadInv.Models.SystemChangesPageModel.DissolveSelect)).Select(e => new SelectListItem { Text = e }), " ", new { @class = "form-control" })*@
+                @Html.DropDownListFor(model => model.Dissolve, Enum.GetNames(typeof(RoadInv.Models.SystemChangesPageModel.DissolveSelect)).Select(e => new SelectListItem { Text = e }), " ", new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label for='form-district'>Distict Number</label>
-                @*@Html.DropDownListFor(m => m.District, Model.Districts, " ", new { @class = "form-control" })*@
+                @Html.DropDownListFor(m => m.District, Model.Districts, " ", new { @class = "form-control" })
             </div>
             <div class='form-group'>
                 <label>County</label>
-                @*@Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })*@
+                @Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })
             </div>
             <div class='form-group'>
                 <label>Route</label>
-                @*@Html.TextBox("Route", "", new { @class = "form-control" })*@
+                @Html.TextBox("Route", "", new { @class = "form-control" })
             </div>
             <div class='form-group'>
                 <label>Section</label>
-                @*@Html.TextBox("Section", "", new { @class = "form-control" })*@
+                @Html.TextBox("Section", "", new { @class = "form-control" })
             </div>
             <div class='form-group'>
                 <label>Logmile</label>
-                @*@Html.TextBox("Logmile", "", new { @class = "form-control" })*@
+                @Html.TextBox("Logmile", "", new { @class = "form-control" })
             </div>
             <div id="form-button-holder" class='form-group'>
                 <button type="submit" id="submit-search">Submit </button>
@@ -115,8 +115,8 @@
             <h5>NHS Designation Summarized by: <span>ARNOLD ID</span> </h5>
             <table>
 
-                @*@if (Model.Dissolve == "Segment")
-                {*@
+                @if (Model.Dissolve == "Segment")
+                {
                     <tr>
                         <th>ID</th>
                         <th>Road ID</th>
@@ -126,16 +126,16 @@
                     </tr>
                     foreach (var item in Model.DissolveNhsViews)
                     {
-                        @*<tr>
+                        <tr>
                             <td>@Html.DisplayFor(modelItem => item.Id)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
                             <td>@Html.DisplayFor(modelItem => item.NhsSummary)</td>
-                        </tr>*@
+                        </tr>
                     }
 
-                    @*@Html.PagedListPager(Model.DissolveNhsViews, page => Url.Action("system_changes_nhs",
+                    @Html.PagedListPager(Model.DissolveNhsViews, page => Url.Action("system_changes_nhs",
                     new
                     {
                         page,
@@ -156,7 +156,7 @@
                         ContainerDivClasses = new[] { "navigation" },
                         LiElementClasses = new[] { "page-item" },
                         PageClasses = new[] { "page-link" }
-                    })*@
+                    })
 
                 }
                 else
@@ -171,10 +171,10 @@
                         <th>Length</th>
                         <th>NHS</th>
                     </tr>
-                    @*@foreach (var item in Model.roadInvs)*@
+                    @foreach (var item in Model.roadInvs)
                     {
-                        @*<tr>*@
-                            @*<td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
                             <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
@@ -183,18 +183,18 @@
                             <td>@Html.DisplayFor(modelItem => item.AhLength)</td>
                             <td>@Html.DisplayFor(modelItem => item.Nhs)</td>
                             <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>
-                            <td>*@
+                            <td>
 
-                                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            </td>*@
-                        @*</tr>*@
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        </tr>
                     }
                 }
 
 
             </table>
             <br />
-            @*Page @(Model.roadInvs.PageCount < Model.roadInvs.PageNumber ? 0 : Model.roadInvs.PageNumber) of @Model.roadInvs.PageCount
+            Page @(Model.roadInvs.PageCount < Model.roadInvs.PageNumber ? 0 : Model.roadInvs.PageNumber) of @Model.roadInvs.PageCount
             @Html.PagedListPager(Model.roadInvs, page => Url.Action("system_changes_nhs",
             new
             {
@@ -216,7 +216,7 @@
                 ContainerDivClasses = new[] { "navigation" },
                 LiElementClasses = new[] { "page-item" },
                 PageClasses = new[] { "page-link" }
-            })*@
+            })
 
         </section>
         <section>
@@ -227,13 +227,13 @@
                     <th>BLM</th>
                     <th>ELM</th>
                 </tr>
-                @*@foreach (var item in Model.ExcludeNhs)*@
+                @foreach (var item in Model.ExcludeNhs)
                 {
                     <tr>
-                        @*<td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                         <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
-                        <td>@Html.DisplayFor(modelItem => item.AhElm)</td>*@
-                        @*<td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Edit</a></td>*@
+                        <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
+                        <td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Edit</a></td>
                     </tr>
                 }
             </table>
