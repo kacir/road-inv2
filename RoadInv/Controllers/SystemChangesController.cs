@@ -115,6 +115,7 @@ namespace RoadInv.Controllers
                 var roads = from r in _context.RoadInvs
                             where r.Nhs != "0"
                             select r;
+                
                 if (!String.IsNullOrEmpty(pageModel.County))
                 {
                     roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
@@ -135,13 +136,16 @@ namespace RoadInv.Controllers
                 {
                     roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
                 }
-                foreach (var road in roads)
+                if (!String.IsNullOrEmpty(pageModel.NHS))
                 {
-                    road.Nhs = pageModel.NHS;
+                    foreach (var road in roads)
+                    {
+                        road.Nhs = pageModel.NHS; 
+                    }
+                    _context.SaveChanges();
                 }
-                _context.SaveChanges();
+  
             }
-            
             return RedirectToAction("system_changes_nhs");
         }
 
@@ -233,6 +237,13 @@ namespace RoadInv.Controllers
         public IActionResult Func()
         {
             return View("system_changes_func");
+        }
+
+        [Route("system_changes/special")]
+        [Route("system_changes/special.html")]
+        public IActionResult Special()
+        {
+            return View("system_changes_special");
         }
     }
 }
