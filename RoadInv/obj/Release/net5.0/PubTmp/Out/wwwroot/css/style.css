@@ -258,6 +258,16 @@ textarea{
 }
 
 .segment-button {
+    border-radius: 50px;
+    border-style: solid;
+    background-color: grey;
+    color: white;
+
+    height: 50px;
+    width: 100px;
+}
+
+.segment-button:disabled {
     border-radius: 100px;
     border-color: darkgray;
     background-color: lightgray;
@@ -273,6 +283,10 @@ button:hover{
     cursor: pointer;
 }
 
+button:disabled{
+    cursor:not-allowed;
+}
+
 .property-box label {
     text-align: center;
 }
@@ -280,13 +294,20 @@ button:hover{
 .property-box  input, .property-box select {
     width: 50px;
 }
-#input-section, #input-blm, #input-elm {
+#AH_Section, #AH_BLM, #AH_ELM {
     width: 75px;
 }
 
-#input-route{
+#AH_Route{
     width: 150px;
 }
+
+.segment-button.override-active {
+    background-color: red;
+    border-color: black;
+    color: black;
+}
+
 
 
 #box-alternate div input{
@@ -362,4 +383,51 @@ input.error, select.error{
     border-color: red;
     border-style: solid;
     border-width: 2px;
+}
+
+
+
+/* Modal Dialog box*/
+
+.modal-form-group{
+    display: table-row;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+    .modal-form-group input, .modal-form-group select, .modal-form-group select option, .modal-form-group span {
+        width: 300px;
+        display: ruby;
+        float: right;
+        border-radius: 15px;
+        font-size: 12px;
+        height: 30px;
+    }
+
+.modal-form-group span {
+        background-color: rgba(255, 255, 255, 0.85);
+    }
+
+.modal-form-group label {
+        color: grey;
+}
+
+#modal-1-title {
+        font-size: 16px;
+        font-weight: normal;
+        color: black;
+        text-align: center;
+        margin: auto;
+}
+
+.modal__footer{
+    display: ruby block;
+}
+
+.modal__footer button{
+    width: 150px;
+}
+
+.micromodal-slide > * {
+    font-size: 12px;
 }

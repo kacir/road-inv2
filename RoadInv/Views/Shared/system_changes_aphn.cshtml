@@ -1,56 +1,105 @@
-﻿@{Layout = "_Layout.cshtml";}
-
-@section nav_apnh {
+﻿@using X.PagedList.Mvc.Core;
+@model RoadInv.Models.SystemChangesPageModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*Need to addTagHelper globally*@
+@{Layout = "_Layout.cshtml";}
+@section nav_nhs {
     active
 }
 @{
-    ViewData["Title"] = "APHN";
+    ViewData["Title"] = "Special";
     ViewData["slash"] = "/";
+    ViewBag.Title = "Special";
 }
+
+<link rel="stylesheet" href="http://localhost:65424/css/micromodal.css">
+@*need to fix this*@
+<script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+
+<script>
+    MicroModal.init();
+    console.log('modal inititalized')
+</script>
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+                <h2 class="modal__title" id="modal-1-title">
+                    APHN Bulk Redesignation
+                </h2>
+                <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+            </header>
+            <main class="modal__content" id="modal-1-content">
+                @using (Html.BeginForm("nhs_update", "system_changes", FormMethod.Post))
+                {
+                    <div class='form-group'>
+                        <label>County</label>
+                        @Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })
+                    </div>
+                    <div class='form-group'>
+                        <label>Route</label>
+                        @Html.TextBox("Route", "", new { @class = "form-control" })
+                    </div>
+                    <div class='form-group'>
+                        <label>Direction</label>
+                        @Html.DropDownListFor(m => m.Direction, Model.Directions, " ", new { @class = "form-control" })
+                    </div>
+                    <div class='form-group'>
+                        <label>BLM</label>
+                        @Html.TextBox("BLM", "", new { @class = "form-control" })
+                    </div>
+                    <div class='form-group'>
+                        <label>ELM</label>
+                        @Html.TextBox("ELM", "", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for='form-district'>APHN</label>
+                        @Html.DropDownListFor(m => m.APHN, Model.APHN_vals, " ", new { @class = "form-control" })
+                    </div>
+                    <footer class="modal__footer">
+                        <button class="modal__btn modal__btn-primary" type="submit" value="Update">Submit for Validation</button>
+                        <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
+                    </footer>
+                }
+            </main>
+
+        </div>
+    </div>
+</div>
 
 <div id="segement-search-main-content master-grid">
     <div id="side-panel" class='split left'>
         <h3>Search</h3>
+
         <form>
             <div class="form-group">
                 <label for='form-dissolve-method'>Dissolve</label>
-                <select class="form-control" id='form-dissolve-method'>
-                    <option></option>
-                    <option value="1">Segement</option>
-                    <option value="2">ARNOLD ID</option>
-                </select>
+                @Html.DropDownListFor(model => model.Dissolve, Enum.GetNames(typeof(RoadInv.Models.SystemChangesPageModel.DissolveSelect)).Select(e => new SelectListItem { Text = e }), " ", new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label for='form-district'>Distict Number</label>
-                <select class="form-control" id='form-distict'>
-                    <option></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                </select>
+                @Html.DropDownListFor(m => m.District, Model.Districts, " ", new { @class = "form-control" })
             </div>
             <div class='form-group'>
                 <label>County</label>
-                <input id="input-county" class="form-control" type="text" />
+                @Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })
             </div>
             <div class='form-group'>
                 <label>Route</label>
-                <input class="form-control" type='text' />
+                @Html.TextBox("Route", "", new { @class = "form-control" })
             </div>
             <div class='form-group'>
                 <label>Section</label>
-                <input class="form-control" type='text' />
+                @Html.TextBox("Section", "", new { @class = "form-control" })
             </div>
             <div class='form-group'>
                 <label>Logmile</label>
-                <input class="form-control" type='text' />
+                @Html.TextBox("Logmile", "", new { @class = "form-control" })
             </div>
             <div id="form-button-holder" class='form-group'>
-                <button id="submit-search">Submit </button>
-                <button id="clear-all">Clear All</button>
+                <button type="submit" id="submit-search">Submit </button>
+                <button type="reset" value="clear" id="clear-all">Clear All</button>
             </div>
 
 
@@ -59,151 +108,217 @@
     <div class='split-right'>
         <div class="master-grid grid-container" style="align-content: center; text-align: center;">
             <div><h1>System Change: APHN</h1> </div>
-            <div><a target="_blank" href="..//new_segement.html"><button id="new-seg-button">New APHN Segement</button></a></div>
-
+            <div><a target="_blank" href="../new_segement"><button id="new-seg-button">New APHN Segement</button></a></div>
+            <div><button id="new-seg-button" data-micromodal-trigger="modal-1" href='javascript:void(0);'>Apply Bulk Redesignation</button></div>
         </div>
         <section>
             <h5>APHN Designation Summarized by: <span>ARNOLD ID</span> </h5>
             <table>
-                <tr>
-                    <th>ARNOLD ID</th>
-                    <th>County</th>
-                    <th>Section</th>
-                    <th>Direction</th>
-                    <th>BLM</th>
-                    <th>ELM</th>
-                    <th>Length</th>
-                    <th>APHN</th>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+
+                @if (Model.Dissolve == "Segment")
+                {
+                    <tr>
+                        <th>ID</th>
+                        <th>Road ID</th>
+                        <th>BLM</th>
+                        <th>ELM</th>
+                        <th>Functional Class</th>
+                    </tr>
+                    foreach (var item in Model.DissolveNhsViews)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NhsSummary)</td>
+                        </tr>
+                    }
+
+                    @Html.PagedListPager(Model.DissolveNhsViews, page => Url.Action("system_changes_aphn",
+                    new
+                    {
+                        page,
+                        sortOrder = ViewBag.CurrentSort,
+                        district = Model.District,
+                        county = Model.County,
+                        route = Model.Route,
+                        section = Model.Section,
+                        logmile = Model.Logmile,
+                        direction = Model.Direction,
+                        blm = Model.BLM,
+                        elm = Model.ELM,
+                        nhs = Model.NHS,
+                        funcclass = Model.FuncClass,
+                        specialsystem = Model.SpecialSystem,
+                        aphn = Model.APHN,
+                        dissolve = Model.Dissolve
+                    }), new X.PagedList.Web.Common.PagedListRenderOptionsBase
+                    {
+                        DisplayItemSliceAndTotal = false,
+                        ContainerDivClasses = new[] { "navigation" },
+                        LiElementClasses = new[] { "page-item" },
+                        PageClasses = new[] { "page-link" }
+                    })
+
+                }
+                else
+                {
+                    <tr>
+                        <th>ARNOLD ID</th>
+                        <th>County</th>
+                        <th>Section</th>
+                        <th>Direction</th>
+                        <th>BLM</th>
+                        <th>ELM</th>
+                        <th>Length</th>
+                        <th>APHN</th>
+                    </tr>
+                    @foreach (var item in Model.roadInvs)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
+                            <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhLength)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Aphn)</td>
+                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>
+                            <td>
+
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        </tr>
+                    }
+                }
+
+
             </table>
+            <br />
+            Page @(Model.roadInvs.PageCount < Model.roadInvs.PageNumber ? 0 : Model.roadInvs.PageNumber) of @Model.roadInvs.PageCount
+            @Html.PagedListPager(Model.roadInvs, page => Url.Action("system_changes_aphn",
+            new
+            {
+                page,
+                sortOrder = ViewBag.CurrentSort,
+                district = Model.District,
+                county = Model.County,
+                route = Model.Route,
+                section = Model.Section,
+                logmile = Model.Logmile,
+                direction = Model.Direction,
+                blm = Model.BLM,
+                elm = Model.ELM,
+                nhs = Model.NHS,
+                funcclass = Model.FuncClass,
+                specialsystem = Model.SpecialSystem,
+                aphn = Model.APHN,
+                dissolve = Model.Dissolve
+            }), new X.PagedList.Web.Common.PagedListRenderOptionsBase
+            {
+                DisplayItemSliceAndTotal = false,
+                ContainerDivClasses = new[] { "navigation" },
+                LiElementClasses = new[] { "page-item" },
+                PageClasses = new[] { "page-link" }
+            })
+
         </section>
         <section>
             <h5>Non-APHN Segements on APHN Routes</h5>
             <table>
                 <tr>
                     <th>ARNOLD ID</th>
-                    <th>County</th>
-                    <th>Section</th>
-                    <th>Direction</th>
                     <th>BLM</th>
                     <th>ELM</th>
-                    <th>Length</th>
                 </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>N/A</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                @foreach (var item in Model.ExcludeNhs)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
+                        <td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Edit</a></td>
+                    </tr>
+                }
             </table>
         </section>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        try {
+            MicroModal.init({
+                awaitCloseAnimation: true, // set to false, to remove close animation
+                onShow: function (modal) {
+                    console.log("micromodal open");
+                    addModalContentHeight('short');
+                    /**************************
+                      For full screen scrolling modal,
+                      uncomment line below & comment line above
+                     **************************/
+                    //addModalContentHeight('tall');
+                },
+                onClose: function (modal) {
+                    console.log("micromodal close");
+                }
+            });
+        } catch (e) {
+            console.log("micromodal error: ", e);
+        }
+    });
+
+    function addModalContentHeight(type) {
+        var type = (arguments[0] != null) ? arguments[0] : 'short';
+        var modalContainer = $("#modal-container");
+        var modalHeader = $("#modal-header");
+        var modalContentContent = $("#modal-content-content");
+        var modalContent = $("#modal-content");
+        var modalFooter = $("#modal-footer");
+
+        var modalIsDefined =
+            modalContainer.length &&
+            modalHeader.length &&
+            modalContent.length &&
+            modalFooter.length;
+
+        if (modalIsDefined) {
+            var modalContainerHeight = modalContainer.outerHeight();
+            var modalHeaderHeight = modalHeader.outerHeight();
+            var modalFooterHeight = modalFooter.outerHeight();
+
+            console.log("modalContainerHeight: ", modalContainerHeight);
+            console.log("modalHeaderHeight: ", modalHeaderHeight);
+            console.log("modalFooterHeight: ", modalFooterHeight);
+
+            var offset = 80;
+
+            var height = modalContainerHeight - (modalHeaderHeight + modalFooterHeight + offset);
+
+            console.log('height: ', height);
+
+            if (!isNaN(height)) {
+                height = height > 0 ? height : 20;
+                if (type == 'short') {
+                    modalContent.css({ 'height': height + 'px' });
+                }
+                else {
+                    modalContainer.css({ 'height': '100%', 'overflow-y': 'hidden', 'margin-top': '40px' });
+                    modalContentContent.css({ 'height': '100%', 'overflow-y': 'auto' });
+                    modalContent.css({ 'overflow-y': 'visible' });
+                    modalFooter.css({ 'margin-bottom': '120px' });
+                }
+                setTimeout(function () {
+                    modalContent.css({ 'display': 'block' });
+                    var modalContentDOM = document.querySelector('#modal-content');
+                    modalContentDOM.scrollTop = 0;
+                });
+            }
+
+        }
+
+    }
+
+</script>

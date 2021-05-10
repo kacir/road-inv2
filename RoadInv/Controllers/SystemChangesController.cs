@@ -29,7 +29,7 @@ namespace RoadInv.Controllers
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
             var roads = from r in _context.RoadInvs
-                        where r.Nhs != "0"
+                        where r.Nhs != "0" && r.Nhs !="" && r.Nhs != null //do we want to filter out nulls, empty strings etc?
                         select r;
 
             var excNh = from r in _context.ExcludeNhs
@@ -113,7 +113,7 @@ namespace RoadInv.Controllers
             if (ModelState.IsValid)
             {
                 var roads = from r in _context.RoadInvs
-                            where r.Nhs != "0"
+                            where r.Nhs != "0" 
                             select r;
                 
                 if (!String.IsNullOrEmpty(pageModel.County))
@@ -226,28 +226,13 @@ namespace RoadInv.Controllers
 
         [Route("system_changes/aphn")]
         [Route("system_changes/aphn.html")]
-        public IActionResult APHN()
-        {
-            return View("system_changes_aphn");
-        }
-
-
-        [Route("system_changes/func")]
-        [Route("system_changes/func.html")]
-        public IActionResult Func()
-        {
-            return View("system_changes_func");
-        }
-
-        [Route("system_changes/special")]
-        [Route("system_changes/special.html")]
-        public async Task<IActionResult> system_changes_special(SystemChangesPageModel pageModel)
+        public async Task<IActionResult> system_changes_aphn(SystemChangesPageModel pageModel)
         {
             int pageSize = 50;
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
             var roads = from r in _context.RoadInvs
-                        where r.Nhs != "0"
+                        where r.Aphn != "" && r.Aphn !=null
                         select r;
 
             var excNh = from r in _context.ExcludeNhs
@@ -261,11 +246,217 @@ namespace RoadInv.Controllers
             pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
             pageModel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - " + a.County, Value = a.CountyNumber, Selected = false }; });
             pageModel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
-            pageModel.NHS_vals = validationModel.NHS.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            pageModel.APHN_vals = validationModel.APHN.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
 
             ViewBag.CurrentSort = pageModel.SortOrder;
 
-            roads = roads.OrderBy(r => r.Nhs);
+            if (!String.IsNullOrEmpty(pageModel.District))
+            {
+                roads = roads.Where(r => r.AhDistrict.Equals(pageModel.District));
+            }
+            if (!String.IsNullOrEmpty(pageModel.County))
+            {
+                roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Route))
+            {
+                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Section))
+            {
+                roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
+            }
+            if (!pageModel.Logmile.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
+            }
+            if (!pageModel.BLM.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
+            }
+            if (!pageModel.ELM.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Direction))
+            {
+                roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
+            }
+            if (!String.IsNullOrEmpty(pageModel.APHN))
+            {
+                roads = roads.Where(r => r.Aphn.Equals(pageModel.APHN));
+            }
+
+            switch (pageModel.SortOrder)
+            {
+                case "name_desc":
+                    roads = roads.OrderByDescending(r => r.Aphn);
+                    break;
+                default:
+                    roads = roads.OrderBy(r => r.Aphn);
+                    break;
+            }
+            ViewBag.CurrentSort = pageModel.SortOrder;
+
+            roads = roads.OrderBy(r => r.Aphn);
+            pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
+            pageModel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize);
+            return View(pageModel);
+        }
+
+
+        [Route("system_changes/func")]
+        [Route("system_changes/func.html")]
+        public async Task<IActionResult> system_changes_func(SystemChangesPageModel pageModel)
+        {
+            int pageSize = 50;
+            int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
+
+            var roads = from r in _context.RoadInvs
+                        where r.FuncClass != "7" && r.FuncClass !=null && r.FuncClass !=""
+                        select r;
+
+            var excNh = from r in _context.ExcludeNhs
+                        select r;
+
+            var diss = from r in _context.DissolveNhsViews
+                       select r;
+
+            var validationModel = new ValidationModel(_context);
+
+            pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
+            pageModel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - " + a.County, Value = a.CountyNumber, Selected = false }; });
+            pageModel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            pageModel.FuncClass_vals = validationModel.FuncClass.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            ViewBag.CurrentSort = pageModel.SortOrder;
+
+            if (!String.IsNullOrEmpty(pageModel.District))
+            {
+                roads = roads.Where(r => r.AhDistrict.Equals(pageModel.District));
+            }
+            if (!String.IsNullOrEmpty(pageModel.County))
+            {
+                roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Route))
+            {
+                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Section))
+            {
+                roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
+            }
+            if (!pageModel.Logmile.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
+            }
+            if (!pageModel.BLM.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
+            }
+            if (!pageModel.ELM.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Direction))
+            {
+                roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
+            }
+            if (!String.IsNullOrEmpty(pageModel.FuncClass))
+            {
+                roads = roads.Where(r => r.FuncClass.Equals(pageModel.FuncClass));
+            }
+
+            switch (pageModel.SortOrder)
+            {
+                case "name_desc":
+                    roads = roads.OrderByDescending(r => r.FuncClass);
+                    break;
+                default:
+                    roads = roads.OrderBy(r => r.FuncClass);
+                    break;
+            }
+            roads = roads.OrderBy(r => r.FuncClass);
+            pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
+            pageModel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize);
+            return View(pageModel);
+        }
+
+        [Route("system_changes/special")]
+        [Route("system_changes/special.html")]
+        public async Task<IActionResult> system_changes_special(SystemChangesPageModel pageModel)
+        {
+            int pageSize = 50;
+            int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
+
+            var roads = from r in _context.RoadInvs
+                        where r.SpecialSystems != ""
+                        select r;
+
+            var excNh = from r in _context.ExcludeNhs
+                        select r;
+
+            var diss = from r in _context.DissolveNhsViews
+                       select r;
+
+            var validationModel = new ValidationModel(_context);
+
+            pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
+            pageModel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - " + a.County, Value = a.CountyNumber, Selected = false }; });
+            pageModel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            pageModel.SpecialSystem_vals = validationModel.SpecialSystems.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            ViewBag.CurrentSort = pageModel.SortOrder;
+
+            if (!String.IsNullOrEmpty(pageModel.District))
+            {
+                roads = roads.Where(r => r.AhDistrict.Equals(pageModel.District));
+            }
+            if (!String.IsNullOrEmpty(pageModel.County))
+            {
+                roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Route))
+            {
+                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Section))
+            {
+                roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
+            }
+            if (!pageModel.Logmile.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
+            }
+            if (!pageModel.BLM.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
+            }
+            if (!pageModel.ELM.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Direction))
+            {
+                roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
+            }
+            if (!String.IsNullOrEmpty(pageModel.SpecialSystem))
+            {
+                roads = roads.Where(r => r.SpecialSystems.Equals(pageModel.SpecialSystem));
+            }
+
+            switch (pageModel.SortOrder)
+            {
+                case "name_desc":
+                    roads = roads.OrderByDescending(r => r.SpecialSystems);
+                    break;
+                default:
+                    roads = roads.OrderBy(r => r.SpecialSystems);
+                    break;
+            }
+
+            ViewBag.CurrentSort = pageModel.SortOrder;
+
+            roads = roads.OrderBy(r => r.FuncClass);
             pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
             pageModel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize);
             return View(pageModel);

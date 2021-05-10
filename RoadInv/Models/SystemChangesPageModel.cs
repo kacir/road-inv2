@@ -18,6 +18,9 @@ namespace RoadInv.Models
         public IEnumerable<SelectListItem> Districts { get; set; }
         public IEnumerable<SelectListItem> Directions { get; set; }
         public IEnumerable<SelectListItem> NHS_vals { get; set; }
+        public IEnumerable<SelectListItem> FuncClass_vals { get; set; }
+        public IEnumerable<SelectListItem> APHN_vals { get; set; }
+        public IEnumerable<SelectListItem> SpecialSystem_vals { get; set; }
 
         public string RoadID { get; set; }
         public string District { get; set; }
@@ -30,8 +33,11 @@ namespace RoadInv.Models
         public string Direction { get; set; }
         public decimal? BLM { get; set; }
         public decimal? ELM { get; set; }
-        public string NHS { get; set; }
         public int? Page { get; set; }
+        public string NHS { get; set; }
+        public string SpecialSystem { get; set; }
+        public string FuncClass { get; set; }
+        public string APHN { get; set; }
         public enum DissolveSelect
         {
             Segment,

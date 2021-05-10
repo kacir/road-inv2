@@ -26,7 +26,7 @@
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
             <header class="modal__header">
                 <h2 class="modal__title" id="modal-1-title">
-                    NHS Bulk Redesignation
+                    Special System Bulk Redesignation
                 </h2>
                 <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
             </header>
@@ -54,8 +54,8 @@
                         @Html.TextBox("ELM", "", new { @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        <label for='form-district'>NHS</label>
-                        @Html.DropDownListFor(m => m.NHS, Model.NHS_vals, " ", new { @class = "form-control" })
+                        <label for='form-district'>Special System</label>
+                        @Html.DropDownListFor(m => m.SpecialSystem, Model.SpecialSystem_vals, " ", new { @class = "form-control" })
                     </div>
                     <footer class="modal__footer">
                         <button class="modal__btn modal__btn-primary" type="submit" value="Update">Submit for Validation</button>
@@ -107,12 +107,12 @@
     </div>
     <div class='split-right'>
         <div class="master-grid grid-container" style="align-content: center; text-align: center;">
-            <div><h1>System Change: NHS</h1> </div>
-            <div><a target="_blank" href="../new_segement"><button id="new-seg-button">New NHS Segement</button></a></div>
+            <div><h1>System Change: Special</h1> </div>
+            <div><a target="_blank" href="../new_segement"><button id="new-seg-button">New Segement</button></a></div>
             <div><button id="new-seg-button" data-micromodal-trigger="modal-1" href='javascript:void(0);'>Apply Bulk Redesignation</button></div>
         </div>
         <section>
-            <h5>NHS Designation Summarized by: <span>ARNOLD ID</span> </h5>
+            <h5>Special System Designation Summarized by: <span>ARNOLD ID</span> </h5>
             <table>
 
                 @if (Model.Dissolve == "Segment")
@@ -122,7 +122,7 @@
                         <th>Road ID</th>
                         <th>BLM</th>
                         <th>ELM</th>
-                        <th>NHS Summary</th>
+                        <th>Special System</th>
                     </tr>
                     foreach (var item in Model.DissolveNhsViews)
                     {
@@ -135,7 +135,7 @@
                         </tr>
                     }
 
-                    @Html.PagedListPager(Model.DissolveNhsViews, page => Url.Action("system_changes_nhs",
+                    @Html.PagedListPager(Model.DissolveNhsViews, page => Url.Action("system_changes_special",
                     new
                     {
                         page,
@@ -149,6 +149,9 @@
                         blm = Model.BLM,
                         elm = Model.ELM,
                         nhs = Model.NHS,
+                        funcclass = Model.FuncClass,
+                        specialsystem = Model.SpecialSystem,
+                        aphn = Model.APHN,
                         dissolve = Model.Dissolve
                     }), new X.PagedList.Web.Common.PagedListRenderOptionsBase
                     {
@@ -169,7 +172,7 @@
                         <th>BLM</th>
                         <th>ELM</th>
                         <th>Length</th>
-                        <th>NHS</th>
+                        <th>Special System</th>
                     </tr>
                     @foreach (var item in Model.roadInvs)
                     {
@@ -181,7 +184,7 @@
                             <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhLength)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Nhs)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SpecialSystems)</td>
                             <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>
                             <td>
 
@@ -195,7 +198,7 @@
             </table>
             <br />
             Page @(Model.roadInvs.PageCount < Model.roadInvs.PageNumber ? 0 : Model.roadInvs.PageNumber) of @Model.roadInvs.PageCount
-            @Html.PagedListPager(Model.roadInvs, page => Url.Action("system_changes_nhs",
+            @Html.PagedListPager(Model.roadInvs, page => Url.Action("system_changes_special",
             new
             {
                 page,
@@ -209,6 +212,9 @@
                 blm = Model.BLM,
                 elm = Model.ELM,
                 nhs = Model.NHS,
+                funcclass = Model.FuncClass,
+                specialsystem = Model.SpecialSystem,
+                aphn = Model.APHN,
                 dissolve = Model.Dissolve
             }), new X.PagedList.Web.Common.PagedListRenderOptionsBase
             {
