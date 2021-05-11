@@ -61,7 +61,7 @@ namespace RoadInv
                 app.UseDeveloperExceptionPage();
             } else
             {
-                app.UseExceptionHandler("error");
+                app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseFileServer();

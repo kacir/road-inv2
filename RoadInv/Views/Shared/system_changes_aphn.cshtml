@@ -78,7 +78,7 @@
                 @Html.DropDownListFor(model => model.Dissolve, Enum.GetNames(typeof(RoadInv.Models.SystemChangesPageModel.DissolveSelect)).Select(e => new SelectListItem { Text = e }), " ", new { @class = "form-control" })
             </div>
             <div class="form-group">
-                <label for='form-district'>Distict Number</label>
+                <label for='form-district'>District Number</label>
                 @Html.DropDownListFor(m => m.District, Model.Districts, " ", new { @class = "form-control" })
             </div>
             <div class='form-group'>
@@ -233,7 +233,7 @@
                     <th>BLM</th>
                     <th>ELM</th>
                 </tr>
-                @foreach (var item in Model.ExcludeNhs)
+                @foreach (var item in Model.ExcludeAphn)
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>

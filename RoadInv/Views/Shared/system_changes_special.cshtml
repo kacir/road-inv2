@@ -78,7 +78,7 @@
                 @Html.DropDownListFor(model => model.Dissolve, Enum.GetNames(typeof(RoadInv.Models.SystemChangesPageModel.DissolveSelect)).Select(e => new SelectListItem { Text = e }), " ", new { @class = "form-control" })
             </div>
             <div class="form-group">
-                <label for='form-district'>Distict Number</label>
+                <label for='form-district'>District Number</label>
                 @Html.DropDownListFor(m => m.District, Model.Districts, " ", new { @class = "form-control" })
             </div>
             <div class='form-group'>
@@ -224,25 +224,6 @@
                 PageClasses = new[] { "page-link" }
             })
 
-        </section>
-        <section>
-            <h5>Non-NHS Segements on NHS Routes</h5>
-            <table>
-                <tr>
-                    <th>ARNOLD ID</th>
-                    <th>BLM</th>
-                    <th>ELM</th>
-                </tr>
-                @foreach (var item in Model.ExcludeNhs)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
-                        <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
-                        <td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Edit</a></td>
-                    </tr>
-                }
-            </table>
         </section>
     </div>
 </div>

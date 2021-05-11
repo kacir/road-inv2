@@ -235,7 +235,7 @@ namespace RoadInv.Controllers
                         where r.Aphn != "" && r.Aphn !=null
                         select r;
 
-            var excNh = from r in _context.ExcludeNhs
+            var excAp = from r in _context.ExcludeAphns
                         select r;
 
             var diss = from r in _context.DissolveNhsViews
@@ -300,7 +300,7 @@ namespace RoadInv.Controllers
 
             roads = roads.OrderBy(r => r.Aphn);
             pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
-            pageModel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize);
+            pageModel.ExcludeAphn = await excAp.ToPagedListAsync(pageNumber, pageSize);
             return View(pageModel);
         }
 
