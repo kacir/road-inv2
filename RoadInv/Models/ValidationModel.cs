@@ -1388,7 +1388,7 @@ greater than one direction number of lanes, then the road must have a median and
                 }
             }
 
-            if (segment.RoadwayWidth != 0 & segment.RoadwayWidth == 999)
+            if (segment.RoadwayWidth != 0 & segment.RoadwayWidth != 999)
             {
                 if (segment.RoadwayWidth < 0)
                 {
@@ -1405,6 +1405,15 @@ greater than one direction number of lanes, then the road must have a median and
                     ErrorItemModel error = new ErrorItemModel("Roadway Width greater than 999", "Roadway Width greater than 999", temp);
                     masterErrorsList.Add(error);
                 }
+                if (segment.RoadwayWidth > segment.SurfaceWidth)
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.RoadwayWidth);
+                    temp.Add(FieldsListModel.SurfaceWidth);
+                    var error = new ErrorItemModel("roadway width is too small/big", "Roadway width does not fi inside of surface width", temp);
+                    masterErrorsList.Add(error);
+                }
+
             }
 
             if (segment.ExtraLanes != "" & (ExtraLanes is null))
@@ -1448,6 +1457,38 @@ turning. please, change the access to someone other than no control or change th
                 ErrorItemModel error = new ErrorItemModel("medianwidth or median type wrong", @"All multipalen divided highway have a medain. 
 By extension, the mediantpye cant be 0, No Median. please chang ethe tpye operation or select a different median type ", temp);
                 masterErrorsList.Add(error);
+            }
+
+            if (segment.LaneWidth >= 15)
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.LaneWidth);
+                var error = new ErrorItemModel("Lane with > 15 ft", "Lane width of 15 feet or more are very unusual. Would you like to enter this value anyway?", temp);
+                masterErrorsList.Add(error);
+            }
+
+            if (segment.SurfaceWidth < segment.LaneWidth)
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.LaneWidth);
+                temp.Add(FieldsListModel.SurfaceWidth);
+                var error = new ErrorItemModel("lane Width too large ", @"A surface width is made up of a vareity of different characteristics. 
+A subset of the surface width is the lane width. The surface width must be larger than the lane width.", temp);
+                masterErrorsList.Add(error);
+            }
+
+            if (int.TryParse(segment.BothDirectionNumLanes, out _))
+            {
+                if (int.Parse(segment.BothDirectionNumLanes) * segment.LaneWidth > segment.SurfaceWidth  )
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.LaneWidth);
+                    temp.Add(FieldsListModel.SurfaceWidth);
+                    temp.Add(FieldsListModel.BothDirectionNumLanes);
+                    var error = new ErrorItemModel("Surface width too small", @"A surface width is map up of a variety of differnt characteristics. 
+A subset of the sruface width is the lane width. The surface width must be larger than the lane width. See the diagram hyperlink", temp);
+                    masterErrorsList.Add(error);
+                }
             }
 
 

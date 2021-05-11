@@ -907,5 +907,140 @@ namespace roadInvUnitTest
             }
         }
 
+        [Theory]
+        [InlineData(1, 15, true)]
+        [InlineData(4, 15, true)]
+        [InlineData(6, 15, true)]
+        [InlineData(8, 15, true)]
+        [InlineData(10, 15, true)]
+        [InlineData(12, 15, true)]
+        [InlineData(13, 15, true)]
+        [InlineData(2, 15, true)]
+        [InlineData(14, 14, true)]
+        [InlineData(12, 1, false)]
+        [InlineData(14, 13, false)]
+        [InlineData(14, 3, false)]
+        [InlineData(10, 5, false)]
+        [InlineData(6, 3, false)]
+        [InlineData(12, 10, false)]
+        [InlineData(6, 2, false)]
+        public void LaneWidthLessThanOrEqualToSurfaceWidth(int laneWidth, int surfaceWidth, bool expected)
+        {
+            var segment = new RoadInv.DB.RoadInv();
+            segment.AhCounty = "60";
+            segment.AhRoute = "ARNOLDDRIVE1";
+            segment.AhSection = "12";
+            segment.LogDirect = "A";
+            segment.AhBlm = 0;
+            segment.AhElm = (decimal?)0.5;
+
+            segment.LaneWidth = laneWidth;
+            segment.SurfaceWidth = surfaceWidth;
+
+            ValidationModel.CleanAttr(segment);
+            var results = validation.FindErrors(segment);
+            var errorFields = AffectedFields(results);
+
+            if (expected)
+            {
+                Assert.True(results.Count == 0);
+            } else
+            {
+                Assert.True(results.Count == 1);
+                Assert.Contains(FieldsListModel.LaneWidth, errorFields);
+                Assert.Contains(FieldsListModel.SurfaceWidth, errorFields);
+                Assert.True(errorFields.Count == 2);
+            }
+        }
+
+        [Theory]
+        [InlineData(2, 4, "1", true)]
+        [InlineData(1, 4, "1", true)]
+        [InlineData(4, 8, "1", true)]
+        [InlineData(6, 10, "1", true)]
+        [InlineData(2, 4, "2", true)]
+        [InlineData(3, 10, "2", true)]
+        [InlineData(6, 13, "2", true)]
+        [InlineData(3, 5, "2", false)]
+        [InlineData(6, 10, "2", false)]
+        public void SurfacWidthLessThanLaneCombinedLength(int laneWidth, int surfaceWidth, string bothDirectionNumLanes, bool expected)
+        {
+            var segment = new RoadInv.DB.RoadInv();
+            segment.AhCounty = "60";
+            segment.AhRoute = "ARNOLDDRIVE1";
+            segment.AhSection = "12";
+            segment.LogDirect = "A";
+            segment.AhBlm = 0;
+            segment.AhElm = (decimal?)0.5;
+
+            segment.LaneWidth = laneWidth;
+            segment.SurfaceWidth = surfaceWidth;
+            segment.BothDirectionNumLanes = bothDirectionNumLanes;
+
+            ValidationModel.CleanAttr(segment);
+            var results = validation.FindErrors(segment);
+            var errorFields = AffectedFields(results);
+
+            if (expected)
+            {
+                Assert.True(results.Count == 0);
+            } else
+            {
+                Assert.True(results.Count == 1);
+                Assert.Contains(FieldsListModel.LaneWidth, errorFields);
+                Assert.Contains(FieldsListModel.SurfaceWidth, errorFields);
+                Assert.Contains(FieldsListModel.BothDirectionNumLanes, errorFields);
+                Assert.True(errorFields.Count == 3);
+            }
+
+        }
+
+        //page 61
+        [Theory]
+        [InlineData(10, 10, true)]
+        [InlineData(9, 10, true)]
+        [InlineData(8, 10, true)]
+        [InlineData(2, 10, true)]
+        [InlineData(1, 10, true)]
+        [InlineData(5, 10, true)]
+        [InlineData(4, 10, true)]
+        [InlineData(4, 16, true)]
+        [InlineData(4, 15, true)]
+        [InlineData(40, 41, true)]
+        [InlineData(42, 41, false)]
+        [InlineData(44, 41, false)]
+        [InlineData(44, 40, false)]
+        [InlineData(20, 15, false)]
+        public void RoadwayWidthLessThanSurfaceWidth(int roadwayWidth, int surfaceWidth, bool expected)
+        {
+            var segment = new RoadInv.DB.RoadInv();
+            segment.AhCounty = "60";
+            segment.AhRoute = "ARNOLDDRIVE1";
+            segment.AhSection = "12";
+            segment.LogDirect = "A";
+            segment.AhBlm = 0;
+            segment.AhElm = (decimal?)0.5;
+
+            segment.RoadwayWidth = roadwayWidth;
+            segment.SurfaceWidth = surfaceWidth;
+
+            ValidationModel.CleanAttr(segment);
+            var results = validation.FindErrors(segment);
+            var errorFields = AffectedFields(results);
+
+            if (expected)
+            {
+                Assert.True(results.Count == 0, AffectedFieldsMessage(errorFields));
+            } else
+            {
+                Assert.True(results.Count == 1, AffectedFieldsMessage(errorFields));
+                Assert.Contains(FieldsListModel.RoadwayWidth, errorFields);
+                Assert.Contains(FieldsListModel.SurfaceWidth, errorFields);
+                Assert.True(errorFields.Count == 2);
+            }
+        }
+
+        //page 66
+
     }
 }
