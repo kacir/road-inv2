@@ -124,18 +124,18 @@
                         <th>ELM</th>
                         <th>Special System</th>
                     </tr>
-                    foreach (var item in Model.DissolveNhsViews)
+                    foreach (var item in Model.DissolveSpecialSystemsViews)
                     {
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.Id)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
-                            <td>@Html.DisplayFor(modelItem => item.NhsSummary)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SpecialSystems)</td>
                         </tr>
                     }
 
-                    @Html.PagedListPager(Model.DissolveNhsViews, page => Url.Action("system_changes_special",
+                    @Html.PagedListPager(Model.DissolveSpecialSystemsViews, page => Url.Action("system_changes_special",
                     new
                     {
                         page,
@@ -224,6 +224,25 @@
                 PageClasses = new[] { "page-link" }
             })
 
+        </section>
+        <section>
+            <h5>Non-Special Segements on Special Routes</h5>
+            <table>
+                <tr>
+                    <th>ARNOLD ID</th>
+                    <th>BLM</th>
+                    <th>ELM</th>
+                </tr>
+                @foreach (var item in Model.ExcludeSpecials)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
+                        <td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Edit</a></td>
+                    </tr>
+                }
+            </table>
         </section>
     </div>
 </div>

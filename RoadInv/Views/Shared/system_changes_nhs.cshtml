@@ -132,6 +132,11 @@
                             <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
                             <td>@Html.DisplayFor(modelItem => item.NhsSummary)</td>
+                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>
+                            <td>
+
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
                         </tr>
                     }
 
@@ -233,7 +238,7 @@
                         <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                         <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                         <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
-                        @*<td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Edit</a></td>*@
+                        <td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Edit</a></td>
                     </tr>
                 }
             </table>

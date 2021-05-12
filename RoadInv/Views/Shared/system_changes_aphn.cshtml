@@ -117,25 +117,30 @@
 
                 @if (Model.Dissolve == "Segment")
                 {
-                    <tr>
-                        <th>ID</th>
-                        <th>Road ID</th>
-                        <th>BLM</th>
-                        <th>ELM</th>
-                        <th>Functional Class</th>
-                    </tr>
-                    foreach (var item in Model.DissolveNhsViews)
+                <tr>
+                    <th>ID</th>
+                    <th>Road ID</th>
+                    <th>BLM</th>
+                    <th>ELM</th>
+                    <th>APHN</th>
+                </tr>
+                    foreach (var item in Model.DissolveAphnViews)
                     {
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.Id)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
-                            <td>@Html.DisplayFor(modelItem => item.NhsSummary)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Aphn)</td>
+                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>
+                            <td>
+
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
                         </tr>
                     }
 
-                    @Html.PagedListPager(Model.DissolveNhsViews, page => Url.Action("system_changes_aphn",
+                    @Html.PagedListPager(Model.DissolveAphnViews, page => Url.Action("system_changes_aphn",
                     new
                     {
                         page,

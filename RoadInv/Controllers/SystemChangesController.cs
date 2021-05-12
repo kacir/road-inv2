@@ -238,7 +238,7 @@ namespace RoadInv.Controllers
             var excAp = from r in _context.ExcludeAphns
                         select r;
 
-            var diss = from r in _context.DissolveNhsViews
+            var diss = from r in _context.DissolveAphnViews
                        select r;
 
             var validationModel = new ValidationModel(_context);
@@ -301,6 +301,10 @@ namespace RoadInv.Controllers
             roads = roads.OrderBy(r => r.Aphn);
             pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
             pageModel.ExcludeAphn = await excAp.ToPagedListAsync(pageNumber, pageSize);
+            if (pageModel.Dissolve == "Segment")
+            {
+                pageModel.DissolveAphnViews = await diss.ToPagedListAsync(pageNumber, pageSize);
+            }
             return View(pageModel);
         }
 
@@ -316,10 +320,8 @@ namespace RoadInv.Controllers
                         where r.FuncClass != "7" && r.FuncClass !=null && r.FuncClass !=""
                         select r;
 
-            var excNh = from r in _context.ExcludeNhs
-                        select r;
 
-            var diss = from r in _context.DissolveNhsViews
+            var diss = from r in _context.DissolveFuncViews
                        select r;
 
             var validationModel = new ValidationModel(_context);
@@ -378,7 +380,10 @@ namespace RoadInv.Controllers
             }
             roads = roads.OrderBy(r => r.FuncClass);
             pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
-            pageModel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize);
+            if (pageModel.Dissolve == "Segment")
+            {
+                pageModel.DissolveFuncViews = await diss.ToPagedListAsync(pageNumber, pageSize);
+            }
             return View(pageModel);
         }
 
@@ -393,10 +398,10 @@ namespace RoadInv.Controllers
                         where r.SpecialSystems != ""
                         select r;
 
-            var excNh = from r in _context.ExcludeNhs
+            var excNh = from r in _context.ExcludeSpecialSystems
                         select r;
 
-            var diss = from r in _context.DissolveNhsViews
+            var diss = from r in _context.DissolveSpecialSystemsViews
                        select r;
 
             var validationModel = new ValidationModel(_context);
@@ -458,7 +463,11 @@ namespace RoadInv.Controllers
 
             roads = roads.OrderBy(r => r.FuncClass);
             pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
-            pageModel.ExcludeNhs = await excNh.ToPagedListAsync(pageNumber, pageSize);
+            pageModel.ExcludeSpecials = await excNh.ToPagedListAsync(pageNumber, pageSize);
+            if (pageModel.Dissolve == "Segment")
+            {
+                pageModel.DissolveSpecialSystemsViews = await diss.ToPagedListAsync(pageNumber, pageSize);
+            }
             return View(pageModel);
         }
     }

@@ -13,9 +13,13 @@ namespace RoadInv.Models
     {
         public IPagedList<RoadInv.DB.RoadInv> roadInvs { get; set; }
         public IPagedList<RoadInv.DB.DissolveNhsView> DissolveNhsViews { get; set; }
+        public IPagedList<RoadInv.DB.DissolveAphnView> DissolveAphnViews { get; set; }
+        public IPagedList<RoadInv.DB.DissolveFuncView> DissolveFuncViews { get; set; }
+        public IPagedList<RoadInv.DB.DissolveSpecialSystemsView> DissolveSpecialSystemsViews { get; set; }
         public IPagedList<RoadInv.DB.ExcludeNh> ExcludeNhs { get; set; }
         public IPagedList<RoadInv.DB.ExcludeAphn> ExcludeAphn { get; set; }
-        public IEnumerable<SelectListItem>Counties{ get; set; }
+        public IPagedList<RoadInv.DB.ExcludeSpecialSystem> ExcludeSpecials { get; set; }
+        public IEnumerable<SelectListItem> Counties{ get; set; }
         public IEnumerable<SelectListItem> Districts { get; set; }
         public IEnumerable<SelectListItem> Directions { get; set; }
         public IEnumerable<SelectListItem> NHS_vals { get; set; }
