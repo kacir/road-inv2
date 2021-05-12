@@ -1041,6 +1041,49 @@ namespace roadInvUnitTest
         }
 
         //page 66
+        [Theory]
+        [InlineData("1", "4" , true)]
+        [InlineData("2", "4", true)]
+        [InlineData("3", "4", true)]
+        [InlineData("4", "4", true)]
+        [InlineData("5", "4", true)]
+        [InlineData("2", "3", false)]
+        [InlineData("2", "2", false)]
+        [InlineData("2", "1", false)]
+        [InlineData("3", "1", false)]
+        [InlineData("4", "1", false)]
+        [InlineData("5", "3", false)]
+        public void MedianMustHaveTypeOperation4(string medianType, string typeOperation, bool expected)
+        {
+            var segment = new RoadInv.DB.RoadInv();
+            segment.AhCounty = "60";
+            segment.AhRoute = "ARNOLDDRIVE1";
+            segment.AhSection = "12";
+            segment.LogDirect = "A";
+            segment.AhBlm = 0;
+            segment.AhElm = (decimal?)0.5;
+
+            segment.MedianType = medianType;
+            segment.TypeOperation = typeOperation;
+
+            ValidationModel.CleanAttr(segment);
+            var results = validation.FindErrors(segment);
+            var errorFields = AffectedFields(results);
+
+            if (expected)
+            {
+                Assert.True(results.Count == 0);
+            } else
+            {
+                Assert.True(results.Count == 1);
+                Assert.Contains(FieldsListModel.MedianType, errorFields);
+                Assert.Contains(FieldsListModel.TypeOperation, errorFields);
+                Assert.True(errorFields.Count == 2);
+            }
+        }
+
+        //page 66 last rule
+        
 
     }
 }

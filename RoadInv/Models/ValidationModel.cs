@@ -944,7 +944,7 @@ the functional class needs to be interstate too.", temp);
                 ErrorItemModel error = new ErrorItemModel("MedianType Invalid", "Median Type is not a valid coded value", temp);
                 masterErrorsList.Add(error);
             }
-            else if (this.ValidMedianType(segment) & decimal.TryParse(segment.MedianWidth, out outMedianWidth))
+            else if (this.ValidMedianType(segment) & segment.MedianType != "" & decimal.TryParse(segment.MedianWidth, out outMedianWidth))
             {
                 string[] SelectedMedianTypes = { "1", "2", "3", "4", "5" };
                 string[] selectedMedianWidths = { null, "", "00000" };
@@ -1487,6 +1487,25 @@ A subset of the surface width is the lane width. The surface width must be large
                     temp.Add(FieldsListModel.BothDirectionNumLanes);
                     var error = new ErrorItemModel("Surface width too small", @"A surface width is map up of a variety of differnt characteristics. 
 A subset of the sruface width is the lane width. The surface width must be larger than the lane width. See the diagram hyperlink", temp);
+                    masterErrorsList.Add(error);
+                }
+            }
+
+            if (ValidMedianType(segment) & ValidTypeOperation(segment) & segment.TypeOperation != "" & segment.MedianType != "")
+            {
+                var selectedMedianTypes = new List<string>();
+                selectedMedianTypes.Add("1");
+                selectedMedianTypes.Add("2");
+                selectedMedianTypes.Add("3");
+                selectedMedianTypes.Add("4");
+                selectedMedianTypes.Add("5");
+                if (selectedMedianTypes.Contains(segment.MedianType) & segment.TypeOperation != "4")
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.MedianType);
+                    temp.Add(FieldsListModel.TypeOperation);
+                    var error = new ErrorItemModel("Must be divided highway", @"It appears you have selected the median type as XXXX. 
+This means the road has a median. Only multilane divided highway have medians. Perhaps you could set the TypeOperation to be 4 (multi-lane divided)", temp);
                     masterErrorsList.Add(error);
                 }
             }
