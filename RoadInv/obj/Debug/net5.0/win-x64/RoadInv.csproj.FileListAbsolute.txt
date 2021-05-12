@@ -151,3 +151,4 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\ref\RoadInv.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.pdb
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.genruntimeconfig.cache
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.csprojAssemblyReference.cache

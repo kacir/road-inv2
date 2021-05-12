@@ -108,7 +108,6 @@
     <div class='split-right'>
         <div class="master-grid grid-container" style="align-content: center; text-align: center;">
             <div><h1>System Change: Functional</h1> </div>
-            <div><a target="_blank" href="../new_segement"><button id="new-seg-button">New Segement</button></a></div>
             <div><button id="new-seg-button" data-micromodal-trigger="modal-1" href='javascript:void(0);'>Apply Bulk Redesignation</button></div>
         </div>
         <section>
@@ -119,13 +118,20 @@
                 {
                     <tr>
                         <th>Arnold ID</th>
+                        <th>County</th>
+                        <th>Section</th>
+                        <th>Direction</th>
                         <th>BLM</th>
                         <th>ELM</th>
+                        
                     </tr>
                     foreach (var item in Model.DissolveFuncViews)
                     {
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhDirection)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
                             <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>

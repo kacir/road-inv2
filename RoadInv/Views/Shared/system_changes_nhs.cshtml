@@ -120,6 +120,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Road ID</th>
+                        <th>County</th>
+                        <th>Section</th>
+                        <th>Direction</th>
                         <th>BLM</th>
                         <th>ELM</th>
                         <th>NHS Summary</th>
@@ -129,6 +132,9 @@
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.Id)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhDirection)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
                             <td>@Html.DisplayFor(modelItem => item.NhsSummary)</td>
@@ -229,15 +235,23 @@
             <table>
                 <tr>
                     <th>ARNOLD ID</th>
+                    <th>County</th>
+                    <th>Section</th>
+                    <th>Direction</th>
                     <th>BLM</th>
                     <th>ELM</th>
+                    <th>NHS</th>
                 </tr>
                 @foreach (var item in Model.ExcludeNhs)
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
                         <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                         <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nhs)</td>
                         <td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Edit</a></td>
                     </tr>
                 }

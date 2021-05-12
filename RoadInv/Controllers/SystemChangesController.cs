@@ -32,10 +32,10 @@ namespace RoadInv.Controllers
                         where r.Nhs != "0" && r.Nhs !="" && r.Nhs != null //do we want to filter out nulls, empty strings etc?
                         select r;
 
-            var excNh = from r in _context.ExcludeNhs
+            var excNh = from r in _context.ExcludeNhs1s
                         select r;
 
-            var diss = from r in _context.DissolveNhsViews
+            var diss = from r in _context.DissolveNhsView1s
                        select r;
 
             var validationModel = new ValidationModel(_context);
@@ -100,6 +100,29 @@ namespace RoadInv.Controllers
             
             if (pageModel.Dissolve == "Segment")
             {
+
+                if (!String.IsNullOrEmpty(pageModel.County))
+                {
+                    diss = diss.Where(r => r.AhCounty.Equals(pageModel.County));
+                }
+
+                if (!String.IsNullOrEmpty(pageModel.Section))
+                {
+                    diss = diss.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
+
+                if (!pageModel.BLM.Equals(null))
+                {
+                    diss = diss.Where(r => r.AhBlm.Equals(pageModel.BLM));
+                }
+                if (!pageModel.ELM.Equals(null))
+                {
+                    diss = diss.Where(r => r.AhBlm.Equals(pageModel.ELM));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Direction))
+                {
+                    diss = diss.Where(r => r.AhDirection.Equals(pageModel.Direction));
+                }
                 pageModel.DissolveNhsViews = await diss.ToPagedListAsync(pageNumber, pageSize);
             }
             return View(pageModel);
@@ -235,10 +258,10 @@ namespace RoadInv.Controllers
                         where r.Aphn != "" && r.Aphn !=null
                         select r;
 
-            var excAp = from r in _context.ExcludeAphns
+            var excAp = from r in _context.ExcludeAphn1s
                         select r;
 
-            var diss = from r in _context.DissolveAphnViews
+            var diss = from r in _context.DissolveAphnView1s
                        select r;
 
             var validationModel = new ValidationModel(_context);
@@ -321,7 +344,7 @@ namespace RoadInv.Controllers
                         select r;
 
 
-            var diss = from r in _context.DissolveFuncViews
+            var diss = from r in _context.DissolveFuncView1s
                        select r;
 
             var validationModel = new ValidationModel(_context);
@@ -398,10 +421,10 @@ namespace RoadInv.Controllers
                         where r.SpecialSystems != ""
                         select r;
 
-            var excNh = from r in _context.ExcludeSpecialSystems
+            var excNh = from r in _context.ExcludeSpecialSystems1s
                         select r;
 
-            var diss = from r in _context.DissolveSpecialSystemsViews
+            var diss = from r in _context.DissolveSpecialSystemsView1s
                        select r;
 
             var validationModel = new ValidationModel(_context);
