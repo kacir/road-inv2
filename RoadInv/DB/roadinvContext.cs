@@ -29,10 +29,20 @@ namespace RoadInv.DB
         public virtual DbSet<ConstraintUrbanAreaCounty> ConstraintUrbanAreaCounties { get; set; }
         public virtual DbSet<DatabaseCopy> DatabaseCopies { get; set; }
         public virtual DbSet<DissolveAphnView> DissolveAphnViews { get; set; }
+        public virtual DbSet<DissolveAphnView1> DissolveAphnView1s { get; set; }
         public virtual DbSet<DissolveFuncView> DissolveFuncViews { get; set; }
+        public virtual DbSet<DissolveFuncView1> DissolveFuncView1s { get; set; }
         public virtual DbSet<DissolveNhsView> DissolveNhsViews { get; set; }
+        public virtual DbSet<DissolveNhsView1> DissolveNhsView1s { get; set; }
         public virtual DbSet<DissolveRouteSignView> DissolveRouteSignViews { get; set; }
         public virtual DbSet<DissolveSpecialSystemsView> DissolveSpecialSystemsViews { get; set; }
+        public virtual DbSet<DissolveSpecialSystemsView1> DissolveSpecialSystemsView1s { get; set; }
+        public virtual DbSet<ExcludeAphn> ExcludeAphns { get; set; }
+        public virtual DbSet<ExcludeAphn1> ExcludeAphn1s { get; set; }
+        public virtual DbSet<ExcludeNh> ExcludeNhs { get; set; }
+        public virtual DbSet<ExcludeNhs1> ExcludeNhs1s { get; set; }
+        public virtual DbSet<ExcludeSpecialSystem> ExcludeSpecialSystems { get; set; }
+        public virtual DbSet<ExcludeSpecialSystems1> ExcludeSpecialSystems1s { get; set; }
         public virtual DbSet<Gisexport> Gisexports { get; set; }
         public virtual DbSet<LegacyDatum> LegacyData { get; set; }
         public virtual DbSet<OutmileageA> OutmileageAs { get; set; }
@@ -48,7 +58,6 @@ namespace RoadInv.DB
         public virtual DbSet<Sysdiagram> Sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
-        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -57,7 +66,6 @@ namespace RoadInv.DB
                 optionsBuilder.UseSqlServer("Server=INVSQL-DEV;Database=roadinv;Trusted_Connection=True;");
             }
         }
-        */
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -618,6 +626,48 @@ namespace RoadInv.DB
                 entity.Property(e => e.Id).HasColumnName("ID");
             });
 
+            modelBuilder.Entity<DissolveAphnView1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("DissolveAPHN_View_1");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("numeric(38, 8)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhCounty)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_County");
+
+                entity.Property(e => e.AhDirection)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_Direction");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("numeric(38, 8)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+
+                entity.Property(e => e.AhSection)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_Section");
+
+                entity.Property(e => e.Aphn)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("APHN");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+            });
+
             modelBuilder.Entity<DissolveFuncView>(entity =>
             {
                 entity.HasNoKey();
@@ -645,6 +695,48 @@ namespace RoadInv.DB
                 entity.Property(e => e.Id).HasColumnName("ID");
             });
 
+            modelBuilder.Entity<DissolveFuncView1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("DissolveFunc_View_1");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("numeric(38, 8)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhCounty)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_County");
+
+                entity.Property(e => e.AhDirection)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_Direction");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("numeric(38, 8)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+
+                entity.Property(e => e.AhSection)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_Section");
+
+                entity.Property(e => e.Aphn)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("APHN");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+            });
+
             modelBuilder.Entity<DissolveNhsView>(entity =>
             {
                 entity.HasNoKey();
@@ -663,6 +755,48 @@ namespace RoadInv.DB
                     .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("AH_RoadID");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.NhsSummary)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("NHS_Summary");
+            });
+
+            modelBuilder.Entity<DissolveNhsView1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("DissolveNHS_View_1");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("numeric(38, 8)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhCounty)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_County");
+
+                entity.Property(e => e.AhDirection)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_Direction");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("numeric(38, 8)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+
+                entity.Property(e => e.AhSection)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_Section");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
@@ -721,6 +855,232 @@ namespace RoadInv.DB
 
                 entity.Property(e => e.SpecialSystems)
                     .HasMaxLength(3)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<DissolveSpecialSystemsView1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("DissolveSpecialSystems_View_1");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("numeric(38, 8)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhCounty)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_County");
+
+                entity.Property(e => e.AhDirection)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_Direction");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("numeric(38, 8)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+
+                entity.Property(e => e.AhSection)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_Section");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.SpecialSystems)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ExcludeAphn>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("excludeAPHN");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .IsRequired()
+                    .HasMaxLength(273)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+            });
+
+            modelBuilder.Entity<ExcludeAphn1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("excludeAPHN_1");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhCounty)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_County");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .IsRequired()
+                    .HasMaxLength(273)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+
+                entity.Property(e => e.AhSection)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_Section");
+
+                entity.Property(e => e.Aphn)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("APHN");
+
+                entity.Property(e => e.LogDirect)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("LOG_DIRECT");
+            });
+
+            modelBuilder.Entity<ExcludeNh>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("excludeNHS");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .IsRequired()
+                    .HasMaxLength(273)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+            });
+
+            modelBuilder.Entity<ExcludeNhs1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("excludeNHS_1");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhCounty)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_County");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .IsRequired()
+                    .HasMaxLength(273)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+
+                entity.Property(e => e.AhSection)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_Section");
+
+                entity.Property(e => e.LogDirect)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("LOG_DIRECT");
+
+                entity.Property(e => e.Nhs)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("NHS");
+            });
+
+            modelBuilder.Entity<ExcludeSpecialSystem>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("excludeSpecialSystems");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .IsRequired()
+                    .HasMaxLength(273)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+            });
+
+            modelBuilder.Entity<ExcludeSpecialSystems1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("excludeSpecialSystems_1");
+
+                entity.Property(e => e.AhBlm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_BLM");
+
+                entity.Property(e => e.AhCounty)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_County");
+
+                entity.Property(e => e.AhElm)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("AH_ELM");
+
+                entity.Property(e => e.AhRoadId)
+                    .IsRequired()
+                    .HasMaxLength(273)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_RoadID");
+
+                entity.Property(e => e.AhSection)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("AH_Section");
+
+                entity.Property(e => e.LogDirect)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("LOG_DIRECT");
+
+                entity.Property(e => e.SpecialSystems)
+                    .HasMaxLength(2)
                     .IsUnicode(false);
             });
 
@@ -1850,12 +2210,6 @@ namespace RoadInv.DB
                 entity.Property(e => e.AhLength)
                     .HasColumnType("decimal(19, 3)")
                     .HasColumnName("AH_Length");
-
-                entity.Property(e => e.AhRoadId)
-                    .IsRequired()
-                    .HasMaxLength(273)
-                    .IsUnicode(false)
-                    .HasColumnName("AH_RoadID");
 
                 entity.Property(e => e.AhRoute)
                     .HasMaxLength(255)

@@ -40,16 +40,17 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item @RenderSection("nav_segements", required: false)">
-        <a class="nav-link" href="@ViewData["slash"]segments.html">Segements <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="@ViewData["slash"]segments.html">Segments <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           System Changes
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a  class="dropdown-item  @RenderSection("nav_nhs", required: false)" href="@ViewData["slash"]system_changes/nhs.html">NHS</a>
-          <a class="dropdown-item  @RenderSection("nav_func", required: false)" href="@ViewData["slash"]system_changes/func.html">Functional Class</a>
-          <a class="dropdown-item  @RenderSection("nav_apnh", required: false)" href="@ViewData["slash"]system_changes/aphn.html">APHN</a>
+            <a class="dropdown-item  @RenderSection("nav_nhs", required: false)" href="@ViewData["slash"]system_changes/nhs.html">NHS</a>
+            <a class="dropdown-item  @RenderSection("nav_func", required: false)" href="@ViewData["slash"]system_changes/func.html">Functional Class</a>
+            <a class="dropdown-item  @RenderSection("nav_apnh", required: false)" href="@ViewData["slash"]system_changes/aphn.html">APHN</a>
+            <a class="dropdown-item  @RenderSection("nav_special", required: false)" href="@ViewData["slash"]system_changes/special.html">Special Systems</a>
         </div>
       </li>
       <li class="nav-item @RenderSection("nav_quality", required: false)">

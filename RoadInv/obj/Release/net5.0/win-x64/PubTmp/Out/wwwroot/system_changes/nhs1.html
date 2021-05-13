@@ -1,0 +1,268 @@
+﻿<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="https://www.ardot.gov/wp-content/uploads/2020/07/cropped-android-chrome-512x512-1-300x300.png" />
+
+    <!-- Jquery and associated pre-dependences -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap core library -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/micromodal.css">
+    <script type="text/javascript" src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+    <!--Jquery UI because its needed for autocomplete w -->
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <title>Roadway Inventory</title>
+
+</head>
+
+    <body>
+
+        <nav class="navbar navbar-expand-lg">
+
+            <a class="navbar-brand" href="../index.html">
+                <img src="../img/ARDOT_Logo.png" width="100">
+
+                Roadway Inventory Database</a>
+            <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../segements.html">Segements <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            System Changes
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item active" href="nhs.html">NHS</a>
+                            <a class="dropdown-item" href="func.html">Functional Class</a>
+                            <a class="dropdown-item " href="aphn.html">APHN</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../quality_control.html">Quality Control</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="../RI_Cheat_Sheet.pdf">RI Cheatsheet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="../help.pdf">Help</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="segement-search-main-content master-grid">
+            <div id="side-panel" class='split left' >
+                <h3>Search</h3>
+                <form>
+                    <div class="form-group">
+                        <label for='form-dissolve-method'>Dissolve</label>
+                        <select class="form-control" id='form-dissolve-method'>
+                            <option></option>
+                            <option value="1">Segement</option>
+                            <option value="2">ARNOLD ID</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for='form-district'>Distict Number</label>
+                        <select class="form-control" id='form-distict'>
+                            <option></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </div>
+                    <div class='form-group'>
+                        <label>County</label>
+                        <input id="input-county" class="form-control" type="text"/>
+                    </div>
+                    <div class='form-group'>
+                        <label>Route</label>
+                        <input class="form-control" type='text' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Section</label>
+                        <input class="form-control" type='text' />
+                    </div>
+                    <div class='form-group'>
+                        <label >Logmile</label>
+                        <input class="form-control" type='text' />
+                    </div>
+                    <div id="form-button-holder" class='form-group'>
+                        <button id="submit-search">Submit </button>
+                        <button id="clear-all">Clear All</button>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class='split-right'>
+                <div class="master-grid grid-container" style="align-content: center; text-align: center;">
+                    <div><h1>System Change: NHS</h1> </div>
+                    <div><a target="_blank" href="..//new_segement.html"><button id="new-seg-button">New NHS Segement</button></a></div>
+                    
+                </div>
+                <section>
+                    <h5>NHS Designation Summarized by: <span>ARNOLD ID</span> </h5>
+                    <table>
+                        <tr>
+                            <th>ARNOLD ID</th>
+                            <th>County</th>
+                            <th>Section</th>
+                            <th>Direction</th>
+                            <th>BLM</th>
+                            <th>ELM</th>
+                            <th>Length</th>
+                            <th>NHS</th>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </section>
+                <section>
+                    <h5>Non-NHS Segements on NHS Routes</h5>
+                    <table>
+                        <tr>
+                            <th>ARNOLD ID</th>
+                            <th>County</th>
+                            <th>Section</th>
+                            <th>Direction</th>
+                            <th>BLM</th>
+                            <th>ELM</th>
+                            <th>Length</th>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>N/A</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </section>
+            </div>
+        </div>
+
+
+    </body>
+</html>

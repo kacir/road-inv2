@@ -13,7 +13,6 @@ namespace RoadInv.DB
         public string AhRoute { get; set; }
         public string AhSection { get; set; }
         public string LogDirect { get; set; }
-        public string AhRoadId { get; set; }
         public string GovermentCode { get; set; }
         public string RuralUrbanArea { get; set; }
         public string UrbanAreaCode { get; set; }
