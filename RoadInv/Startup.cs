@@ -51,6 +51,8 @@ namespace RoadInv
             services.AddDbContext<roadinvContext>
                 (options => options.UseSqlServer(this.configuration["EntityConnectinString"]));
 
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

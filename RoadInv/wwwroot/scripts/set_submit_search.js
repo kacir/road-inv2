@@ -7,6 +7,27 @@ function submitEventLoop() {
         var inputSection = $('#section').val();
         var inputLogmile = $('#logmile').val();
 
+        if (inputDistrict === undefined) {
+            inputDistrict = "";
+        }
+
+    if (inputCounty === undefined) {
+        inputCounty = "";
+    }
+
+    if (inputRoute === undefined) {
+        inputRoute = "";
+    }
+
+    if (inputSection === undefined) {
+        inputSection = "";
+    }
+
+    if (inputLogmile === undefined) {
+        inputLogmile = -1;
+    }
+
+        
         console.log(inputDistrict);
         console.log(inputCounty);
         console.log(inputRoute);

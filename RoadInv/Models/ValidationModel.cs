@@ -666,6 +666,23 @@ namespace RoadInv.Models
                 masterErrorsList.Add(extentError);
             }
 
+            //BLM or ELM are too big to be valid
+            if (segment.AhBlm > 999)
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.AH_BLM);
+                ErrorItemModel extentError = new ErrorItemModel("BLM > 999", " BLM logmiles should not be larger than 999 miles. Thats longer than the width of the state of arkansas", temp);
+                masterErrorsList.Add(extentError);
+            }
+            if (segment.AhElm > 999)
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.AH_ELM);
+                ErrorItemModel extentError = new ErrorItemModel("ELM > 999", " ELM logmiles should not be larger than 999 miles. Thats longer than the width of the state of arkansas", temp);
+                masterErrorsList.Add(extentError);
+            }
+
+
             //checking other core attributes
             if (segment.AhRoute.Length > 100)
             {
@@ -682,7 +699,7 @@ namespace RoadInv.Models
                 temp.Add(FieldsListModel.AH_Route);
 
                 string longError = "";
-                foreach (var item in ErrorItemModel.checkInvalidCharacters(segment.AhRoute))
+                foreach (var item in ValidationModel.checkInvalidCharacters(segment.AhRoute))
                 {
                     longError = longError + item + ", ";
                 }
@@ -696,22 +713,23 @@ namespace RoadInv.Models
                 }
 
             }
-            if (ErrorItemModel.checkInvalidCharacters(segment.AhSection).Count > 0)
+            if (ValidationModel.checkInvalidCharacters(segment.AhSection).Count > 0)
             {
                 segment.AhSection = segment.AhSection.ToUpper();
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.AH_Section);
                 string longError = "";
 
-                var invalidChars = ErrorItemModel.checkInvalidCharacters(segment.AhSection);
+                var invalidChars = ValidationModel.checkInvalidCharacters(segment.AhSection);
 
                 foreach (var item in invalidChars)
                 {
                     longError = longError + item + ", ";
                 }
-                longError = longError.Substring(longError.Length - 2);
+                
                 if (longError != ", " & longError != "")
                 {
+                    longError = longError.Substring(longError.Length - 2);
                     ErrorItemModel routeError = new ErrorItemModel(@"AH_Section invalid character(s)", "AH_Section field only allows " +
 "numeric (1-9) and aphabet letters (A-Z). The following invalid characters were found it the AH_Route field" + longError, temp);
                     masterErrorsList.Add(routeError);
@@ -736,6 +754,8 @@ namespace RoadInv.Models
                 ErrorItemModel error = new ErrorItemModel("AH_Section > 3 chars", "AH_Section field can only be three characters long according to ARNOLD", temp);
                 masterErrorsList.Add(error);
             }
+            //check if section has no value
+
 
             //check for valid county value $
             if (!this.ValidAH_County(segment))
@@ -763,6 +783,23 @@ namespace RoadInv.Models
                 }
             }
 
+            //One way cuplet exception, both section and direction must be valid before this becomes active
+            if (segment.AhSection.Length <= 3 & segment.AhSection.Length >= 1 & ValidationModel.checkInvalidCharacters(segment.AhSection).Count == 0)
+            {
+                if (segment.AhSection[segment.AhSection.Length - 1] == 'X' &  segment.LogDirect == "A")
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.AH_Section);
+                    temp.Add(FieldsListModel.LOG_DIRECT);
+                    ErrorItemModel error = new ErrorItemModel("One way couplet" , 
+                        @"The section code indicates the segment is a One-way couplet. All one way couplets are must be antilog direction 
+and the Type Operation must be one-way couplet. I recommend you change some fields.", temp);
+                    masterErrorsList.Add(error);
+
+                }
+            }
+
+
             if (!(segment.GovermentCode == "") & !(segment.GovermentCode is null) & !this.ValidGovermentCode(segment))
             {
                 List<string> temp = new List<string>();
@@ -784,7 +821,8 @@ namespace RoadInv.Models
             {
                 if (this.ValidGovermentCode(segment))
                 {
-                    if ((segment.RouteSign == "1" | segment.RouteSign == "2" | segment.RouteSign == "3") & segment.GovermentCode != "1" | !(segment.RouteSign == "1" | segment.RouteSign == "2" | segment.RouteSign == "3") & segment.GovermentCode == "1")
+                    if ((segment.RouteSign == "1" | segment.RouteSign == "2" | segment.RouteSign == "3") & segment.GovermentCode != "1" | 
+                        !(segment.RouteSign == "1" | segment.RouteSign == "2" | segment.RouteSign == "3") & segment.GovermentCode == "1")
                     {
                         List<string> temp = new List<string>();
                         temp.Add(FieldsListModel.RouteSign);
@@ -844,7 +882,7 @@ namespace RoadInv.Models
             }
 
             //main functional class checks
-            if (!(segment.FuncClass is null) & (segment.FuncClass == "") & ! this.ValidFuncClass(segment))
+            if (!(segment.FuncClass is null) & segment.FuncClass != "" & ! this.ValidFuncClass(segment))
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.FuncClass);
@@ -862,7 +900,7 @@ namespace RoadInv.Models
 the functional class needs to be interstate too.", temp);
                     masterErrorsList.Add(error);
                 }
-                if (segment.RouteSign == "1" && segment.FuncClass != "1")
+                if (segment.RouteSign != "1" && segment.FuncClass == "1")
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.RouteSign);
@@ -906,7 +944,7 @@ the functional class needs to be interstate too.", temp);
                 ErrorItemModel error = new ErrorItemModel("MedianType Invalid", "Median Type is not a valid coded value", temp);
                 masterErrorsList.Add(error);
             }
-            else if (this.ValidMedianType(segment) & decimal.TryParse(segment.MedianWidth, out outMedianWidth))
+            else if (this.ValidMedianType(segment) & segment.MedianType != "" & decimal.TryParse(segment.MedianWidth, out outMedianWidth))
             {
                 string[] SelectedMedianTypes = { "1", "2", "3", "4", "5" };
                 string[] selectedMedianWidths = { null, "", "00000" };
@@ -919,7 +957,7 @@ the functional class needs to be interstate too.", temp);
                         a median but the Median Width is null.", temp);
                     masterErrorsList.Add(error);
                 }
-                if (segment.MedianType == "1" & !selectedMedianWidths.Contains(segment.MedianWidth))
+                if (segment.MedianType == "0" & !selectedMedianWidths.Contains(segment.MedianWidth))
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.MedianType);
@@ -940,8 +978,6 @@ the functional class needs to be interstate too.", temp);
             else if (this.ValidTypeOperation(segment))
             {
                 var selectedMedianWidth = new List<string>();
-                selectedMedianWidth.Add(null);
-                selectedMedianWidth.Add("");
                 selectedMedianWidth.Add("00000");
                 
                 if (selectedMedianWidth.Contains(segment.MedianType) & segment.TypeOperation == "1")
@@ -953,8 +989,8 @@ the functional class needs to be interstate too.", temp);
 road is divided so it should have a median but the median type indicates there is no median", temp);
                     masterErrorsList.Add(error);
                 }
-
-                if (segment.MedianWidth == "0" & segment.TypeOperation == "4")
+                
+                if (segment.MedianWidth == "0" & segment.TypeOperation == "4")//$
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.TypeOperation);
@@ -963,59 +999,95 @@ road is divided so it should have a median but the median type indicates there i
 road is divided so it should have a median but the median type indicates there is no median", temp);
                     masterErrorsList.Add(error);
                 }
+
+                if (int.TryParse(segment.MedianWidth, out _))
+                {
+                    int medianWidthInt = int.Parse(segment.MedianWidth);
+                    if (medianWidthInt > 0 & segment.TypeOperation != "4")
+                    {
+                        List<string> temp = new List<string>();
+                        temp.Add(FieldsListModel.TypeOperation);
+                        temp.Add(FieldsListModel.MedianWidth);
+                        var error = new ErrorItemModel("Type Operation Should be 4.", "You have set the median width to a non-zero value. " +
+                            "only multilane divided highway have medians. Please change the type oepration or change the median width to zero.", temp);
+                        masterErrorsList.Add(error);
+                    }
+                    
+
+                }
+                
+                if (segment.FuncClass == "2" & segment.TypeOperation != "4" )
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.TypeOperation);
+                    temp.Add(FieldsListModel.FuncClass);
+                    ErrorItemModel error = new ErrorItemModel("Other Freeways and Expressways not mutlilane", @"All functional class 2 roads 
+(Other freeways and expressways must be type operation 4 in the majority of cases. Functional class 2 desiganted a multilane highways)", temp);
+                    masterErrorsList.Add(error);
+                }
             }
 
-            if (!(segment.Access == "") & (segment.Access is null) & !this.ValidAccess(segment))
+            if (!(segment.Access == "") & !(segment.Access is null) & !this.ValidAccess(segment))
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.Access);
                 ErrorItemModel error = new ErrorItemModel("invalid Access", "Access is value is not valid", temp);
                 masterErrorsList.Add(error);
-            }
-            else if (this.ValidRouteSign(segment))
+            } else if (!(segment.Access == "") & !(segment.Access is null) & this.ValidAccess(segment))
             {
-                if ((segment.RouteSign == "1" & segment.Access != "1") | (segment.RouteSign != "1" & segment.Access == "1"))
+                if (this.ValidRouteSign(segment))
                 {
-                    List<string> temp = new List<string>();
-                    temp.Add(FieldsListModel.RouteSign);
-                    temp.Add(FieldsListModel.Access);
-                    ErrorItemModel error = new ErrorItemModel("Route Sign Access Pair invalid", "Route Sign Interstate (1) segmeents must also have accesss be 3 - No Control and vice versa", temp);
-                    masterErrorsList.Add(error);
+                    if ((segment.RouteSign == "1" & segment.Access != "1") | (segment.RouteSign != "1" & segment.Access == "1"))
+                    {
+                        List<string> temp = new List<string>();
+                        temp.Add(FieldsListModel.RouteSign);
+                        temp.Add(FieldsListModel.Access);
+                        ErrorItemModel error = new ErrorItemModel("Route Sign Access Pair invalid", "Route Sign Interstate (1) segmeents must also have accesss be 3 - No Control and vice versa", temp);
+                        masterErrorsList.Add(error);
+                    }
                 }
-            }
-            else if (this.ValidTypeOperation(segment))
-            {
-                if (segment.Access == "1" & segment.TypeOperation != "4")
+
+                if (this.ValidTypeOperation(segment))
                 {
-                    List<string> temp = new List<string>();
-                    temp.Add(FieldsListModel.TypeOperation);
-                    temp.Add(FieldsListModel.Access);
-                    ErrorItemModel error = new ErrorItemModel("Access/Type Operation Pair invalid", "If access is full control (1) then Type Operation must be divided highway (1)", temp);
-                    masterErrorsList.Add(error);
+                    if (segment.Access == "1" & segment.TypeOperation != "4")
+                    {
+                        List<string> temp = new List<string>();
+                        temp.Add(FieldsListModel.TypeOperation);
+                        temp.Add(FieldsListModel.Access);
+                        ErrorItemModel error = new ErrorItemModel("Access/Type Operation Pair invalid", "If access is full control (1) then Type Operation must be divided highway (1)", temp);
+                        masterErrorsList.Add(error);
+                    }
                 }
-            }
-            else if (this.ValidMedianType(segment))
-            {
-                if (segment.Access == "3" & segment.MedianType != "0")
+
+                if (this.ValidMedianType(segment))
                 {
-                    List<string> temp = new List<string>();
-                    temp.Add(FieldsListModel.MedianType);
-                    temp.Add(FieldsListModel.Access);
-                    ErrorItemModel error = new ErrorItemModel("Median Type Access Pair invalid", "If Access is no control (3) then the road has a median so MedianType should not be 0", temp);
-                    masterErrorsList.Add(error);
+                    if (segment.Access == "3" & segment.MedianType != "0")
+                    {
+                        List<string> temp = new List<string>();
+                        temp.Add(FieldsListModel.MedianType);
+                        temp.Add(FieldsListModel.Access);
+                        ErrorItemModel error = new ErrorItemModel("Median Type Access Pair invalid", "If Access is no control (3) then the road has a median so MedianType should not be 0", temp);
+                        masterErrorsList.Add(error);
+                    }
                 }
-            }
-            else if (decimal.TryParse(segment.MedianWidth, out _))
-            {
-                if (segment.MedianWidth == "0" & segment.Access == "3")
+
+                if (decimal.TryParse(segment.MedianWidth, out _))
                 {
-                    List<string> temp = new List<string>();
-                    temp.Add(FieldsListModel.MedianWidth);
-                    temp.Add(FieldsListModel.Access);
-                    ErrorItemModel error = new ErrorItemModel("Median Width Access Pair invalid", "If Access is no control (3) then the road has no a median so MedianWidth should be greater than 0", temp);
-                    masterErrorsList.Add(error);
+                    if (segment.MedianWidth == "0" & segment.Access == "3")
+                    {
+                        List<string> temp = new List<string>();
+                        temp.Add(FieldsListModel.MedianWidth);
+                        temp.Add(FieldsListModel.Access);
+                        ErrorItemModel error = new ErrorItemModel("Median Width Access Pair invalid", "If Access is no control (3) then the road has no a median so MedianWidth should be greater than 0", temp);
+                        masterErrorsList.Add(error);
+                    }
                 }
+
             }
+
+
+
+
 
             if (!(segment.Aphn is null) & segment.Aphn != "" & ! this.ValidAPHN(segment))
             {
@@ -1039,20 +1111,23 @@ road is divided so it should have a median but the median type indicates there i
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.NHS);
+                    temp.Add(FieldsListModel.RouteSign);
                     ErrorItemModel error = new ErrorItemModel("RouteSign/ NHS pair invalid", "All RouteSign Interstate (1) roads that are Type Road mainlane (1) must be part of the NHS (1-Interstate)", temp);
                     masterErrorsList.Add(error);
+                    //Yellow All
                 }
 
                 if (this.ValidAPHN(segment) & segment.Aphn != "1")
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.APHN);
+                    temp.Add(FieldsListModel.RouteSign);
                     ErrorItemModel error = new ErrorItemModel("RouteSign APHN pair invalid", "All RouteSign Interstate (1) roads that are Type Road mainlane (1) must be part of the APHN (1- Interstate).", temp);
                     masterErrorsList.Add(error);
                 }
             }
 
-            if (segment.RouteSign == "2" | segment.RouteSign == "3" & segment.TypeRoad == "1" && segment.Nhs != "0")
+            if (segment.RouteSign == "2" | segment.RouteSign == "3" & segment.TypeRoad == "1" && segment.Nhs != "0" & this.ValidNHS(segment) & segment.Aphn != "1" & this.ValidAPHN(segment))
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.RouteSign);
@@ -1063,9 +1138,9 @@ road is divided so it should have a median but the median type indicates there i
                 masterErrorsList.Add(error);
             }
 
-            if (this.ValidRouteSign(segment) & this.ValidTypeRoad(segment) )
+            if (this.ValidAPHN(segment) & segment.Aphn != "" & this.ValidNHS(segment) & segment.Nhs != "")
             {
-                if (!(segment.Nhs == "1" & segment.Aphn == "1"))
+                if (!(segment.Nhs == "1" & segment.Aphn == "1") & !(segment.Aphn == "2" & segment.Nhs != "0"))
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.NHS);
@@ -1088,6 +1163,17 @@ road is divided so it should have a median but the median type indicates there i
                         masterErrorsList.Add(error);
 
                     }
+                } 
+                
+                if (segment.Aphn == "2" & segment.Nhs != "0")
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.NHS);
+                    temp.Add(FieldsListModel.APHN);
+
+                    ErrorItemModel Error = new ErrorItemModel("NHS value wrong", "APHN is set to other arterials. " +
+                        "This means it must not be on the NHS. if its on the NHS then change the APHN vlaue to 1 NHS", temp);
+                    masterErrorsList.Add(Error);
                 }
 
 
@@ -1097,9 +1183,10 @@ road is divided so it should have a median but the median type indicates there i
             if (this.ValidFuncClass(segment) & this.ValidAPHN(segment) )
             {
                 List<string> selctedFunctionalClass = new List<string>();
-                selctedFunctionalClass.Add("2");
-                selctedFunctionalClass.Add("3");
-                selctedFunctionalClass.Add("4");
+                selctedFunctionalClass.Add("1");
+                selctedFunctionalClass.Add("5");
+                selctedFunctionalClass.Add("6");
+                selctedFunctionalClass.Add("7");
 
                 if (segment.Aphn == "2" & selctedFunctionalClass.Contains(segment.FuncClass))
                 {
@@ -1117,6 +1204,17 @@ road is divided so it should have a median but the median type indicates there i
                 temp.Add(FieldsListModel.SpecialSystems);
                 ErrorItemModel error = new ErrorItemModel("Special Systems not valid", "SpecialSystems is not valid", temp);
                 masterErrorsList.Add(error);
+            } else if (ValidNHS(segment) & ValidSpecialSystems(segment))
+            {
+                if (segment.SpecialSystems == "9" & segment.Nhs != "1")
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.SpecialSystems);
+                    temp.Add(FieldsListModel.NHS);
+                    ErrorItemModel error = new ErrorItemModel("NHS Wrong", @"All Interstates are automatically part of the STRAHNET system. 
+It appears you have the value currently at XXX. I recommend you change it to match.", temp);
+                    masterErrorsList.Add(error);
+                }
             }
 
             if (!int.TryParse(segment.BothDirectionNumLanes, out _) & segment.BothDirectionNumLanes != "")
@@ -1290,7 +1388,7 @@ greater than one direction number of lanes, then the road must have a median and
                 }
             }
 
-            if (segment.RoadwayWidth != 0 & segment.RoadwayWidth == 999)
+            if (segment.RoadwayWidth != 0 & segment.RoadwayWidth != 999)
             {
                 if (segment.RoadwayWidth < 0)
                 {
@@ -1307,6 +1405,15 @@ greater than one direction number of lanes, then the road must have a median and
                     ErrorItemModel error = new ErrorItemModel("Roadway Width greater than 999", "Roadway Width greater than 999", temp);
                     masterErrorsList.Add(error);
                 }
+                if (segment.RoadwayWidth > segment.SurfaceWidth)
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.RoadwayWidth);
+                    temp.Add(FieldsListModel.SurfaceWidth);
+                    var error = new ErrorItemModel("roadway width is too small/big", "Roadway width does not fi inside of surface width", temp);
+                    masterErrorsList.Add(error);
+                }
+
             }
 
             if (segment.ExtraLanes != "" & (ExtraLanes is null))
@@ -1326,7 +1433,79 @@ greater than one direction number of lanes, then the road must have a median and
                 if (!this.ValidSurfaceType(segment))
                 {
                     List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.SurfaceType);
                     ErrorItemModel error = new ErrorItemModel("invalid Surface Type", "invalid surface type", temp);
+                    masterErrorsList.Add(error);
+                }
+            }
+
+            if (segment.TypeOperation == "4" & segment.Access == "3")
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.TypeOperation);
+                temp.Add(FieldsListModel.Access);
+                ErrorItemModel error = new ErrorItemModel("Access Wrong", @"A multilane divided highway must have some amount of control of 
+turning. please, change the access to someone other than no control or change the type operation to something toher than multilane divided", temp);
+                masterErrorsList.Add(error);
+            }
+
+            if (segment.MedianType == "0" & segment.TypeOperation == "4")
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.TypeOperation);
+                temp.Add(FieldsListModel.MedianType);
+                ErrorItemModel error = new ErrorItemModel("medianwidth or median type wrong", @"All multipalen divided highway have a medain. 
+By extension, the mediantpye cant be 0, No Median. please chang ethe tpye operation or select a different median type ", temp);
+                masterErrorsList.Add(error);
+            }
+
+            if (segment.LaneWidth >= 15)
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.LaneWidth);
+                var error = new ErrorItemModel("Lane with > 15 ft", "Lane width of 15 feet or more are very unusual. Would you like to enter this value anyway?", temp);
+                masterErrorsList.Add(error);
+            }
+
+            if (segment.SurfaceWidth < segment.LaneWidth)
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.LaneWidth);
+                temp.Add(FieldsListModel.SurfaceWidth);
+                var error = new ErrorItemModel("lane Width too large ", @"A surface width is made up of a vareity of different characteristics. 
+A subset of the surface width is the lane width. The surface width must be larger than the lane width.", temp);
+                masterErrorsList.Add(error);
+            }
+
+            if (int.TryParse(segment.BothDirectionNumLanes, out _))
+            {
+                if (int.Parse(segment.BothDirectionNumLanes) * segment.LaneWidth > segment.SurfaceWidth  )
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.LaneWidth);
+                    temp.Add(FieldsListModel.SurfaceWidth);
+                    temp.Add(FieldsListModel.BothDirectionNumLanes);
+                    var error = new ErrorItemModel("Surface width too small", @"A surface width is map up of a variety of differnt characteristics. 
+A subset of the sruface width is the lane width. The surface width must be larger than the lane width. See the diagram hyperlink", temp);
+                    masterErrorsList.Add(error);
+                }
+            }
+
+            if (ValidMedianType(segment) & ValidTypeOperation(segment) & segment.TypeOperation != "" & segment.MedianType != "")
+            {
+                var selectedMedianTypes = new List<string>();
+                selectedMedianTypes.Add("1");
+                selectedMedianTypes.Add("2");
+                selectedMedianTypes.Add("3");
+                selectedMedianTypes.Add("4");
+                selectedMedianTypes.Add("5");
+                if (selectedMedianTypes.Contains(segment.MedianType) & segment.TypeOperation != "4")
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.MedianType);
+                    temp.Add(FieldsListModel.TypeOperation);
+                    var error = new ErrorItemModel("Must be divided highway", @"It appears you have selected the median type as XXXX. 
+This means the road has a median. Only multilane divided highway have medians. Perhaps you could set the TypeOperation to be 4 (multi-lane divided)", temp);
                     masterErrorsList.Add(error);
                 }
             }
