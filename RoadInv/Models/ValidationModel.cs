@@ -314,10 +314,9 @@ namespace RoadInv.Models
         public static List<string> checkInvalidCharacters(string focusString)
             //AH_Route and AH_Section can only contain A-Z and 0-9 characters. All others are invalid
         {
-            List<string> temp = new List<string>();
+            List<string> temp = new();
             foreach (char focusChar in focusString)
             {
-                var yellow = focusChar;
                 if (!validCharacters.Contains(focusChar) )
                 {
                     temp.Add(focusChar.ToString());

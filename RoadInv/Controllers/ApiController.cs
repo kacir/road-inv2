@@ -394,6 +394,107 @@ namespace RoadInv.Controllers
             return Json(newID);
         }
 
+        [Route("api/validate_bulk")]
+        public IActionResult ValidateBulk(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string NHS)
+        {
+            var overlappingRecords = from record in this._dbContext.RoadInvs
+                         where record.AhRoadId == AH_RoadID & (record.AhBlm < AH_BLM &  record.AhElm > AH_BLM) | (record.AhBlm < AH_ELM & record.AhElm > AH_ELM)
+                         select record;
+
+            foreach(var row in overlappingRecords)
+            {
+                row.Nhs = NHS;
+            }
+
+
+            var bulkErrors = new ErrorItemBulkModel(this._dbContext, AH_BLM, AH_ELM, overlappingRecords);
+
+            //find all associated records
+            //summarize findings by the following factors
+            // - number of records effected
+            // - number of records error
+            // - miles of records effected
+            // - miles of records error
+            // - find number of out of range miles
+
+            var bulkErrorsErrors = Json(bulkErrors);
+
+            return bulkErrorsErrors;
+        }
+
+        [Route("api/edit_bulk")]
+        public IActionResult ImplimentBulkEdit(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string NHS)
+        {
+            //find records that are 100% inside the bulk segment
+            
+            var interiorSegments = from record in this._dbContext.RoadInvs
+                                     where record.AhRoadId == AH_RoadID & (record.AhBlm <= AH_BLM & record.AhElm > AH_BLM) & (record.AhBlm < AH_ELM & record.AhElm >= AH_ELM)
+                                     select record;
+
+            //find records that are undershooting the bulk segment
+            var overshootSegements = from record in this._dbContext.RoadInvs
+                                    where record.AhRoadId == AH_RoadID & (record.AhBlm <= AH_BLM & record.AhElm > AH_BLM) & (record.AhBlm < AH_ELM & record.AhElm < AH_ELM)
+                                    select record;
+
+            foreach(var row in overshootSegements)
+            {
+                //create new record
+                var newBLM = AH_ELM;
+                var newELM = row.AhElm;
+
+                //split record
+                var newRecord = new DB.RoadInv();
+                newRecord.Access = row.Access;
+                newRecord.AhCounty = row.AhCounty;
+                newRecord.AhDistrict = row.AhDistrict;
+                newRecord.AhRoute = row.AhRoute;
+                newRecord.AhSection = row.AhSection;
+                newRecord.AlternativeRouteName = row.AlternativeRouteName;
+                newRecord.Aphn = row.Aphn;
+                newRecord.ArnoldConv = row.Aphn;
+                newRecord.BothDirectionNumLanes = row.BothDirectionNumLanes;
+                newRecord.Comment1 = row.Comment1;
+                newRecord.ExtraLanes = row.ExtraLanes;
+                newRecord.FuncClass = row.FuncClass;
+                newRecord.GiscreateDate = row.GiscreateDate;
+                newRecord.GiscreatedUser = row.GiscreatedUser;
+                newRecord.Gisid = row.Gisid;
+                newRecord.GislastEditedDate = row.GislastEditedDate;
+                newRecord.GislastEditedUser = row.GislastEditedUser;
+                newRecord.GovermentCode = row.GovermentCode;
+                newRecord.LaneWidth = row.LaneWidth;
+                newRecord.LeftShoulderSurface = row.LeftShoulderSurface;
+                newRecord.LeftShoulderWidth = row.LeftShoulderWidth;
+                newRecord.LegacyBlm = row.LegacyBlm;
+                newRecord.LegacyElm = row.LegacyElm;
+                newRecord.LegacyId = row.LegacyId;
+                newRecord.LogDirect = row.LogDirect;
+                newRecord.MedianType = row.MedianType;
+                newRecord.MedianWidth = row.MedianWidth;
+                newRecord.Nhs = row.Nhs;
+                newRecord.OneDirectionNumLanes = row.OneDirectionNumLanes;
+                newRecord.RightShoulderSurface = row.RightShoulderSurface;
+                newRecord.RightShoulderWidth = row.RightShoulderWidth;
+                newRecord.RoadwayWidth = row.RoadwayWidth;
+                newRecord.RouteSign = row.RouteSign;
+                newRecord.RuralUrbanArea = row.RuralUrbanArea;
+                newRecord.SpecialSystems = row.SpecialSystems;
+                newRecord.SurfaceType = row.SurfaceType;
+                newRecord.SurfaceWidth = row.SurfaceWidth;
+
+            }
+
+
+            //find records that are overshooting the bulk segment
+            var undershootsSegements = from record in this._dbContext.RoadInvs
+                                        where record.AhRoadId == AH_RoadID & (record.AhBlm > AH_BLM & record.AhElm > AH_BLM) & (record.AhBlm < AH_ELM & record.AhElm <= AH_ELM)
+                                        select record;
+
+
+
+            return null;
+        }
+
 
         [Route("api/validate")]
         public IActionResult Validate(string AH_District = "",
