@@ -42,6 +42,10 @@
                         @Html.TextBox("Route", "", new { @class = "form-control" })
                     </div>
                     <div class='form-group'>
+                        <label>Section</label>
+                        @Html.TextBox("Section", "", new { @class = "form-control" })
+                    </div>
+                    <div class='form-group'>
                         <label>Direction</label>
                         @Html.DropDownListFor(m => m.Direction, Model.Directions, " ", new { @class = "form-control" })
                     </div>

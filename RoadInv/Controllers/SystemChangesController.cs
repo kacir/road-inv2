@@ -147,6 +147,10 @@ namespace RoadInv.Controllers
                 {
                     roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
                 }
+                if (!pageModel.Section.Equals(null))
+                {
+                    roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
                 if (!String.IsNullOrEmpty(pageModel.Direction))
                 {
                     roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
@@ -155,6 +159,7 @@ namespace RoadInv.Controllers
                 {
                     roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
                 }
+                
                 if (!pageModel.ELM.Equals(null))
                 {
                     roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));

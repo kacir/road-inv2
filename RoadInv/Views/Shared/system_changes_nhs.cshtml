@@ -31,30 +31,34 @@
             <main class="modal__content" id="modal-1-content">
                 @using (Html.BeginForm("nhs_update", "system_changes", FormMethod.Post))
                 {
-                        <div class='form-group'>
-                            <label>County</label>
-                            @Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })
-                        </div>
-                        <div class='form-group'>
-                            <label>Route</label>
-                            @Html.TextBox("Route", "", new { @class = "form-control" })
-                        </div>
-                        <div class='form-group'>
-                            <label>Direction</label>
-                            @Html.DropDownListFor(m => m.Direction, Model.Directions, " ", new { @class = "form-control" })
-                        </div>
-                        <div class='form-group'>
-                            <label>BLM</label>
-                            @Html.TextBox("BLM", "", new { @class = "form-control" })
-                        </div>
-                        <div class='form-group'>
-                            <label>ELM</label>
-                            @Html.TextBox("ELM", "", new { @class = "form-control" })
-                        </div>
-                        <div class="form-group">
-                            <label for='form-district'>NHS</label>
-                            @Html.DropDownListFor(m => m.NHS, Model.NHS_vals, " ", new { @class = "form-control" })
-                        </div>
+                    <div class='form-group'>
+                        <label>County</label>
+                        @Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })
+                    </div>
+                    <div class='form-group'>
+                        <label>Route</label>
+                        @Html.TextBox("Route", "", new { @class = "form-control" })
+                    </div>
+                    <div class='form-group'>
+                        <label>Section</label>
+                        @Html.TextBox("Section", "", new { @class = "form-control" })
+                    </div>
+                    <div class='form-group'>
+                        <label>Direction</label>
+                        @Html.DropDownListFor(m => m.Direction, Model.Directions, " ", new { @class = "form-control" })
+                    </div>
+                    <div class='form-group'>
+                        <label>BLM</label>
+                        @Html.TextBox("BLM", "", new { @class = "form-control" })
+                    </div>
+                    <div class='form-group'>
+                        <label>ELM</label>
+                        @Html.TextBox("ELM", "", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for='form-district'>NHS</label>
+                        @Html.DropDownListFor(m => m.NHS, Model.NHS_vals, " ", new { @class = "form-control" })
+                    </div>
                     <footer class="modal__footer">
                         <button class="modal__btn modal__btn-primary" type="submit" value="Update">Submit for Validation</button>
                         @*<input class="modal__btn modal__btn-primary" type="button" value="Submit for Validation" onclick="location.href='@Url.Action("nhs_update", "system_changes")'" />*@
