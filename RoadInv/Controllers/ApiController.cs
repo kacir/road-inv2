@@ -16,18 +16,12 @@ namespace RoadInv.Controllers
     public class ApiController : Controller
     {
         public roadinvContext _dbContext;
+        public BulkEditModel _bulkEdits;
 
         public ApiController(roadinvContext dbContext)
         {
             _dbContext = dbContext;
-        }
-
-        public IActionResult test(int ID)
-        {
-            var segment = this._dbContext.RoadInvs.Find(ID);
-
-
-            return Json(0);
+            _bulkEdits = new BulkEditModel(this._dbContext);
         }
 
 
@@ -311,69 +305,7 @@ namespace RoadInv.Controllers
             decimal AH_ELM = -1)
         {
             var segmentDetails = this._dbContext.RoadInvs.Find(ID);
-
-            //clone and set values for new clone
-            var duplicate = new DB.RoadInv();
-
-            //customize attributes of duplicate
-            if (AH_BLM != -1)
-            {
-                duplicate.AhBlm = AH_BLM;
-            }
-
-            if (segmentDetails.AhCounty != "")
-            {
-                duplicate.AhCounty = AH_County;
-            }
-
-
-            if (AH_ELM != -1)
-            {
-                duplicate.AhElm = AH_ELM;
-            }
-
-            if (AH_Route != "")
-            {
-                duplicate.AhRoute = AH_Route;
-            }
-
-            if (AH_Section != "")
-            {
-                duplicate.AhSection = AH_Section;
-            }
-
-            if (LOG_DIRECT != "")
-            {
-                duplicate.LogDirect = LOG_DIRECT;
-            }
-
-            //explicitly set every single attribute
-            duplicate.Access = segmentDetails.Access;
-            duplicate.AhDistrict = segmentDetails.AhDistrict;
-            duplicate.AlternativeRouteName = segmentDetails.AlternativeRouteName;
-            duplicate.Aphn = segmentDetails.Aphn;
-            duplicate.ArnoldConv = segmentDetails.ArnoldConv;
-            duplicate.Comment1 = segmentDetails.Comment1;
-            duplicate.ExtraLanes = segmentDetails.ExtraLanes;
-            duplicate.FuncClass = segmentDetails.FuncClass;
-            duplicate.GovermentCode = segmentDetails.GovermentCode;
-            duplicate.LaneWidth = segmentDetails.LaneWidth;
-            duplicate.MedianType = segmentDetails.MedianType;
-            duplicate.MedianWidth = segmentDetails.MedianWidth;
-            duplicate.Nhs = segmentDetails.Nhs;
-            duplicate.RoadwayWidth = segmentDetails.RoadwayWidth;
-            duplicate.RouteSign = segmentDetails.RouteSign;
-            duplicate.RuralUrbanArea = segmentDetails.RuralUrbanArea;
-            duplicate.SpecialSystems = segmentDetails.SpecialSystems;
-            duplicate.SurfaceType = segmentDetails.SurfaceType;
-            duplicate.SurfaceWidth = segmentDetails.SurfaceWidth;
-            duplicate.SystemStatus = segmentDetails.SystemStatus;
-            duplicate.TypeOperation = segmentDetails.TypeOperation;
-            duplicate.TypeRoad = segmentDetails.TypeRoad;
-            duplicate.UrbanAreaCode = segmentDetails.UrbanAreaCode;
-            duplicate.YearBuilt = segmentDetails.YearBuilt;
-            duplicate.YearRecon = segmentDetails.YearRecon;
-            duplicate.BothDirectionNumLanes = segmentDetails.BothDirectionNumLanes;
+            var duplicate = ErrorItemBulkModel.CloneSegment(segmentDetails);
 
             //attributes that need to be mirrored to antilog side
             if (int.TryParse(segmentDetails.BothDirectionNumLanes, out _) & int.TryParse(segmentDetails.OneDirectionNumLanes, out _))
@@ -422,75 +354,17 @@ namespace RoadInv.Controllers
             return bulkErrorsErrors;
         }
 
-        [Route("api/edit_bulk")]
+        [Route("api/edit_bulk/nhs")]
         public IActionResult ImplimentBulkEdit(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string NHS)
         {
-            //find records that are 100% inside the bulk segment
-            
-            var interiorSegments = from record in this._dbContext.RoadInvs
-                                     where record.AhRoadId == AH_RoadID & (record.AhBlm <= AH_BLM & record.AhElm > AH_BLM) & (record.AhBlm < AH_ELM & record.AhElm >= AH_ELM)
-                                     select record;
+            //split records that partly overlap the designation into multiple pieces
+            var ajustedSegments  = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);
 
-            //find records that are undershooting the bulk segment
-            var overshootSegements = from record in this._dbContext.RoadInvs
-                                    where record.AhRoadId == AH_RoadID & (record.AhBlm <= AH_BLM & record.AhElm > AH_BLM) & (record.AhBlm < AH_ELM & record.AhElm < AH_ELM)
-                                    select record;
-
-            foreach(var row in overshootSegements)
+            foreach(var row in ajustedSegments)
             {
-                //create new record
-                var newBLM = AH_ELM;
-                var newELM = row.AhElm;
-
-                //split record
-                var newRecord = new DB.RoadInv();
-                newRecord.Access = row.Access;
-                newRecord.AhCounty = row.AhCounty;
-                newRecord.AhDistrict = row.AhDistrict;
-                newRecord.AhRoute = row.AhRoute;
-                newRecord.AhSection = row.AhSection;
-                newRecord.AlternativeRouteName = row.AlternativeRouteName;
-                newRecord.Aphn = row.Aphn;
-                newRecord.ArnoldConv = row.Aphn;
-                newRecord.BothDirectionNumLanes = row.BothDirectionNumLanes;
-                newRecord.Comment1 = row.Comment1;
-                newRecord.ExtraLanes = row.ExtraLanes;
-                newRecord.FuncClass = row.FuncClass;
-                newRecord.GiscreateDate = row.GiscreateDate;
-                newRecord.GiscreatedUser = row.GiscreatedUser;
-                newRecord.Gisid = row.Gisid;
-                newRecord.GislastEditedDate = row.GislastEditedDate;
-                newRecord.GislastEditedUser = row.GislastEditedUser;
-                newRecord.GovermentCode = row.GovermentCode;
-                newRecord.LaneWidth = row.LaneWidth;
-                newRecord.LeftShoulderSurface = row.LeftShoulderSurface;
-                newRecord.LeftShoulderWidth = row.LeftShoulderWidth;
-                newRecord.LegacyBlm = row.LegacyBlm;
-                newRecord.LegacyElm = row.LegacyElm;
-                newRecord.LegacyId = row.LegacyId;
-                newRecord.LogDirect = row.LogDirect;
-                newRecord.MedianType = row.MedianType;
-                newRecord.MedianWidth = row.MedianWidth;
-                newRecord.Nhs = row.Nhs;
-                newRecord.OneDirectionNumLanes = row.OneDirectionNumLanes;
-                newRecord.RightShoulderSurface = row.RightShoulderSurface;
-                newRecord.RightShoulderWidth = row.RightShoulderWidth;
-                newRecord.RoadwayWidth = row.RoadwayWidth;
-                newRecord.RouteSign = row.RouteSign;
-                newRecord.RuralUrbanArea = row.RuralUrbanArea;
-                newRecord.SpecialSystems = row.SpecialSystems;
-                newRecord.SurfaceType = row.SurfaceType;
-                newRecord.SurfaceWidth = row.SurfaceWidth;
-
+                row.Nhs = NHS;
             }
-
-
-            //find records that are overshooting the bulk segment
-            var undershootsSegements = from record in this._dbContext.RoadInvs
-                                        where record.AhRoadId == AH_RoadID & (record.AhBlm > AH_BLM & record.AhElm > AH_BLM) & (record.AhBlm < AH_ELM & record.AhElm <= AH_ELM)
-                                        select record;
-
-
+            _bulkEdits._dbContext.SaveChanges();
 
             return null;
         }
