@@ -1,0 +1,94 @@
+﻿@{Layout = "_Layout.cshtml";}
+
+@section nav_quality {
+    active
+}
+@{ ViewData["Title"] = "Bulk Validation"; }
+
+@model List<RoadInv.Models.BulkValidationItemModel>;
+
+<br />
+<section>
+    <h1>3000 Known Data Validation Errors</h1>
+    <br>
+
+    <table>
+        <tr>
+            <th>Link</th>
+            <th>County</th>
+            <th>Route</th>
+            <th>Section</th>
+            <th>Direction</th>
+            <th>AH_RoadID</th>
+            <th>BLM</th>
+            <th>ELM</th>
+            <th>Error Count</th>
+            <th>Error Fields</th>
+        </tr>
+        @foreach (var errorItem in Model)
+        {
+            //create table
+<tr>
+    <td>
+        <a href="edit_segement?id=@errorItem.segment.Id">Link</a>
+    </td>
+    <td>
+        @errorItem.segment.AhCounty
+    </td>
+    <td>
+        @errorItem.segment.AhRoute
+    </td>
+    <td>
+        @errorItem.segment.AhSection
+    </td>
+    <td>
+        @errorItem.segment.LogDirect
+    </td>
+    <td>
+        @errorItem.segment.AhRoadId
+    </td>
+    <td>
+        @errorItem.segment.AhBlm
+    </td>
+    <td>
+        @errorItem.segment.AhElm
+    </td>
+    <td>
+        @errorItem.errors.Count()
+    </td>
+    <td class="errorfields">
+        @{ List<string> fieldsList = new List<string>();
+            foreach (var error in errorItem.errors)
+            {
+                foreach (var field in error.Fields)
+                {
+                    fieldsList.Add(field);
+                }
+
+            }
+
+            fieldsList = fieldsList.Distinct().ToList();
+            fieldsList.Sort();
+
+            foreach (var field in fieldsList)
+            {
+<span>@field</span> } }
+    </td>
+
+
+</tr>
+}
+    </table>
+
+    <style>
+        table {
+            margin: auto;
+        }
+
+        .errorfields {
+            width: 50px;
+        }
+    </style>
+
+</section>
+

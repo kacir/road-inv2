@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "roadInvUnitTest": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

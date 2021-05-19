@@ -16,18 +16,12 @@ namespace RoadInv.Controllers
     public class ApiController : Controller
     {
         public roadinvContext _dbContext;
+        public BulkEditModel _bulkEdits;
 
         public ApiController(roadinvContext dbContext)
         {
             _dbContext = dbContext;
-        }
-
-        public IActionResult test(int ID)
-        {
-            var segment = this._dbContext.RoadInvs.Find(ID);
-
-
-            return Json(0);
+            _bulkEdits = new BulkEditModel(this._dbContext);
         }
 
 
@@ -311,69 +305,7 @@ namespace RoadInv.Controllers
             decimal AH_ELM = -1)
         {
             var segmentDetails = this._dbContext.RoadInvs.Find(ID);
-
-            //clone and set values for new clone
-            var duplicate = new DB.RoadInv();
-
-            //customize attributes of duplicate
-            if (AH_BLM != -1)
-            {
-                duplicate.AhBlm = AH_BLM;
-            }
-
-            if (segmentDetails.AhCounty != "")
-            {
-                duplicate.AhCounty = AH_County;
-            }
-
-
-            if (AH_ELM != -1)
-            {
-                duplicate.AhElm = AH_ELM;
-            }
-
-            if (AH_Route != "")
-            {
-                duplicate.AhRoute = AH_Route;
-            }
-
-            if (AH_Section != "")
-            {
-                duplicate.AhSection = AH_Section;
-            }
-
-            if (LOG_DIRECT != "")
-            {
-                duplicate.LogDirect = LOG_DIRECT;
-            }
-
-            //explicitly set every single attribute
-            duplicate.Access = segmentDetails.Access;
-            duplicate.AhDistrict = segmentDetails.AhDistrict;
-            duplicate.AlternativeRouteName = segmentDetails.AlternativeRouteName;
-            duplicate.Aphn = segmentDetails.Aphn;
-            duplicate.ArnoldConv = segmentDetails.ArnoldConv;
-            duplicate.Comment1 = segmentDetails.Comment1;
-            duplicate.ExtraLanes = segmentDetails.ExtraLanes;
-            duplicate.FuncClass = segmentDetails.FuncClass;
-            duplicate.GovermentCode = segmentDetails.GovermentCode;
-            duplicate.LaneWidth = segmentDetails.LaneWidth;
-            duplicate.MedianType = segmentDetails.MedianType;
-            duplicate.MedianWidth = segmentDetails.MedianWidth;
-            duplicate.Nhs = segmentDetails.Nhs;
-            duplicate.RoadwayWidth = segmentDetails.RoadwayWidth;
-            duplicate.RouteSign = segmentDetails.RouteSign;
-            duplicate.RuralUrbanArea = segmentDetails.RuralUrbanArea;
-            duplicate.SpecialSystems = segmentDetails.SpecialSystems;
-            duplicate.SurfaceType = segmentDetails.SurfaceType;
-            duplicate.SurfaceWidth = segmentDetails.SurfaceWidth;
-            duplicate.SystemStatus = segmentDetails.SystemStatus;
-            duplicate.TypeOperation = segmentDetails.TypeOperation;
-            duplicate.TypeRoad = segmentDetails.TypeRoad;
-            duplicate.UrbanAreaCode = segmentDetails.UrbanAreaCode;
-            duplicate.YearBuilt = segmentDetails.YearBuilt;
-            duplicate.YearRecon = segmentDetails.YearRecon;
-            duplicate.BothDirectionNumLanes = segmentDetails.BothDirectionNumLanes;
+            var duplicate = ErrorItemBulkModel.CloneSegment(segmentDetails);
 
             //attributes that need to be mirrored to antilog side
             if (int.TryParse(segmentDetails.BothDirectionNumLanes, out _) & int.TryParse(segmentDetails.OneDirectionNumLanes, out _))
@@ -392,6 +324,49 @@ namespace RoadInv.Controllers
             int newID = duplicate.Id;
 
             return Json(newID);
+        }
+
+        [Route("api/validate_bulk")]
+        public IActionResult ValidateBulk(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string NHS)
+        {
+            var overlappingRecords = from record in this._dbContext.RoadInvs
+                         where record.AhRoadId == AH_RoadID & (record.AhBlm < AH_BLM &  record.AhElm > AH_BLM) | (record.AhBlm < AH_ELM & record.AhElm > AH_ELM)
+                         select record;
+
+            foreach(var row in overlappingRecords)
+            {
+                row.Nhs = NHS;
+            }
+
+
+            var bulkErrors = new ErrorItemBulkModel(this._dbContext, AH_BLM, AH_ELM, overlappingRecords);
+
+            //find all associated records
+            //summarize findings by the following factors
+            // - number of records effected
+            // - number of records error
+            // - miles of records effected
+            // - miles of records error
+            // - find number of out of range miles
+
+            var bulkErrorsErrors = Json(bulkErrors);
+
+            return bulkErrorsErrors;
+        }
+
+        [Route("api/edit_bulk/nhs")]
+        public IActionResult ImplimentBulkEdit(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string NHS)
+        {
+            //split records that partly overlap the designation into multiple pieces
+            var ajustedSegments  = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);
+
+            foreach(var row in ajustedSegments)
+            {
+                row.Nhs = NHS;
+            }
+            _bulkEdits._dbContext.SaveChanges();
+
+            return null;
         }
 
 

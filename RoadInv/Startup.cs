@@ -6,6 +6,9 @@ using RoadInv.Models;
 using Microsoft.Extensions.Configuration;
 using RoadInv.DB;
 using Microsoft.EntityFrameworkCore;
+using System;
+using RoadInv.Interfaces;
+using RoadInv.Repositories;
 
 namespace RoadInv
 {
@@ -17,6 +20,8 @@ namespace RoadInv
             this.configuration = configuration;
         }
 
+        public IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -24,10 +29,29 @@ namespace RoadInv
             services.AddControllers();
             services.AddMvc();
 
+            //services.AddSession(options => 
+            //{
+            //    options.IdleTimeout = TimeSpan.FromMinutes(30); //sets session expire time
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.IsEssential = true;
+            //});
+
             //both entity framework and SQL Client are needed for project
             //used for entity framework database connection
+
+            #region Repositories 
+            //Transient lifetime services are created each time they are requested
+            //Transient objects are always different; a new instance is provided to every controller and every service
+            //This is only needed if we decide to implement a repository.
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>)); 
+            services.AddTransient<IRoadinvRepository, RoadinvRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork.UnitOfWork>();
+            #endregion
+
             services.AddDbContext<roadinvContext>
                 (options => options.UseSqlServer(this.configuration["EntityConnectinString"]));
+
+
 
         }
 
@@ -39,14 +63,21 @@ namespace RoadInv
                 app.UseDeveloperExceptionPage();
             } else
             {
-                app.UseExceptionHandler("error");
+                app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseFileServer();
             app.UseRouting();
+            //app.UseSession();
+            
 
-            app.UseEndpoints(endpoints => {
-                endpoints.MapControllers();
+            app.UseEndpoints(endpoints => 
+            {
+               endpoints.MapControllerRoute(
+               name: "default",
+               pattern: "{controller=Home}/{action=Index}/{id?}");
+
+               endpoints.MapControllers();
             });
         }
     }

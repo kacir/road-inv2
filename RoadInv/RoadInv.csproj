@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>f3f1c825-9fee-4142-a151-7b0a1c7c4dee</UserSecretsId>
+    <RootNamespace>RoadInv</RootNamespace>
+    <AssemblyName>RoadInv</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,8 +23,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.0.7" />
     <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="5.1.30" />
   </ItemGroup>
   <ItemGroup>
