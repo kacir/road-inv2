@@ -602,23 +602,36 @@ namespace RoadInv.Models
             //look for missing properties in first few standard properties
             List<string> missingProperties = new List<string>();
 
-            if (segment.AhCounty is null | segment.AhCounty.Length == 0)
+            if (segment.AhCounty is null)
+            {
+                missingProperties.Add(FieldsListModel.AH_County);
+            } 
+            else if (segment.AhCounty.Length == 0)
             {
                 missingProperties.Add(FieldsListModel.AH_County);
             }
 
-            if (segment.AhRoute is null | segment.AhRoute.Length == 0)
+
+            if (segment.AhRoute is null)
+            {
+                missingProperties.Add(FieldsListModel.AH_Route);
+            } else  if (segment.AhRoute.Length == 0)
             {
                 missingProperties.Add(FieldsListModel.AH_Route);
             }
 
-            if (segment.AhSection is null | segment.AhSection.Length == 0)
+            if (segment.AhSection is null)
+            {
+                missingProperties.Add(FieldsListModel.AH_Section);
+            } else if (segment.AhSection.Length == 0)
             {
                 missingProperties.Add(FieldsListModel.AH_Section);
             }
 
-            if (segment.LogDirect is null | segment.LogDirect.Length == 0)
+            if (segment.LogDirect is null)
             {
+                missingProperties.Add(FieldsListModel.LOG_DIRECT);
+            } else if (segment.LogDirect.Length == 0){
                 missingProperties.Add(FieldsListModel.LOG_DIRECT);
             }
 
@@ -736,7 +749,14 @@ namespace RoadInv.Models
 
             }
             //Check if direction is valid
-            if (!(segment.LogDirect.ToUpper() == "A" | segment.LogDirect.ToUpper() == "B"))
+            if (segment.LogDirect is null)
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.LOG_DIRECT);
+                ErrorItemModel error = new ErrorItemModel("LOG_DIRECT not valid", "The LOG_DIRECT/Direction field is null. It must contain a value", temp);
+                masterErrorsList.Add(error);
+            }
+            else if (!(segment.LogDirect.ToUpper() == "A" | segment.LogDirect.ToUpper() == "B"))
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.LOG_DIRECT);
@@ -746,13 +766,17 @@ namespace RoadInv.Models
             }
 
             //check section field is not too long
-            if (segment.AhSection.Length > 3)
+            if (!(segment.AhSection is null))
             {
-                List<string> temp = new List<string>();
-                temp.Add(FieldsListModel.AH_Section);
-                ErrorItemModel error = new ErrorItemModel("AH_Section > 3 chars", "AH_Section field can only be three characters long according to ARNOLD", temp);
-                masterErrorsList.Add(error);
+                if (segment.AhSection.Length > 3)
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(FieldsListModel.AH_Section);
+                    ErrorItemModel error = new ErrorItemModel("AH_Section > 3 chars", "AH_Section field can only be three characters long according to ARNOLD", temp);
+                    masterErrorsList.Add(error);
+                }
             }
+
             //check if section has no value
 
 

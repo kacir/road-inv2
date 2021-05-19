@@ -10,6 +10,8 @@ namespace RoadInv.Models
         private ValidationModel validator;
         private DB.roadinvContext _dbContext;
 
+        public List<BulkValidationItemModel> masterList = new List<BulkValidationItemModel>();
+
         public BulkValidationModel(DB.roadinvContext dbContext)
         {
             this._dbContext = dbContext;
@@ -19,12 +21,22 @@ namespace RoadInv.Models
 
         public void BulkValidate()
         {
-            Dictionary<int, int> errorCounts = new();
-            Dictionary<int, DB.RoadInv> errorRecords = new();
-
-            foreach (var record in _dbContext.RoadInvs)
+            foreach (var record in _dbContext.RoadInvs.OrderBy(record => record.AhRoadId))
             {
                 var errors = this.validator.FindErrors(record);
+                if (errors.Count > 0)
+                {
+                    var item = new BulkValidationItemModel
+                    {
+                        errors = errors,
+                        segment = record
+                    };
+                    masterList.Add(item);
+                }
+                if (masterList.Count > 3000)
+                {
+                    break;
+                }
             }
         }
     }
