@@ -7,12 +7,12 @@
   DTS:CreatorName="AHTD\rk42861"
   DTS:DTSID="{F9DF2DC8-4564-4589-A3C1-00955062C9ED}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.2000.166"
+  DTS:LastModifiedProductVersion="15.0.2000.128"
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="13"
-  DTS:VersionGUID="{BA9CD022-7F1C-4645-9EA5-D1BCD1E24E7D}">
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{7CCDFE02-8860-4A45-923D-AEBBC23E3D07}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -23,8 +23,6 @@
       DTS:ObjectName="INVSQL-DEV.roadinv">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
           DTS:ConnectionString="Data Source=INVSQL-DEV;Initial Catalog=roadinv;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -35,13 +33,11 @@
       DTS:ObjectName="SQL1.ROADINV.gisuser">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
           DTS:ConnectionString="Data Source=SQL1;User ID=gisuser;Initial Catalog=ROADINV;Provider=MSOLEDBSQL.1;Auto Translate=False;">
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAASxBeu0SzkuiBAAFmDekGgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADp8GDQeD+tH+pjCs1dcciTAAAAAASAAACgAAAAEAAAAENseHfsFh/h38Nw48kvFEgIAAAABLQmu1NTTZ0UAAAABG1FIFmgLc8wfVU5MoVqiXK0NV0</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAASxBeu0SzkuiBAAFmDekGgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABmQbeuND4p73/PsA79OHEJAAAAAASAAACgAAAAEAAAAJMz7a5OKVM1h1sMaLxKHrAIAAAA0S47ExOnWKUUAAAAiy/a4HeaoGZ4Lst1F4Dy0ftOOm4</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -52,8 +48,6 @@
       DTS:ObjectName="SQLGIS.SIR">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
           DTS:ConnectionString="Data Source=SQLGIS;Initial Catalog=SIR;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -481,6 +475,14 @@
                       cachedName="Arnold_conv"
                       externalMetadataColumnId="Package\Off System Import\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Arnold_conv]"
                       lineageId="Package\Off System Import\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[Arnold_conv]" />
+                    <inputColumn
+                      refId="Package\Off System Import\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[SpecialSystem]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="SpecialSystem"
+                      externalMetadataColumnId="Package\Off System Import\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[SpecialSystems]"
+                      lineageId="Package\Off System Import\OLE DB Source 1.Outputs[OLE DB Source Output].Columns[SpecialSystem]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -2423,6 +2425,14 @@ WHERE (RouteSign IN (4 , 5) or LOG_DIRECTION = 'B')</property>
                       cachedName="UpdateUserID"
                       externalMetadataColumnId="Package\On System Import\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UpdateUserID]"
                       lineageId="Package\On System Import\OLE DB Source.Outputs[OLE DB Source Output].Columns[UpdateUserID]" />
+                    <inputColumn
+                      refId="Package\On System Import\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SpecialSystem]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="SpecialSystem"
+                      externalMetadataColumnId="Package\On System Import\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpecialSystems]"
+                      lineageId="Package\On System Import\OLE DB Source.Outputs[OLE DB Source Output].Columns[SpecialSystem]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -3950,13 +3960,17 @@ WHERE RouteSign IN ('1', '2', '3')</property>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="170,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="102,58" />
+        <NodeLayout
           Size="179,42"
           Id="Package\Off System Import"
           TopLeft="90,167" />
         <NodeLayout
-          Size="170,42"
-          Id="Package\Execute SQL Task"
-          TopLeft="102,58" />
+          Size="187,45"
+          Id="Package\On System Import"
+          TopLeft="82,268" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="183.25,100">
@@ -3979,10 +3993,6 @@ WHERE RouteSign IN ('1', '2', '3')</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="187,45"
-          Id="Package\On System Import"
-          TopLeft="82,268" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
           TopLeft="177.5,209">
@@ -4047,14 +4057,6 @@ WHERE RouteSign IN ('1', '2', '3')</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Off System Import\OLE DB Source 1">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Off System Import\OLE DB Destination 1">
     <Properties>
       <Property>
@@ -4064,6 +4066,14 @@ WHERE RouteSign IN ('1', '2', '3')</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Off System Import\OLE DB Source 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -4106,14 +4116,6 @@ WHERE RouteSign IN ('1', '2', '3')</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\On System Import\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\On System Import\OLE DB Destination">
     <Properties>
       <Property>
@@ -4123,6 +4125,14 @@ WHERE RouteSign IN ('1', '2', '3')</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\On System Import\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

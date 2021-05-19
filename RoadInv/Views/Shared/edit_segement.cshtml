@@ -658,11 +658,11 @@
         return inputs;
     }
 
-    $("input, select, textarea").on("keyup, change", submitInputs)
+    //trigger committ changes when submit inputs occurs
+    $("input, select, textarea").on("keyup, change", submitInputs);
 
 
-
-    //Check to see if the attributes are valid
+    //General function to check to see if the inputs are valid
     function submitInputs() {
         console.log("SubmitInputs");
         var inputs = gatherInput();
@@ -1004,7 +1004,7 @@
     });
     $("#box-alternate div input").on("keyup, change", submitInputs);
 
-
-
+    //run validation on all data after its been loaded even if its in the database
+    submitInputs();
 
 </script>
