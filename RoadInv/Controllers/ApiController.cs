@@ -369,7 +369,6 @@ namespace RoadInv.Controllers
             return null;
         }
 
-
         [Route("api/validate")]
         public IActionResult Validate(string AH_District = "",
             string AH_County = "",

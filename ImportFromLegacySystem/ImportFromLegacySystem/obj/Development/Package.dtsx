@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="15"
-  DTS:VersionGUID="{7CCDFE02-8860-4A45-923D-AEBBC23E3D07}">
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{51A2236F-FAC8-4C6F-A0A3-38C5B3E2E8CE}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -37,7 +37,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAASxBeu0SzkuiBAAFmDekGgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADxzboIlaL503n6YsXyK/P4AAAAAASAAACgAAAAEAAAAJkZ9yznJ1MQUpHnvM6eRwYIAAAAiKJQ+0z8fUoUAAAAtoZ4OX1VySc5krt0ycg9+ZROTUY</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAASxBeu0SzkuiBAAFmDekGgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAOo+PX6G+72f9d3fvcjPbeAAAAAASAAACgAAAAEAAAABEtEaBcPYzR9noEvHgimlEIAAAAshzAWqfmLAQUAAAAQ0PTETv9m8jrUdH6eer0Zy+3ZaI</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -835,7 +835,7 @@ CAST (LOG_DIRECTION as varchar(2)) AS LOG_DIRECT,
 CAST ([AH_RoadID] AS varchar (150)) AS AH_RoadID , 
 CAST( round([AH_BLM], 3) AS DECIMAL (8,4) ) AS AH_BLM, 
 CAST (round([AH_ELM], 3) AS DECIMAL (8, 4) ) AS AH_ELM,  
-CAST (GovernmentCode AS varchar(3)) AS GovermentCode,
+CAST ( CAST(GovernmentCode AS int)  AS varchar(3)) AS GovermentCode,
 CAST (RuralUrbanArea AS varchar(2)) AS RuralUrbanArea,
 ISNULL( CAST (UrbanAreaCode AS varchar(5)), '00000') AS UrbanAreaCode,
 CAST([FunctionalClass] AS varchar(4)) AS FuncClass,
@@ -4024,13 +4024,13 @@ WHERE RouteSign IN ('1', '2', '3')</property>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="166,42"
-          Id="Package\Off System Import\OLE DB Source 1"
-          TopLeft="44,29" />
-        <NodeLayout
           Size="186,42"
           Id="Package\Off System Import\OLE DB Destination 1"
           TopLeft="29,160" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Off System Import\OLE DB Source 1"
+          TopLeft="44,29" />
         <EdgeLayout
           Id="Package\Off System Import.Paths[OLE DB Source Output]"
           TopLeft="124.5,71">

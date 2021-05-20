@@ -1082,7 +1082,127 @@ namespace roadInvUnitTest
             }
         }
 
-        //page 66 last rule
+        [Theory]
+        [InlineData("1900", true)]
+        [InlineData("1966", true)]
+        [InlineData("2001", true)]
+        [InlineData("2032", true)]
+        [InlineData("1982", true)]
+        [InlineData("1990", true)]
+        [InlineData("1919", true)]
+        [InlineData("2062", true)]
+        [InlineData("2132", false)]
+        [InlineData("500000", false)]
+        [InlineData("3300", false)]
+        [InlineData("2300", false)]
+        [InlineData("1619", false)]
+        [InlineData("1500", false)]
+        [InlineData("1782", false)]
+        public void ValidYearReconstructed(string yearRecon, bool expected)
+        {
+            var segment = new RoadInv.DB.RoadInv();
+            segment.AhCounty = "60";
+            segment.AhRoute = "ARNOLDDRIVE1";
+            segment.AhSection = "12";
+            segment.LogDirect = "A";
+            segment.AhBlm = 0;
+            segment.AhElm = (decimal?)0.5;
+
+            segment.YearRecon = yearRecon;
+
+            ValidationModel.CleanAttr(segment);
+            var results = validation.FindErrors(segment);
+            var errorFields = AffectedFields(results);
+
+            if (expected)
+            {
+                Assert.True(results.Count == 0);
+            } else
+            {
+                Assert.True(results.Count == 1);
+                Assert.Contains(FieldsListModel.yearRecon, errorFields);
+                Assert.Single(errorFields);
+            }
+
+        }
+
+        [Theory]
+        [InlineData("1900", true)]
+        [InlineData("1966", true)]
+        [InlineData("2001", true)]
+        [InlineData("2032", true)]
+        [InlineData("1982", true)]
+        [InlineData("1990", true)]
+        [InlineData("1919", true)]
+        [InlineData("2062", true)]
+        [InlineData("2132", false)]
+        [InlineData("500000", false)]
+        [InlineData("3300", false)]
+        [InlineData("2300", false)]
+        [InlineData("1619", false)]
+        [InlineData("1500", false)]
+        [InlineData("1782", false)]
+        public void ValidYearBuilt(string yearBuilt, bool expected)
+        {
+            var segment = new RoadInv.DB.RoadInv();
+            segment.AhCounty = "60";
+            segment.AhRoute = "ARNOLDDRIVE1";
+            segment.AhSection = "12";
+            segment.LogDirect = "A";
+            segment.AhBlm = 0;
+            segment.AhElm = (decimal?)0.5;
+
+            segment.YearBuilt = yearBuilt;
+
+            ValidationModel.CleanAttr(segment);
+            var results = validation.FindErrors(segment);
+            var errorFields = AffectedFields(results);
+
+            if (expected)
+            {
+                Assert.True(results.Count == 0);
+            }
+            else
+            {
+                Assert.True(results.Count == 1);
+                Assert.Contains(FieldsListModel.YearBuilt, errorFields);
+                Assert.Single(errorFields);
+            }
+
+        }
+
+        [Fact]
+        public void NoMedianCombo()
+        {
+            var segment = new RoadInv.DB.RoadInv();
+            segment.AhCounty = "60";
+            segment.AhRoute = "ARNOLDDRIVE1";
+            segment.AhSection = "12";
+            segment.LogDirect = "A";
+            segment.AhBlm = 0;
+            segment.AhElm = (decimal?)0.5;
+
+            segment.MedianType = "0";
+            segment.MedianWidth = "000";
+
+            ValidationModel.CleanAttr(segment);
+            var results = validation.FindErrors(segment);
+            var errorFields = AffectedFields(results);
+
+            Assert.Empty(results);
+        }
+
+        [Fact]
+        public void SpecificRecorTest()
+        {
+            int recordid = 1645279;
+            var segment = this._dbContext.RoadInvs.Find(recordid);
+
+            ValidationModel.CleanAttr(segment);
+            var results = validation.FindErrors(segment);
+
+            Assert.True(results.Count == 0);
+        }
         
 
     }

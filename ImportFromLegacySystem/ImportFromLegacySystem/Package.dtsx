@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="15"
-  DTS:VersionGUID="{7CCDFE02-8860-4A45-923D-AEBBC23E3D07}">
+  DTS:VersionBuild="18"
+  DTS:VersionGUID="{80355CA8-8BEA-429B-9A18-98185F775644}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -37,7 +37,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAASxBeu0SzkuiBAAFmDekGgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABmQbeuND4p73/PsA79OHEJAAAAAASAAACgAAAAEAAAAJMz7a5OKVM1h1sMaLxKHrAIAAAA0S47ExOnWKUUAAAAiy/a4HeaoGZ4Lst1F4Dy0ftOOm4</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAASxBeu0SzkuiBAAFmDekGgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAASm/09QFSXibr8UJo7FhteAAAAAASAAACgAAAAEAAAAArJvOD/o+DsZmqbxYvNjf4IAAAA3vDwI4ugRA0UAAAAT0Q/Jvwsd+VjhQ0Vg5kkn2MNXyA</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -55,10 +55,27 @@
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
-      DTS:refId="Package\Execute SQL Task"
+      DTS:refId="Package\Delete All Records"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
       DTS:DTSID="{86099DBD-9F7F-4437-A0C9-A0BD48E566E3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete All Records"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6B210F8D-42F0-4E35-B524-E9C24F375E94}"
+          SQLTask:SqlStatementSource="DELETE FROM [roadinv].[dbo].[RoadInv]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AEAD29D2-D781-4C6A-99A7-6F0D17F9885E}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Execute SQL Task"
@@ -68,7 +85,8 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{6B210F8D-42F0-4E35-B524-E9C24F375E94}"
-          SQLTask:SqlStatementSource="DELETE FROM [roadinv].[dbo].[RoadInv]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="UPDATE [roadinv].[dbo].[RoadInv]&#xA;SET TypeRoad = '1'&#xA;WHERE TypeRoad = '2';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -835,7 +853,7 @@ CAST (LOG_DIRECTION as varchar(2)) AS LOG_DIRECT,
 CAST ([AH_RoadID] AS varchar (150)) AS AH_RoadID , 
 CAST( round([AH_BLM], 3) AS DECIMAL (8,4) ) AS AH_BLM, 
 CAST (round([AH_ELM], 3) AS DECIMAL (8, 4) ) AS AH_ELM,  
-CAST (GovernmentCode AS varchar(3)) AS GovermentCode,
+CAST ( CAST(GovernmentCode AS int)  AS varchar(3)) AS GovermentCode,
 CAST (RuralUrbanArea AS varchar(2)) AS RuralUrbanArea,
 ISNULL( CAST (UrbanAreaCode AS varchar(5)), '00000') AS UrbanAreaCode,
 CAST([FunctionalClass] AS varchar(4)) AS FuncClass,
@@ -3928,13 +3946,30 @@ WHERE RouteSign IN ('1', '2', '3')</property>
         </pipeline>
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Removed Zeros"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="remove 01 goverment code values from table"
+      DTS:DTSID="{F0A2DCB1-9771-45BE-8CDA-49EB1E8561BC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Removed Zeros"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6B210F8D-42F0-4E35-B524-E9C24F375E94}"
+          SQLTask:SqlStatementSource="  UPDATE [roadinv].[dbo].[RoadInv]&#xA;  SET GovermentCode = '1'&#xA;  WHERE GovermentCode = '01';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
       DTS:DTSID="{DF6EE5A1-7E2F-4346-B460-F2383D570161}"
-      DTS:From="Package\Execute SQL Task"
+      DTS:From="Package\Delete All Records"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
       DTS:To="Package\Off System Import" />
@@ -3946,6 +3981,22 @@ WHERE RouteSign IN ('1', '2', '3')</property>
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
       DTS:To="Package\On System Import" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{FE5392F4-E7ED-4507-A43C-33C654918173}"
+      DTS:From="Package\On System Import"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Removed Zeros" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{3E2C9C13-527F-4E57-B39C-3F3128BCBBAF}"
+      DTS:From="Package\Removed Zeros"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Execute SQL Task" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -3958,10 +4009,10 @@ WHERE RouteSign IN ('1', '2', '3')</property>
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="170,42"
-          Id="Package\Execute SQL Task"
+          Id="Package\Delete All Records"
           TopLeft="102,58" />
         <NodeLayout
           Size="179,42"
@@ -3971,6 +4022,10 @@ WHERE RouteSign IN ('1', '2', '3')</property>
           Size="187,45"
           Id="Package\On System Import"
           TopLeft="82,268" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Removed Zeros"
+          TopLeft="95,371" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="183.25,100">
@@ -4015,6 +4070,54 @@ WHERE RouteSign IN ('1', '2', '3')</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="178.25,313">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58"
+              Start="0,0"
+              End="0,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="104,457" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="183.25,413">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -4024,13 +4127,13 @@ WHERE RouteSign IN ('1', '2', '3')</property>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="166,42"
-          Id="Package\Off System Import\OLE DB Source 1"
-          TopLeft="44,29" />
-        <NodeLayout
           Size="186,42"
           Id="Package\Off System Import\OLE DB Destination 1"
           TopLeft="29,160" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Off System Import\OLE DB Source 1"
+          TopLeft="44,29" />
         <EdgeLayout
           Id="Package\Off System Import.Paths[OLE DB Source Output]"
           TopLeft="124.5,71">

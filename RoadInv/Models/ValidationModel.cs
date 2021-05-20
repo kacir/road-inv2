@@ -478,7 +478,7 @@ namespace RoadInv.Models
         {
             foreach(var item in this.SystemStatus)
             {
-                if (item.Domainvalue == seg.FuncClass)
+                if (item.Domainvalue == seg.SystemStatus)
                 {
                     return true;
                 }
@@ -970,7 +970,7 @@ the functional class needs to be interstate too.", temp);
             else if (this.ValidMedianType(segment) & segment.MedianType != "" & decimal.TryParse(segment.MedianWidth, out outMedianWidth))
             {
                 string[] SelectedMedianTypes = { "1", "2", "3", "4", "5" };
-                string[] selectedMedianWidths = { null, "", "00000" };
+                string[] selectedMedianWidths = { null, "", "000" };
                 if (SelectedMedianTypes.Contains(segment.MedianType) & selectedMedianWidths.Contains(segment.MedianWidth))
                 {
                     List<string> temp = new List<string>();
@@ -1370,7 +1370,7 @@ greater than one direction number of lanes, then the road must have a median and
                 if (int.TryParse(segment.YearBuilt, out _))
                 {
                     int yearBuiltInt = int.Parse(segment.YearBuilt);
-                    if ((yearBuiltInt >= 1800) && yearBuiltInt < 2100)
+                    if (!(yearBuiltInt >= 1800 & yearBuiltInt < 2100))
                     {
                         List<string> temp = new List<string>();
                         temp.Add(FieldsListModel.YearBuilt);
@@ -1393,7 +1393,7 @@ greater than one direction number of lanes, then the road must have a median and
                 if (int.TryParse(segment.YearRecon, out _))
                 {
                     int yearReconInt = int.Parse(segment.YearRecon);
-                    if (yearReconInt > 1800 & yearReconInt < 2100)
+                    if (!(yearReconInt > 1800 & yearReconInt < 2100))
                     {
                         List<string> temp = new List<string>();
                         temp.Add(FieldsListModel.yearRecon);
@@ -1482,7 +1482,7 @@ By extension, the mediantpye cant be 0, No Median. please chang ethe tpye operat
                 masterErrorsList.Add(error);
             }
 
-            if (segment.LaneWidth >= 15)
+            if (segment.LaneWidth > 15)
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.LaneWidth);
@@ -1532,7 +1532,6 @@ This means the road has a median. Only multilane divided highway have medians. P
                     masterErrorsList.Add(error);
                 }
             }
-
 
             return masterErrorsList;
         }
