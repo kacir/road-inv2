@@ -12,7 +12,7 @@
     ViewBag.Title = "NHS";
 }
 
-<link rel="stylesheet" href="http://localhost:65424/css/micromodal.css">@*need to fix this*@
+<link href="~/css/micromodal.css" rel="stylesheet">
 <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
 
 <script>
@@ -143,9 +143,6 @@
                             <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
                             <td>@Html.DisplayFor(modelItem => item.NhsSummary)</td>
-                            
-                            <td>
-
                         </tr>
                     }
 
