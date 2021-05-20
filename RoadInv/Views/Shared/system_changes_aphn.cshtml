@@ -134,9 +134,9 @@
                             <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Link</a></td>
                             <td>@Html.DisplayFor(modelItem => item.Id)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
-                            @*<td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
-                            <td>@Html.DisplayFor(modelItem => item.AhDirection)</td>*@
+                            <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
                             <td>@Html.DisplayFor(modelItem => item.Aphn)</td>
@@ -242,19 +242,17 @@
                     <th>Direction</th>
                     <th>BLM</th>
                     <th>ELM</th>
-                    <th>APHN</th>
                 </tr>
                 @foreach (var item in Model.ExcludeAphn)
                 {
             <tr>
                 <td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Link</a></td>
                 <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
-                @*<td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
+                <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
                 <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
-                <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>*@
+                <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
                 <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                 <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
-                @*<td>@Html.DisplayFor(modelItem => item.Aphn)</td>*@
 
             </tr>
                 }
