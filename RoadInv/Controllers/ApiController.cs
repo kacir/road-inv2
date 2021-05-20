@@ -369,6 +369,51 @@ namespace RoadInv.Controllers
             return null;
         }
 
+        [Route("api/edit_bulk/aphn")]
+        public IActionResult ImplimentBulkEditAPHN(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string APHN)
+        {
+            //split records that partly overlap the designation into multiple pieces
+            var ajustedSegments = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);
+
+            foreach (var row in ajustedSegments)
+            {
+                row.Aphn = APHN;
+            }
+            _bulkEdits._dbContext.SaveChanges();
+
+            return null;
+        }
+
+        [Route("api/edit_bulk/functional")]
+        public IActionResult ImplimentBulkEditFuncClass(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string FuncClass)
+        {
+            //split records that partly overlap the designation into multiple pieces
+            var ajustedSegments = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);
+
+            foreach (var row in ajustedSegments)
+            {
+                row.FuncClass = FuncClass;
+            }
+            _bulkEdits._dbContext.SaveChanges();
+
+            return null;
+        }
+
+        [Route("api/edit_bulk/special")]
+        public IActionResult ImplimentBulkEditSpecial(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string Special)
+        {
+            //split records that partly overlap the designation into multiple pieces
+            var ajustedSegments = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);
+
+            foreach (var row in ajustedSegments)
+            {
+                row.SpecialSystems = Special;
+            }
+            _bulkEdits._dbContext.SaveChanges();
+
+            return null;
+        }
+
 
         [Route("api/validate")]
         public IActionResult Validate(string AH_District = "",

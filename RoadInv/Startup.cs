@@ -7,8 +7,6 @@ using Microsoft.Extensions.Configuration;
 using RoadInv.DB;
 using Microsoft.EntityFrameworkCore;
 using System;
-using RoadInv.Interfaces;
-using RoadInv.Repositories;
 
 namespace RoadInv
 {
@@ -39,14 +37,6 @@ namespace RoadInv
             //both entity framework and SQL Client are needed for project
             //used for entity framework database connection
 
-            #region Repositories 
-            //Transient lifetime services are created each time they are requested
-            //Transient objects are always different; a new instance is provided to every controller and every service
-            //This is only needed if we decide to implement a repository.
-            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>)); 
-            services.AddTransient<IRoadinvRepository, RoadinvRepository>();
-            services.AddTransient<IUnitOfWork, UnitOfWork.UnitOfWork>();
-            #endregion
 
             services.AddDbContext<roadinvContext>
                 (options => options.UseSqlServer(this.configuration["EntityConnectinString"]));

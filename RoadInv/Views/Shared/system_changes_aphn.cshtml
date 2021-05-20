@@ -121,7 +121,7 @@
 
                 @if (Model.Dissolve == "Segment")
                 {
-                <tr>
+                <tr><th></th>
                     <th>ID</th>
                     <th>Road ID</th>
                     <th>BLM</th>
@@ -131,19 +131,16 @@
                     foreach (var item in Model.DissolveAphnViews)
                     {
                         <tr>
+                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Link</a></td>
                             <td>@Html.DisplayFor(modelItem => item.Id)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
-                            <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
+                            @*<td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
-                            <td>@Html.DisplayFor(modelItem => item.AhDirection)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AhDirection)</td>*@
                             <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
                             <td>@Html.DisplayFor(modelItem => item.Aphn)</td>
-                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>
-                            <td>
-
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            </td>
+                            
                         </tr>
                     }
 
@@ -177,6 +174,7 @@
                 else
                 {
                     <tr>
+                        <th></th>
                         <th>ARNOLD ID</th>
                         <th>County</th>
                         <th>Section</th>
@@ -189,6 +187,7 @@
                     @foreach (var item in Model.roadInvs)
                     {
                         <tr>
+                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Link</a></td>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
@@ -197,11 +196,6 @@
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhLength)</td>
                             <td>@Html.DisplayFor(modelItem => item.Aphn)</td>
-                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>
-                            <td>
-
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            </td>
                         </tr>
                     }
                 }
@@ -241,6 +235,7 @@
             <h5>Non-APHN Segements on APHN Routes</h5>
             <table>
                 <tr>
+                    <th></th>
                     <th>ARNOLD ID</th>
                     <th>County</th>
                     <th>Section</th>
@@ -251,16 +246,17 @@
                 </tr>
                 @foreach (var item in Model.ExcludeAphn)
                 {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
-                        <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
-                        <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
-                        <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
-                        <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Aphn)</td>
-                        <td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Edit</a></td>
-                    </tr>
+            <tr>
+                <td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Link</a></td>
+                <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
+                @*<td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
+                <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
+                <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>*@
+                <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
+                <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
+                @*<td>@Html.DisplayFor(modelItem => item.Aphn)</td>*@
+
+            </tr>
                 }
             </table>
         </section>
