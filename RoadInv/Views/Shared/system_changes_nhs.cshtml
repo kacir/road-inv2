@@ -138,7 +138,7 @@
                     foreach (var item in Model.DissolveNhsViews)
                     {
                         <tr>
-                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Link</a></td>
+                            <td><a href="#" data-toggle="modal" data-target="#modal-1">Link</a></td>
                             <td>@Html.DisplayFor(modelItem => item.Id)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
