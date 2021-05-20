@@ -355,7 +355,7 @@ namespace RoadInv.Controllers
         }
 
         [Route("api/edit_bulk/nhs")]
-        public IActionResult ImplimentBulkEdit(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string NHS)
+        public IActionResult ImplementBulkEditNHS(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string NHS)
         {
             //split records that partly overlap the designation into multiple pieces
             var ajustedSegments  = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);
@@ -370,7 +370,7 @@ namespace RoadInv.Controllers
         }
 
         [Route("api/edit_bulk/aphn")]
-        public IActionResult ImplimentBulkEditAPHN(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string APHN)
+        public IActionResult ImplementBulkEditAPHN(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string APHN)
         {
             //split records that partly overlap the designation into multiple pieces
             var ajustedSegments = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);
@@ -385,7 +385,7 @@ namespace RoadInv.Controllers
         }
 
         [Route("api/edit_bulk/functional")]
-        public IActionResult ImplimentBulkEditFuncClass(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string FuncClass)
+        public IActionResult ImplementBulkEditFuncClass(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string FuncClass)
         {
             //split records that partly overlap the designation into multiple pieces
             var ajustedSegments = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);
@@ -400,7 +400,7 @@ namespace RoadInv.Controllers
         }
 
         [Route("api/edit_bulk/special")]
-        public IActionResult ImplimentBulkEditSpecial(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string Special)
+        public IActionResult ImplementBulkEditSpecial(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string Special)
         {
             //split records that partly overlap the designation into multiple pieces
             var ajustedSegments = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);

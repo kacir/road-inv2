@@ -76,14 +76,6 @@ namespace RoadInv.Controllers
             {
                 roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
             }
-            //if (!pageModel.BLM.Equals(null))
-            //{
-            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            //}
-            //if (!pageModel.ELM.Equals(null))
-            //{
-            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-            //}
             if (!String.IsNullOrEmpty(pageModel.Direction))
             {
                 roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
@@ -112,24 +104,18 @@ namespace RoadInv.Controllers
                 {
                     diss = diss.Where(r => r.AhCounty.Equals(pageModel.County)); //will need to scaffold
                 }
-
                 if (!String.IsNullOrEmpty(pageModel.Section))
                 {
                     diss = diss.Where(r => r.AhSection.Equals(pageModel.Section));
                 }
-
-                if (!pageModel.BLM.Equals(null))
+                if (!String.IsNullOrEmpty(pageModel.Route))
                 {
-                    diss = diss.Where(r => r.AhBlm.Equals(pageModel.BLM));
+                    diss = diss.Where(r => r.AhRoute.Equals(pageModel.Route));
                 }
-                if (!pageModel.ELM.Equals(null))
+                if (!String.IsNullOrEmpty(pageModel.Direction))
                 {
-                    diss = diss.Where(r => r.AhBlm.Equals(pageModel.ELM));
+                    diss = diss.Where(r => r.LogDirect.Equals(pageModel.Direction));
                 }
-                //if (!String.IsNullOrEmpty(pageModel.Direction))
-                //{
-                //    diss = diss.Where(r => r.AhDirection.Equals(pageModel.Direction));
-                //}
                 pageModel.DissolveNhsViews = await diss.ToPagedListAsync(pageNumber, pageSize);
             }
             return View(pageModel);
@@ -181,14 +167,6 @@ namespace RoadInv.Controllers
             {
                 roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
             }
-            //if (!pageModel.BLM.Equals(null))
-            //{
-            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            //}
-            //if (!pageModel.ELM.Equals(null))
-            //{
-            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-            //}
             if (!String.IsNullOrEmpty(pageModel.Direction))
             {
                 roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
@@ -214,6 +192,22 @@ namespace RoadInv.Controllers
             pageModel.ExcludeAphn = await excAp.ToPagedListAsync(pageNumber, pageSize);
             if (pageModel.Dissolve == "Segment")
             {
+                if (!String.IsNullOrEmpty(pageModel.County))
+                {
+                    diss = diss.Where(r => r.AhCounty.Equals(pageModel.County)); //will need to scaffold
+                }
+                if (!String.IsNullOrEmpty(pageModel.Section))
+                {
+                    diss = diss.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Route))
+                {
+                    diss = diss.Where(r => r.AhRoute.Equals(pageModel.Route));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Direction))
+                {
+                    diss = diss.Where(r => r.LogDirect.Equals(pageModel.Direction));
+                }
                 pageModel.DissolveAphnViews = await diss.ToPagedListAsync(pageNumber, pageSize);
             }
             return View(pageModel);
@@ -263,14 +257,6 @@ namespace RoadInv.Controllers
             {
                 roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
             }
-            //if (!pageModel.BLM.Equals(null))
-            //{
-            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            //}
-            //if (!pageModel.ELM.Equals(null))
-            //{
-            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-            //}
             if (!String.IsNullOrEmpty(pageModel.Direction))
             {
                 roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
@@ -293,6 +279,22 @@ namespace RoadInv.Controllers
             pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
             if (pageModel.Dissolve == "Segment")
             {
+                if (!String.IsNullOrEmpty(pageModel.County))
+                {
+                    diss = diss.Where(r => r.AhCounty.Equals(pageModel.County)); //will need to scaffold
+                }
+                if (!String.IsNullOrEmpty(pageModel.Section))
+                {
+                    diss = diss.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Route))
+                {
+                    diss = diss.Where(r => r.AhRoute.Equals(pageModel.Route));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Direction))
+                {
+                    diss = diss.Where(r => r.LogDirect.Equals(pageModel.Direction));
+                }
                 pageModel.DissolveFuncViews = await diss.ToPagedListAsync(pageNumber, pageSize);
             }
             return View(pageModel);
@@ -344,14 +346,6 @@ namespace RoadInv.Controllers
             {
                 roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
             }
-            //if (!pageModel.BLM.Equals(null))
-            //{
-            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            //}
-            //if (!pageModel.ELM.Equals(null))
-            //{
-            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-            //}
             if (!String.IsNullOrEmpty(pageModel.Direction))
             {
                 roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
@@ -378,6 +372,22 @@ namespace RoadInv.Controllers
             pageModel.ExcludeSpecials = await excNh.ToPagedListAsync(pageNumber, pageSize);
             if (pageModel.Dissolve == "Segment")
             {
+                if (!String.IsNullOrEmpty(pageModel.County))
+                {
+                    diss = diss.Where(r => r.AhCounty.Equals(pageModel.County)); //will need to scaffold
+                }
+                if (!String.IsNullOrEmpty(pageModel.Section))
+                {
+                    diss = diss.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Route))
+                {
+                    diss = diss.Where(r => r.AhRoute.Equals(pageModel.Route));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Direction))
+                {
+                    diss = diss.Where(r => r.LogDirect.Equals(pageModel.Direction));
+                }
                 pageModel.DissolveSpecialSystemsViews = await diss.ToPagedListAsync(pageNumber, pageSize);
             }
             return View(pageModel);
@@ -395,6 +405,8 @@ namespace RoadInv.Controllers
                             select r;
 
                 var ApiController = new ApiController(_context);
+                //var BulkValidation = new BulkValidationModel(_context);
+                
 
                 if (!String.IsNullOrEmpty(pageModel.County))
                 {
@@ -416,31 +428,33 @@ namespace RoadInv.Controllers
                 {
                     roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
                 }
-
                 if (!pageModel.ELM.Equals(null))
                 {
                     roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
                 }
+                //==========================================================
+                //======================Bulk Edits Begin====================
                 var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
 
                 if (pageModel.NHS != null)
                 {
-                    ApiController.ImplimentBulkEdit(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
+                    //string results = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS).ToString();
+                    ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
                     return RedirectToAction("system_changes_nhs");
                 }
                 else if (pageModel.APHN != null)
                 {
-                    ApiController.ImplimentBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
+                    ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
                     return RedirectToAction("system_changes_aphn");
                 }
                 else if (pageModel.FuncClass != null)
                 {
-                    ApiController.ImplimentBulkEditFuncClass(roadID, pageModel.BLM, pageModel.ELM, pageModel.FuncClass);
+                    ApiController.ImplementBulkEditFuncClass(roadID, pageModel.BLM, pageModel.ELM, pageModel.FuncClass);
                     return RedirectToAction("system_changes_func");
                 }
                 else if (pageModel.SpecialSystem != null)
                 {
-                    ApiController.ImplimentBulkEditSpecial(roadID, pageModel.BLM, pageModel.ELM, pageModel.SpecialSystem);
+                    ApiController.ImplementBulkEditSpecial(roadID, pageModel.BLM, pageModel.ELM, pageModel.SpecialSystem);
                     return RedirectToAction("system_changes_special");
                 }
             }

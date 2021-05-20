@@ -62,7 +62,7 @@
                     <footer class="modal__footer">
                         <button class="modal__btn modal__btn-primary" type="submit" value="Update">Submit for Validation</button>
                         @*<input class="modal__btn modal__btn-primary" type="button" value="Submit for Validation" onclick="location.href='@Url.Action("nhs_update", "system_changes")'" />*@
-                        <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
+                        @*<button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>*@
                     </footer>
                 }
             </main>
@@ -97,12 +97,16 @@
                 @Html.TextBox("Section", "", new { @class = "form-control" })
             </div>
             <div class='form-group'>
+                <label>Direction</label>
+                @Html.DropDownListFor(m => m.Direction, Model.Directions, " ", new { @class = "form-control", })
+            </div>
+            <div class='form-group'>
                 <label>Logmile</label>
                 @Html.TextBox("Logmile", "", new { @class = "form-control" })
             </div>
             <div id="form-button-holder" class='form-group'>
                 <button type="submit" id="submit-search">Submit </button>
-                <button type ="reset" value="clear" id="clear-all">Clear All</button>
+                <button type="reset" value="clear" id="clear-all">Clear All</button>
             </div>
 
 
