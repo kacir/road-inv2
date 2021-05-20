@@ -421,3 +421,4 @@ E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.MvcApplic
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\Details.cshtml.g.cs
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\system_changes_special.cshtml.g.cs
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\bulk_validate.cshtml.g.cs

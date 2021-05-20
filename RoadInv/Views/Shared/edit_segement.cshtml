@@ -7,6 +7,26 @@
 }
 <link href="~/css/micromodal.css" rel="stylesheet">
 <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+<style>
+    .arrow-button{
+        font-size: 75px;
+        width: 100px;
+        border-radius: 50px;
+        border-style: solid;
+        background-color: grey;
+        color: white;
+    }
+    .segment-title{
+        width: 50%;
+    }
+
+    .segment-title-holder{
+        display: flex;
+        align-content: center;
+        margin: auto;
+    }
+
+</style>
 
 <div class="modal micromodal-slide" id="modal-delete" aria-hidden="true">
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
@@ -152,37 +172,40 @@
     MicroModal.init();
 </script>
 
-<div class="segment-title">
-    <h1 id="header" data="@Model.details.Id">
-        @if (Model.editStatus == SegementDetailPageModel.newSegment)
-        {
-            <text>New Segment</text>
-        }
-        else if (Model.editStatus == SegementDetailPageModel.mirrorSegment)
-        {
-            <text>Mirrored Segment</text>
-        }
-        else if (Model.editStatus == SegementDetailPageModel.duplicateSegment)
-        {
-            <text>Duplicate Segment</text>
-        }
-        else
-        {
-            <text>Road Segement</text>
-        }
-        <span class="@FieldsListModel.AH_RoadID">@Model.details.AhRoadId </span>
-        <br> BLM:
-        <span class="@FieldsListModel.AH_BLM">@Model.details.AhBlm</span> - ELM
-        <span class="@FieldsListModel.AH_ELM">@Model.details.AhElm</span>
-    </h1>
+<div class="segment-title-holder">
+    <button id="left-arrow" class="arrow-button">&#x2190;</button>
+    <div class="segment-title ">
+        <h1 id="header" data="@Model.details.Id">
+            @if (Model.editStatus == SegementDetailPageModel.newSegment)
+            {
+                <text>New Segment</text>
+            }
+            else if (Model.editStatus == SegementDetailPageModel.mirrorSegment)
+            {
+                <text>Mirrored Segment</text>
+            }
+            else if (Model.editStatus == SegementDetailPageModel.duplicateSegment)
+            {
+                <text>Duplicate Segment</text>
+            }
+            else
+            {
+                <text>Road Segement</text>
+            }
+            <span class="@FieldsListModel.AH_RoadID">@Model.details.AhRoadId </span>
+            <br> BLM:
+            <span class="@FieldsListModel.AH_BLM">@Model.details.AhBlm</span> - ELM
+            <span class="@FieldsListModel.AH_ELM">@Model.details.AhElm</span>
+        </h1>
+    </div>
+    <button id="right-arrow" class="arrow-button">&#8594;</button>
 </div>
 <div class="main-content">
     <div class="master-grid">
         <div id="box-coreChar" class='property-box'>
             <h6>  Core Characteristics</h6>
             <div class=grid-container>
-
-                <DIV>
+                <div>
                     <label data-toggle="tooltip" data-placement="top" title="ArDOT District">Distict</label>
                     <select id="@FieldsListModel.AH_District" data="@Model.details.AhDistrict">
                         <option></option>
@@ -191,8 +214,7 @@
                             <option @if (Model.details.AhDistrict == item.DistrictNumber) { <text>selected</text> } value="@item.DistrictNumber">@item.DistrictNumber</option>
                         }
                     </select>
-
-                </DIV>
+                </div>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="ArDOT County Number. Not to be confused with FHWA County Numbers.">County</label>
                     <select id="@FieldsListModel.AH_County" data="@Model.details.AhCounty">
@@ -364,6 +386,14 @@
                             <option @if (Model.details.ExtraLanes == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
                         }
                     </select>
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="The year the road was constructed or added to the state highway system">Year <br /> Built</label>
+                    <input id="@FieldsListModel.YearBuilt" data="@Model.details.YearBuilt" value="@Model.details.YearBuilt" />
+                </div>
+                <div>
+                    <label data-toggle="tooltip" data-placement="top" title="Year the road was last reconstructed. Normally refers to the last overlay.">Year <br /> Recon</label>
+                    <input id="@FieldsListModel.yearRecon" data="@Model.details.YearRecon"  value="@Model.details.YearRecon" />
                 </div>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="Width of the surface">Surface <br /> Width</label>
@@ -621,7 +651,8 @@
         "@FieldsListModel.SurfaceWidth", "@FieldsListModel.Access", "@FieldsListModel.MedianType", "@FieldsListModel.MedianWidth",
         "@FieldsListModel.OneDirectionNumLanes", "@FieldsListModel.BothDirectionNumLanes", "@FieldsListModel.FuncClass", "@FieldsListModel.NHS",
         "@FieldsListModel.APHN", "@FieldsListModel.GovermentCode", "@FieldsListModel.SpecialSystems", "@FieldsListModel.SystemStatus",
-        "@FieldsListModel.RoadwayWidth", "@FieldsListModel.Comment1", "@FieldsListModel.ID", "@FieldsListModel.Alternative_Route_Name"];
+        "@FieldsListModel.RoadwayWidth", "@FieldsListModel.Comment1", "@FieldsListModel.YearBuilt", "@FieldsListModel.yearRecon", "@FieldsListModel.ID",
+        "@FieldsListModel.Alternative_Route_Name"];
 
     function gatherInput() {
         inputs = {};
@@ -658,11 +689,11 @@
         return inputs;
     }
 
-    $("input, select, textarea").on("keyup, change", submitInputs)
+    //trigger committ changes when submit inputs occurs
+    $("input, select, textarea").on("keyup, change", submitInputs);
 
 
-
-    //Check to see if the attributes are valid
+    //General function to check to see if the inputs are valid
     function submitInputs() {
         console.log("SubmitInputs");
         var inputs = gatherInput();
@@ -685,7 +716,7 @@
 
     //apply tag class error-flag to everything that has an error asscoaited with it.
     function errorPost(data) {
-        if(!$("#manual-override").hasClass("override-active")) {
+        if (!$("#manual-override").hasClass("override-active")) {
             console.log(data);
             //zero out all attributes errors
             $(".error-flag")
@@ -714,6 +745,16 @@
                 $("#save-changes").removeClass("override-active").text("Save");
             }
 
+        } else {
+            // logic goes here^
+            $("#save-changes").removeClass("override-active").text("Save");
+            subjectAttributes.forEach(function (item) {
+                $("#" + item)
+                    .removeClass("error-flag")
+                    .removeAttr("title")
+                    .removeAttr("data-placement")
+                    .tooltip("disable");
+            });
         }
     }
 
@@ -874,18 +915,60 @@
     });
 
 
-    //allow enable and disable of manual override
+    //allow enable and disable of manual override ^
     $("#manual-override").click(function () {
         var button = $("#manual-override");
 
         if (button.hasClass("override-active")) {
             button.removeClass("override-active");
+            submitInputs();
         } else {
             button.addClass("override-active");
+            submitInputs();
         }
     });
 
-    var originalValues = gatherInput();
+    //Need to gather inputs the first time directly from the database to avoid keeping saved attributes
+    //var originalValues = gatherInput();
+
+    var originalValues = {
+        "@FieldsListModel.AH_District": "@Model.details.AhDistrict",
+        "@FieldsListModel.AH_County": "@Model.details.AhCounty",
+        "@FieldsListModel.AH_Section": "@Model.details.AhSection",
+        "@FieldsListModel.AH_Route": "@Model.details.AhRoute",
+        "@FieldsListModel.AH_Section": "@Model.details.AhSection",
+        "@FieldsListModel.LOG_DIRECT": "@Model.details.LogDirect",
+        "@FieldsListModel.AH_BLM":  @Model.details.AhBlm ,
+        "@FieldsListModel.AH_ELM":  @Model.details.AhElm ,
+        "@FieldsListModel.RouteSign": "@Model.details.RouteSign",
+        "@FieldsListModel.TypeRoad" : "@Model.details.TypeRoad",
+        "@FieldsListModel.RuralUrbanArea": "@Model.details.RuralUrbanArea",
+        "@FieldsListModel.UrbanAreaCode": "@Model.details.UrbanAreaCode",
+        "@FieldsListModel.LeftShoulderWidth": @Model.details.LeftShoulderWidth,
+        "@FieldsListModel.LeftShoulderSurface": "@Model.details.LeftShoulderSurface",
+        "@FieldsListModel.RightShoulderWidth": @Model.details.RightShoulderWidth,
+        "@FieldsListModel.RightShoulderSurface": "@Model.details.RightShoulderSurface",
+        "@FieldsListModel.SurfaceType": "@Model.details.SurfaceType",
+        "@FieldsListModel.TypeOperation": "@Model.details.TypeOperation",
+        "@FieldsListModel.LaneWidth": @Model.details.LaneWidth,
+        "@FieldsListModel.ExtraLanes": "@Model.details.ExtraLanes",
+        "@FieldsListModel.SurfaceWidth": @Model.details.SurfaceWidth,
+        "@FieldsListModel.Access": "@Model.details.Access",
+        "@FieldsListModel.MedianType": "@Model.details.MedianType",
+        "@FieldsListModel.MedianWidth": "@Model.details.MedianWidth",
+        "@FieldsListModel.OneDirectionNumLanes": "@Model.details.OneDirectionNumLanes",
+        "@FieldsListModel.BothDirectionNumLanes": "@Model.details.BothDirectionNumLanes",
+        "@FieldsListModel.FuncClass": "@Model.details.FuncClass",
+        "@FieldsListModel.NHS": "@Model.details.Nhs",
+        "@FieldsListModel.APHN": "@Model.details.Aphn",
+        "@FieldsListModel.GovermentCode": "@Model.details.GovermentCode",
+        "@FieldsListModel.SpecialSystems": "@Model.details.SpecialSystems",
+        "@FieldsListModel.SystemStatus": "@Model.details.SystemStatus",
+        "@FieldsListModel.RoadwayWidth": @Model.details.RoadwayWidth,
+        "@FieldsListModel.Comment1": "@Model.details.Comment1",
+        "@FieldsListModel.ID": "@Model.details.Id",
+        "@FieldsListModel.Alternative_Route_Name": "@Model.details.AlternativeRouteName"
+    };
 
 
     $("#reset-changes").click(function () {
@@ -1004,7 +1087,16 @@
     });
     $("#box-alternate div input").on("keyup, change", submitInputs);
 
+    $("#left-arrow").click(function () {
+        alert("Its an Altert left");
+    });
+
+    $("#right-arrow").click(function () {
+        alert("Its an Altert right");
+    });
 
 
+    //run validation on all data after its been loaded even if its in the database
+    submitInputs();
 
 </script>

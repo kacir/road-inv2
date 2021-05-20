@@ -138,5 +138,15 @@ namespace RoadInv.Controllers
             return View("quality_control", _dbContext);
         }
 
+        [Route("bulk_validate")]
+        [Route("bulk_validate.html")]
+        public IActionResult BulkValidateAll()
+        {
+            var validator = new BulkValidationModel(this._dbContext);
+            validator.BulkValidate();
+
+            return View("bulk_validate", validator.masterList);
+        }
+
     }
 }
