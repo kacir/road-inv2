@@ -46,11 +46,12 @@ namespace roadInvUnitTest
                 .Build();
             return config;
         }
+        
 
         public void FakeRouteGenerator()
         {
             //full ah_RoadID is 16xFAKENAMEx1xA
-            var originSegment = this._dbContext.RoadInvs.Find(1014831);
+            var originSegment = this._dbContext.RoadInvs.Find(1482104);
             string fakeRouteName = "FAKENAME";
             string nhsStatus = "1";
 
@@ -89,7 +90,7 @@ namespace roadInvUnitTest
         {
             FakeRouteGenerator();
 
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" select record;
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" select record;
             Assert.NotEmpty(fakeRoutes);
             Assert.True(fakeRoutes.Count() == 3);
         }
@@ -104,7 +105,7 @@ namespace roadInvUnitTest
             bool failed;
             try
             {
-                this._bulkEditor.BulkEdit("16xFAKENAMExzzxA", (decimal)0.25, (decimal)0.5);
+                this._bulkEditor.BulkEdit("74xFAKENAMExzzxA", (decimal)0.25, (decimal)0.5);
                 failed = false;
             }
             catch (Exception)
@@ -118,12 +119,12 @@ namespace roadInvUnitTest
         public void OutOfRange()
         {
             FakeRouteGenerator();
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" select record;
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" select record;
 
             bool failed;
             try
             {
-                this._bulkEditor.BulkEdit("16xFAKENAMExzzxA", 50, 55);
+                this._bulkEditor.BulkEdit("74xFAKENAMExzzxA", 50, 55);
                 failed = false;
             }
             catch (Exception)
@@ -138,8 +139,8 @@ namespace roadInvUnitTest
         public void OneRecordNoSplitting1()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", (decimal)0.25, (decimal)0.5);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", (decimal)0.25, (decimal)0.5);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 1);
             Assert.True(effectedRows.First().AhBlm == (decimal)0.25);
@@ -172,8 +173,8 @@ namespace roadInvUnitTest
         public void OneRecordNoSplitting2()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", (decimal)0.5, 1);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", (decimal)0.5, 1);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 1);
             Assert.True(effectedRows.First().AhBlm == (decimal)0.5);
@@ -206,8 +207,8 @@ namespace roadInvUnitTest
         public void OneRecordNoSplitting3()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", (decimal)1, (decimal)1.5);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", (decimal)1, (decimal)1.5);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 1);
             Assert.True(effectedRows.First().AhBlm == (decimal)1);
@@ -241,8 +242,8 @@ namespace roadInvUnitTest
         public void UnderShootOneRecordEffected()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", -1, (decimal)0.5);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", -1, (decimal)0.5);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 1);
             Assert.True(effectedRows.First().AhBlm == (decimal)0.25);
@@ -256,8 +257,8 @@ namespace roadInvUnitTest
         public void OvershootOneRecordEffected()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", 1, 2);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", 1, 2);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 1);
             Assert.True(effectedRows.First().AhBlm == 1);
@@ -271,8 +272,8 @@ namespace roadInvUnitTest
         public void ContainsMultipleRecords()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", -1, 5);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", -1, 5);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 3);
             Assert.True(effectedRows.First().AhBlm == (decimal)0.25);
@@ -305,8 +306,8 @@ namespace roadInvUnitTest
         public void Undershoot()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", (decimal)0.25, (decimal)0.3);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", (decimal)0.25, (decimal)0.3);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 1);
             Assert.True(effectedRows.First().AhBlm == (decimal)0.25);
@@ -345,8 +346,8 @@ namespace roadInvUnitTest
         public void Undershoot2()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", (decimal)0.002, (decimal)0.3);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", (decimal)0.002, (decimal)0.3);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 1);
             Assert.True(effectedRows.First().AhBlm == (decimal)0.25);
@@ -385,8 +386,8 @@ namespace roadInvUnitTest
         public void Overshoot()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", (decimal)1.25, (decimal)1.5);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", (decimal)1.25, (decimal)1.5);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 1);
             Assert.True(effectedRows.First().AhBlm == (decimal)1.25);
@@ -425,8 +426,8 @@ namespace roadInvUnitTest
         public void Overshoot2()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", (decimal)1.25, (decimal)4);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", (decimal)1.25, (decimal)4);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 1);
             Assert.True(effectedRows.First().AhBlm == (decimal)1.25);
@@ -465,8 +466,8 @@ namespace roadInvUnitTest
         public void SplitMiddleRecordTwice()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", (decimal)0.55, (decimal)0.9);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", (decimal)0.55, (decimal)0.9);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 1);
             Assert.True(effectedRows.First().AhBlm == (decimal)0.55);
@@ -514,8 +515,8 @@ namespace roadInvUnitTest
         public void SplitTwoRecords()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("16xFAKENAMEx1xA", (decimal)0.4, (decimal)0.6);
-            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "16xFAKENAMEx1xA" orderby record.AhBlm select record;
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", (decimal)0.4, (decimal)0.6);
+            var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 2);
             Assert.True(fakeRoutes.Count() == 5);

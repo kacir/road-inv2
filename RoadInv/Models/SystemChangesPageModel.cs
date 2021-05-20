@@ -12,13 +12,13 @@ namespace RoadInv.Models
     public class SystemChangesPageModel
     {
         public IPagedList<RoadInv.DB.RoadInv> roadInvs { get; set; }
-        public IPagedList<RoadInv.DB.DissolveNhsView1> DissolveNhsViews { get; set; }
-        public IPagedList<RoadInv.DB.DissolveAphnView1> DissolveAphnViews { get; set; }
-        public IPagedList<RoadInv.DB.DissolveFuncView1> DissolveFuncViews { get; set; }
-        public IPagedList<RoadInv.DB.DissolveSpecialSystemsView1> DissolveSpecialSystemsViews { get; set; }
-        public IPagedList<RoadInv.DB.ExcludeNhs1> ExcludeNhs { get; set; }
-        public IPagedList<RoadInv.DB.ExcludeAphn1> ExcludeAphn { get; set; }
-        public IPagedList<RoadInv.DB.ExcludeSpecialSystems1> ExcludeSpecials { get; set; }
+        public IPagedList<RoadInv.DB.DissolveNhsView> DissolveNhsViews { get; set; }
+        public IPagedList<RoadInv.DB.DissolveAphnView> DissolveAphnViews { get; set; }
+        public IPagedList<RoadInv.DB.DissolveFuncView> DissolveFuncViews { get; set; }
+        public IPagedList<RoadInv.DB.DissolveSpecialSystemsView> DissolveSpecialSystemsViews { get; set; }
+        public IPagedList<RoadInv.DB.ExcludeNh> ExcludeNhs { get; set; }
+        public IPagedList<RoadInv.DB.ExcludeAphn> ExcludeAphn { get; set; }
+        public IPagedList<RoadInv.DB.ExcludeSpecialSystem> ExcludeSpecials { get; set; }
         public IEnumerable<SelectListItem> Counties{ get; set; }
         public IEnumerable<SelectListItem> Districts { get; set; }
         public IEnumerable<SelectListItem> Directions { get; set; }
@@ -36,8 +36,8 @@ namespace RoadInv.Models
         public string SortOrder { get; set; }
         public string Dissolve { get; set; }
         public string Direction { get; set; }
-        public decimal? BLM { get; set; }
-        public decimal? ELM { get; set; }
+        public decimal BLM { get; set; }
+        public decimal ELM { get; set; }
         public int? Page { get; set; }
         public string NHS { get; set; }
         public string SpecialSystem { get; set; }

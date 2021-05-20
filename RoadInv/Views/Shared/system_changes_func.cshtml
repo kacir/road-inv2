@@ -12,8 +12,7 @@
     ViewBag.Title = "Functional Class";
 }
 
-<link rel="stylesheet" href="http://localhost:65424/css/micromodal.css">
-@*need to fix this*@
+<link href="~/css/micromodal.css" rel="stylesheet">
 <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
 
 <script>
@@ -62,7 +61,7 @@
                     </div>
                     <footer class="modal__footer">
                         <button class="modal__btn modal__btn-primary" type="submit" value="Update">Submit for Validation</button>
-                        <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
+                        @*<button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>*@
                     </footer>
                 }
             </main>
@@ -97,6 +96,10 @@
                 @Html.TextBox("Section", "", new { @class = "form-control" })
             </div>
             <div class='form-group'>
+                <label>Direction</label>
+                @Html.DropDownListFor(m => m.Direction, Model.Directions, " ", new { @class = "form-control", })
+            </div>
+            <div class='form-group'>
                 <label>Logmile</label>
                 @Html.TextBox("Logmile", "", new { @class = "form-control" })
             </div>
@@ -120,6 +123,7 @@
                 @if (Model.Dissolve == "Segment")
                 {
                     <tr>
+                        <th></th>
                         <th>Arnold ID</th>
                         <th>County</th>
                         <th>Section</th>
@@ -131,17 +135,13 @@
                     foreach (var item in Model.DissolveFuncViews)
                     {
                         <tr>
+                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Link</a></td>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
-                            <td>@Html.DisplayFor(modelItem => item.AhDirection)</td>
+                            <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
-                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>
-                            <td>
-
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            </td>
                         </tr>
                     }
 
@@ -175,6 +175,7 @@
                 else
                 {
                     <tr>
+                        <th></th>
                         <th>ARNOLD ID</th>
                         <th>County</th>
                         <th>Section</th>
@@ -186,21 +187,17 @@
                     </tr>
                     @foreach (var item in Model.roadInvs)
                     {
-                        <tr>
-                            <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
-                            <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
-                            <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
-                            <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
-                            <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
-                            <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
-                            <td>@Html.DisplayFor(modelItem => item.AhLength)</td>
-                            <td>@Html.DisplayFor(modelItem => item.FuncClass)</td>
-                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Edit</a></td>
-                            <td>
-
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            </td>
-                        </tr>
+            <tr>
+                <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Link</a></td>
+                <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
+                <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
+                <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
+                <td>@Html.DisplayFor(modelItem => item.LogDirect)</td>
+                <td>@Html.DisplayFor(modelItem => item.AhBlm)</td>
+                <td>@Html.DisplayFor(modelItem => item.AhElm)</td>
+                <td>@Html.DisplayFor(modelItem => item.AhLength)</td>
+                <td>@Html.DisplayFor(modelItem => item.FuncClass)</td>
+            </tr>
                     }
                 }
 
