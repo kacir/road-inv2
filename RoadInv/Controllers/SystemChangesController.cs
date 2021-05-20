@@ -35,8 +35,9 @@ namespace RoadInv.Controllers
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
             var roads = from r in _context.RoadInvs
-                        where r.Nhs != "0" && r.Nhs !="" && r.Nhs != null //do we want to filter out nulls, empty strings etc?
+                        where r.Nhs != "0" && r.Nhs != "" && r.Nhs != null //do we want to filter out nulls, empty strings etc?
                         select r;
+
 
             var excNh = from r in _context.ExcludeNhs
                         select r;
@@ -65,7 +66,7 @@ namespace RoadInv.Controllers
             }
             if (!String.IsNullOrEmpty(pageModel.Route))
             {
-                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
+                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route.Trim()));
             }
             if (!String.IsNullOrEmpty(pageModel.Section))
             {
@@ -75,14 +76,14 @@ namespace RoadInv.Controllers
             {
                 roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
             }
-            if (!pageModel.BLM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            }
-            if (!pageModel.ELM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-            }
+            //if (!pageModel.BLM.Equals(null))
+            //{
+            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
+            //}
+            //if (!pageModel.ELM.Equals(null))
+            //{
+            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
+            //}
             if (!String.IsNullOrEmpty(pageModel.Direction))
             {
                 roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
@@ -107,15 +108,15 @@ namespace RoadInv.Controllers
             if (pageModel.Dissolve == "Segment")
             {
 
-                //if (!String.IsNullOrEmpty(pageModel.County))
-                //{
-                //    diss = diss.Where(r => r.AhCounty.Equals(pageModel.County)); //will need to scaffold
-                //}
+                if (!String.IsNullOrEmpty(pageModel.County))
+                {
+                    diss = diss.Where(r => r.AhCounty.Equals(pageModel.County)); //will need to scaffold
+                }
 
-                //if (!String.IsNullOrEmpty(pageModel.Section))
-                //{
-                //    diss = diss.Where(r => r.AhSection.Equals(pageModel.Section));
-                //}
+                if (!String.IsNullOrEmpty(pageModel.Section))
+                {
+                    diss = diss.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
 
                 if (!pageModel.BLM.Equals(null))
                 {
@@ -180,14 +181,14 @@ namespace RoadInv.Controllers
             {
                 roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
             }
-            if (!pageModel.BLM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            }
-            if (!pageModel.ELM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-            }
+            //if (!pageModel.BLM.Equals(null))
+            //{
+            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
+            //}
+            //if (!pageModel.ELM.Equals(null))
+            //{
+            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
+            //}
             if (!String.IsNullOrEmpty(pageModel.Direction))
             {
                 roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
@@ -262,14 +263,14 @@ namespace RoadInv.Controllers
             {
                 roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
             }
-            if (!pageModel.BLM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            }
-            if (!pageModel.ELM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-            }
+            //if (!pageModel.BLM.Equals(null))
+            //{
+            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
+            //}
+            //if (!pageModel.ELM.Equals(null))
+            //{
+            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
+            //}
             if (!String.IsNullOrEmpty(pageModel.Direction))
             {
                 roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
@@ -308,6 +309,7 @@ namespace RoadInv.Controllers
                         where r.SpecialSystems != ""
                         select r;
 
+
             var excNh = from r in _context.ExcludeSpecialSystems
                         select r;
 
@@ -342,14 +344,14 @@ namespace RoadInv.Controllers
             {
                 roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
             }
-            if (!pageModel.BLM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            }
-            if (!pageModel.ELM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-            }
+            //if (!pageModel.BLM.Equals(null))
+            //{
+            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
+            //}
+            //if (!pageModel.ELM.Equals(null))
+            //{
+            //    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
+            //}
             if (!String.IsNullOrEmpty(pageModel.Direction))
             {
                 roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
