@@ -43,7 +43,7 @@ namespace RoadInv.Models
         public string SpecialSystem { get; set; }
         public string FuncClass { get; set; }
         public string APHN { get; set; }
-
+        public decimal? APHN_Length { get; set; }
         public enum DissolveSelect
         {
             Segment,

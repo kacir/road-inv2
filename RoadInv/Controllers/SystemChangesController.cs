@@ -46,6 +46,8 @@ namespace RoadInv.Controllers
             var diss = from r in _context.DissolveNhsViews
                        select r;
 
+            
+
             var validationModel = new ValidationModel(_context);
             
             pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
@@ -138,6 +140,7 @@ namespace RoadInv.Controllers
 
             var diss = from r in _context.DissolveAphnViews
                        select r;
+            
 
             var validationModel = new ValidationModel(_context);
 
@@ -393,19 +396,16 @@ namespace RoadInv.Controllers
             }
             return View(pageModel);
         }
-//=====================Updates======================================================================================================
-//==================================================================================================================================
+
         [HttpPost]
-        [Route("system_changes/nhs_update")]
-        [Route("system_changes/nhs_update.html")]
-        public IActionResult NHS_Update(SystemChangesPageModel pageModel)
+        [Route("system_changes/bulk_update")]
+        [Route("system_changes/bulk_update.html")]
+        public IActionResult Bulk_Update(SystemChangesPageModel pageModel)
         {
             if (ModelState.IsValid)
             {
                 var roads = from r in _context.RoadInvs //query is defined but not running against the database
-                            where r.Nhs != "0"
                             select r;
-                
 
                 var ApiController = new ApiController(_context);
                 //var BulkValidation = new BulkValidationModel(_context);
@@ -438,18 +438,21 @@ namespace RoadInv.Controllers
                 //==========================================================
                 //======================Bulk Edits Begin====================
                 var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
+                //APHNReport(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
+
+
 
                 if (pageModel.NHS != null)
                 {
                     //string results = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS).ToString();
-                    //preview changes
                     ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
                     return RedirectToAction("system_changes_nhs");
                 }
                 else if (pageModel.APHN != null)
                 {
+                    APHNReport(pageModel);
                     ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
-                    return RedirectToAction("system_changes_aphn");
+                    return RedirectToAction("system_changes_aphn", pageModel);
                 }
                 else if (pageModel.FuncClass != null)
                 {
@@ -463,293 +466,24 @@ namespace RoadInv.Controllers
                 }
             }
             string baseUrl = string.Format("{0}://{1}",HttpContext.Request.Scheme, HttpContext.Request.Host);
-            return Redirect(baseUrl);
+            return Redirect(baseUrl);//need to figure out how to go back to previous screen on close
         }
-        [HttpPost]
-        [Route("system_changes/aphn_update")]
-        [Route("system_changes/aphn_update.html")]
-        public IActionResult APHN_Update(SystemChangesPageModel pageModel)
+
+        public void APHNReport(SystemChangesPageModel pageModel)
         {
-            if (ModelState.IsValid)
-            {
-                var roads = from r in _context.RoadInvs //query is defined but not running against the database
-                            where r.Aphn != "0"
-                            select r;
-
-                ViewData["TotalAPHN"] = (from r in _context.RoadInvs //query is defined but not running against the database
-                            where r.Aphn != "0"
-                            select r.AhLength).Sum().ToString();
-
-
-                var ApiController = new ApiController(_context);
-                //var BulkValidation = new BulkValidationModel(_context);
-
-
-                if (!String.IsNullOrEmpty(pageModel.County))
-                {
-                    roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
-                }
-                if (!String.IsNullOrEmpty(pageModel.Route))
-                {
-                    roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
-                }
-                if (!pageModel.Section.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
-                }
-                if (!String.IsNullOrEmpty(pageModel.Direction))
-                {
-                    roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
-                }
-                if (!pageModel.BLM.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-                }
-                if (!pageModel.ELM.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-                }
-                //==========================================================
-                //======================Bulk Edits Begin====================
-                var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
-
-                if (pageModel.NHS != null)
-                {
-                    //string results = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS).ToString();
-                    //preview changes
-                    ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
-                    return RedirectToAction("system_changes_nhs");
-                }
-                else if (pageModel.APHN != null)
-                {
-                    ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
-                    return RedirectToAction("system_changes_aphn");
-                }
-                else if (pageModel.FuncClass != null)
-                {
-                    ApiController.ImplementBulkEditFuncClass(roadID, pageModel.BLM, pageModel.ELM, pageModel.FuncClass);
-                    return RedirectToAction("system_changes_func");
-                }
-                else if (pageModel.SpecialSystem != null)
-                {
-                    ApiController.ImplementBulkEditSpecial(roadID, pageModel.BLM, pageModel.ELM, pageModel.SpecialSystem);
-                    return RedirectToAction("system_changes_special");
-                }
-            }
-            string baseUrl = string.Format("{0}://{1}", HttpContext.Request.Scheme, HttpContext.Request.Host);
-            return Redirect(baseUrl);
-        }
-        [HttpPost]
-        [Route("system_changes/func_update")]
-        [Route("system_changes/func_update.html")]
-        public IActionResult Functional_Update(SystemChangesPageModel pageModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var roads = from r in _context.RoadInvs
-                            where r.FuncClass != "7" && r.FuncClass != null && r.FuncClass != ""
-                            select r;
-
-
-                var ApiController = new ApiController(_context);
-                //var BulkValidation = new BulkValidationModel(_context);
-
-
-                if (!String.IsNullOrEmpty(pageModel.County))
-                {
-                    roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
-                }
-                if (!String.IsNullOrEmpty(pageModel.Route))
-                {
-                    roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
-                }
-                if (!pageModel.Section.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
-                }
-                if (!String.IsNullOrEmpty(pageModel.Direction))
-                {
-                    roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
-                }
-                if (!pageModel.BLM.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-                }
-                if (!pageModel.ELM.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-                }
-                //==========================================================
-                //======================Bulk Edits Begin====================
-                var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
-
-                if (pageModel.NHS != null)
-                {
-                    //string results = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS).ToString();
-                    //preview changes
-                    ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
-                    return RedirectToAction("system_changes_nhs");
-                }
-                else if (pageModel.APHN != null)
-                {
-                    ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
-                    return RedirectToAction("system_changes_aphn");
-                }
-                else if (pageModel.FuncClass != null)
-                {
-                    ApiController.ImplementBulkEditFuncClass(roadID, pageModel.BLM, pageModel.ELM, pageModel.FuncClass);
-                    return RedirectToAction("system_changes_func");
-                }
-                else if (pageModel.SpecialSystem != null)
-                {
-                    ApiController.ImplementBulkEditSpecial(roadID, pageModel.BLM, pageModel.ELM, pageModel.SpecialSystem);
-                    return RedirectToAction("system_changes_special");
-                }
-            }
-            string baseUrl = string.Format("{0}://{1}", HttpContext.Request.Scheme, HttpContext.Request.Host);
-            return Redirect(baseUrl);
+            var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
+            
+            ViewData["APHN_Length"] = (from r in _context.RoadInvs
+                                       where r.Aphn != "0" && r.AhRoadId == roadID
+                                       select r.AhLength).Sum();
+            pageModel.APHN_Length = (from r in _context.RoadInvs
+                        where r.Aphn != "0" && r.AhRoadId == roadID
+                        select r.AhLength).Sum();
+            
+            //await ViewBag.APHN_Length = test;
+            //var test1 = test;
         }
 
-        [HttpPost]
-        [Route("system_changes/special_update")]
-        [Route("system_changes/special_update.html")]
-        public IActionResult Special_Update(SystemChangesPageModel pageModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var roads = from r in _context.RoadInvs
-                            where r.SpecialSystems != ""
-                            select r;
-
-
-                var ApiController = new ApiController(_context);
-                //var BulkValidation = new BulkValidationModel(_context);
-
-
-                if (!String.IsNullOrEmpty(pageModel.County))
-                {
-                    roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
-                }
-                if (!String.IsNullOrEmpty(pageModel.Route))
-                {
-                    roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
-                }
-                if (!pageModel.Section.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
-                }
-                if (!String.IsNullOrEmpty(pageModel.Direction))
-                {
-                    roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
-                }
-                if (!pageModel.BLM.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-                }
-                if (!pageModel.ELM.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-                }
-                //==========================================================
-                //======================Bulk Edits Begin====================
-                var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
-
-                if (pageModel.NHS != null)
-                {
-                    //string results = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS).ToString();
-                    //preview changes
-                    ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
-                    return RedirectToAction("system_changes_nhs");
-                }
-                else if (pageModel.APHN != null)
-                {
-                    ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
-                    return RedirectToAction("system_changes_aphn");
-                }
-                else if (pageModel.FuncClass != null)
-                {
-                    ApiController.ImplementBulkEditFuncClass(roadID, pageModel.BLM, pageModel.ELM, pageModel.FuncClass);
-                    return RedirectToAction("system_changes_func");
-                }
-                else if (pageModel.SpecialSystem != null)
-                {
-                    ApiController.ImplementBulkEditSpecial(roadID, pageModel.BLM, pageModel.ELM, pageModel.SpecialSystem);
-                    return RedirectToAction("system_changes_special");
-                }
-            }
-            string baseUrl = string.Format("{0}://{1}", HttpContext.Request.Scheme, HttpContext.Request.Host);
-            return Redirect(baseUrl);
-        }
-
-        // GET: 
-        [Route("system_changes/nhs/Details")]
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var roadInv = await _context.RoadInvs
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (roadInv == null)
-            {
-                return NotFound();
-            }
-
-            return View(roadInv);
-        }
-
-        // GET: 
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AhDistrict,AhCounty,AhRoute,AhSection,LogDirect,AhRoadId,GovermentCode,RuralUrbanArea,UrbanAreaCode,FuncClass,Nhs,SystemStatus,SpecialSystems,BothDirectionNumLanes,OneDirectionNumLanes,Comment1,TypeRoad,RouteSign,Aphn,Access,TypeOperation,YearBuilt,YearRecon,MedianWidth,LaneWidth,SurfaceWidth,RightShoulderSurface,LeftShoulderSurface,RightShoulderWidth,LeftShoulderWidth,RoadwayWidth,ExtraLanes,YearAdt,MedianType,SurfaceType,AlternativeRouteName,LegacyId,LegacyBlm,LegacyElm,UpdateUserId,UpdateDate,Gisid,GiscreateDate,GiscreatedUser,GislastEditedUser,GislastEditedDate,ArnoldConv,AhBlm,AhElm,AhLength")] DB.RoadInv roadInv)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(roadInv);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(roadInv);
-        }
-
-        // GET: RoadInvs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var roadInv = await _context.RoadInvs
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (roadInv == null)
-            {
-                return NotFound();
-            }
-
-            return View(roadInv);
-        }
-
-        // POST: RoadInvs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var roadInv = await _context.RoadInvs.FindAsync(id);
-            _context.RoadInvs.Remove(roadInv);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool RoadInvExists(int id)
         {
