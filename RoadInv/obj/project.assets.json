@@ -9218,25 +9218,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\rk42861\\.nuget\\packages\\": {},
+    "C:\\Users\\MW42705\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\RoadInv.csproj",
+      "projectUniqueName": "C:\\Users\\MW42705\\source\\repos\\road-inv2\\RoadInv\\RoadInv.csproj",
       "projectName": "RoadInv",
-      "projectPath": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\RoadInv.csproj",
-      "packagesPath": "C:\\Users\\rk42861\\.nuget\\packages\\",
-      "outputPath": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\obj\\",
+      "projectPath": "C:\\Users\\MW42705\\source\\repos\\road-inv2\\RoadInv\\RoadInv.csproj",
+      "packagesPath": "C:\\Users\\MW42705\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\MW42705\\source\\repos\\road-inv2\\RoadInv\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\rk42861\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\MW42705\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\MicroFocus.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -9245,8 +9248,9 @@
         "net5.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Micro Focus\\Visual COBOL\\NuGetPackages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Users\\rk42861\\AppData\\Local\\Esri\\NuGet": {},
+        "\\\\csd1\\appdev\\Nuget": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
