@@ -1,4 +1,5 @@
 ﻿@using RoadInv.Models
+@using RoadInv.DB
 @model SearchPageModel
 @{Layout = "_Layout.cshtml";}
 
@@ -9,46 +10,72 @@
     ViewData["Title"] = "Segements";
 }
 
+<style>
+    #AH_BLM, #AH_Route, #AH_Section {
+        width: 100%;
+    }
+</style>
+
 <div id="segement-search-main-content master-grid">
     <div id="side-panel" class='split left'>
         <h3>Search</h3>
-        <div action="/search" method="get">
+        <div >
             <div class="form-group">
                 <label for='form-district'>District Number</label>
-                <select class="form-control" id='district'>
+                <select class="form-control" id='@FieldsListModel.AH_District'>
                     <option value=""></option>
                     @foreach (var x in Model.con.AH_District)
                     {
-                        <option @if (ViewBag.district == x.DistrictNumber.Trim()) { <text> selected</text> } value="@x.DistrictNumber.Trim()" >@x.DistrictNumber.Trim() </option>
+                        <option @if (Model.filterDistrict == x.DistrictNumber.Trim()) { <text> selected</text> } value="@x.DistrictNumber.Trim()">@x.DistrictNumber.Trim() </option>
                     }
                 </select>
             </div>
             <div class='form-group'>
                 <label>County</label>
-                <select id="county" class="form-control">
+                <select id="@FieldsListModel.AH_County" class="form-control">
                     <option value=""></option>
                     @foreach (var u in Model.con.AH_County)
                     {
-                        <option @if (ViewBag.county == u.CountyNumber) { <text> selected</text> } value="@u.CountyNumber">@u.CountyNumber - @u.County</option>
+                        <option @if (Model.filterCounty == u.CountyNumber) { <text> selected</text> } value="@u.CountyNumber">@u.CountyNumber - @u.County</option>
                     }
                 </select>
 
             </div>
             <div class='form-group'>
                 <label>Route</label>
-                <input id="route" class="form-control" type='text' value="@ViewBag.route" />
+                <input id="@FieldsListModel.AH_Route" class="form-control" type='text' value="@Model.filterRoute" />
             </div>
             <div class='form-group'>
                 <label>Section</label>
-                <input id="section" class="form-control" type='text' value="@ViewBag.section" />
+                <input id="@FieldsListModel.AH_Section" class="form-control" type='text' value="@Model.filterSection" />
+            </div>
+            <div class='form-group'>
+                <label>Direction</label>
+                <select id="@FieldsListModel.LOG_DIRECT" class="form-control" >
+                    <option value=""></option>
+                    @foreach(var u in Model.con.LOG_DIRECT)
+            {
+                <option @if (Model.filterDirection == u.Domainvalue) {<text>selected</text>} value="@u.Domainvalue">@u.Domainvalue - @u.Label </option>
+            }
+                </select>
+            </div>
+            <div>
+                <label>Road Type</label>
+                <select id="@FieldsListModel.TypeRoad" class="form-control">
+                    <option value=""></option>
+                    @foreach(var u in Model.con.TypeRoad)
+            {
+                <option @if (Model.filterTypeRoad == u.Domainvalue) { <text> selected</text> } value="@u.Domainvalue">@u.Domainvalue - @u.Label </option>
+            }
+                </select>
             </div>
             <div class='form-group'>
                 <label>Logmile</label>
-                <input id="logmile" class="form-control" type='text' value="@if (ViewBag.logmile != -1) { <text>@ViewBag.logmile</text>} " />
+                <input id="@FieldsListModel.AH_BLM" class="form-control" type='text' value="@if (Model.filterLogmile != -1) { <text>@Model.filterLogmile</text>} " />
             </div>
             <div id="form-button-holder" class='form-group'>
-                <a id="submit-search-link" href="/search"><button type="submit" id="submit-search">Submit </button></a>
-                <a href="/search"><button id="clear-all">Clear All</button></a>
+                <button type="submit" id="submit-search" onclick="submitEventLoop()">Submit </button>
+                <button id="clear-all">Clear All</button>
             </div>
 
 
@@ -103,4 +130,86 @@
         </table>
     </div>
 </div>
-<script src="scripts/set_submit_search.js"></script>
+
+<script>
+
+    function submitEventLoop() {
+        console.log("hello world!");
+        var inputDistrict = $('#@FieldsListModel.AH_District option:selected').text();
+        var inputCounty = $('#@FieldsListModel.AH_County option:selected').attr('value');
+        var inputRoute = $('#@FieldsListModel.AH_Route').val();
+        var inputSection = $('#@FieldsListModel.AH_Section').val();
+        var inputLogmile = $('#@FieldsListModel.AH_BLM').val();
+
+        var inputRoadtype = $("#@FieldsListModel.TypeRoad").val();
+        var inputDirection = $("#@FieldsListModel.LOG_DIRECT").val();
+
+        if (inputDistrict === undefined) {
+            inputDistrict = "";
+        }
+
+        if (inputCounty === undefined) {
+            inputCounty = "";
+        }
+
+        if (inputRoute === undefined) {
+            inputRoute = "";
+        }
+
+        if (inputSection === undefined) {
+            inputSection = "";
+        }
+
+        if (inputLogmile === undefined) {
+            inputLogmile = -1;
+        }
+
+        if (inputRoadtype === undefined) {
+            inputRoadtype = "";
+        }
+
+        if (inputDirection === undefined) {
+            inputDirection = "";
+        }
+
+
+        console.log(inputDistrict);
+        console.log(inputCounty);
+        console.log(inputRoute);
+        console.log(inputSection);
+        console.log(inputLogmile);
+        console.log(inputRoadtype);
+        console.log(inputDirection);
+
+        inputDistrict = 'district=' + inputDistrict.trim() + '&';
+        inputCounty = 'county=' + inputCounty.trim() + '&';
+        inputRoute = 'route=' + inputRoute.trim() + '&';
+        inputSection = 'section=' + inputSection.trim() + '&';
+        inputLogmile = 'logmile=' + inputLogmile.trim() + '&';
+        inputRoadType = "typeroad=" + inputRoadtype.trim() + '&';
+        inputDirection = "direction=" + inputDirection.trim();
+
+        var searchString = "/segments?" + inputDistrict + inputCounty + inputRoute + inputSection + inputLogmile + inputRoadType + inputDirection;
+        window.location.href = searchString;
+        console.log(searchString);
+        //$('#submit-search-link').attr("href", searchString);
+    }
+
+    $(".form-group").keypress(function (e) {
+        if (e.which == 13) {
+            submitEventLoop();
+            return false;
+        }
+    });
+
+    // Re-add clear attributes option
+    $("#clear-all").click(function () {
+        $("#@FieldsListModel.AH_District").val("");
+        $("#@FieldsListModel.AH_County").val("");
+        $('#@FieldsListModel.AH_Route').val("");
+        $('#@FieldsListModel.AH_Section').val("");
+        $('#@FieldsListModel.AH_BLM').val("");
+        $("#@FieldsListModel.TypeRoad").val("");
+        $("#@FieldsListModel.LOG_DIRECT").val("");
+    });
+</script>

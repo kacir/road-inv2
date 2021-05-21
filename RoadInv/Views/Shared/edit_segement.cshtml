@@ -1088,11 +1088,29 @@
     $("#box-alternate div input").on("keyup, change", submitInputs);
 
     $("#left-arrow").click(function () {
-        alert("Its an Altert left");
+        var inputs = { "sourceSegmentID" : "@Model.details.Id"};
+        $.post("api/segmentOrder", inputs, function (data) {
+            if (data.beforeid == -1) {
+                alert("There is no next id");
+            } else {
+                window.location.href = "/edit_segement.html?id=" + data.beforeid;
+            }
+
+        }, "json");
+
     });
 
     $("#right-arrow").click(function () {
-        alert("Its an Altert right");
+        var inputs = { "sourceSegmentID": "@Model.details.Id" };
+        $.post("api/segmentOrder", inputs, function (data) {
+
+            if (data.afterid == -1) {
+                alert("there is no after id");
+            } else {
+                window.location.href = "/edit_segement.html?id=" + data.afterid;
+            }
+
+        }, "json");
     });
 
 
