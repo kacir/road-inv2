@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,6 +45,8 @@ namespace RoadInv.Controllers
 
             var diss = from r in _context.DissolveNhsViews
                        select r;
+
+            
 
             var validationModel = new ValidationModel(_context);
             
@@ -137,6 +140,7 @@ namespace RoadInv.Controllers
 
             var diss = from r in _context.DissolveAphnViews
                        select r;
+            
 
             var validationModel = new ValidationModel(_context);
 
@@ -394,14 +398,13 @@ namespace RoadInv.Controllers
         }
 
         [HttpPost]
-        [Route("system_changes/nhs_update")]
-        [Route("system_changes/nhs_update.html")]
-        public IActionResult NHS_Update(SystemChangesPageModel pageModel)
+        [Route("system_changes/bulk_update")]
+        [Route("system_changes/bulk_update.html")]
+        public IActionResult Bulk_Update(SystemChangesPageModel pageModel)
         {
             if (ModelState.IsValid)
             {
                 var roads = from r in _context.RoadInvs //query is defined but not running against the database
-                            where r.Nhs != "0"
                             select r;
 
                 var ApiController = new ApiController(_context);
@@ -435,6 +438,9 @@ namespace RoadInv.Controllers
                 //==========================================================
                 //======================Bulk Edits Begin====================
                 var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
+                //APHNReport(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
+
+
 
                 if (pageModel.NHS != null)
                 {
@@ -444,8 +450,9 @@ namespace RoadInv.Controllers
                 }
                 else if (pageModel.APHN != null)
                 {
+                    APHNReport(pageModel);
                     ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
-                    return RedirectToAction("system_changes_aphn");
+                    return RedirectToAction("system_changes_aphn", pageModel);
                 }
                 else if (pageModel.FuncClass != null)
                 {
@@ -458,78 +465,25 @@ namespace RoadInv.Controllers
                     return RedirectToAction("system_changes_special");
                 }
             }
-            return RedirectToAction("system_changes_nhs"); //maybe return to error screen?
+            string baseUrl = string.Format("{0}://{1}",HttpContext.Request.Scheme, HttpContext.Request.Host);
+            return Redirect(baseUrl);//need to figure out how to go back to previous screen on close
         }
 
-        // GET: 
-        [Route("system_changes/nhs/Details")]
-        public async Task<IActionResult> Details(int? id)
+        public void APHNReport(SystemChangesPageModel pageModel)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var roadInv = await _context.RoadInvs
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (roadInv == null)
-            {
-                return NotFound();
-            }
-
-            return View(roadInv);
+            var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
+            
+            ViewData["APHN_Length"] = (from r in _context.RoadInvs
+                                       where r.Aphn != "0" && r.AhRoadId == roadID
+                                       select r.AhLength).Sum();
+            pageModel.APHN_Length = (from r in _context.RoadInvs
+                        where r.Aphn != "0" && r.AhRoadId == roadID
+                        select r.AhLength).Sum();
+            
+            //await ViewBag.APHN_Length = test;
+            //var test1 = test;
         }
 
-        // GET: 
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AhDistrict,AhCounty,AhRoute,AhSection,LogDirect,AhRoadId,GovermentCode,RuralUrbanArea,UrbanAreaCode,FuncClass,Nhs,SystemStatus,SpecialSystems,BothDirectionNumLanes,OneDirectionNumLanes,Comment1,TypeRoad,RouteSign,Aphn,Access,TypeOperation,YearBuilt,YearRecon,MedianWidth,LaneWidth,SurfaceWidth,RightShoulderSurface,LeftShoulderSurface,RightShoulderWidth,LeftShoulderWidth,RoadwayWidth,ExtraLanes,YearAdt,MedianType,SurfaceType,AlternativeRouteName,LegacyId,LegacyBlm,LegacyElm,UpdateUserId,UpdateDate,Gisid,GiscreateDate,GiscreatedUser,GislastEditedUser,GislastEditedDate,ArnoldConv,AhBlm,AhElm,AhLength")] DB.RoadInv roadInv)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(roadInv);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(roadInv);
-        }
-
-        // GET: RoadInvs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var roadInv = await _context.RoadInvs
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (roadInv == null)
-            {
-                return NotFound();
-            }
-
-            return View(roadInv);
-        }
-
-        // POST: RoadInvs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var roadInv = await _context.RoadInvs.FindAsync(id);
-            _context.RoadInvs.Remove(roadInv);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool RoadInvExists(int id)
         {
