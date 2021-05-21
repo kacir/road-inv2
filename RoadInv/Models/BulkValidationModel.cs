@@ -23,6 +23,7 @@ namespace RoadInv.Models
         {
             foreach (var record in _dbContext.RoadInvs.OrderBy(record => record.AhRoadId))
             {
+                ValidationModel.CleanAttr(record);
                 var errors = this.validator.FindErrors(record);
                 if (errors.Count > 0)
                 {

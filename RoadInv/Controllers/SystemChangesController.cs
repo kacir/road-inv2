@@ -12,6 +12,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RoadInv.Controllers
 {
+    /*
+         * This controller is responsible for rendering
+         * and controlling behavior on the system changes tab.
+         * We might want to add a service layer in order to handle 
+         * DB calls and statement formatting
+     */
     public class SystemChangesController : Controller
     {
         private readonly roadinvContext _context;
@@ -29,17 +35,18 @@ namespace RoadInv.Controllers
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
             var roads = from r in _context.RoadInvs
-                        where r.Nhs != "0" && r.Nhs !="" && r.Nhs != null //do we want to filter out nulls, empty strings etc?
+                        where r.Nhs != "0" && r.Nhs != "" && r.Nhs != null //do we want to filter out nulls, empty strings etc?
                         select r;
 
-            var excNh = from r in _context.ExcludeNhs1s
+
+            var excNh = from r in _context.ExcludeNhs
                         select r;
 
-            var diss = from r in _context.DissolveNhsView1s
+            var diss = from r in _context.DissolveNhsViews
                        select r;
 
             var validationModel = new ValidationModel(_context);
-
+            
             pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
             pageModel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - " + a.County, Value = a.CountyNumber, Selected = false }; });
             pageModel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
@@ -59,7 +66,7 @@ namespace RoadInv.Controllers
             }
             if (!String.IsNullOrEmpty(pageModel.Route))
             {
-                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
+                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route.Trim()));
             }
             if (!String.IsNullOrEmpty(pageModel.Section))
             {
@@ -68,14 +75,6 @@ namespace RoadInv.Controllers
             if (!pageModel.Logmile.Equals(null))
             {
                 roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
-            }
-            if (!pageModel.BLM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            }
-            if (!pageModel.ELM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
             }
             if (!String.IsNullOrEmpty(pageModel.Direction))
             {
@@ -103,27 +102,293 @@ namespace RoadInv.Controllers
 
                 if (!String.IsNullOrEmpty(pageModel.County))
                 {
-                    diss = diss.Where(r => r.AhCounty.Equals(pageModel.County));
+                    diss = diss.Where(r => r.AhCounty.Equals(pageModel.County)); //will need to scaffold
                 }
-
                 if (!String.IsNullOrEmpty(pageModel.Section))
                 {
                     diss = diss.Where(r => r.AhSection.Equals(pageModel.Section));
                 }
-
-                if (!pageModel.BLM.Equals(null))
+                if (!String.IsNullOrEmpty(pageModel.Route))
                 {
-                    diss = diss.Where(r => r.AhBlm.Equals(pageModel.BLM));
-                }
-                if (!pageModel.ELM.Equals(null))
-                {
-                    diss = diss.Where(r => r.AhBlm.Equals(pageModel.ELM));
+                    diss = diss.Where(r => r.AhRoute.Equals(pageModel.Route));
                 }
                 if (!String.IsNullOrEmpty(pageModel.Direction))
                 {
-                    diss = diss.Where(r => r.AhDirection.Equals(pageModel.Direction));
+                    diss = diss.Where(r => r.LogDirect.Equals(pageModel.Direction));
                 }
                 pageModel.DissolveNhsViews = await diss.ToPagedListAsync(pageNumber, pageSize);
+            }
+            return View(pageModel);
+        }
+
+        [Route("system_changes/aphn")]
+        [Route("system_changes/aphn.html")]
+        public async Task<IActionResult> system_changes_aphn(SystemChangesPageModel pageModel)
+        {
+            int pageSize = 50;
+            int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
+
+            var roads = from r in _context.RoadInvs
+                        where r.Aphn != "" && r.Aphn !=null
+                        select r;
+
+            var excAp = from r in _context.ExcludeAphns
+                        select r;
+
+            var diss = from r in _context.DissolveAphnViews
+                       select r;
+
+            var validationModel = new ValidationModel(_context);
+
+            pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
+            pageModel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - " + a.County, Value = a.CountyNumber, Selected = false }; });
+            pageModel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            pageModel.APHN_vals = validationModel.APHN.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+
+            ViewBag.CurrentSort = pageModel.SortOrder;
+
+            if (!String.IsNullOrEmpty(pageModel.District))
+            {
+                roads = roads.Where(r => r.AhDistrict.Equals(pageModel.District));
+            }
+            if (!String.IsNullOrEmpty(pageModel.County))
+            {
+                roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Route))
+            {
+                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Section))
+            {
+                roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
+            }
+            if (!pageModel.Logmile.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Direction))
+            {
+                roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
+            }
+            if (!String.IsNullOrEmpty(pageModel.APHN))
+            {
+                roads = roads.Where(r => r.Aphn.Equals(pageModel.APHN));
+            }
+
+            switch (pageModel.SortOrder)
+            {
+                case "name_desc":
+                    roads = roads.OrderByDescending(r => r.Aphn);
+                    break;
+                default:
+                    roads = roads.OrderBy(r => r.Aphn);
+                    break;
+            }
+            ViewBag.CurrentSort = pageModel.SortOrder;
+
+            roads = roads.OrderBy(r => r.Aphn);
+            pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
+            pageModel.ExcludeAphn = await excAp.ToPagedListAsync(pageNumber, pageSize);
+            if (pageModel.Dissolve == "Segment")
+            {
+                if (!String.IsNullOrEmpty(pageModel.County))
+                {
+                    diss = diss.Where(r => r.AhCounty.Equals(pageModel.County)); //will need to scaffold
+                }
+                if (!String.IsNullOrEmpty(pageModel.Section))
+                {
+                    diss = diss.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Route))
+                {
+                    diss = diss.Where(r => r.AhRoute.Equals(pageModel.Route));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Direction))
+                {
+                    diss = diss.Where(r => r.LogDirect.Equals(pageModel.Direction));
+                }
+                pageModel.DissolveAphnViews = await diss.ToPagedListAsync(pageNumber, pageSize);
+            }
+            return View(pageModel);
+        }
+
+
+        [Route("system_changes/func")]
+        [Route("system_changes/func.html")]
+        public async Task<IActionResult> system_changes_func(SystemChangesPageModel pageModel)
+        {
+            int pageSize = 50;
+            int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
+
+            var roads = from r in _context.RoadInvs
+                        where r.FuncClass != "7" && r.FuncClass !=null && r.FuncClass !=""
+                        select r;
+
+
+            var diss = from r in _context.DissolveFuncViews
+                       select r;
+
+            var validationModel = new ValidationModel(_context);
+
+            pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
+            pageModel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - " + a.County, Value = a.CountyNumber, Selected = false }; });
+            pageModel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            pageModel.FuncClass_vals = validationModel.FuncClass.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            ViewBag.CurrentSort = pageModel.SortOrder;
+
+            if (!String.IsNullOrEmpty(pageModel.District))
+            {
+                roads = roads.Where(r => r.AhDistrict.Equals(pageModel.District));
+            }
+            if (!String.IsNullOrEmpty(pageModel.County))
+            {
+                roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Route))
+            {
+                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Section))
+            {
+                roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
+            }
+            if (!pageModel.Logmile.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Direction))
+            {
+                roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
+            }
+            if (!String.IsNullOrEmpty(pageModel.FuncClass))
+            {
+                roads = roads.Where(r => r.FuncClass.Equals(pageModel.FuncClass));
+            }
+
+            switch (pageModel.SortOrder)
+            {
+                case "name_desc":
+                    roads = roads.OrderByDescending(r => r.FuncClass);
+                    break;
+                default:
+                    roads = roads.OrderBy(r => r.FuncClass);
+                    break;
+            }
+            roads = roads.OrderBy(r => r.FuncClass);
+            pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
+            if (pageModel.Dissolve == "Segment")
+            {
+                if (!String.IsNullOrEmpty(pageModel.County))
+                {
+                    diss = diss.Where(r => r.AhCounty.Equals(pageModel.County)); //will need to scaffold
+                }
+                if (!String.IsNullOrEmpty(pageModel.Section))
+                {
+                    diss = diss.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Route))
+                {
+                    diss = diss.Where(r => r.AhRoute.Equals(pageModel.Route));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Direction))
+                {
+                    diss = diss.Where(r => r.LogDirect.Equals(pageModel.Direction));
+                }
+                pageModel.DissolveFuncViews = await diss.ToPagedListAsync(pageNumber, pageSize);
+            }
+            return View(pageModel);
+        }
+
+        [Route("system_changes/special")]
+        [Route("system_changes/special.html")]
+        public async Task<IActionResult> system_changes_special(SystemChangesPageModel pageModel)
+        {
+            int pageSize = 50;
+            int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
+
+            var roads = from r in _context.RoadInvs
+                        where r.SpecialSystems != ""
+                        select r;
+
+
+            var excNh = from r in _context.ExcludeSpecialSystems
+                        select r;
+
+            var diss = from r in _context.DissolveSpecialSystemsViews
+                       select r;
+
+            var validationModel = new ValidationModel(_context);
+
+            pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
+            pageModel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - " + a.County, Value = a.CountyNumber, Selected = false }; });
+            pageModel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            pageModel.SpecialSystem_vals = validationModel.SpecialSystems.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
+            ViewBag.CurrentSort = pageModel.SortOrder;
+
+            if (!String.IsNullOrEmpty(pageModel.District))
+            {
+                roads = roads.Where(r => r.AhDistrict.Equals(pageModel.District));
+            }
+            if (!String.IsNullOrEmpty(pageModel.County))
+            {
+                roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Route))
+            {
+                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Section))
+            {
+                roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
+            }
+            if (!pageModel.Logmile.Equals(null))
+            {
+                roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
+            }
+            if (!String.IsNullOrEmpty(pageModel.Direction))
+            {
+                roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
+            }
+            if (!String.IsNullOrEmpty(pageModel.SpecialSystem))
+            {
+                roads = roads.Where(r => r.SpecialSystems.Equals(pageModel.SpecialSystem));
+            }
+
+            switch (pageModel.SortOrder)
+            {
+                case "name_desc":
+                    roads = roads.OrderByDescending(r => r.SpecialSystems);
+                    break;
+                default:
+                    roads = roads.OrderBy(r => r.SpecialSystems);
+                    break;
+            }
+
+            ViewBag.CurrentSort = pageModel.SortOrder;
+
+            roads = roads.OrderBy(r => r.FuncClass);
+            pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
+            pageModel.ExcludeSpecials = await excNh.ToPagedListAsync(pageNumber, pageSize);
+            if (pageModel.Dissolve == "Segment")
+            {
+                if (!String.IsNullOrEmpty(pageModel.County))
+                {
+                    diss = diss.Where(r => r.AhCounty.Equals(pageModel.County)); //will need to scaffold
+                }
+                if (!String.IsNullOrEmpty(pageModel.Section))
+                {
+                    diss = diss.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Route))
+                {
+                    diss = diss.Where(r => r.AhRoute.Equals(pageModel.Route));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Direction))
+                {
+                    diss = diss.Where(r => r.LogDirect.Equals(pageModel.Direction));
+                }
+                pageModel.DissolveSpecialSystemsViews = await diss.ToPagedListAsync(pageNumber, pageSize);
             }
             return View(pageModel);
         }
@@ -135,10 +400,14 @@ namespace RoadInv.Controllers
         {
             if (ModelState.IsValid)
             {
-                var roads = from r in _context.RoadInvs
-                            where r.Nhs != "0" 
+                var roads = from r in _context.RoadInvs //query is defined but not running against the database
+                            where r.Nhs != "0"
                             select r;
+
+                var ApiController = new ApiController(_context);
+                //var BulkValidation = new BulkValidationModel(_context);
                 
+
                 if (!String.IsNullOrEmpty(pageModel.County))
                 {
                     roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
@@ -159,22 +428,37 @@ namespace RoadInv.Controllers
                 {
                     roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
                 }
-                
                 if (!pageModel.ELM.Equals(null))
                 {
                     roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
                 }
-                if (!String.IsNullOrEmpty(pageModel.NHS))
+                //==========================================================
+                //======================Bulk Edits Begin====================
+                var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
+
+                if (pageModel.NHS != null)
                 {
-                    foreach (var road in roads)
-                    {
-                        road.Nhs = pageModel.NHS; 
-                    }
-                    _context.SaveChanges();
+                    //string results = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS).ToString();
+                    ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
+                    return RedirectToAction("system_changes_nhs");
                 }
-  
+                else if (pageModel.APHN != null)
+                {
+                    ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
+                    return RedirectToAction("system_changes_aphn");
+                }
+                else if (pageModel.FuncClass != null)
+                {
+                    ApiController.ImplementBulkEditFuncClass(roadID, pageModel.BLM, pageModel.ELM, pageModel.FuncClass);
+                    return RedirectToAction("system_changes_func");
+                }
+                else if (pageModel.SpecialSystem != null)
+                {
+                    ApiController.ImplementBulkEditSpecial(roadID, pageModel.BLM, pageModel.ELM, pageModel.SpecialSystem);
+                    return RedirectToAction("system_changes_special");
+                }
             }
-            return RedirectToAction("system_changes_nhs");
+            return RedirectToAction("system_changes_nhs"); //maybe return to error screen?
         }
 
         // GET: 
@@ -250,253 +534,6 @@ namespace RoadInv.Controllers
         private bool RoadInvExists(int id)
         {
             return _context.RoadInvs.Any(e => e.Id == id);
-        }
-
-        [Route("system_changes/aphn")]
-        [Route("system_changes/aphn.html")]
-        public async Task<IActionResult> system_changes_aphn(SystemChangesPageModel pageModel)
-        {
-            int pageSize = 50;
-            int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
-
-            var roads = from r in _context.RoadInvs
-                        where r.Aphn != "" && r.Aphn !=null
-                        select r;
-
-            var excAp = from r in _context.ExcludeAphn1s
-                        select r;
-
-            var diss = from r in _context.DissolveAphnView1s
-                       select r;
-
-            var validationModel = new ValidationModel(_context);
-
-            pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
-            pageModel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - " + a.County, Value = a.CountyNumber, Selected = false }; });
-            pageModel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
-            pageModel.APHN_vals = validationModel.APHN.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
-
-            ViewBag.CurrentSort = pageModel.SortOrder;
-
-            if (!String.IsNullOrEmpty(pageModel.District))
-            {
-                roads = roads.Where(r => r.AhDistrict.Equals(pageModel.District));
-            }
-            if (!String.IsNullOrEmpty(pageModel.County))
-            {
-                roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
-            }
-            if (!String.IsNullOrEmpty(pageModel.Route))
-            {
-                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
-            }
-            if (!String.IsNullOrEmpty(pageModel.Section))
-            {
-                roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
-            }
-            if (!pageModel.Logmile.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
-            }
-            if (!pageModel.BLM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            }
-            if (!pageModel.ELM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-            }
-            if (!String.IsNullOrEmpty(pageModel.Direction))
-            {
-                roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
-            }
-            if (!String.IsNullOrEmpty(pageModel.APHN))
-            {
-                roads = roads.Where(r => r.Aphn.Equals(pageModel.APHN));
-            }
-
-            switch (pageModel.SortOrder)
-            {
-                case "name_desc":
-                    roads = roads.OrderByDescending(r => r.Aphn);
-                    break;
-                default:
-                    roads = roads.OrderBy(r => r.Aphn);
-                    break;
-            }
-            ViewBag.CurrentSort = pageModel.SortOrder;
-
-            roads = roads.OrderBy(r => r.Aphn);
-            pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
-            pageModel.ExcludeAphn = await excAp.ToPagedListAsync(pageNumber, pageSize);
-            if (pageModel.Dissolve == "Segment")
-            {
-                pageModel.DissolveAphnViews = await diss.ToPagedListAsync(pageNumber, pageSize);
-            }
-            return View(pageModel);
-        }
-
-
-        [Route("system_changes/func")]
-        [Route("system_changes/func.html")]
-        public async Task<IActionResult> system_changes_func(SystemChangesPageModel pageModel)
-        {
-            int pageSize = 50;
-            int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
-
-            var roads = from r in _context.RoadInvs
-                        where r.FuncClass != "7" && r.FuncClass !=null && r.FuncClass !=""
-                        select r;
-
-
-            var diss = from r in _context.DissolveFuncView1s
-                       select r;
-
-            var validationModel = new ValidationModel(_context);
-
-            pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
-            pageModel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - " + a.County, Value = a.CountyNumber, Selected = false }; });
-            pageModel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
-            pageModel.FuncClass_vals = validationModel.FuncClass.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
-            ViewBag.CurrentSort = pageModel.SortOrder;
-
-            if (!String.IsNullOrEmpty(pageModel.District))
-            {
-                roads = roads.Where(r => r.AhDistrict.Equals(pageModel.District));
-            }
-            if (!String.IsNullOrEmpty(pageModel.County))
-            {
-                roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
-            }
-            if (!String.IsNullOrEmpty(pageModel.Route))
-            {
-                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
-            }
-            if (!String.IsNullOrEmpty(pageModel.Section))
-            {
-                roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
-            }
-            if (!pageModel.Logmile.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
-            }
-            if (!pageModel.BLM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            }
-            if (!pageModel.ELM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-            }
-            if (!String.IsNullOrEmpty(pageModel.Direction))
-            {
-                roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
-            }
-            if (!String.IsNullOrEmpty(pageModel.FuncClass))
-            {
-                roads = roads.Where(r => r.FuncClass.Equals(pageModel.FuncClass));
-            }
-
-            switch (pageModel.SortOrder)
-            {
-                case "name_desc":
-                    roads = roads.OrderByDescending(r => r.FuncClass);
-                    break;
-                default:
-                    roads = roads.OrderBy(r => r.FuncClass);
-                    break;
-            }
-            roads = roads.OrderBy(r => r.FuncClass);
-            pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
-            if (pageModel.Dissolve == "Segment")
-            {
-                pageModel.DissolveFuncViews = await diss.ToPagedListAsync(pageNumber, pageSize);
-            }
-            return View(pageModel);
-        }
-
-        [Route("system_changes/special")]
-        [Route("system_changes/special.html")]
-        public async Task<IActionResult> system_changes_special(SystemChangesPageModel pageModel)
-        {
-            int pageSize = 50;
-            int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
-
-            var roads = from r in _context.RoadInvs
-                        where r.SpecialSystems != ""
-                        select r;
-
-            var excNh = from r in _context.ExcludeSpecialSystems1s
-                        select r;
-
-            var diss = from r in _context.DissolveSpecialSystemsView1s
-                       select r;
-
-            var validationModel = new ValidationModel(_context);
-
-            pageModel.Districts = validationModel.AH_District.ConvertAll(a => { return new SelectListItem { Text = a.DistrictNumber, Value = a.DistrictNumber, Selected = false }; });
-            pageModel.Counties = validationModel.AH_County.ConvertAll(a => { return new SelectListItem { Text = a.CountyNumber + " - " + a.County, Value = a.CountyNumber, Selected = false }; });
-            pageModel.Directions = validationModel.LOG_DIRECT.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
-            pageModel.SpecialSystem_vals = validationModel.SpecialSystems.ConvertAll(a => { return new SelectListItem { Text = a.Domainvalue, Value = a.Domainvalue, Selected = false }; });
-            ViewBag.CurrentSort = pageModel.SortOrder;
-
-            if (!String.IsNullOrEmpty(pageModel.District))
-            {
-                roads = roads.Where(r => r.AhDistrict.Equals(pageModel.District));
-            }
-            if (!String.IsNullOrEmpty(pageModel.County))
-            {
-                roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
-            }
-            if (!String.IsNullOrEmpty(pageModel.Route))
-            {
-                roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
-            }
-            if (!String.IsNullOrEmpty(pageModel.Section))
-            {
-                roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
-            }
-            if (!pageModel.Logmile.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.Logmile) || r.AhElm.Equals(pageModel.Logmile));
-            }
-            if (!pageModel.BLM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-            }
-            if (!pageModel.ELM.Equals(null))
-            {
-                roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-            }
-            if (!String.IsNullOrEmpty(pageModel.Direction))
-            {
-                roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
-            }
-            if (!String.IsNullOrEmpty(pageModel.SpecialSystem))
-            {
-                roads = roads.Where(r => r.SpecialSystems.Equals(pageModel.SpecialSystem));
-            }
-
-            switch (pageModel.SortOrder)
-            {
-                case "name_desc":
-                    roads = roads.OrderByDescending(r => r.SpecialSystems);
-                    break;
-                default:
-                    roads = roads.OrderBy(r => r.SpecialSystems);
-                    break;
-            }
-
-            ViewBag.CurrentSort = pageModel.SortOrder;
-
-            roads = roads.OrderBy(r => r.FuncClass);
-            pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
-            pageModel.ExcludeSpecials = await excNh.ToPagedListAsync(pageNumber, pageSize);
-            if (pageModel.Dissolve == "Segment")
-            {
-                pageModel.DissolveSpecialSystemsViews = await diss.ToPagedListAsync(pageNumber, pageSize);
-            }
-            return View(pageModel);
         }
     }
 }

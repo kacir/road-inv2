@@ -11,6 +11,14 @@ namespace RoadInv.Models
         public ValidationModel con;
         public IQueryable<DB.RoadInv> details;
 
+        public string filterDistrict;
+        public string filterCounty;
+        public string filterRoute;
+        public string filterSection;
+        public string filterDirection;
+        public string filterTypeRoad;
+        public decimal filterLogmile;
+
         public SearchPageModel(ValidationModel con, IQueryable<DB.RoadInv> details)
         {
             this.con = con;
