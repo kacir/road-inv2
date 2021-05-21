@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -392,7 +393,8 @@ namespace RoadInv.Controllers
             }
             return View(pageModel);
         }
-
+//=====================Updates======================================================================================================
+//==================================================================================================================================
         [HttpPost]
         [Route("system_changes/nhs_update")]
         [Route("system_changes/nhs_update.html")]
@@ -403,6 +405,7 @@ namespace RoadInv.Controllers
                 var roads = from r in _context.RoadInvs //query is defined but not running against the database
                             where r.Nhs != "0"
                             select r;
+                
 
                 var ApiController = new ApiController(_context);
                 //var BulkValidation = new BulkValidationModel(_context);
@@ -439,6 +442,7 @@ namespace RoadInv.Controllers
                 if (pageModel.NHS != null)
                 {
                     //string results = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS).ToString();
+                    //preview changes
                     ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
                     return RedirectToAction("system_changes_nhs");
                 }
@@ -458,7 +462,223 @@ namespace RoadInv.Controllers
                     return RedirectToAction("system_changes_special");
                 }
             }
-            return RedirectToAction("system_changes_nhs"); //maybe return to error screen?
+            string baseUrl = string.Format("{0}://{1}",HttpContext.Request.Scheme, HttpContext.Request.Host);
+            return Redirect(baseUrl);
+        }
+        [HttpPost]
+        [Route("system_changes/aphn_update")]
+        [Route("system_changes/aphn_update.html")]
+        public IActionResult APHN_Update(SystemChangesPageModel pageModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var roads = from r in _context.RoadInvs //query is defined but not running against the database
+                            where r.Aphn != "0"
+                            select r;
+
+                ViewData["TotalAPHN"] = (from r in _context.RoadInvs //query is defined but not running against the database
+                            where r.Aphn != "0"
+                            select r.AhLength).Sum().ToString();
+
+
+                var ApiController = new ApiController(_context);
+                //var BulkValidation = new BulkValidationModel(_context);
+
+
+                if (!String.IsNullOrEmpty(pageModel.County))
+                {
+                    roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Route))
+                {
+                    roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
+                }
+                if (!pageModel.Section.Equals(null))
+                {
+                    roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Direction))
+                {
+                    roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
+                }
+                if (!pageModel.BLM.Equals(null))
+                {
+                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
+                }
+                if (!pageModel.ELM.Equals(null))
+                {
+                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
+                }
+                //==========================================================
+                //======================Bulk Edits Begin====================
+                var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
+
+                if (pageModel.NHS != null)
+                {
+                    //string results = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS).ToString();
+                    //preview changes
+                    ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
+                    return RedirectToAction("system_changes_nhs");
+                }
+                else if (pageModel.APHN != null)
+                {
+                    ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
+                    return RedirectToAction("system_changes_aphn");
+                }
+                else if (pageModel.FuncClass != null)
+                {
+                    ApiController.ImplementBulkEditFuncClass(roadID, pageModel.BLM, pageModel.ELM, pageModel.FuncClass);
+                    return RedirectToAction("system_changes_func");
+                }
+                else if (pageModel.SpecialSystem != null)
+                {
+                    ApiController.ImplementBulkEditSpecial(roadID, pageModel.BLM, pageModel.ELM, pageModel.SpecialSystem);
+                    return RedirectToAction("system_changes_special");
+                }
+            }
+            string baseUrl = string.Format("{0}://{1}", HttpContext.Request.Scheme, HttpContext.Request.Host);
+            return Redirect(baseUrl);
+        }
+        [HttpPost]
+        [Route("system_changes/func_update")]
+        [Route("system_changes/func_update.html")]
+        public IActionResult Functional_Update(SystemChangesPageModel pageModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var roads = from r in _context.RoadInvs
+                            where r.FuncClass != "7" && r.FuncClass != null && r.FuncClass != ""
+                            select r;
+
+
+                var ApiController = new ApiController(_context);
+                //var BulkValidation = new BulkValidationModel(_context);
+
+
+                if (!String.IsNullOrEmpty(pageModel.County))
+                {
+                    roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Route))
+                {
+                    roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
+                }
+                if (!pageModel.Section.Equals(null))
+                {
+                    roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Direction))
+                {
+                    roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
+                }
+                if (!pageModel.BLM.Equals(null))
+                {
+                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
+                }
+                if (!pageModel.ELM.Equals(null))
+                {
+                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
+                }
+                //==========================================================
+                //======================Bulk Edits Begin====================
+                var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
+
+                if (pageModel.NHS != null)
+                {
+                    //string results = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS).ToString();
+                    //preview changes
+                    ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
+                    return RedirectToAction("system_changes_nhs");
+                }
+                else if (pageModel.APHN != null)
+                {
+                    ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
+                    return RedirectToAction("system_changes_aphn");
+                }
+                else if (pageModel.FuncClass != null)
+                {
+                    ApiController.ImplementBulkEditFuncClass(roadID, pageModel.BLM, pageModel.ELM, pageModel.FuncClass);
+                    return RedirectToAction("system_changes_func");
+                }
+                else if (pageModel.SpecialSystem != null)
+                {
+                    ApiController.ImplementBulkEditSpecial(roadID, pageModel.BLM, pageModel.ELM, pageModel.SpecialSystem);
+                    return RedirectToAction("system_changes_special");
+                }
+            }
+            string baseUrl = string.Format("{0}://{1}", HttpContext.Request.Scheme, HttpContext.Request.Host);
+            return Redirect(baseUrl);
+        }
+
+        [HttpPost]
+        [Route("system_changes/special_update")]
+        [Route("system_changes/special_update.html")]
+        public IActionResult Special_Update(SystemChangesPageModel pageModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var roads = from r in _context.RoadInvs
+                            where r.SpecialSystems != ""
+                            select r;
+
+
+                var ApiController = new ApiController(_context);
+                //var BulkValidation = new BulkValidationModel(_context);
+
+
+                if (!String.IsNullOrEmpty(pageModel.County))
+                {
+                    roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Route))
+                {
+                    roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
+                }
+                if (!pageModel.Section.Equals(null))
+                {
+                    roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
+                }
+                if (!String.IsNullOrEmpty(pageModel.Direction))
+                {
+                    roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
+                }
+                if (!pageModel.BLM.Equals(null))
+                {
+                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
+                }
+                if (!pageModel.ELM.Equals(null))
+                {
+                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
+                }
+                //==========================================================
+                //======================Bulk Edits Begin====================
+                var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
+
+                if (pageModel.NHS != null)
+                {
+                    //string results = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS).ToString();
+                    //preview changes
+                    ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
+                    return RedirectToAction("system_changes_nhs");
+                }
+                else if (pageModel.APHN != null)
+                {
+                    ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
+                    return RedirectToAction("system_changes_aphn");
+                }
+                else if (pageModel.FuncClass != null)
+                {
+                    ApiController.ImplementBulkEditFuncClass(roadID, pageModel.BLM, pageModel.ELM, pageModel.FuncClass);
+                    return RedirectToAction("system_changes_func");
+                }
+                else if (pageModel.SpecialSystem != null)
+                {
+                    ApiController.ImplementBulkEditSpecial(roadID, pageModel.BLM, pageModel.ELM, pageModel.SpecialSystem);
+                    return RedirectToAction("system_changes_special");
+                }
+            }
+            string baseUrl = string.Format("{0}://{1}", HttpContext.Request.Scheme, HttpContext.Request.Host);
+            return Redirect(baseUrl);
         }
 
         // GET: 

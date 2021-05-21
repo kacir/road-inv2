@@ -15,10 +15,6 @@
 <link href="~/css/micromodal.css" rel="stylesheet">
 <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
 
-<script>
-    MicroModal.init();
-</script>
-
 <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
@@ -60,9 +56,11 @@
                         @Html.DropDownListFor(m => m.NHS, Model.NHS_vals, " ", new { @class = "form-control" })
                     </div>
                     <footer class="modal__footer">
-                        <button class="modal__btn modal__btn-primary" type="submit" value="Update">Submit for Validation</button>
+                        
+                        <button class="modal__btn modal__btn-primary" type="submit" value="Update" onclick="AlertFunction()">Submit for Validation</button>
                         @*<input class="modal__btn modal__btn-primary" type="button" value="Submit for Validation" onclick="location.href='@Url.Action("nhs_update", "system_changes")'" />*@
                         @*<button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>*@
+                        <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
                     </footer>
                 }
             </main>
@@ -260,7 +258,20 @@
         </section>
     </div>
 </div>
-
+<script>
+    function AlertFunction() {
+        alert_string = ''; //display Miles removed from NHS
+        alert_string = ''; //display Miles of specified BLM and ELM that are already off the NHS
+        if (confirm('Would you like to apply this change?')) {
+            return;
+        } else {
+            event.preventDefault();
+            window.history.back();
+            //prevent post
+            return false;
+        }
+    }
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         try {

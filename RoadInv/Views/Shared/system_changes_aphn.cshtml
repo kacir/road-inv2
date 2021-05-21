@@ -30,7 +30,7 @@
                 <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
             </header>
             <main class="modal__content" id="modal-1-content">
-                @using (Html.BeginForm("nhs_update", "system_changes", FormMethod.Post))
+                @using (Html.BeginForm("aphn_update", "system_changes", FormMethod.Post))
                 {
                     <div class='form-group'>
                         <label>County</label>
@@ -61,8 +61,8 @@
                         @Html.DropDownListFor(m => m.APHN, Model.APHN_vals, " ", new { @class = "form-control" })
                     </div>
                     <footer class="modal__footer">
-                        <button class="modal__btn modal__btn-primary" type="submit" value="Update">Submit for Validation</button>
-                        @*<button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>*@
+                        <button class="modal__btn modal__btn-primary" type="submit" value="Update" onclick="AlertFunction()">Submit for Validation</button>
+                        <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
                     </footer>
                 }
             </main>
@@ -263,7 +263,22 @@
         </section>
     </div>
 </div>
-
+<script>
+    function AlertFunction() {
+        var total = "@ViewData["TotalAPHN"]";
+        alert(total);
+        alert_string = ''; //display Miles removed from APHN
+        alert_string = ''; //display Miles of specified BLM and ELM that are already off the APHN
+        if (confirm(total)) {
+            return;
+        } else {
+            event.preventDefault();
+            window.history.back();
+            //prevent post
+            return false;
+        }
+    }
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         try {

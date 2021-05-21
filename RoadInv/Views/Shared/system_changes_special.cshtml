@@ -29,7 +29,7 @@
                 <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
             </header>
             <main class="modal__content" id="modal-1-content">
-                @using (Html.BeginForm("nhs_update", "system_changes", FormMethod.Post))
+                @using (Html.BeginForm("special_update", "system_changes", FormMethod.Post))
                 {
                     <div class='form-group'>
                         <label>County</label>
@@ -60,8 +60,8 @@
                         @Html.DropDownListFor(m => m.SpecialSystem, Model.SpecialSystem_vals, " ", new { @class = "form-control" })
                     </div>
                     <footer class="modal__footer">
-                        <button class="modal__btn modal__btn-primary" type="submit" value="Update">Submit for Validation</button>
-                        @*<button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>*@
+                        <button class="modal__btn modal__btn-primary" type="submit" value="Update" onclick="AlertFunction()">Submit for Validation</button>
+                        <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
                     </footer>
                 }
             </main>
@@ -263,7 +263,18 @@
         </section>
     </div>
 </div>
-
+<script>
+    function AlertFunction() {
+        if (confirm('Are you sure you want to save this thing into the database?')) {
+            return;
+        } else {
+            event.preventDefault();
+            window.history.back();
+            //prevent post
+            return false;
+        }
+    }
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         try {
