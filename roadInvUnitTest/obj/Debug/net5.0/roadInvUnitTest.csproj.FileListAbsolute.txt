@@ -137,7 +137,6 @@ E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\runtimes\
 E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\RoadInv.dll
 E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\RoadInv.pdb
-E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInvUnitTest.csprojAssemblyReference.cache
 E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInvUnitTest.GeneratedMSBuildEditorConfig.editorconfig
 E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInvUnitTest.AssemblyInfoInputs.cache
 E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInvUnitTest.AssemblyInfo.cs
@@ -464,3 +463,4 @@ C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInv
 C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\obj\Debug\net5.0\ref\roadInvUnitTest.dll
 C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInvUnitTest.pdb
 C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInvUnitTest.genruntimeconfig.cache
+E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInvUnitTest.csproj.AssemblyReference.cache

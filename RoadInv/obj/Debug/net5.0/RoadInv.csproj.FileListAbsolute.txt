@@ -81,7 +81,6 @@ E:\scratch\RoadInv_Overhaul\WebServer\RoadInv\RoadInv\bin\Debug\net5.0\runtimes\
 E:\scratch\RoadInv_Overhaul\WebServer\RoadInv\RoadInv\bin\Debug\net5.0\Z.EntityFramework.Extensions.EFCore.dll
 E:\scratch\RoadInv_Overhaul\WebServer\RoadInv\RoadInv\bin\Debug\net5.0\Z.EntityFramework.Plus.EFCore.dll
 E:\scratch\RoadInv_Overhaul\WebServer\RoadInv\RoadInv\bin\Debug\net5.0\Z.Expressions.Eval.dll
-E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.csprojAssemblyReference.cache
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.GeneratedMSBuildEditorConfig.editorconfig
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.AssemblyInfoInputs.cache
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.AssemblyInfo.cs
@@ -422,3 +421,4 @@ E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Share
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\system_changes_special.cshtml.g.cs
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\bulk_validate.cshtml.g.cs
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.csproj.AssemblyReference.cache
