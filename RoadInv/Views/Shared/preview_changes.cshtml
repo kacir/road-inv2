@@ -1,0 +1,27 @@
+﻿@using X.PagedList.Mvc.Core;
+@model RoadInv.Models.SystemChangesPageModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*Need to addTagHelper globally*@
+@{Layout = "_Layout.cshtml";}
+@section nav_apnh {
+    active
+}
+<link rel="stylesheet" href="/css/micromodal.css" >
+<script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+
+<h1>Preview Changes</h1>
+
+<div id="Segment-search-main-content master-grid">
+    <div id="side-panel" class='split left'>
+        <h3>Search</h3>
+        @Html.DisplayFor(Model => Model.County);
+        @Html.DisplayFor(Model => Model.Route);
+        @Html.DisplayFor(Model => Model.Section);
+        @Html.DisplayFor(Model => Model.Direction);
+        @Html.DisplayFor(Model => Model.BLM);
+        @Html.DisplayFor(Model => Model.ELM);
+        @Html.DisplayFor(Model => Model.APHN_Length);
+        @ViewBag.TotalLengthOnAPHN;
+        @ViewBag.TotalLengthOffAPHN;
+    </div>
+</div>

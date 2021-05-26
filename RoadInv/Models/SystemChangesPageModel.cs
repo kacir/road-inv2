@@ -44,6 +44,8 @@ namespace RoadInv.Models
         public string FuncClass { get; set; }
         public string APHN { get; set; }
         public decimal? APHN_Length { get; set; }
+        [Display(Name = "CheckBox Display Name")]
+        public bool PreviewChanges { get; set; }
         public enum DissolveSelect
         {
             Segment,
