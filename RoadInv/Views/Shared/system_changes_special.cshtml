@@ -74,7 +74,7 @@
     <div id="side-panel" class='split left'>
         <h3>Search</h3>
 
-        <form>
+        <form id="Search">
             <div class="form-group">
                 <label for='form-dissolve-method'>Dissolve</label>
                 @Html.DropDownListFor(model => model.Dissolve, Enum.GetNames(typeof(RoadInv.Models.SystemChangesPageModel.DissolveSelect)).Select(e => new SelectListItem { Text = e }), " ", new { @class = "form-control" })
