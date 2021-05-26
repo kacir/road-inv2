@@ -81,7 +81,7 @@
     <div id="side-panel" class='split left'>
         <h3>Search</h3>
 
-        <form>
+        <form id="Search">
             <div class="form-group">
                 <label for='form-dissolve-method'>Dissolve</label>
                 @Html.DropDownListFor(model => model.Dissolve, Enum.GetNames(typeof(RoadInv.Models.SystemChangesPageModel.DissolveSelect)).Select(e => new SelectListItem { Text = e }), " ", new { @class = "form-control" })
@@ -113,7 +113,7 @@
             
             <div id="form-button-holder" class='form-group'>
                 <button type="submit" id="submit-search">Submit </button>
-                <button type="reset" value="clear" id="clear-all">Clear All</button>
+                <button value="clear" id="clear-all" onclick="clearall()">Clear All</button>
             </div>
 
 
@@ -271,11 +271,16 @@ new
     </div>
 </div>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     function AlertFunction() {
         
         document.getElementById('modal_footer').innerHTML = '<p>Are you sure? Preview Changes will give you the ability to view a report of the edits before they are made. </p><button type="button" class="btn btn-secondary" data-micromodal-close>No</button>' +
             '<button type="button" class="btn btn-primary" onclick="submit()">Yes</button>'
+    }
+</script>*@
+<script>
+    function clearall() {
+        document.getElementById("Search").reset();
     }
 </script>
 <script>

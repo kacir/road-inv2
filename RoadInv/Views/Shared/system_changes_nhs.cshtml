@@ -104,7 +104,7 @@
             </div>
             <div id="form-button-holder" class='form-group'>
                 <button type="submit" id="submit-search">Submit </button>
-                <button type="reset" value="clear" id="clear-all">Clear All</button>
+                <button value="clear" id="clear-all" onclick="clearall()">Clear All</button>
             </div>
 
 
@@ -259,17 +259,8 @@
     </div>
 </div>
 <script>
-    function AlertFunction() {
-        alert_string = ''; //display Miles removed from NHS
-        alert_string = ''; //display Miles of specified BLM and ELM that are already off the NHS
-        if (confirm('Would you like to apply this change?')) {
-            return;
-        } else {
-            event.preventDefault();
-            window.history.back();
-            //prevent post
-            return false;
-        }
+    function clearall() {
+        document.getElementById("Search").reset();
     }
 </script>
 <script>

@@ -478,14 +478,14 @@ namespace RoadInv.Controllers
             
             var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
 
-            //could add case statement like in Bulk_Edits action to change below values to reflect designation type
+            //could add case statement like in the Bulk_Update action to change below values to reflect designation type
 
             //if pageModel.APHN is not null
             //send APHN report to view
             pageModel.APHN_Length = (from r in _context.RoadInvs //page model demonstrates flexibility in case we want to use this value again                           
                                      where r.Aphn != "0" && r.AhRoadId == roadID //we could just as easily use a viewbag like below
                                      select r.AhLength).Sum();
-
+            ViewBag.lenModified = pageModel.ELM - pageModel.BLM;
             ViewBag.TotalLengthOnAPHN = (from r in _context.RoadInvs 
                                      where r.Aphn != "0"
                                      select r.AhLength).Sum();

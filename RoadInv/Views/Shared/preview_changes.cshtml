@@ -12,16 +12,30 @@
 <h1>Preview Changes</h1>
 
 <div id="Segment-search-main-content master-grid">
-    <div id="side-panel" class='split left'>
-        <h3>Search</h3>
-        @Html.DisplayFor(Model => Model.County);
-        @Html.DisplayFor(Model => Model.Route);
-        @Html.DisplayFor(Model => Model.Section);
-        @Html.DisplayFor(Model => Model.Direction);
-        @Html.DisplayFor(Model => Model.BLM);
-        @Html.DisplayFor(Model => Model.ELM);
-        @Html.DisplayFor(Model => Model.APHN_Length);
-        @ViewBag.TotalLengthOnAPHN;
-        @ViewBag.TotalLengthOffAPHN;
+    <div class="master-grid grid-container" style="align-content: center; text-align: center;">
+        <div>
+            County: @Html.DisplayFor(Model => Model.County)
+        </div>
+            Route: @Html.DisplayFor(Model => Model.Route)
+        <div>
+            Section: @Html.DisplayFor(Model => Model.Section)
+        </div>
+            Direction: @Html.DisplayFor(Model => Model.Direction)
+        <div>
+            BLM: @Html.DisplayFor(Model => Model.BLM)
+        </div>
+        <div>
+            ELM: @Html.DisplayFor(Model => Model.ELM)
+        </div>
+        <div>
+            Total Miles to be Modified: @ViewBag.lenModified
+        </div>
+        <div>
+            Total Miles of Roadway on APHN: @ViewBag.TotalLengthOnAPHN
+        </div>
+        <div>
+            Total Miles of Roadway off APHN: @ViewBag.TotalLengthOffAPHN
+        </div>
+
     </div>
 </div>

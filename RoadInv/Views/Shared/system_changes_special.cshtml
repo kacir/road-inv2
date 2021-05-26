@@ -105,7 +105,7 @@
             </div>
             <div id="form-button-holder" class='form-group'>
                 <button type="submit" id="submit-search">Submit </button>
-                <button type="reset" value="clear" id="clear-all">Clear All</button>
+                <button value="clear" id="clear-all" onclick="clearall()">Clear All</button>
             </div>
 
 
@@ -264,15 +264,8 @@
     </div>
 </div>
 <script>
-    function AlertFunction() {
-        if (confirm('Are you sure you want to save this thing into the database?')) {
-            return;
-        } else {
-            event.preventDefault();
-            window.history.back();
-            //prevent post
-            return false;
-        }
+    function clearall() {
+        document.getElementById("Search").reset();
     }
 </script>
 <script>
