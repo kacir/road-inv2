@@ -109,19 +109,44 @@
             {
                 <tr>
                     <td> <a style="transform: rotate(90deg)" href='edit_segement.html?id=@u.Id'>Link</a> </td>
-                    <td>@u.SystemStatus</td>
-                    <td>@u.AhDistrict</td>
-                    <td>@u.AhCounty</td>
+                    <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.SystemStatus){
+                        if (item.Domainvalue == u.SystemStatus){
+                            <text>@item.Domainvalue - @item.Label</text>
+                        }
+                    }">@u.SystemStatus</td>
+                    <td data-toggle="tooltip" data-placement="top" title="ArDOT District @u.AhDistrict">@u.AhDistrict</td>
+                    <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.AH_County){
+                        if (item.CountyNumber == u.AhCounty){
+                            <text>@item.CountyNumber - @item.County</text>
+                        }
+                    }">@u.AhCounty</td>
                     <td>@u.AhRoute</td>
                     <td>@u.AhSection</td>
                     <td>@u.LogDirect</td>
                     <td>@u.AhBlm</td>
                     <td>@u.AhElm</td>
                     <td>@u.AhLength</td>
-                    <td>@u.RouteSign</td>
-                    <td>@u.TypeRoad</td>
-                    <td>@u.FuncClass</td>
-                    <td>@u.Nhs</td>
+                    <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.RouteSign){
+                        if (item.Domainvalue == u.RouteSign){
+                            <text>@item.Domainvalue - @item.Label</text>
+                        }
+                    }">
+                    @u.RouteSign</td>
+                    <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.TypeRoad){
+                        if (item.Domainvalue == u.TypeRoad){
+                            <text>@item.Domainvalue - @item.Label</text>
+                        }
+                    }">@u.TypeRoad</td>
+                    <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.FuncClass){
+                        if (item.Domainvalue == u.FuncClass){
+                            <text>@item.Domainvalue - @item.Label</text>
+                        }
+                    }">@u.FuncClass</td>
+                    <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.NHS){
+                        if (item.Domainvalue == u.Nhs){
+                            <text>@item.Domainvalue - @item.Label</text>
+                        }
+                    }">@u.Nhs</td>
 
                 </tr>
             }
@@ -130,7 +155,11 @@
         </table>
     </div>
 </div>
-
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+            });
+</script>
 <script>
 
     function submitEventLoop() {

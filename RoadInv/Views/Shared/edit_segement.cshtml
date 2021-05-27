@@ -209,10 +209,23 @@
                     <label data-toggle="tooltip" data-placement="top" title="ArDOT District">Distict</label>
                     <select id="@FieldsListModel.AH_District" data="@Model.details.AhDistrict">
                         <option></option>
-                        @foreach (ConstaintDistrict item in Model.con.AH_District)
-                        {
-                            <option @if (Model.details.AhDistrict == item.DistrictNumber) { <text>selected</text> } value="@item.DistrictNumber">@item.DistrictNumber</option>
+                        @{
+                            var codeIncludedDistrict = false;
+                            @foreach (ConstaintDistrict item in Model.con.AH_District)
+                            {
+                                <option @if (Model.details.AhDistrict == item.DistrictNumber) { <text>selected</text> } value="@item.DistrictNumber">@item.DistrictNumber</option>
+                            if (Model.details.AhDistrict == item.DistrictNumber)
+                                {
+                                    codeIncludedDistrict = true;
+                                }
+                            }
+                            if (codeIncludedDistrict == false & Model.details.AhDistrict != "" & !(Model.details.AhDistrict is null))
+                            {
+                                <option selected value="@Model.details.AhDistrict">@Model.details.AhDistrict - Invalid </option>
+                            }
+
                         }
+
                     </select>
                 </div>
                 <div>
@@ -220,11 +233,22 @@
                     <select id="@FieldsListModel.AH_County" data="@Model.details.AhCounty">
 
                         <option></option>
-                        @foreach (ConstaintCounty item in Model.con.AH_County)
-                        {
-                            <option @if (Model.details.AhCounty == item.CountyNumber) { <text> selected</text> } value="@item.CountyNumber">@item.CountyNumber - @item.County</option>
+                        @{
+                            var codeIncludedCounty = false;
+                            @foreach (ConstaintCounty item in Model.con.AH_County)
+                            {
+                                <option @if (Model.details.AhCounty == item.CountyNumber) { <text> selected</text> } value="@item.CountyNumber">@item.CountyNumber - @item.County</option>
+                            if (Model.details.AhCounty == item.CountyNumber)
+                                {
+                                    codeIncludedCounty = true;
+                                }
+                            }
 
+                            if (codeIncludedCounty == false & Model.details.AhCounty != "" & !(Model.details.AhCounty is null)){
+                                <option selected value="@Model.details.AhCounty">@Model.details.AhCounty - Invalid</option>
+                            }
                         }
+
                     </select>
                 </div>
                 <div>
@@ -246,10 +270,23 @@
                     <label data-toggle="tooltip" data-placement="top" title="The log direction of the road. Most roads are log direction with anti-log roads being part of dual carrageways">Direction</label>
                     <select id="@FieldsListModel.LOG_DIRECT" data="@Model.details.LogDirect">
                         <option></option>
-                        @foreach (var item in Model.con.LOG_DIRECT)
-                        {
-                    <option @if (Model.details.LogDirect == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        @{
+                            var codeIncludedLogDirection = false;
+                            @foreach (var item in Model.con.LOG_DIRECT)
+                            {
+                            <option @if (Model.details.LogDirect == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            if (Model.details.LogDirect == item.Domainvalue)   {
+                                    codeIncludedLogDirection = true;
+                            }
+                            }
+
+                            if (codeIncludedLogDirection == false & Model.details.LogDirect != "" & !(Model.details.LogDirect is null))
+                            {
+                                <option selected value="@Model.details.LogDirect">@Model.details.LogDirect - Invalid </option>
+                            }
+                            
                         }
+
                     </select>
                 </div>
                 <div>
@@ -287,20 +324,46 @@
                                    on the municipal boundary rather than the managment or ownership of the road">Route Sign</label>
                             <select id="@FieldsListModel.RouteSign" data="@Model.details.RouteSign">
                                 <option></option>
-                                @foreach (var item in Model.con.RouteSign)
-                                {
+                                @{
+                                    var codeIncludedRouteSign = false;
+                                    @foreach (var item in Model.con.RouteSign)
+                                    {
                                     <option @if (Model.details.RouteSign == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                                    if (Model.details.RouteSign == item.Domainvalue)
+                                        {
+                                            codeIncludedRouteSign = true;
+                                        }
+                                    }
+
+                                    if (codeIncludedRouteSign == false & Model.details.RouteSign != "" & !(Model.details.RouteSign is null))
+                                    {
+                                        <option selected value="@Model.details.RouteSign">@Model.details.RouteSign - Invalid </option>
+                                    }
+
                                 }
+
                             </select>
                         </div>
                         <div>
                             <label data-toggle="tooltip" data-placement="top" title="Indicates based on its function in the vacinity">Type Road</label>
                             <select id="@FieldsListModel.TypeRoad" data="@Model.details.TypeRoad">
                                 <option></option>
-                                @foreach (var item in Model.con.TypeRoad)
-                                {
-                            <option @if (Model.details.RouteSign == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label </option>
+                                @{
+                                    var codeIncludedTypeRoad = false;
+                                    @foreach (var item in Model.con.TypeRoad)
+                                    {
+                                    <option @if (Model.details.TypeRoad == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label </option>
+                                    if (Model.details.TypeRoad == item.Domainvalue){
+                                            codeIncludedTypeRoad = true;
+                                    }    
                                 }
+
+                                    if (codeIncludedTypeRoad == false & Model.details.TypeRoad != "" & !(Model.details.TypeRoad is null))
+                                    {
+                                        <option selected value="@Model.details.TypeRoad">@Model.details.TypeRoad - Invalid</option>
+                                    }
+                                }
+
                             </select>
                         </div>
                         <div>
@@ -316,9 +379,20 @@
                         <div>
                             <label data-toggle="tooltip" data-placement="top" title="Dicates which census urbanized area of segement is part of. Default is 0000 for not in a designated area">Urban Code</label>
                             <select id="@FieldsListModel.UrbanAreaCode" data="@Model.details.UrbanAreaCode">
-                                @foreach (var item in Model.con.UrbanAreaCode)
-                                {
-                                    <option @if (Model.details.UrbanAreaCode == item.UrbanCode) { <text> selected</text> } value="@item.UrbanCode">@item.UrbanCode - @item.Name</option>
+                                @{
+                                    var codeIncludedUrbanCode = false;
+                                    foreach (var item in Model.con.UrbanAreaCode)
+                                    {
+                                        <option @if (Model.details.UrbanAreaCode == item.UrbanCode) { <text> selected</text> } value="@item.UrbanCode">@item.UrbanCode - @item.Name</option>
+                                        if (Model.details.UrbanAreaCode == item.UrbanCode)
+                                        {
+                                            codeIncludedUrbanCode = true;
+                                        }
+                                    }
+                                    if (codeIncludedUrbanCode == false)
+                                    {
+                                        <option selected value="@Model.details.UrbanAreaCode"> @Model.details.UrbanAreaCode" - Invalid Code</option>
+                                    }
                                 }
                             </select>
                         </div>
@@ -336,10 +410,22 @@
                             <label data-toggle="tooltip" data-placement="top" title="The predominant surface type of the road shoulder. Does not include bike lanes or sidewalks">Left Shoulder <br /> Surface</label>
                             <select id="@FieldsListModel.LeftShoulderSurface" data="@Model.details.LeftShoulderSurface">
                                 <option></option>
-                                @foreach (var item in Model.con.ShoulderSurface)
+                                @{
+                                    var codeIncludedLeftShoulderSurface = false;
+                                    @foreach (var item in Model.con.ShoulderSurface)
                                 {
                                     <option @if (Model.details.LeftShoulderSurface == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                                    if (Model.details.LeftShoulderSurface == item.Domainvalue)
+                                        {
+                                            codeIncludedLeftShoulderSurface = true;
+                                        }
                                 }
+                                    if (codeIncludedLeftShoulderSurface == false)
+                                    {
+                                        <option selected value="@Model.details.LeftShoulderSurface"> @Model.details.LeftShoulderSurface - invalid </option>
+                                    }
+                                }
+
                             </select>
                         </div>
                         <div>
@@ -350,10 +436,22 @@
                             <label data-toggle="tooltip" data-placement="top" title="The predominant surface type of the road shoulder. Does not include bike lanes or sidewalks">Right Shoulder <br /> Surface</label>
                             <select data="@Model.details.RightShoulderSurface" id="@FieldsListModel.RightShoulderSurface">
                                 <option></option>
-                                @foreach (var item in Model.con.ShoulderSurface)
+                                @{
+                                    var codeIncludedRightShoulderSurface = false;
+                                                                    @foreach (var item in Model.con.ShoulderSurface)
                                 {
                                     <option @if (Model.details.RightShoulderSurface == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                                    if (Model.details.RightShoulderSurface == item.Domainvalue)
+                                        {
+                                            codeIncludedRightShoulderSurface = true;
+                                        }
                                 }
+                                    if (codeIncludedRightShoulderSurface == false)
+                                    {
+                                        <option selected value="@Model.details.RightShoulderSurface"> @Model.details.RightShoulderSurface - invalid</option>
+                                    }
+                                }
+
                             </select>
                         </div>
                     </div>
@@ -367,10 +465,22 @@
                     <label data-toggle="tooltip" data-placement="top" title="The predominant surface type for the road">Surface <br /> Type</label>
                     <select data="@Model.details.SurfaceType" id="@FieldsListModel.SurfaceType">
                         <option></option>
-                        @foreach (var item in Model.con.SurfaceType)
+                        @{
+                            var codeIncludedSurfaceType = false;
+                            foreach (var item in Model.con.SurfaceType)
                         {
                             <option @if (Model.details.SurfaceType == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.ValueDescription</option>
+                            if (Model.details.SurfaceType == item.Domainvalue)
+                                {
+                                    codeIncludedSurfaceType = true;
+                                }
                         }
+                            if (codeIncludedSurfaceType == false & Model.details.SurfaceType != "" & !(Model.details.SurfaceType is null))
+                            {
+                                <option selected value="@Model.details.SurfaceType"> @Model.details.SurfaceType - invalid</option>
+                            }
+                        }
+                        
                     </select>
                 </div>
                 <div>
@@ -381,10 +491,21 @@
                     <label data-toggle="tooltip" data-placement="top" title="non-thu traffic lanes like turn lanes">Extra <br /> Lanes</label>
                     <select data="@Model.details.ExtraLanes" id="@FieldsListModel.ExtraLanes">
                         <option></option>
-                        @foreach (var item in Model.con.ExtraLanes)
-                        {
-                            <option @if (Model.details.ExtraLanes == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        @{
+                            var codeIncludedExtraLanes = false;
+                            @foreach (var item in Model.con.ExtraLanes)
+                            {
+                                <option @if (Model.details.ExtraLanes == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                                if (Model.details.ExtraLanes == item.Domainvalue)
+                                {
+                                    codeIncludedExtraLanes = true;
+                                }
+                            }
+                            if (codeIncludedExtraLanes == false){
+                                <option selected value="@Model.details.ExtraLanes">@Model.details.ExtraLanes - invalid</option>
+                            }
                         }
+
                     </select>
                 </div>
                 <div>
@@ -405,10 +526,21 @@
                     <label data-toggle="tooltip" data-placement="top" title="Indicates the operation of a road, ex: one-way, two-way, divided, etc…">Type <br /> Operation</label>
                     <select data="@Model.details.TypeOperation" id="@FieldsListModel.TypeOperation">
                         <option></option>
-                        @foreach (var item in Model.con.TypeOperation)
+                        @{
+                            var codeIncludedTypeOperation = false;
+                            foreach (var item in Model.con.TypeOperation)
                         {
-                            <option @if (Model.details.TypeOperation == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            <option @if (Model.details.TypeOperation == item.Domainvalue) { <text> selected </text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            if (Model.details.TypeOperation == item.Domainvalue){
+                                    codeIncludedTypeOperation = true;
+                            }
                         }
+                            if (codeIncludedTypeOperation == false)
+                            {
+                                <option selected value="@Model.details.TypeOperation">@Model.details.TypeOperation - Invalid</option>
+                            }
+                        }
+                        
                     </select>
                 </div>
                 <div>
@@ -417,10 +549,21 @@
                            side streets, driveways, etc… Partial control is when a road is divided and the access points are somewhat controlled.">Access</label>
                     <select data="@Model.details.Access" id="@FieldsListModel.Access">
                         <option></option>
-                        @foreach (var item in Model.con.Access)
+                        @{
+                            var codeIncludedAccess = false;
+                            foreach (var item in Model.con.Access)
                         {
-                            <option @if (Model.details.Access == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            <option @if (Model.details.Access == item.Domainvalue) { <text> selected </text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            if (Model.details.Access == item.Domainvalue)
+                                {
+                                    codeIncludedAccess = true;
+                                }
                         }
+                            if (codeIncludedAccess == false){
+                                <option selected value="@Model.details.Access">@Model.details.Access - invalid</option>
+                            }
+                        }
+                        
                     </select>
                 </div>
                 <div>
@@ -428,10 +571,22 @@
                            types of medians. If a median is present, it must be divided and have a median width.">Median <br /> Type</label>
                     <select data="@Model.details.MedianType" id="@FieldsListModel.MedianType">
                         <option></option>
-                        @foreach (var item in Model.con.MedianType)
+                        @{
+                            var codeIncludedMedianType = false;
+                            foreach (var item in Model.con.MedianType)
                         {
                     <option @if (Model.details.MedianType == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            if (Model.details.MedianType == item.Domainvalue)
+                                {
+                                    codeIncludedMedianType = true;
+                                }
                         }
+                            if (codeIncludedMedianType == false)
+                            {
+                                <option selected value="@Model.details.MedianType">@Model.details.MedianType - invalid</option>
+                            }
+                        }
+                        
                     </select>
                 </div>
                 <div>
@@ -478,10 +633,22 @@
                     <label data-toggle="tooltip" data-placement="top" title="Indicates the level of functional classification, codes range from 1 thru 7.">Functional <br /> Class</label>
                     <select data="@Model.details.FuncClass" id="@FieldsListModel.FuncClass">
                         <option></option>
-                        @foreach (var item in Model.con.FuncClass)
+                        @{
+                            var codeIncludedFunc = false;
+                            foreach (var item in Model.con.FuncClass)
                         {
-                    <option @if (Model.details.FuncClass == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                        <option @if (Model.details.FuncClass == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            if(Model.details.FuncClass == item.Domainvalue)
+                                {
+                                    codeIncludedFunc = true;
+                                }
+                    }
+                            if (codeIncludedFunc == false)
+                            {
+                                <option selected value="@Model.details.FuncClass">@Model.details.FuncClass - invalid</option>
+                            }
                         }
+                        
                     </select>
                 </div>
                 <div>
@@ -489,10 +656,21 @@
                            NHS route or intermodal connector route.">NHS</label>
                     <select data="@Model.details.Nhs" id="@FieldsListModel.NHS">
                         <option></option>
-                        @foreach (var item in Model.con.NHS)
+                        @{
+                            var codeIncludedNHS = false;
+                            foreach (var item in Model.con.NHS)
                         {
-                            <option @if (Model.details.Nhs == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            <option @if (Model.details.Nhs == item.Domainvalue) { <text> selected </text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                                if (Model.details.Nhs == item.Domainvalue)
+                                {
+                                    codeIncludedNHS = true;
+                                }
                         }
+                        if (codeIncludedNHS == false){
+                            <option selected value="@Model.details.Nhs">@Model.details.Nhs - Invalid </option>
+                        }
+                        }
+                        
                     </select>
                 </div>
                 <div>
@@ -500,30 +678,66 @@
                            the entire state highway system.">APHN<br></label>
                     <select data="@Model.details.Aphn" id="@FieldsListModel.APHN">
                         <option></option>
-                        @foreach (var item in Model.con.APHN)
+                        @{
+                            var codeIncludesAPHN = false;
+                            foreach (var item in Model.con.APHN)
                         {
                             <option @if (Model.details.Aphn == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            if (Model.details.Aphn == item.Domainvalue)
+                                {
+                                    codeIncludesAPHN = true;
+                                }
                         }
+                        if (codeIncludesAPHN == false){
+                            <option selected value="@Model.details.Aphn">@Model.details.Aphn - Invalid </option>
+                        }
+                        }
+                        
                     </select>
                 </div>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="Indicates which government agency owns the roadway. State, County, City, Forest Service, Air force, etc…">Goverment <br /> Code</label>
                     <select data="@Model.details.GovermentCode" id="@FieldsListModel.GovermentCode">
                         <option></option>
-                        @foreach (var item in Model.con.GovermentCode)
+                        @{
+                            var codeIncludesGovermentCode = false;
+                            foreach (var item in Model.con.GovermentCode)
                         {
                     <option @if (Model.details.GovermentCode == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            if (Model.details.GovermentCode == item.Domainvalue)
+                            {
+                                codeIncludesGovermentCode = true;
+                            }            
                         }
+                            if (codeIncludesGovermentCode == false)
+                            {
+                                <option selected value="@Model.details.GovermentCode">@Model.details.GovermentCode - Invalid</option>
+                            }
+                        }
+                        
                     </select>
                 </div>
                 <div>
                     <label data-toggle="tooltip" data-placement="top" title="Some roadways have a special designation; the special system code shows which category of special system the record belongs in.">Special <br /> Systems</label>
                     <select data="@Model.details.SpecialSystems" id="@FieldsListModel.SpecialSystems">
                         <option></option>
-                        @foreach (var item in Model.con.SpecialSystems)
+                        @{
+                            var codeIncludesSpecialSystem = false;
+                            foreach (var item in Model.con.SpecialSystems)
                         {
                             <option @if (Model.details.SpecialSystems == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            if (Model.details.SpecialSystems == item.Domainvalue)
+                                {
+                                    codeIncludesSpecialSystem = true;
+                                }
                         }
+                            if (codeIncludesSpecialSystem == false)
+                            {
+                                <option selected value="@Model.details.SpecialSystems">@Model.details.SpecialSystems - Invalid</option>
+                            } 
+                        
+                        }
+                        
                     </select>
                 </div>
                 <div>
@@ -532,10 +746,22 @@
                            update system status until it is officially approved by the Arkansas State Highway Commission.">System <br /> Status</label>
                     <select data="@Model.details.SystemStatus" id="@FieldsListModel.SystemStatus">
                         <option></option>
-                        @foreach (var item in Model.con.SystemStatus)
+                        @{
+                            var codeIncludesSystemStatus = false;
+                            foreach (var item in Model.con.SystemStatus)
                         {
                             <option @if (Model.details.SystemStatus == item.Domainvalue) { <text> selected</text> } value="@item.Domainvalue">@item.Domainvalue - @item.Label</option>
+                            if (Model.details.SystemStatus == item.Domainvalue)
+                                {
+                                    codeIncludesSystemStatus = true;
+                                }
                         }
+                            if (codeIncludesSystemStatus == false)
+                            {
+                                <option selected value="@Model.details.SystemStatus">@Model.details.SystemStatus - Invalid</option>
+                            }
+                        }
+                        
                     </select>
                 </div>
             </div>
@@ -944,15 +1170,34 @@
         "@FieldsListModel.TypeRoad" : "@Model.details.TypeRoad",
         "@FieldsListModel.RuralUrbanArea": "@Model.details.RuralUrbanArea",
         "@FieldsListModel.UrbanAreaCode": "@Model.details.UrbanAreaCode",
-        "@FieldsListModel.LeftShoulderWidth": @Model.details.LeftShoulderWidth,
+    "@FieldsListModel.LeftShoulderWidth": @{
+        if (Model.details.LeftShoulderWidth is null)
+        {
+            <text>""</text>
+        }
+        else {<text>@Model.details.LeftShoulderWidth </text>} 
+    },
         "@FieldsListModel.LeftShoulderSurface": "@Model.details.LeftShoulderSurface",
-        "@FieldsListModel.RightShoulderWidth": @Model.details.RightShoulderWidth,
+    "@FieldsListModel.RightShoulderWidth": @{
+        if (Model.details.LeftShoulderWidth is null) 
+        { 
+            <text>""</text> 
+        } else {<text>@Model.details.RightShoulderWidth</text>}
+    } ,
         "@FieldsListModel.RightShoulderSurface": "@Model.details.RightShoulderSurface",
         "@FieldsListModel.SurfaceType": "@Model.details.SurfaceType",
         "@FieldsListModel.TypeOperation": "@Model.details.TypeOperation",
-        "@FieldsListModel.LaneWidth": @Model.details.LaneWidth,
+        "@FieldsListModel.LaneWidth": @{
+        if (Model.details.LaneWidth is null)
+        {
+            <text>""</text>
+        } else {<text>@Model.details.LaneWidth</text>}
+        },
         "@FieldsListModel.ExtraLanes": "@Model.details.ExtraLanes",
-        "@FieldsListModel.SurfaceWidth": @Model.details.SurfaceWidth,
+    "@FieldsListModel.SurfaceWidth": @if (Model.details.SurfaceWidth is null){
+        <text>""</text>
+    } else {<text>@Model.details.SurfaceWidth</text>
+    },
         "@FieldsListModel.Access": "@Model.details.Access",
         "@FieldsListModel.MedianType": "@Model.details.MedianType",
         "@FieldsListModel.MedianWidth": "@Model.details.MedianWidth",
@@ -964,7 +1209,12 @@
         "@FieldsListModel.GovermentCode": "@Model.details.GovermentCode",
         "@FieldsListModel.SpecialSystems": "@Model.details.SpecialSystems",
         "@FieldsListModel.SystemStatus": "@Model.details.SystemStatus",
-        "@FieldsListModel.RoadwayWidth": @Model.details.RoadwayWidth,
+    "@FieldsListModel.RoadwayWidth": @{
+        if (Model.details.RoadwayWidth is null) 
+    { 
+        <text>""</text> 
+    } else 
+        {<text>@Model.details.RoadwayWidth</text>}} ,
         "@FieldsListModel.Comment1": "@Model.details.Comment1",
         "@FieldsListModel.ID": "@Model.details.Id",
         "@FieldsListModel.Alternative_Route_Name": "@Model.details.AlternativeRouteName"
