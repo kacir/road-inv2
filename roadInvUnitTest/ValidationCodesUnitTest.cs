@@ -86,6 +86,7 @@ namespace roadInvUnitTest
         [InlineData("", false)]
         [InlineData(" ", false)]
         [InlineData("undefined", false)]
+        [InlineData("99", false)]
         public void districtValue(string districtString, bool expectedResult)
         {
             var exists = false;
