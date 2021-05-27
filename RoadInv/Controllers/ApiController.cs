@@ -413,7 +413,19 @@ namespace RoadInv.Controllers
 
             return null;
         }
+        [Route("api/segmentOrder")]
+        public IActionResult SegmentOrder(int sourceSegmentID)
+        {
+            var orderer = new Models.SegmentOrderModel(_dbContext);
 
+            var beforeid = orderer.Before(sourceSegmentID);
+            var afterid = orderer.After(sourceSegmentID);
+
+            var result = new {beforeid, afterid };
+            var jsonResult = Json(result);
+
+            return jsonResult;
+        }
 
         [Route("api/validate")]
         public IActionResult Validate(string AH_District = "",

@@ -30,7 +30,7 @@
                 <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
             </header>
             <main class="modal__content" id="modal-1-content">
-                @using (Html.BeginForm("nhs_update", "system_changes", FormMethod.Post))
+                @using (Html.BeginForm("bulk_update", "system_changes", FormMethod.Post))
                 {
                     <div class='form-group'>
                         <label>County</label>
@@ -60,9 +60,9 @@
                         <label for='form-district'>APHN</label>
                         @Html.DropDownListFor(m => m.APHN, Model.APHN_vals, " ", new { @class = "form-control" })
                     </div>
-                    <footer class="modal__footer">
-                        <button class="modal__btn modal__btn-primary" type="submit" value="Update">Submit for Validation</button>
-                        @*<button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>*@
+                    <footer class="modal__footer" id="modal_footer">
+                        <button class="modal__btn modal__btn-primary" type="submit" value="Update" onclick="AlertFunction()">Submit for Validation</button>
+                        <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
                     </footer>
                 }
             </main>
@@ -263,7 +263,13 @@
         </section>
     </div>
 </div>
-
+<script>
+    function AlertFunction() {
+        //var APHN_Length = Model.APHN_Length;
+        document.getElementById('modal_footer').innerHTML = '<p>This is a test</p><button type="button" class="btn btn-secondary" data-micromodal-close>No</button>' +
+            '<button type="button" class="btn btn-primary" onclick="submit()">Yes</button>';
+    }
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         try {

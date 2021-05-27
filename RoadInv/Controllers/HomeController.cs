@@ -32,7 +32,7 @@ namespace RoadInv.Controllers
 
         [Route("segments.html")]
         [Route("segments")]
-        public IActionResult SearchTable(string district= "", string county = "", string route = "", string section = "", string direction = "", decimal logmile = -1)
+        public IActionResult SearchTable(string district= "", string county = "", string route = "", string section = "", string direction = "", decimal logmile = -1, string typeroad = "")
         {
             //clean attributes to make the query more likely to success if there is a typo of some kind
             if (district is not null)
@@ -55,6 +55,10 @@ namespace RoadInv.Controllers
             {
                 direction = direction.Trim();
             }
+            if (typeroad is not null)
+            {
+                typeroad = typeroad.Trim();
+            }
 
             IQueryable<DB.RoadInv> output;
 
@@ -64,7 +68,8 @@ namespace RoadInv.Controllers
                           (record.AhRoute == route | route == "" | route == null) &
                           (record.AhSection == section | section == "" | section == null) &
                           (record.LogDirect == direction | direction == "" | direction == null) &
-                          ((record.AhBlm <= logmile & record.AhElm >= logmile) | logmile == -1)
+                          ((record.AhBlm <= logmile & record.AhElm >= logmile) | logmile == -1) &
+                          (record.TypeRoad == typeroad | typeroad == "" | typeroad == null)
                           orderby record.RouteSign ascending, record.AhRoadId ascending, record.AhBlm ascending 
                           select record;
 
@@ -74,12 +79,13 @@ namespace RoadInv.Controllers
             var val = new ValidationModel(_dbContext);
             var pageModel = new SearchPageModel(val, details: output);
 
-            ViewBag.county = county;
-            ViewBag.route = route;
-            ViewBag.section = section;
-            ViewBag.direction = direction;
-            ViewBag.district = district;
-            ViewBag.logmile = logmile;
+            pageModel.filterCounty = county;
+            pageModel.filterRoute = route;
+            pageModel.filterSection = section;
+            pageModel.filterDirection = direction;
+            pageModel.filterDistrict = district;
+            pageModel.filterLogmile = logmile;
+            pageModel.filterTypeRoad = typeroad;
 
 
             return View("SearchTable", pageModel);
@@ -136,6 +142,16 @@ namespace RoadInv.Controllers
         public IActionResult quality_control()
         {           
             return View("quality_control", _dbContext);
+        }
+
+        [Route("bulk_validate")]
+        [Route("bulk_validate.html")]
+        public IActionResult BulkValidateAll()
+        {
+            var validator = new BulkValidationModel(this._dbContext);
+            validator.BulkValidate();
+
+            return View("bulk_validate", validator.masterList);
         }
 
     }
