@@ -70,11 +70,11 @@
     </div>
 </div>
 
-<div id="segement-search-main-content master-grid">
+<div id="Segment-search-main-content master-grid">
     <div id="side-panel" class='split left'>
         <h3>Search</h3>
 
-        <form>
+        <form id="Search">
             <div class="form-group">
                 <label for='form-dissolve-method'>Dissolve</label>
                 @Html.DropDownListFor(model => model.Dissolve, Enum.GetNames(typeof(RoadInv.Models.SystemChangesPageModel.DissolveSelect)).Select(e => new SelectListItem { Text = e }), " ", new { @class = "form-control" })
@@ -105,7 +105,7 @@
             </div>
             <div id="form-button-holder" class='form-group'>
                 <button type="submit" id="submit-search">Submit </button>
-                <button type="reset" value="clear" id="clear-all">Clear All</button>
+                <button value="clear" id="clear-all" onclick="clearall()">Clear All</button>
             </div>
 
 
@@ -135,7 +135,7 @@
                     foreach (var item in Model.DissolveFuncViews)
                     {
                         <tr>
-                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Link</a></td>
+                            <td><a href="#" data-toggle="modal" data-target="#modal-1">Link</a></td>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
@@ -188,7 +188,7 @@
                     @foreach (var item in Model.roadInvs)
                     {
             <tr>
-                <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Link</a></td>
+                <td><a target="_blank" href='../edit_Segment.html?id=@item.Id'>Link</a></td>
                 <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                 <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
                 <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
@@ -235,15 +235,8 @@
     </div>
 </div>
 <script>
-    function AlertFunction() {
-        if (confirm('Are you sure you want to save this thing into the database?')) {
-            return;
-        } else {
-            event.preventDefault();
-            window.history.back();
-            //prevent post
-            return false;
-        }
+    function clearall() {
+        document.getElementById("Search").reset();
     }
 </script>
 <script>

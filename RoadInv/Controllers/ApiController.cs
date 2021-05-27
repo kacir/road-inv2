@@ -123,8 +123,8 @@ namespace RoadInv.Controllers
             return Json(1);
         }
 
-        [Route("api/dup_segement")]
-        [Route("api/dup_segement.html")]
+        [Route("api/dup_Segment")]
+        [Route("api/dup_Segment.html")]
         public IActionResult DuplicateSegment(int ID, string AH_County = "",
             string AH_Route = "",
             string AH_Section = "",
@@ -210,7 +210,7 @@ namespace RoadInv.Controllers
             return Json(newID);
         }
 
-        [Route("api/new_segement")]
+        [Route("api/new_Segment")]
         public IActionResult SaveNew(string AH_District = "",
             string AH_County = "",
             string AH_Route = "",
@@ -296,7 +296,7 @@ namespace RoadInv.Controllers
             return Json(newID);
         }
 
-        [Route("api/mirror_segement")]
+        [Route("api/mirror_Segment")]
         public IActionResult MirrorSegment(int ID, string AH_County = "",
             string AH_Route = "",
             string AH_Section = "",

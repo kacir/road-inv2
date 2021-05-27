@@ -1,10 +1,10 @@
 ﻿@{Layout = "_Layout.cshtml";}
 
-@section nav_segements {
+@section nav_Segments {
     active
 }
 @{
-    ViewData["Title"] = "New Segement";
+    ViewData["Title"] = "New Segment";
 }
 
 <div class="segment-title"><h1>New Segment <span id="post-AH_RoadID"></span></h1></div>
@@ -92,7 +92,7 @@
                     <h6>Classification Properties</h6>
                     <div class="grid-container">
                         <div>
-                            <label data-toggle="tooltip" data-placement="top" title="The Route Sign designation of the segement. County and City designations are dependent on the municipal boundary rather than the managment or ownership of the road">Route Sign</label>
+                            <label data-toggle="tooltip" data-placement="top" title="The Route Sign designation of the Segment. County and City designations are dependent on the municipal boundary rather than the managment or ownership of the road">Route Sign</label>
                             <select id="gather-RouteSign">
                                 <option></option>
                                 <option value="1">1 - Interstate</option>
@@ -116,7 +116,7 @@
                             </select>
                         </div>
                         <div>
-                            <label data-toggle="tooltip" data-placement="top" title="Indicates if the segement in located inside of an ajusted urbanized area boundary">Rural Urban Area</label>
+                            <label data-toggle="tooltip" data-placement="top" title="Indicates if the Segment in located inside of an ajusted urbanized area boundary">Rural Urban Area</label>
                             <select id="gather-RuralUrbanArea">
                                 <option></option>
                                 <option value="1">1 - Rural Population &lt; 5,000</option>
@@ -126,7 +126,7 @@
                             </select>
                         </div>
                         <div>
-                            <label data-toggle="tooltip" data-placement="top" title="Dicates which census urbanized area of segement is part of. Default is 0000 for not in a designated area">Urban Code</label>
+                            <label data-toggle="tooltip" data-placement="top" title="Dicates which census urbanized area of Segment is part of. Default is 0000 for not in a designated area">Urban Code</label>
                             <select id="gather-UrbanCode">
                                 <option value="00000">00000 - N/A</option>
                                 <option value="30925">30925 - Fort Smith</option>
@@ -263,7 +263,7 @@
             <h6>Lanes</h6>
             <div class="grid-container">
                 <div>
-                    <label data-toggle="tooltip" data-placement="top" title="In a divided highway, the field describes the number of lanes in a single direction of travel. In non-divided highway segements">One Direction Number of Lanes</label>
+                    <label data-toggle="tooltip" data-placement="top" title="In a divided highway, the field describes the number of lanes in a single direction of travel. In non-divided highway Segments">One Direction Number of Lanes</label>
                     <input id="gather-OneDirectionNumLanes" type="text">
                 </div>
 
@@ -353,7 +353,7 @@
                     </select>
                 </div>
                 <div>
-                    <label data-toggle="tooltip" data-placement="top" title="Indicates if the road is close or open to traffic. Also indicates if its a segement that is not tracked as part of the roadway inventory">System <br /> Status</label>
+                    <label data-toggle="tooltip" data-placement="top" title="Indicates if the road is close or open to traffic. Also indicates if its a Segment that is not tracked as part of the roadway inventory">System <br /> Status</label>
                     <select id="gather-SystemStatus">
                         <option></option>
                         <option value="1">1 - Open</option>
@@ -395,7 +395,7 @@
     <div class="grid-container">
 
         <div>
-            <button id="button-save" data-toggle="tooltip" data-placement="top" title="Save new segement to the backend database" class="segment-button">Save</button>
+            <button id="button-save" data-toggle="tooltip" data-placement="top" title="Save new Segment to the backend database" class="segment-button">Save</button>
         </div>
         <div>
             <button data-toggle="tooltip" data-placement="top" title="Reset the changes to whatever state it was before you started applying changes" class="segment-button">Reset Changes</button>

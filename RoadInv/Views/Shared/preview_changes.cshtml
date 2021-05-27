@@ -1,0 +1,41 @@
+﻿@using X.PagedList.Mvc.Core;
+@model RoadInv.Models.SystemChangesPageModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*Need to addTagHelper globally*@
+@{Layout = "_Layout.cshtml";}
+@section nav_apnh {
+    active
+}
+<link rel="stylesheet" href="/css/micromodal.css" >
+<script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+
+<h1>Preview Changes</h1>
+
+<div id="Segment-search-main-content master-grid">
+    <div class="master-grid grid-container" style="align-content: center; text-align: center;">
+        <div>
+            County: @Html.DisplayFor(Model => Model.County)
+        </div>
+            Route: @Html.DisplayFor(Model => Model.Route)
+        <div>
+            Section: @Html.DisplayFor(Model => Model.Section)
+        </div>
+            Direction: @Html.DisplayFor(Model => Model.Direction)
+        <div>
+            BLM: @Html.DisplayFor(Model => Model.BLM)
+        </div>
+        <div>
+            ELM: @Html.DisplayFor(Model => Model.ELM)
+        </div>
+        <div>
+            Total Miles to be Modified: @ViewBag.lenModified
+        </div>
+        <div>
+            Total Miles of Roadway on APHN: @ViewBag.TotalLengthOnAPHN
+        </div>
+        <div>
+            Total Miles of Roadway off APHN: @ViewBag.TotalLengthOffAPHN
+        </div>
+
+    </div>
+</div>

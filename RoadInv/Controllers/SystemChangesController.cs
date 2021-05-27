@@ -404,12 +404,11 @@ namespace RoadInv.Controllers
         {
             if (ModelState.IsValid)
             {
+                //pageModel.PreviewChanges = false;
                 var roads = from r in _context.RoadInvs //query is defined but not running against the database
                             select r;
 
                 var ApiController = new ApiController(_context);
-                //var BulkValidation = new BulkValidationModel(_context);
-                
 
                 if (!String.IsNullOrEmpty(pageModel.County))
                 {
@@ -437,52 +436,69 @@ namespace RoadInv.Controllers
                 }
                 //==========================================================
                 //======================Bulk Edits Begin====================
+                //==========================================================
                 var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
-                //APHNReport(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
-
-
-
-                if (pageModel.NHS != null)
+                
+                ViewData["County"] = pageModel.County;
+                if (pageModel.PreviewChanges == true)
                 {
-                    //string results = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS).ToString();
+                    return RedirectToAction("preview_changes", pageModel);
+                }
+                else if (pageModel.NHS != null)
+                {
                     ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
-                    return RedirectToAction("system_changes_nhs");
+                    return RedirectToAction("system_changes_nhs", pageModel);
                 }
                 else if (pageModel.APHN != null)
                 {
-                    APHNReport(pageModel);
                     ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
                     return RedirectToAction("system_changes_aphn", pageModel);
                 }
                 else if (pageModel.FuncClass != null)
                 {
                     ApiController.ImplementBulkEditFuncClass(roadID, pageModel.BLM, pageModel.ELM, pageModel.FuncClass);
-                    return RedirectToAction("system_changes_func");
+                    return RedirectToAction("system_changes_func", pageModel);
                 }
                 else if (pageModel.SpecialSystem != null)
                 {
                     ApiController.ImplementBulkEditSpecial(roadID, pageModel.BLM, pageModel.ELM, pageModel.SpecialSystem);
-                    return RedirectToAction("system_changes_special");
+                    return RedirectToAction("system_changes_special", pageModel);
                 }
+                
             }
             string baseUrl = string.Format("{0}://{1}",HttpContext.Request.Scheme, HttpContext.Request.Host);
             return Redirect(baseUrl);//need to figure out how to go back to previous screen on close
         }
 
-        public void APHNReport(SystemChangesPageModel pageModel)
+        [HttpGet]
+        [Route("system_changes/preview_changes")]
+        [Route("system_changes/preview_changes.html")]
+        public async Task<IActionResult> preview_changes(SystemChangesPageModel pageModel)
         {
+            
             var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
+
+            //could add case statement like in the Bulk_Update action to change below values to reflect designation type
+
+            //if pageModel.APHN is not null
+            //send APHN report to view
+            pageModel.APHN_Length = (from r in _context.RoadInvs //page model demonstrates flexibility in case we want to use this value again                           
+                                     where r.Aphn != "0" && r.AhRoadId == roadID //we could just as easily use a viewbag like below
+                                     select r.AhLength).Sum();
+            ViewBag.lenModified = pageModel.ELM - pageModel.BLM;
+            ViewBag.TotalLengthOnAPHN = (from r in _context.RoadInvs 
+                                     where r.Aphn != "0"
+                                     select r.AhLength).Sum();
             
-            ViewData["APHN_Length"] = (from r in _context.RoadInvs
-                                       where r.Aphn != "0" && r.AhRoadId == roadID
-                                       select r.AhLength).Sum();
-            pageModel.APHN_Length = (from r in _context.RoadInvs
-                        where r.Aphn != "0" && r.AhRoadId == roadID
-                        select r.AhLength).Sum();
+            ViewBag.TotalLengthOffAPHN = (from r in _context.RoadInvs
+                                          where r.Aphn == "0"
+                                          select r.AhLength).Sum();
             
-            //await ViewBag.APHN_Length = test;
-            //var test1 = test;
+            //right now, the editor will have to push the back button to get back to the previous action.
+            //the page model will be saved and the values will return in the forms
+            return View(pageModel);
         }
+
 
 
         private bool RoadInvExists(int id)

@@ -131,10 +131,8 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.TagHelpers.output.cache
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.RazorCoreGenerate.cache
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\Details.cshtml.g.cs
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\edit_segement.cshtml.g.cs
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\error.cshtml.g.cs
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\index.cshtml.g.cs
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\new_segement.cshtml.g.cs
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\quality_control.cshtml.g.cs
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\SearchTable.cshtml.g.cs
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\system_changes_aphn.cshtml.g.cs
@@ -153,3 +151,6 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.genruntimeconfig.cache
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.csprojAssemblyReference.cache
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\bulk_validate.cshtml.g.cs
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\edit_segment.cshtml.g.cs
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\new_segment.cshtml.g.cs
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\preview_changes.cshtml.g.cs

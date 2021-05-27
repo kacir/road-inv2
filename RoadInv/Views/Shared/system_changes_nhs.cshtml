@@ -69,11 +69,11 @@
     </div>
 </div>
 
-<div id="segement-search-main-content master-grid">
+<div id="Segment-search-main-content master-grid">
     <div id="side-panel" class='split left'>
         <h3>Search</h3>
 
-        <form>
+        <form id="Search">
             <div class="form-group">
                 <label for='form-dissolve-method'>Dissolve</label>
                 @Html.DropDownListFor(model => model.Dissolve, Enum.GetNames(typeof(RoadInv.Models.SystemChangesPageModel.DissolveSelect)).Select(e => new SelectListItem { Text = e }), " ", new { @class = "form-control" })
@@ -104,7 +104,7 @@
             </div>
             <div id="form-button-holder" class='form-group'>
                 <button type="submit" id="submit-search">Submit </button>
-                <button type="reset" value="clear" id="clear-all">Clear All</button>
+                <button value="clear" id="clear-all" onclick="clearall()">Clear All</button>
             </div>
 
 
@@ -113,7 +113,7 @@
     <div class='split-right'>
         <div class="master-grid grid-container" style="align-content: center; text-align: center;">
             <div><h1>System Change: NHS</h1> </div>
-            <div><a target="_blank" href="../new_segement"><button id="new-seg-button">New NHS Segement</button></a></div>
+            <div><a target="_blank" href="../new_Segment"><button id="new-seg-button">New NHS Segment</button></a></div>
             <div><button id="new-seg-button" data-micromodal-trigger="modal-1" href='javascript:void(0);'>Apply Bulk Redesignation</button></div>
         </div>
         <section>
@@ -188,7 +188,7 @@
                     @foreach (var item in Model.roadInvs)
                     {
                         <tr>
-                            <td><a target="_blank" href='../edit_segement.html?id=@item.Id'>Link</a></td>
+                            <td><a target="_blank" href='../edit_Segment.html?id=@item.Id'>Link</a></td>
                             <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
                             <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
@@ -231,7 +231,7 @@
 
         </section>
         <section>
-            <h5>Non-NHS Segements on NHS Routes</h5>
+            <h5>Non-NHS Segments on NHS Routes</h5>
             <table>
                 <tr>
                     <th></th>
@@ -245,7 +245,7 @@
                 @foreach (var item in Model.ExcludeNhs)
                 {
                     <tr>
-                        <td><a target="_blank" href='../edit_segement.html?id=@item.AhRoadId'>Link</a></td>
+                        <td><a target="_blank" href='../edit_Segment.html?id=@item.AhRoadId'>Link</a></td>
                         <td>@Html.DisplayFor(modelItem => item.AhRoadId)</td>
                         <td>@Html.DisplayFor(modelItem => item.AhCounty)</td>
                         <td>@Html.DisplayFor(modelItem => item.AhSection)</td>
@@ -259,17 +259,8 @@
     </div>
 </div>
 <script>
-    function AlertFunction() {
-        alert_string = ''; //display Miles removed from NHS
-        alert_string = ''; //display Miles of specified BLM and ELM that are already off the NHS
-        if (confirm('Would you like to apply this change?')) {
-            return;
-        } else {
-            event.preventDefault();
-            window.history.back();
-            //prevent post
-            return false;
-        }
+    function clearall() {
+        document.getElementById("Search").reset();
     }
 </script>
 <script>

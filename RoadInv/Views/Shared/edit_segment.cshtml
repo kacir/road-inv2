@@ -1,9 +1,9 @@
 ﻿@using RoadInv.DB
 @using RoadInv.Models
-@model SegementDetailPageModel
+@model SegmentDetailPageModel
 @{Layout = "_Layout.cshtml";}
 @{
-    ViewData["Title"] = "Edit Segement";
+    ViewData["Title"] = "Edit Segment";
 }
 <link href="~/css/micromodal.css" rel="stylesheet">
 <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
@@ -176,21 +176,21 @@
     <button id="left-arrow" class="arrow-button">&#x2190;</button>
     <div class="segment-title ">
         <h1 id="header" data="@Model.details.Id">
-            @if (Model.editStatus == SegementDetailPageModel.newSegment)
+            @if (Model.editStatus == SegmentDetailPageModel.newSegment)
             {
                 <text>New Segment</text>
             }
-            else if (Model.editStatus == SegementDetailPageModel.mirrorSegment)
+            else if (Model.editStatus == SegmentDetailPageModel.mirrorSegment)
             {
                 <text>Mirrored Segment</text>
             }
-            else if (Model.editStatus == SegementDetailPageModel.duplicateSegment)
+            else if (Model.editStatus == SegmentDetailPageModel.duplicateSegment)
             {
                 <text>Duplicate Segment</text>
             }
             else
             {
-                <text>Road Segement</text>
+                <text>Road Segment</text>
             }
             <span class="@FieldsListModel.AH_RoadID">@Model.details.AhRoadId </span>
             <br> BLM:
@@ -320,7 +320,7 @@
                     <h6>Classification Properties</h6>
                     <div class="grid-container">
                         <div>
-                            <label data-toggle="tooltip" data-placement="top" title="The Route Sign designation of the segement. County and City designations are dependent 
+                            <label data-toggle="tooltip" data-placement="top" title="The Route Sign designation of the Segment. County and City designations are dependent 
                                    on the municipal boundary rather than the managment or ownership of the road">Route Sign</label>
                             <select id="@FieldsListModel.RouteSign" data="@Model.details.RouteSign">
                                 <option></option>
@@ -367,7 +367,7 @@
                             </select>
                         </div>
                         <div>
-                            <label data-toggle="tooltip" data-placement="top" title="Indicates if the segement in located inside of an ajusted urbanized area boundary">Rural Urban Area</label>
+                            <label data-toggle="tooltip" data-placement="top" title="Indicates if the Segment in located inside of an ajusted urbanized area boundary">Rural Urban Area</label>
                             <select id="@FieldsListModel.RuralUrbanArea" data="@Model.details.RuralUrbanArea">
                                 <option></option>
                                 @foreach (var item in Model.con.RuralUrbanArea)
@@ -377,7 +377,7 @@
                             </select>
                         </div>
                         <div>
-                            <label data-toggle="tooltip" data-placement="top" title="Dicates which census urbanized area of segement is part of. Default is 0000 for not in a designated area">Urban Code</label>
+                            <label data-toggle="tooltip" data-placement="top" title="Dicates which census urbanized area of Segment is part of. Default is 0000 for not in a designated area">Urban Code</label>
                             <select id="@FieldsListModel.UrbanAreaCode" data="@Model.details.UrbanAreaCode">
                                 @{
                                     var codeIncludedUrbanCode = false;
@@ -821,8 +821,8 @@
         <div>
                 <button onclick="MicroModal.show('modal-2')" title="create a duplicate of this exact record" 
                         data-toggle="tooltip" data-placement="bottom" class="segment-button"
-                        @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment |
-  Model.editStatus == SegementDetailPageModel.newSegment) { <text> disabled</text>
+                        @if (Model.editStatus == SegmentDetailPageModel.duplicateSegment | Model.editStatus == SegmentDetailPageModel.mirrorSegment |
+  Model.editStatus == SegmentDetailPageModel.newSegment) { <text> disabled</text>
                         }>
                     Duplicate record
                 </button>
@@ -831,16 +831,16 @@
 <div>
 
 <button id="delete-segment" title="Delete this segment permanatly from the database" data-toggle="tooltip" data-placement="bottom" class="segment-button"  
-        @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment |
-  Model.editStatus == SegementDetailPageModel.newSegment)
+        @if (Model.editStatus == SegmentDetailPageModel.duplicateSegment | Model.editStatus == SegmentDetailPageModel.mirrorSegment |
+  Model.editStatus == SegmentDetailPageModel.newSegment)
         {
             <text>disabled</text>
         } >Delete record</button>
         </div>
         <div>
             <button onclick="MicroModal.show('modal-1')" data-toggle="tooltip" data-placement="bottom" 
-                    @if (Model.editStatus == SegementDetailPageModel.duplicateSegment | Model.editStatus == SegementDetailPageModel.mirrorSegment |
-  Model.editStatus == SegementDetailPageModel.newSegment)
+                    @if (Model.editStatus == SegmentDetailPageModel.duplicateSegment | Model.editStatus == SegmentDetailPageModel.mirrorSegment |
+  Model.editStatus == SegmentDetailPageModel.newSegment)
                     {
                 <text>disabled</text>
                     } class="segment-button">Mirror Record</button>
@@ -992,14 +992,14 @@
 
         var newRecord = "@Model.editStatus";
 
-        if ("@Model.editStatus" == "@SegementDetailPageModel.newSegment") {
-            $.post("api/new_segement", inputs, function (data) {
+        if ("@Model.editStatus" == "@SegmentDetailPageModel.newSegment") {
+            $.post("api/new_Segment", inputs, function (data) {
                 console.log("new results have been saved");
                 console.log(data);
                 originalValues = gatherInput();//update values used to determine if changes have been made
                 $("#save-changes").text("Changes saved!").fadeIn(1000, function () {
                     $("#save-changes").text("Save");
-                    window.location.href = "edit_segement.html?ID=" + String(data);
+                    window.location.href = "edit_Segment.html?ID=" + String(data);
                 });
             });
         } else {
@@ -1284,9 +1284,9 @@
         parameters["@FieldsListModel.AH_BLM"] = AH_BLM;
         parameters["@FieldsListModel.AH_ELM"] = AH_ELM;
 
-        $.post("api/dup_segement", parameters, function (data) {
+        $.post("api/dup_Segment", parameters, function (data) {
             MicroModal.close("modal-2");
-            window.location.href = "edit_segement?ID=" + String(data);
+            window.location.href = "edit_Segment?ID=" + String(data);
         });
 
     });
@@ -1310,9 +1310,9 @@
 
         console.log(parameters);
 
-        $.post("api/mirror_segement", parameters, function (data) {
+        $.post("api/mirror_Segment", parameters, function (data) {
             MicroModal.close("modal-1");
-            window.location.href = "edit_segement?ID=" + String(data);
+            window.location.href = "edit_Segment?ID=" + String(data);
         });
 
     });
@@ -1343,7 +1343,7 @@
             if (data.beforeid == -1) {
                 alert("There is no next id");
             } else {
-                window.location.href = "/edit_segement.html?id=" + data.beforeid;
+                window.location.href = "/edit_Segment.html?id=" + data.beforeid;
             }
 
         }, "json");
@@ -1357,7 +1357,7 @@
             if (data.afterid == -1) {
                 alert("there is no after id");
             } else {
-                window.location.href = "/edit_segement.html?id=" + data.afterid;
+                window.location.href = "/edit_Segment.html?id=" + data.afterid;
             }
 
         }, "json");
