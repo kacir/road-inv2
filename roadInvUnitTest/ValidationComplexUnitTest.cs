@@ -1195,7 +1195,7 @@ namespace roadInvUnitTest
         [Fact]
         public void SpecificRecorTest()
         {
-            int recordid = 1645279;
+            int recordid = 1446487;
             var segment = this._dbContext.RoadInvs.Find(recordid);
 
             ValidationModel.CleanAttr(segment);
@@ -1203,7 +1203,5 @@ namespace roadInvUnitTest
 
             Assert.True(results.Count == 0);
         }
-        
-
     }
 }

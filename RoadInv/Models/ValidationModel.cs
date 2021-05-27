@@ -360,6 +360,34 @@ namespace RoadInv.Models
 
         }
 
+        public bool ValidLeftShoulderSurface(DB.RoadInv seg)
+        {
+            bool valid = false;
+            foreach(var item in this.ShoulderSurface)
+            {
+                if (item.Domainvalue == seg.LeftShoulderSurface)
+                {
+                    valid = true;
+                }
+                
+            }
+            return valid;
+        }
+
+        public bool ValidRightShoulderSurface(DB.RoadInv seg)
+        {
+            bool valid = false;
+            foreach (var item in this.ShoulderSurface)
+            {
+                if (item.Domainvalue == seg.RightShoulderSurface)
+                {
+                    valid = true;
+                }
+
+            }
+            return valid;
+        }
+
         public bool ValidAH_District(DB.RoadInv seg)
         {
             bool valid = false;
@@ -654,9 +682,10 @@ namespace RoadInv.Models
             //check to make sure district is valid $
             if (!(segment.AhDistrict is null) & !(segment.AhDistrict == "") & !this.ValidAH_District(segment))
             {
-                    List<string> temp = new List<string>();
-                    temp.Add(FieldsListModel.AH_District);
-                    ErrorItemModel districtError = new ErrorItemModel("AH_District Invalid", "AH_District value is not in list of valid values for field", temp);
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.AH_District);
+                ErrorItemModel districtError = new ErrorItemModel("AH_District Invalid", "AH_District value is not in list of valid values for field", temp);
+                masterErrorsList.Add(districtError);
             }
 
 
@@ -1125,6 +1154,7 @@ road is divided so it should have a median but the median type indicates there i
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.NHS);
                 ErrorItemModel error = new ErrorItemModel("NHS invalid", "NHS value is not valid", temp);
+                masterErrorsList.Add(error);
             }
 
             //Highy compound check on a few attributes
@@ -1439,9 +1469,9 @@ greater than one direction number of lanes, then the road must have a median and
 
             }
 
-            if (segment.ExtraLanes != "" & (ExtraLanes is null))
+            if (segment.ExtraLanes != "" & !(ExtraLanes is null))
             {
-                if (this.ValidExtraLanes(segment) )
+                if (!this.ValidExtraLanes(segment))
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.ExtraLanes);
@@ -1531,6 +1561,22 @@ A subset of the sruface width is the lane width. The surface width must be large
 This means the road has a median. Only multilane divided highway have medians. Perhaps you could set the TypeOperation to be 4 (multi-lane divided)", temp);
                     masterErrorsList.Add(error);
                 }
+            }
+
+            if (!ValidLeftShoulderSurface(segment) & segment.LeftShoulderSurface != "" & !(segment.LeftShoulderSurface is null))
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.LeftShoulderSurface);
+                var error = new ErrorItemModel("Left Shoulder Surface invalid", "The left shoulder surface is not one of the values in the database", temp);
+                masterErrorsList.Add(error);
+            }
+
+            if (!ValidRightShoulderSurface(segment) & segment.RightShoulderSurface != "" & !(segment.RightShoulderSurface is null))
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.RightShoulderSurface);
+                var error = new ErrorItemModel("Right Shoulder Surface invalid", "The right shoulder surface is not one of the values in the database", temp);
+                masterErrorsList.Add(error);
             }
 
             return masterErrorsList;

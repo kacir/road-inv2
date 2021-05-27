@@ -609,6 +609,127 @@ namespace roadInvUnitTest
             }
         }
 
+        [Theory]
+        [InlineData("0", true)]
+        [InlineData("1", true)]
+        [InlineData("2", true)]
+        [InlineData("3", true)]
+        [InlineData("4", true)]
+        [InlineData("5", true)]
+        [InlineData("6", true)]
+        [InlineData("60", false)]
+        [InlineData("a", false)]
+        [InlineData("fg", false)]
+        [InlineData("22", false)]
+        public void LeftShoulderValid(string leftShoulderSurface, bool expected)
+        {
+            var segment = new RoadInv.DB.RoadInv();
+            segment.AhCounty = "60";
+            segment.AhRoute = "ARNOLDDRIVE1";
+            segment.AhSection = "123";
+            segment.LogDirect = "A";
+            segment.AhBlm = 0;
+            segment.AhElm = (decimal?)0.5;
+            segment.LeftShoulderSurface = leftShoulderSurface;
+
+            ValidationModel.CleanAttr(segment);
+            var results = validation.FindErrors(segment);
+            var errorFields = AffectedFields(results);
+
+            if (expected)
+            {
+                Assert.True(results.Count == 0);
+            } else
+            {
+                Assert.True(results.Count == 1);
+                Assert.Contains(FieldsListModel.LeftShoulderSurface, errorFields);
+                Assert.True(errorFields.Count == 1);
+                Assert.Contains(FieldsListModel.LeftShoulderSurface, errorFields);
+            }
+        }
+
+        [Theory]
+        [InlineData("0", true)]
+        [InlineData("1", true)]
+        [InlineData("2", true)]
+        [InlineData("3", true)]
+        [InlineData("4", true)]
+        [InlineData("5", true)]
+        [InlineData("6", true)]
+        [InlineData("60", false)]
+        [InlineData("a", false)]
+        [InlineData("fg", false)]
+        [InlineData("22", false)]
+        public void RightShoulderValid(string rightShoulderSurface, bool expected)
+        {
+            var segment = new RoadInv.DB.RoadInv();
+            segment.AhCounty = "60";
+            segment.AhRoute = "ARNOLDDRIVE1";
+            segment.AhSection = "123";
+            segment.LogDirect = "A";
+            segment.AhBlm = 0;
+            segment.AhElm = (decimal?)0.5;
+            segment.RightShoulderSurface = rightShoulderSurface;
+
+            ValidationModel.CleanAttr(segment);
+            var results = validation.FindErrors(segment);
+            var errorFields = AffectedFields(results);
+
+            if (expected)
+            {
+                Assert.True(results.Count == 0);
+            }
+            else
+            {
+                Assert.True(results.Count == 1);
+                Assert.Contains(FieldsListModel.RightShoulderSurface, errorFields);
+                Assert.True(errorFields.Count == 1);
+                Assert.Contains(FieldsListModel.RightShoulderSurface, errorFields);
+            }
+        }
+
+        [Theory]
+        [InlineData("0", true)]
+        [InlineData("1", true)]
+        [InlineData("2", true)]
+        [InlineData("3", true)]
+        [InlineData("4", true)]
+        [InlineData("5", true)]
+        [InlineData("6", true)]
+        [InlineData("7", true)]
+        [InlineData("8", true)]
+        [InlineData("9", true)]
+        [InlineData("10", true)]
+        [InlineData("11", false)]
+        [InlineData("12", false)]
+        [InlineData("555", false)]
+        public void validNHS(string nhs, bool expected)
+        {
+            var segment = new RoadInv.DB.RoadInv();
+            segment.AhCounty = "60";
+            segment.AhRoute = "ARNOLDDRIVE1";
+            segment.AhSection = "123";
+            segment.LogDirect = "A";
+            segment.AhBlm = 0;
+            segment.AhElm = (decimal?)0.5;
+
+            segment.Nhs = nhs;
+
+            ValidationModel.CleanAttr(segment);
+            var results = validation.FindErrors(segment);
+            var errorFields = AffectedFields(results);
+
+            if (expected)
+            {
+                Assert.True(results.Count == 0);
+            } else
+            {
+                Assert.True(results.Count > 0);
+                Assert.Contains(FieldsListModel.NHS, errorFields);
+                Assert.True(errorFields.Count == 1);
+            }
+        }
+
         //exception case about SectionCode x as one-way couplet
         [Theory]
         [InlineData("B", true)]
