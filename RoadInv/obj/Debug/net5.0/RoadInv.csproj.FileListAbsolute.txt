@@ -422,3 +422,4 @@ E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Share
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\bulk_validate.cshtml.g.cs
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.csproj.AssemblyReference.cache
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\bulk_validate.cshtml.g.cs
