@@ -3,11 +3,11 @@
 @model SearchPageModel
 @{Layout = "_Layout.cshtml";}
 
-@section nav_segements {
+@section nav_segments {
     active
 }
 @{
-    ViewData["Title"] = "Segements";
+    ViewData["Title"] = "segments";
 }
 
 <style>
@@ -16,7 +16,7 @@
     }
 </style>
 
-<div id="segement-search-main-content master-grid">
+<div id="segment-search-main-content master-grid">
     <div id="side-panel" class='split left'>
         <h3>Search</h3>
         <div >
@@ -83,8 +83,8 @@
     </div>
     <div class='split-right'>
         <div class="master-grid grid-container">
-            <div><h1>Roadway Inventory Segements</h1></div>
-            <div><a target="_blank" href="new_segement.html"><button id="new-seg-button">New Segement</button></a></div>
+            <div><h1>Roadway Inventory segments</h1></div>
+            <div><a target="_blank" href="new_segment.html"><button id="new-seg-button">New segment</button></a></div>
         </div>
 
         <table>
@@ -108,7 +108,7 @@
             @foreach (var u in Model.details)
             {
                 <tr>
-                    <td> <a style="transform: rotate(90deg)" href='edit_segement.html?id=@u.Id'>Link</a> </td>
+                    <td> <a style="transform: rotate(90deg)" href='edit_segment.html?id=@u.Id'>Link</a> </td>
                     <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.SystemStatus){
                         if (item.Domainvalue == u.SystemStatus){
                             <text>@item.Domainvalue - @item.Label</text>
