@@ -31,15 +31,15 @@ namespace RoadInv
         {
             
             services.AddMvc();
-            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-              .AddMicrosoftIdentityWebApp(configuration.GetSection("AzureAd"));
-            services.AddControllers(options =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            });
+            //services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+            //  .AddMicrosoftIdentityWebApp(configuration.GetSection("AzureAd")); //we need to be using an ssl certificate for this to work right in chrome
+            //services.AddControllers(options =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //        .RequireAuthenticatedUser()
+            //        .Build();
+            //    options.Filters.Add(new AuthorizeFilter(policy));
+            //});
             
             services.AddRazorPages()
                 .AddMicrosoftIdentityUI();
@@ -81,10 +81,8 @@ namespace RoadInv
             app.UseFileServer();
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            //app.UseSession();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
 
             app.UseEndpoints(endpoints => 
