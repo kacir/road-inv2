@@ -63,11 +63,6 @@ namespace RoadInv
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            //app.Use((context, next) => //probably not necessary
-            //{
-            //    context.Request.Scheme = "http";
-            //    return next();
-            //});
 
             // Add this before any other middleware that might write cookies
             app.UseCookiePolicy();

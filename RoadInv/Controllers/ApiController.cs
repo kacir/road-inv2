@@ -330,8 +330,8 @@ namespace RoadInv.Controllers
         public IActionResult ValidateBulk(string AH_RoadID, decimal AH_BLM, decimal AH_ELM)
         {
             var overlappingRecords = from record in this._dbContext.RoadInvs
-                         where record.AhRoadId == AH_RoadID & ((record.AhBlm < AH_BLM &  record.AhElm > AH_BLM) | (record.AhBlm < AH_ELM & record.AhElm > AH_ELM))
-                         select record;
+                         where record.AhRoadId == AH_RoadID & ((record.AhBlm < AH_BLM &  record.AhElm > AH_BLM) | (record.AhBlm < AH_ELM & record.AhElm > AH_ELM)) 
+                         select record; //added parenthesis. please look at this.
 
             var bulkErrors = new ErrorItemBulkModel(this._dbContext, AH_BLM, AH_ELM, overlappingRecords);
 
