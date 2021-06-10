@@ -207,7 +207,7 @@ namespace roadInvUnitTest
         public void OneRecordNoSplitting3()
         {
             FakeRouteGenerator();
-            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", (decimal)1, (decimal)1.5);
+            var effectedRows = this._bulkEditor.BulkEdit("74xFAKENAMEx0xA", 1, (decimal)1.5);
             var fakeRoutes = from record in this._dbContext.RoadInvs where record.AhRoadId == "74xFAKENAMEx0xA" orderby record.AhBlm select record;
 
             Assert.True(effectedRows.Count() == 1);

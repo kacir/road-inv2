@@ -11,13 +11,13 @@ using Xunit;
 
 namespace roadInvUnitTest
 {
-    public class ValidationComplexUnitTest
+    public class ValidationCodesUnitTest
     {
         public RoadInv.DB.roadinvContext _dbContext;
         public RoadInv.Models.ValidationModel validation;
 
 
-        public ValidationComplexUnitTest()
+        public ValidationCodesUnitTest()
         {
             var config = InitConfiguration();
             var connectionString = config["EntityConnectinString"];
@@ -232,7 +232,7 @@ namespace roadInvUnitTest
 
             if (expected)
             {
-                Assert.True(results.Count == 0, ValidationComplexUnitTest.AffectedFieldsMessage(errorFields));
+                Assert.True(results.Count == 0, ValidationCodesUnitTest.AffectedFieldsMessage(errorFields));
             } else
             {
                 Assert.True(results.Count == 1);
@@ -874,7 +874,7 @@ namespace roadInvUnitTest
         [InlineData(6, true)]
         [InlineData(7, true)]
         [InlineData(8, true)]
-        [InlineData(15, false)]
+        [InlineData(15, true)]
         [InlineData(17, false)]
         [InlineData(19, false)]
         [InlineData(22, false)]

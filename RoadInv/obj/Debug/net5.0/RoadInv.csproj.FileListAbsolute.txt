@@ -149,9 +149,7 @@ E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\scopedcss\bundle\
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.TagHelpers.input.cache
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.TagHelpers.output.cache
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.RazorCoreGenerate.cache
-E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\edit_segement.cshtml.g.cs
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\index.cshtml.g.cs
-E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\new_segement.cshtml.g.cs
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\quality_control.cshtml.g.cs
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\SearchTable.cshtml.g.cs
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\system_changes_aphn.cshtml.g.cs
@@ -434,3 +432,16 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Ident
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Identity.Web.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Identity.Web.UI.Views.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Identity.Web.UI.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Azure.Core.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Azure.Identity.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Azure.Security.KeyVault.Certificates.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Azure.Security.KeyVault.Secrets.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Identity.Web.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Identity.Web.UI.Views.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Identity.Web.UI.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\edit_segment.cshtml.g.cs
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\new_segment.cshtml.g.cs
+E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\preview_changes.cshtml.g.cs

@@ -464,3 +464,13 @@ C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\obj\Debug\net5.0\ref\roa
 C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInvUnitTest.pdb
 C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInvUnitTest.genruntimeconfig.cache
 E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInvUnitTest.csproj.AssemblyReference.cache
+E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Azure.Core.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Azure.Identity.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Azure.Security.KeyVault.Certificates.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Azure.Security.KeyVault.Secrets.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Microsoft.Identity.Web.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Microsoft.Identity.Web.UI.Views.dll
+E:\scratch\RoadInv_Overhaul\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Microsoft.Identity.Web.UI.dll

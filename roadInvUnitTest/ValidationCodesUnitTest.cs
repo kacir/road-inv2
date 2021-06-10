@@ -613,7 +613,7 @@ namespace roadInvUnitTest
         [InlineData("3", true)]
         [InlineData("4", true)]
         [InlineData("5", true)]
-        [InlineData("6", true)]
+        [InlineData("6", false)]
         [InlineData("7", false)]
         [InlineData("8", false)]
         [InlineData("9", false)]

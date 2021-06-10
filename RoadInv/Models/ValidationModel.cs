@@ -871,7 +871,7 @@ and the Type Operation must be one-way couplet. I recommend you change some fiel
             }
             else
             {
-                if (this.ValidGovermentCode(segment))
+                if (this.ValidGovermentCode(segment) & this.ValidRouteSign(segment))
                 {
                     if ((segment.RouteSign == "1" | segment.RouteSign == "2" | segment.RouteSign == "3") & segment.GovermentCode != "1" | 
                         !(segment.RouteSign == "1" | segment.RouteSign == "2" | segment.RouteSign == "3") & segment.GovermentCode == "1")
@@ -1520,7 +1520,7 @@ By extension, the mediantpye cant be 0, No Median. please chang ethe tpye operat
                 masterErrorsList.Add(error);
             }
 
-            if (segment.SurfaceWidth < segment.LaneWidth)
+            if (segment.SurfaceWidth < segment.LaneWidth & segment.SurfaceWidth != 0 & segment.LaneWidth != 0)
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.LaneWidth);
