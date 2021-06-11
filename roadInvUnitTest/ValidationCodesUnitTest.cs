@@ -7,9 +7,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace roadInvUnitTest
 {
+    /// <summary>
+    /// Class contains collection of unit tests that see if the allowed field codes have been properly loaded into the validation class on itialization.
+    /// </summary>
     public class RoadInvUnitTest
     {
+        /// <summary>
+        /// The entity framework context object
+        /// </summary>
         public RoadInv.DB.roadinvContext _dbContext;
+        /// <summary>
+        /// Validation object that stores the coded values for each field
+        /// </summary>
         public RoadInv.Models.ValidationModel validation;
 
 
@@ -32,6 +41,11 @@ namespace roadInvUnitTest
             validation = new RoadInv.Models.ValidationModel(_dbContext);
         }
 
+        /// <summary>
+        /// Loads configuartion setting json file into a confiug object containing the database connection string. 
+        /// Method is called during object initialization. Should not be used ouside of this class.
+        /// </summary>
+        /// <returns>config object containing database connection string</returns>
         public static IConfiguration InitConfiguration()
         {
             var config = new ConfigurationBuilder()
@@ -40,7 +54,11 @@ namespace roadInvUnitTest
             return config;
         }
 
-
+        /// <summary>
+        /// tests the county string list for valid coded values
+        /// </summary>
+        /// <param name="countyString">County coded value as a string. Non-zero padded</param>
+        /// <param name="expectedResult">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("40", true)]
         [InlineData("75", true)]
@@ -52,7 +70,7 @@ namespace roadInvUnitTest
         [InlineData("", false)]
         [InlineData(" ", false)]
         [InlineData("undefined", false)]
-        public void countyValues(string countyString, bool expectedResult)
+        public void CountyValues(string countyString, bool expectedResult)
         {
 
             //check if county 1 is in thing
@@ -78,6 +96,11 @@ namespace roadInvUnitTest
             
         }
 
+        /// <summary>
+        /// Tests the district string list for valid values
+        /// </summary>
+        /// <param name="districtString">ArDOT Districts as string. Non-zero padded</param>
+        /// <param name="expectedResult">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("7", true)]
@@ -87,7 +110,7 @@ namespace roadInvUnitTest
         [InlineData(" ", false)]
         [InlineData("undefined", false)]
         [InlineData("99", false)]
-        public void districtValue(string districtString, bool expectedResult)
+        public void DistrictValue(string districtString, bool expectedResult)
         {
             var exists = false;
             foreach(var district in validation.AH_District)
@@ -109,6 +132,12 @@ namespace roadInvUnitTest
 
         }
 
+        /// <summary>
+        /// Tests the route sign string list for expected values
+        /// </summary>
+        /// <param name="routeSignString">Route Sign coded value as a string (non-zero padded)</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("2", true)]
@@ -118,7 +147,7 @@ namespace roadInvUnitTest
         [InlineData("", false)]
         [InlineData(" ", false)]
         [InlineData("undefined", false)]
-        public void routeSign(string routeSignString, bool expected)
+        public void RouteSign(string routeSignString, bool expected)
         {
             var exists = false;
             foreach(var routeSign in validation.RouteSign)
@@ -139,6 +168,12 @@ namespace roadInvUnitTest
 
         }
 
+        /// <summary>
+        /// Tests the Urban Code string list for expected coded values
+        /// </summary>
+        /// <param name="urbanCodeString">Urban Code coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("50392", true)]
         [InlineData("99999", false)]
@@ -147,7 +182,7 @@ namespace roadInvUnitTest
         [InlineData("", false)]
         [InlineData(" ", false)]
         [InlineData("undefined", false)]
-        public void urbanCode(string urbanCodeString, bool expected)
+        public void UrbanCode(string urbanCodeString, bool expected)
         {
             var exists = false;
             foreach(var urbanCode in validation.UrbanAreaCode)
@@ -168,6 +203,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests system Status coded values string list
+        /// </summary>
+        /// <param name="StatusString">Status string as </param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("2", true)]
@@ -197,6 +238,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests the functional class field for various coded value options
+        /// </summary>
+        /// <param name="funcString">Functional Class code as a string</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("2", true)]
@@ -231,6 +278,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// tests the direction coded values list for expected values
+        /// </summary>
+        /// <param name="directionString">Log Direction coded value as a string</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("A", true)]
         [InlineData("B", true)]
@@ -242,7 +295,7 @@ namespace roadInvUnitTest
         [InlineData(" ", false)]
         [InlineData(null, false)]
         [InlineData("undefined", false)]
-        public void direction(string directionString, bool expected)
+        public void Direction(string directionString, bool expected)
         {
             var exists = false;
             foreach(var direction in validation.LOG_DIRECT)
@@ -262,6 +315,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests access string list for expected coded values
+        /// </summary>
+        /// <param name="accessString">Access field coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("2", true)]
@@ -291,6 +350,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests Extra Lanes feild for expected coded values.
+        /// </summary>
+        /// <param name="extraLanesString">Extra Lanes coded value as string</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", true)]
         [InlineData("1", true)]
@@ -325,6 +390,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests APHN Field for expected coded values
+        /// </summary>
+        /// <param name="APHNString">APHN coded value as string</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", true)]
         [InlineData("1", true)]
@@ -355,6 +426,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests NHS string list for expected coded values
+        /// </summary>
+        /// <param name="NHSString">NHS coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", true)]
         [InlineData("1", true)]
@@ -393,6 +470,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests Special Systems string list for expected coded values
+        /// </summary>
+        /// <param name="SpecialSystemsString">Special Systems coded value as a string</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("2", false)]
@@ -428,6 +511,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests shoulder surface string list for expected values
+        /// </summary>
+        /// <param name="shoulderSurfaceString">Shoulder Surface coded value as string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", true)]
         [InlineData("1", true)]
@@ -464,6 +553,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests goverment code string list for expected values
+        /// </summary>
+        /// <param name="GovermentCodeString">Goveremnt Code coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("2", true)]
@@ -504,6 +599,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests surface type string object for expected values
+        /// </summary>
+        /// <param name="SurfaceTypeString">Surface Type coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", true)]
         [InlineData("1", true)]
@@ -540,6 +641,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests type operation string list for expected coded-values
+        /// </summary>
+        /// <param name="typeOperationString">Type Operation coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", false)]
         [InlineData("1", true)]
@@ -570,6 +677,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests Type Road string list for expected coded values
+        /// </summary>
+        /// <param name="typeRoadString">Type Road coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", false)]
         [InlineData("1", true)]
@@ -606,6 +719,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests median type string list for expected values
+        /// </summary>
+        /// <param name="medianTypeString">Median Type Coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", true)]
         [InlineData("1", true)]
@@ -645,6 +764,15 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests Both District and county fields for valid combinations of the two fields. 
+        /// District only cover certain districts. Not all combinations are valid.
+        /// Invalid combinations should cause data validation errors.
+        /// </summary>
+        /// <param name="county">ArDOT County number as a non-zero padded string object</param>
+        /// <param name="district">ArDOT District number as a non-zero padded string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("60", "6", true)]//pulaski county and district 6
         [InlineData("60", "1", false)]
@@ -672,6 +800,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests Urban Area field as for expected coded values
+        /// </summary>
+        /// <param name="urbanArea">Urban Area coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("2", true)]
@@ -702,6 +836,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests section code string list for expected values
+        /// </summary>
+        /// <param name="codeString">Section Code letter as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("A", true)]
         [InlineData("B", true)]
@@ -744,6 +884,15 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Tests Urban Area Code and county field value combinations. specific urban areas only exist in certain counties. 
+        /// For instance the little rock urbanizated area can't exist in washington county. 
+        /// These should cause validation errors to be flagged.
+        /// </summary>
+        /// <param name="urbanAreaCode">Urban Area Code as string object</param>
+        /// <param name="county">ArDOT County code as a non-zero padded string</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no validation errors. 
+        /// false is the expected result includes errors</param>
         [Theory]
         [InlineData("40213", "26", true)]
         [InlineData("40213", "70", false)]
@@ -770,6 +919,15 @@ namespace roadInvUnitTest
             
         }
 
+        /// <summary>
+        /// Tests the CheckInvaidCharacters method on the ValidationModel Class. 
+        /// The CheckInvalidCharacters method is used by validation logic tied 
+        /// to the route, and section fields. testing of this method elimiates a 
+        /// single cause when debugging other method's dependent on 
+        /// CheckInvalidCharacters.
+        /// </summary>
+        /// <param name="testString"></param>
+        /// <param name="expected"></param>
         [Theory]
         [InlineData("104", true)]
         [InlineData("14", true)]
@@ -777,7 +935,7 @@ namespace roadInvUnitTest
         [InlineData("##", false)]
         [InlineData("55", true)]
         [InlineData("0", true)]
-        public void validCharacters(string testString, bool expected)
+        public void ValidCharacters(string testString, bool expected)
         {
             var invalidChars = ValidationModel.checkInvalidCharacters(testString);
 

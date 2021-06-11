@@ -12,9 +12,19 @@ using Xunit.Abstractions;
 
 namespace roadInvUnitTest
 {
+    /// <summary>
+    /// Perform Simple validation logic unit tests. does not check for valid coded values 
+    /// but does check for valid relationship between different field value. It also check for valid value ranges for numeric fields.
+    /// </summary>
     public class ValidationLogicUnitTest
     {
+        /// <summary>
+        /// Entity framework database context object need to interact with roadway inventory database.
+        /// </summary>
         public RoadInv.DB.roadinvContext _dbContext;
+        /// <summary>
+        /// initalized validation object on which all data validations are run on.
+        /// </summary>
         public RoadInv.Models.ValidationModel validation;
         private readonly ITestOutputHelper logger;
 
@@ -39,6 +49,11 @@ namespace roadInvUnitTest
             this.logger = logger;
         }
 
+        /// <summary>
+        /// Loads configuartion setting json file into a confiug object containing the database connection string. 
+        /// Method is called during object initialization. Should not be used ouside of this class.
+        /// </summary>
+        /// <returns>config object containing database connection string</returns>
         public static IConfiguration InitConfiguration()
         {
             var config = new ConfigurationBuilder()
@@ -47,6 +62,11 @@ namespace roadInvUnitTest
             return config;
         }
 
+        /// <summary>
+        /// tests the county string list for valid coded values
+        /// </summary>
+        /// <param name="countyString">County coded value as a string. Non-zero padded</param>
+        /// <param name="expectedResult">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         private static List<string> AffectedFields(List<RoadInv.Models.ErrorItemModel> rawList)
         {
             var resultList = new List<string>();
@@ -64,6 +84,11 @@ namespace roadInvUnitTest
             return resultList;
         }
 
+        /// <summary>
+        /// Tests the county string list for valid coded values
+        /// </summary>
+        /// <param name="countyString">County coded value as a string. Non-zero padded</param>
+        /// <param name="expectedResult">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         private static string AffectedFieldsMessage(List<string> rawList)
         {
             var builderString = "";
@@ -74,6 +99,11 @@ namespace roadInvUnitTest
             return builderString;
         }
 
+        /// <summary>
+        /// Tests senario where the segment object does not have any attributes fill out at all. 
+        /// Error fields should include County, Route, Section , Log direction, bLm and BLM for a minimum viable record.
+        /// Test sill fail if no error is given or if error include less or more than the expected flagged fields.
+        /// </summary>
         [Fact]
         public void EmptyInput(){
             var segment = new RoadInv.DB.RoadInv();
@@ -97,8 +127,28 @@ namespace roadInvUnitTest
             logger.WriteLine("fields flagg in this operation are the following " + AffectedFieldsMessage(errorFields));
         }
 
+        /// <summary>
+        /// Tests the seanrio of a segment object with the bare minimum of fields filled in. There should be no errrs raised at this point.
+        /// </summary>
+        /// <param name="county">ArDOT county number as a non-zero padded string</param>
+        /// <param name="route">Route name as a string</param>
+        /// <param name="section">3 digit or character section number</param>
+        /// <param name="direction">LOG Direction string</param>
+        /// <param name="BLM">valid Begining logmile</param>
+        /// <param name="ELM">valid ending logmile.</param>
         [Theory]
         [InlineData("2", "ARNOLDDRIVE1", "123", "A", 0, 0.2)]
+        [InlineData("2", "MAINSTREET", "123", "A", 0, 0.2)]
+        [InlineData("2", "OLDHIGHWAY55", "123", "A", 0, 0.2)]
+        [InlineData("2", "56THSTREET", "123", "A", 0, 0.2)]
+        [InlineData("40", "ARNOLDDRIVE1", "123", "A", 0, 0.2)]
+        [InlineData("33", "ARNOLDDRIVE1", "123", "A", 0, 0.2)]
+        [InlineData("7", "ARNOLDDRIVE1", "123", "A", 0, 0.2)]
+        [InlineData("7", "ARNOLDDRIVE1", "123", "A", 0, 0.5)]
+        [InlineData("7", "ARNOLDDRIVE1", "123", "A", 0.01, 0.2)]
+        [InlineData("7", "ARNOLDDRIVE1", "3", "A", 0.01, 0.2)]
+        [InlineData("7", "ARNOLDDRIVE1", "0", "A", 0.01, 0.2)]
+        [InlineData("7", "ARNOLDDRIVE1", "1", "A", 0.01, 0.2)]
         public void MinAttributes(string county, string route, string section, string direction, decimal BLM, decimal ELM)
         {
             var segment = new RoadInv.DB.RoadInv();
@@ -116,6 +166,11 @@ namespace roadInvUnitTest
             logger.WriteLine("fields flagg in this operation are the following " + AffectedFieldsMessage(errorFields));
         }
 
+        /// <summary>
+        /// Test attempts to replicate the error where the begining logmile and ending logmile are the same. 
+        /// Single validation error should be launched effecting only the BLM and ELM fields.
+        /// </summary>
+        /// <param name="logmile">logmile to be duplicated to both the BLM and ELM</param>
         [Theory]
         [InlineData(0)]
         [InlineData(0.4545)]
@@ -126,7 +181,11 @@ namespace roadInvUnitTest
         [InlineData(10)]
         [InlineData(10.465)]
         [InlineData(8.398)]
-        public void logmilesEqual(decimal logmile)
+        [InlineData(55.398)]
+        [InlineData(200)]
+        [InlineData(345)]
+        [InlineData(356.487)]
+        public void LogmilesEqual(decimal logmile)
         {
             var segment = new RoadInv.DB.RoadInv();
             segment.AhCounty = "2";
@@ -147,13 +206,19 @@ namespace roadInvUnitTest
             logger.WriteLine("fields flagg in this operation are the following " + AffectedFieldsMessage(errorFields));
         }
 
-        //logmile negitive
+        /// <summary>
+        /// unit test create different combinations of negitive BLM and ELM values to trigger the negitive blm or elm error. 
+        /// When this error occurs there should only be one validation error created.
+        /// </summary>
+        /// <param name="blm">begining logmile as number</param>
+        /// <param name="elm">ending logmile as number</param>
+        /// <param name="expected">a boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData(0.2, 0.4, true)]
         [InlineData(-1, 0.4, false)]
         [InlineData(-5, -2, false)]
         [InlineData(-900, -50, false)]
-        public void logmileNegitive(decimal blm, decimal elm, bool expected)
+        public void LogmileNegitive(decimal blm, decimal elm, bool expected)
         {
             var segment = new RoadInv.DB.RoadInv();
             segment.AhCounty = "2";
@@ -173,10 +238,17 @@ namespace roadInvUnitTest
             } else
             {
                 Assert.True(results.Count == 1);
+                Assert.True(errorFields.Contains(FieldsListModel.AH_BLM) | errorFields.Contains(FieldsListModel.AH_ELM));
             }
             
         }
 
+        /// <summary>
+        /// If the BLM or ELM is larger than 999.999, a validation error should be launched. This method tests to see if it is launched.
+        /// </summary>
+        /// <param name="blm"></param>
+        /// <param name="elm"></param>
+        /// <param name="erroCount"></param>
         [Theory]
         [InlineData(5, 12, 0)]
         [InlineData(5, 999, 0)]
@@ -186,7 +258,6 @@ namespace roadInvUnitTest
         [InlineData(1001, 1002, 2)]
         [InlineData(1001, 100000000, 2)]
         [InlineData(0, 9999999999, 1)]
-        //logmile greater than 999.999
         public void LogmileMassive(decimal blm, decimal elm, int erroCount)
         {
             var segment = new RoadInv.DB.RoadInv();
@@ -202,13 +273,25 @@ namespace roadInvUnitTest
             var errorFields = AffectedFields(results);
 
             Assert.True(results.Count == erroCount, AffectedFieldsMessage(errorFields));
- 
+            Assert.True(errorFields.Contains(FieldsListModel.AH_BLM) | errorFields.Contains(FieldsListModel.AH_ELM));
         }
 
 
-
+        /// <summary>
+        /// Test if validation error is launched when the BLM and ELM are accidently flipped so the BLM is actuallly greater than the ELM. 
+        /// input value should always be flipped in order to cause an error.
+        /// </summary>
+        /// <param name="blm">Begining Logmile</param>
+        /// <param name="elm">Ending Logmile</param>
         [Theory]
         [InlineData(5 , 0)]
+        [InlineData(2, 0)]
+        [InlineData(200, 0)]
+        [InlineData(50.001, 50)]
+        [InlineData(4.657, 3.554)]
+        [InlineData(555, 0)]
+        [InlineData(454, 345)]
+        [InlineData(2.0874, 0.343)]
         public void LogmileFlipped(decimal blm, decimal elm)
         {
             var segment = new RoadInv.DB.RoadInv();
@@ -226,7 +309,12 @@ namespace roadInvUnitTest
             logger.WriteLine("fields flagg in this operation are the following " + AffectedFieldsMessage(errorFields));
         }
 
-        
+        /// <summary>
+        /// Checked the error validation that is invalid characers are in the route name, it causes an validation error. 
+        /// Valid characters only inlcude numbers 0-9 and letters A-Z.
+        /// </summary>
+        /// <param name="route">ARNOLD route name with possible invalid characters</param>
+        /// <param name="expected">a boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("ARNOLDDRIVE1", true)]
         [InlineData("ARNOLDDR", true)]
@@ -273,6 +361,12 @@ namespace roadInvUnitTest
             logger.WriteLine("fields flagg in this operation are the following " + AffectedFieldsMessage(errorFields));
         }
 
+        /// <summary>
+        /// This method tests the validation errors for very long route names. If the route lane is 
+        /// beyond a certain number of character's there should be a validation error for the route field.
+        /// </summary>
+        /// <param name="route">ARNOLD Route Name</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("fsfdsfsdfdsfdsfs", true)]
         [InlineData("fsfdsfsdfdsfdsfs54645", true)]
@@ -308,7 +402,11 @@ namespace roadInvUnitTest
         }
 
 
-        //invalid section characters
+        /// <summary>
+        /// Tests if the section field contains invalid characters in it. Valid characters can only be A-Z and 1-10.
+        /// </summary>
+        /// <param name="section">The ARNOLD Section number</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("123", true)]
         [InlineData("12B", true)]
@@ -355,6 +453,12 @@ namespace roadInvUnitTest
             logger.WriteLine("fields flagg in this operation are the following " + AffectedFieldsMessage(errorFields));
         }
 
+        /// <summary>
+        /// Check valdiation for when the section field has too many characters. The section field should have a max of three characters. lengths
+        /// greater than three should result in an error.
+        /// </summary>
+        /// <param name="section">ARNOLD Section Number</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("AA", true)]
@@ -387,7 +491,13 @@ namespace roadInvUnitTest
             }
         }
 
-
+        /// <summary>
+        /// tests validation for invalid combinations of route sign field and goverment code. If the goverment code indicates ArDOT is the managing agency,
+        /// then the route Sign should be 1, 2, or 3. Conversly routes with route Sign 1,2, or 3 should have a goverment code of ArDOT.
+        /// </summary>
+        /// <param name="RouteSign">Route Sign coded value as a string object</param>
+        /// <param name="GovermentCode">Goverment Code coded value as string object</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("1", "1", true)]
         [InlineData("2", "1", true)]
@@ -424,10 +534,17 @@ namespace roadInvUnitTest
                 Assert.Contains(FieldsListModel.GovermentCode, errorFields);
                 Assert.Contains(FieldsListModel.RouteSign, errorFields);
             }
-            logger.WriteLine("fields flagg in this operation are the following " + AffectedFieldsMessage(errorFields));
+            logger.WriteLine("fields flag in this operation are the following " + AffectedFieldsMessage(errorFields));
 
         }
 
+        /// <summary>
+        /// Check validations for invalid combinations of urban area code and rural urban area. If the the segment in located in an Urban Area
+        /// then it will have an urban code. If it has an urban code then Rural Urban Area should be code 3 or 4 indicating urbanized or large urbanized.
+        /// </summary>
+        /// <param name="UrbanAreaCode">Urban Area Code as a string</param>
+        /// <param name="RuralUrbanArea">Rural Urban Area Coded value as a string object</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("50392", "1", false)]
         [InlineData("50392", "2", false)]
@@ -461,6 +578,11 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Testing valid coded values for rural urban area.
+        /// </summary>
+        /// <param name="ruralUrbanArea">Rural Urban Area as string object</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("3", false)]
         [InlineData("4", false)]
@@ -496,7 +618,14 @@ namespace roadInvUnitTest
         }
 
 
-
+        /// <summary>
+        /// Tests for valid functional class and route sign combinations. This pull only on the rule that functional class 1 is alway going to be interstate
+        /// Interstate routes are alway going to be functional class 1. conversly all functional class 1 routes will always be interstates. Logic works both
+        /// ways.
+        /// </summary>
+        /// <param name="funcClass">Functional Class coded value as a string</param>
+        /// <param name="routeSign">Route Sign coded value as a string</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("1", "1", true)]
         [InlineData("2", "1", false)]
@@ -540,7 +669,13 @@ namespace roadInvUnitTest
         }
 
 
-        //I do not understand this validation. I think it is supposed to mean all functional class 2 routes are multilane divided roads
+        /// <summary>
+        /// all functional class 2 routes are multilane divided roads. According the the definition in the functional class guide 
+        /// Ohter Freeway and Expressways must be multilane divided.
+        /// </summary>
+        /// <param name="funcClass">Functional Class coded value as a string object</param>
+        /// <param name="TypeOperation">Type Operation coded value as a string object</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("2", "4", true)]
         [InlineData("2", "1", false)]
@@ -578,10 +713,17 @@ namespace roadInvUnitTest
 
 
         //APHN Functional Class Pair
+        /// <summary>
+        /// Checks APHN and functional class pairs for different valid and valid combinations and their validation errors.
+        /// Functional Class 1 interstate means the route is interstate. APHN code 1 is also interstate. If functional Class is 1 then APHN must also be 1.
+        /// </summary>
+        /// <param name="funcClass">Functional Class coded value as a string</param>
+        /// <param name="APHN">APHN coded value as a string</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("1", "1", true)]
         [InlineData("7", "0", true)]
-        public void funcClassAPHNPair(string funcClass, string APHN, bool expected)
+        public void FuncClassAPHNPair(string funcClass, string APHN, bool expected)
         {
             var segment = new RoadInv.DB.RoadInv();
             segment.AhCounty = "60";
@@ -609,6 +751,11 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Checks the coded values for left shoulder surface to make sure they are valid and still numbers.
+        /// </summary>
+        /// <param name="leftShoulderSurface">Left Shoulder Surface Coded value as string</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("0", true)]
         [InlineData("1", true)]
@@ -648,6 +795,11 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Checks the coded values for right shoulder surface to make sure they are valid and still numbers.
+        /// </summary>
+        /// <param name="leftShoulderSurface">Right Shoulder Surface Coded value as string</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("0", true)]
         [InlineData("1", true)]
@@ -688,6 +840,11 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Checks validations for various valid or invalid coded values for NHS field.
+        /// </summary>
+        /// <param name="nhs">NHS coded value as a string</param>
+        /// <param name="expected">A boolean value indicating if errors are going to be returned or not. true for no errors. false for errors</param>
         [Theory]
         [InlineData("0", true)]
         [InlineData("1", true)]
@@ -703,7 +860,7 @@ namespace roadInvUnitTest
         [InlineData("11", false)]
         [InlineData("12", false)]
         [InlineData("555", false)]
-        public void validNHS(string nhs, bool expected)
+        public void ValidNHS(string nhs, bool expected)
         {
             var segment = new RoadInv.DB.RoadInv();
             segment.AhCounty = "60";

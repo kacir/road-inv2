@@ -11,11 +11,17 @@ using Xunit;
 
 namespace roadInvUnitTest
 {
+    /// <summary>
+    /// This class is a collection of various unit tests that check complex logical 
+    /// relationship between different fields and logically valid number ranges for individual fields. 
+    /// Check individual method docstrings for explainaitions of their complex logic.
+    /// </summary>
     public class ValidationCodesUnitTest
     {
+        /// <value> <c>_dbContext</c> - entiy framework context some description of some kind </value>
         public RoadInv.DB.roadinvContext _dbContext;
+        /// <value> <c>validation</c> - instance needed in order to perform valdiations against things in the database </value>
         public RoadInv.Models.ValidationModel validation;
-
 
         public ValidationCodesUnitTest()
         {
@@ -36,6 +42,11 @@ namespace roadInvUnitTest
             validation = new RoadInv.Models.ValidationModel(_dbContext);
         }
 
+        /// <summary>
+        /// Loads configuartion setting json file into a confiug object containing the database connection string. 
+        /// Method is called during object initialization. Should not be used ouside of this class.
+        /// </summary>
+        /// <returns>config object containing database connection string</returns>
         public static IConfiguration InitConfiguration()
         {
             var config = new ConfigurationBuilder()
@@ -44,6 +55,12 @@ namespace roadInvUnitTest
             return config;
         }
 
+        /// <summary>
+        /// Turns a list of string objects that are intended to be field names and builts them into a string. 
+        /// The intent is this method helps build error messages used in other unit tests. This is only intended as a message helper.
+        /// </summary>
+        /// <param name="rawList">a string list object containing field names</param>
+        /// <returns>a sting version of the inptu rawList object in a comma delinated format</returns>
         private static List<string> AffectedFields(List<RoadInv.Models.ErrorItemModel> rawList)
         {
             var resultList = new List<string>();
@@ -61,6 +78,12 @@ namespace roadInvUnitTest
             return resultList;
         }
 
+        /// <summary>
+        /// Turns a list of string objects that are intended to be field names and builts them into a string. 
+        /// The intent is this method helps build error messages used in other unit tests. This is only intended as a message helper.
+        /// </summary>
+        /// <param name="rawList">a string list object containing field names</param>
+        /// <returns>a sting version of the inptu rawList object in a comma delinated format</returns>
         private static string AffectedFieldsMessage(List<string> rawList)
         {
             var builderString = "";
