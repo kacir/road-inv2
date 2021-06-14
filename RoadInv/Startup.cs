@@ -50,10 +50,23 @@ namespace RoadInv
             {
                 options.AddPolicy("admin-only", p =>
                 {
-                    p.RequireClaim("groups", this.configuration["SystemInformationOID"]); //system information group object ID, should probably put GUID in appsettings
-                    //portal.azure.com => App Registrations => RoadwayInventory => Manifest, then set "groupMembershipClaims": "SecurityGroup"
-                    //portal.azure.com => Active Directory => find the group you want to allow => copy and paste the group's Object ID
-                    //add the [Authorize("admin-only")] to classes/functions you want to require authorization
+                    /*To implement, go to portal.azure.com
+                     * => App Registrations
+                     * => RoadwayInventory
+                     * => Manifest, then set "groupMembershipClaims" to SecurityGroup
+                     * To find groups to add, to to portal.azure.com
+                     * => Active Directory
+                     * => Groups, find the group you want to allow, click and copy/paste the group's object ID
+                     * Add the [Authorize("admin-only")] attribute to classes/functions you want to require authorization
+                     * */
+                    p.RequireAssertion(context =>
+                        context.User.HasClaim(c =>
+                            c.Value == this.configuration["TrafficInformationSys"] ||  //system information and research - traffic information systems
+                            c.Value == this.configuration["SystemInformation"] ||      //system information and research - system information
+                            c.Value == this.configuration["TrafficInformation"] ||     //system information and research - traffic information
+                            c.Value == this.configuration["SystemInfoGIS"] ||          //system information and research - gis
+                            c.Value == this.configuration["TrafficDataCollection"]));  //system information and research - traffic data collection
+
                 });
             });
 
