@@ -14,7 +14,7 @@ namespace roadInvUnitTest
     /// <summary>
     /// This class is a collection of various unit tests that check complex logical 
     /// relationship between different fields and logically valid number ranges for individual fields. 
-    /// Check individual method docstrings for explainaitions of their complex logic.
+    /// Check individual method docstrings for explanations of their complex logic.
     /// </summary>
     public class ValidationCodesUnitTest
     {
@@ -95,6 +95,15 @@ namespace roadInvUnitTest
         }
 
         /*If Route = 1 and Type Road = 1 Then NHS must be 1 and APHN = 1*/
+        /// <summary>
+        /// This tests validates errors related to redundancy between the NHS and RouteSign.
+        /// The rule is if RouteSign = 1 then NHS must be 1.
+        /// All Interstates (RouteSign 1) are part of the NHS. By extension all The status of the
+        /// NHS field must be 1 - on NHS. If the RouteSign is 1 and NHS is 0 - Not NHS that is an issue
+        /// Only applied to TypeRoad 1 - Mainlane due to ramp complexities.
+        /// </summary>
+        /// <param name="NHS">National Highway System coded value</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("2", false)]
@@ -130,6 +139,14 @@ namespace roadInvUnitTest
         }
 
         /*If Route = 1 and Type Road = 1 Then NHS must be 1 and APHN = 1*/
+        /// <summary>
+        /// This test validates errors recated to redundancy between APHN and Route Sign.
+        /// All Interstate (RouteSign 1) are part of the APHN by default.
+        /// All Interstates must be listed under APHN status 1 NHS because all Intstates are on the NHS.
+        /// Only applied to TypeRoad 1 - Mainlane due to ramp complexities.
+        /// </summary>
+        /// <param name="APHN">APHN Coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("2", false)]
@@ -167,6 +184,14 @@ namespace roadInvUnitTest
 
 
         /*If RouteSign = 2 or 3 and TypeRoad = 1 if NHS <> 0 then APHN = 1*/
+        /// <summary>
+        /// This one is a bit complicated of a rule for validation a specific APHN value combo.
+        /// The previous rule took care of RouteSign 1 rules. This takes care of RouteSign 2 and 3 which are US and State routes.
+        /// If a route is on the NHS and its on the on system, is must be listed under APHN status 1, on the NHS.
+        /// Only applied to TypeRoad 1 - Mainlane due to ramp complexities.
+        /// </summary>
+        /// <param name="APHN">APHN coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", true)]
         [InlineData("2", false)]
@@ -206,6 +231,14 @@ namespace roadInvUnitTest
         }
 
         /* If NHS = 0 the APHN <> 1 */
+        /// <summary>
+        /// This one is fairly simple. There is a status of APHN 1 - NHS.
+        /// All NHS routes must be on the APHN using coded value 1. If a route is not on 
+        /// the NHS, indicated by NHS coded value 0, but the APHN value 1 one indicating its is on the NHS
+        /// There is something wrong. It needs to launch an error.
+        /// </summary>
+        /// <param name="APHN">APHN coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", false)]
         public void RuleGP34C(string APHN, bool expected)
@@ -223,6 +256,13 @@ namespace roadInvUnitTest
         }
 
         /* If specialSystem = 9 then NHS must be 1 */
+        /// <summary>
+        /// All NHS routes are automically part of STRATNET.
+        /// Therefore if Special System is 9 - STRATNET then NHS must be 1 - on NHS
+        /// </summary>
+        /// <param name="specialSystem">Special Systems coded value as a string object</param>
+        /// <param name="NHS">NHS coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("5", "1", true)]
         [InlineData("1", "1", true)]
@@ -265,8 +305,15 @@ namespace roadInvUnitTest
         }
 
         //Both Direction # lanes
-
+        // if TypeOperation = 4 then BothDirectionNumLane >= 2
         //page 39
+        /// <summary>
+        /// This tests compatability of the typeOperation field and bothDirectionNumLanes field.
+        /// If a road is a divided highway (Type Operation 4). It would need at least two lanes. 
+        /// One Log direction lane and one antilog direction lane. Thats a minimum total of two lanes
+        /// By extension, the bothDirectionNunLanes field is a total of the log and anti-log lanes.
+        /// Any divided highway should then have a bothDirectionNumLane field equal to or greater than 2.
+        /// </summary>
         [Fact]
         public void InvalidSingleLaneDividedHighway()
         {
@@ -294,6 +341,14 @@ namespace roadInvUnitTest
         [InlineData("1")]
         [InlineData("2")]
         [InlineData("3")]
+        /// <summary>
+        /// This tests compatability of the typeOperation field and bothDirectionNumLanes field.
+        /// If a road is a divided highway (Type Operation 4). It would need at least two lanes. 
+        /// One Log direction lane and one antilog direction lane. Thats a minimum total of two lanes
+        /// By extension, the bothDirectionNunLanes field is a total of the log and anti-log lanes.
+        /// Any divided highway should then have a bothDirectionNumLane field equal to or greater than 2.
+        /// </summary>
+        /// <param name="TypeOperation">TypeOperation coded value as a string object</param>
         public void ValidNotSingleLaneDividedHighway(string TypeOperation)
         {
             var segment = new RoadInv.DB.RoadInv();
@@ -315,6 +370,20 @@ namespace roadInvUnitTest
 
         }
 
+        /// <summary>
+        /// This deals with simple math valdiations associated with the bothDirectionNumLanes and OneDirectionNumLanes fields in a divided highway
+        /// The bothDirectionNumLanes field is a combination of both log and antilog directions. OneDirectionNumLanes is just the
+        /// number of lanes for a single single. In theory,
+        /// 
+        /// OneDirectionNumLanes Antilog + OnDirectionNumLanes Log = BothDirectionNumLanes
+        /// 
+        /// If this is the case then BothDirectionNumLanes could never be bigger than OnDirectionNumLanes minus since the opposite side of the
+        /// road should have at least one lane.
+        /// 
+        /// </summary>
+        /// <param name="BothDirectionNumLanes">Number of lanes on both sides of the road of a divided highway in total. As a string object</param>
+        /// <param name="OneDirectionNumLanes">Number of lanes on just a single side of the divided highway as a string object</param>
+        /// <param name="Expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("2", "1", true)]
         [InlineData("5", "1", true)]
@@ -345,6 +414,16 @@ namespace roadInvUnitTest
 
         }
 
+        /// <summary>
+        /// This deal with simple math validations asscoiated with the BothDirectionNumLanes and 
+        /// OnDirectionNumLanes fields in a non-divided highway.
+        /// 
+        /// In a non-divided highway, in theory both bothDirectionNumLanes and OneDirectionNumLanes should be equal to each other
+        /// or the Both Directions lanes should be less than one direction numlanes
+        /// </summary>
+        /// <param name="BothDirectionNumLanes">Number of lanes on both sides of the road of a divided highway in total. As a string object</param>
+        /// <param name="OneDirectionNumLanes">Number of lanes on just a single side of the divided highway as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("2", "2", true)]
         [InlineData("8", "8", true)]
@@ -387,7 +466,13 @@ namespace roadInvUnitTest
         }
 
         //page 39 BothDirectionNum Lanes last rule
-
+        /// <summary>
+        /// BothDirectionsNumber of Lanes must be greater than OneDirection number of lanes, only when its a divided highway.
+        /// If its any other type operation like one-way, two way undivided or one-way couplet, both need to be equal to each other.
+        /// This tests if the two lane field are not equal which type operations will cause flags to be launched.
+        /// </summary>
+        /// <param name="TypeOperation">Type Operation Coded-value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", false)]
         [InlineData("2", false)]
@@ -423,6 +508,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// If the one direction number of lanes is greater than both directions number of lanes, then
+        /// its a divided highway. divided highways have medians. The median type must not be 0 - no median.
+        /// </summary>
+        /// <param name="MedianType">Median type coded-value as string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", false)]
         [InlineData("1", true)]
@@ -460,6 +551,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        ///  If one direction number of lanes is greare than both directions number of lanes, then
+        ///  its a divided highway. all divided highways have medians. all medians have a width.
+        /// </summary>
+        /// <param name="medianWidth">Median Width as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", false)]
         [InlineData("1", true)]
@@ -497,6 +594,13 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// checks a single combination of NHS and APHN.
+        /// if the APHN value 1 one, then the route is on the NHS.
+        /// All NHS values except for 0 are valid combinations with APHN 1.
+        /// </summary>
+        /// <param name="NHS">NHS coded value as string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", false)]
         [InlineData("1", true)]
@@ -537,7 +641,15 @@ namespace roadInvUnitTest
             }
         
         }
-        
+
+        /// <summary>
+        /// Checks a single combination of NHS and APHN
+        /// if NHS value indicates route is not on NHS, APHN can't equal code 1 (NHS). 
+        /// This violates the definition of the coded value. This test the rule that
+        /// errors that get launched with an APHN is not 1 but the NHS value is.
+        /// </summary>
+        /// <param name="NHS">NHS coded value as string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("0" ,true)]
         [InlineData("1", false)]
@@ -572,7 +684,15 @@ namespace roadInvUnitTest
             }
         }
 
-
+        /// <summary>
+        /// APHN coded value 2 - Other Arerials is defined as being all routes that are functional class 2, 3 or 4 which are
+        /// Other Freeways and Expressways and Other Principal Arterials. 
+        /// 
+        /// This unit test triggers error to validate if the APHN value is 2 Other Arterials try all
+        /// Functional classes and test for expected values.
+        /// </summary>
+        /// <param name="funcClass">Functional Class coded-value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", false)]
         [InlineData("2", true)]
@@ -611,6 +731,12 @@ namespace roadInvUnitTest
         }
 
         //page 48
+        /// <summary>
+        /// Interstates always have full access control.
+        /// Interstates are routeSign 1- Interstate. Interstates have ramps and other traffic control
+        /// mechanisms which make the Access control value 1 - Full Control
+        /// </summary>
+        /// <param name="accessControl">Access Control coded-value as string object</param>
         [Theory]
         [InlineData("2")]
         [InlineData("3")]
@@ -636,6 +762,13 @@ namespace roadInvUnitTest
             Assert.Contains(FieldsListModel.RouteSign, errorFields);
         }
 
+        /// <summary>
+        /// All divided highways have full control access.
+        /// This method tests different combinations with access 1- full control. only TypeOperation 4 - Divided highway
+        /// Should return not return errors.
+        /// </summary>
+        /// <param name="typeOperation">Acess control coded-value as string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", false)]
         [InlineData("2", false)]
@@ -670,6 +803,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// If the median type indicates there is a median (everything but 0 = no median). Then its a divided highway
+        /// If its a divided highway, the access control is full - code 1
+        /// </summary>
+        /// <param name="medianType">Median Type coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", true)]
         [InlineData("1", false)]
@@ -707,6 +846,12 @@ namespace roadInvUnitTest
 
         }
 
+        /// <summary>
+        /// if the median width is greater than 0, that indicates there is a median.
+        /// If there is a median then, then its a divided highway. All divided highways are access control 1 - full control
+        /// </summary>
+        /// <param name="medianWidth">Median width as a string. No units and not zero padded.</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", false)]
         [InlineData("1", true)]
@@ -746,6 +891,11 @@ namespace roadInvUnitTest
         }
 
         //page 49
+        /// <summary>
+        /// tests a single invalid combination between type operation and access control
+        /// all access control type 1- full control records must be type operation 4 - divided highway.
+        /// full control can only be achieved on a divided highway.
+        /// </summary>
         [Fact]
         public void InvalidTypeOperationAccessCombo()
         {
@@ -769,6 +919,11 @@ namespace roadInvUnitTest
             Assert.Contains(FieldsListModel.TypeOperation, errorFields);
         }
 
+        /// <summary>
+        /// All divided highway have medians
+        /// if the median width is zero that should cause an error with type operation 4 - divided highway.
+        /// Divided highways should have median greater than zero.
+        /// </summary>
         [Fact]
         public void DividedHighwayWithNoMedianWidth() 
         {
@@ -793,6 +948,11 @@ namespace roadInvUnitTest
             Assert.True(errorFields.Count == 2);
         }
 
+        /// <summary>
+        /// All divided highways have meidans
+        /// If the meidan type is not 0 (no median). That indicates the type operation should be 4 -divided highway.
+        /// If the median type is zero and the type operation is 4 divided highway, then an error should be launched.
+        /// </summary>
         [Fact]
         public void DividedHighwayWithNoMedianType()
         {
@@ -818,6 +978,11 @@ namespace roadInvUnitTest
         }
 
         //page 52
+        /// <summary>
+        /// Tests different type operations while using the same median width which indicates its a divided highway (type operation 4).
+        /// </summary>
+        /// <param name="typeOperation">Type Operation as a coded value</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", false)]
         [InlineData("2", false)]
@@ -851,6 +1016,13 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Both median width and median type can suggest the existance or lack of a median.
+        /// Both need to agree with each other. You can't have a median with of 0 but a median type of cable for instance.
+        /// This tests the situation of a 12 ft median with different median types. Only the median type 0 - no median should return an error.
+        /// </summary>
+        /// <param name="medianType">Median Type coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("0", false)]
         [InlineData("1", true)]
@@ -888,6 +1060,12 @@ namespace roadInvUnitTest
         }
 
         //page 54
+        /// <summary>
+        /// The validations do not allow a lane width greater than 15 feet.
+        /// test tries various lane widths with expecte results based on the 15 feet max.
+        /// </summary>
+        /// <param name="laneWidth">Lane width as an integer</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData(1, true)]
         [InlineData(5, true)]
@@ -930,6 +1108,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// surface width includes lanes inside of it. The surface width must be at least as big as the lane width. If not it should cause an error.
+        /// </summary>
+        /// <param name="laneWidth">Lane width in feet</param>
+        /// <param name="surfaceWidth">Surface Width in feet</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData(1, 15, true)]
         [InlineData(4, 15, true)]
@@ -976,6 +1160,13 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// The surface width should always be larger than the lane width times the number of lanes for both directions.
+        /// </summary>
+        /// <param name="laneWidth">Lane width in feet</param>
+        /// <param name="surfaceWidth">Surface width in feet</param>
+        /// <param name="bothDirectionNumLanes">Both Directions Number of lanes</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData(2, 4, "1", true)]
         [InlineData(1, 4, "1", true)]
@@ -1019,6 +1210,15 @@ namespace roadInvUnitTest
         }
 
         //page 61
+        /// <summary>
+        /// Roadway Width is always less thant the surface width. surfae width includes the shoulders.
+        /// Roadway width does not. 
+        /// 
+        /// Test check multiple combo lengths of roadway width and surface width. 
+        /// </summary>
+        /// <param name="roadwayWidth">Roadway width in feet</param>
+        /// <param name="surfaceWidth">Surface widht in feet</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData(10, 10, true)]
         [InlineData(9, 10, true)]
@@ -1064,6 +1264,14 @@ namespace roadInvUnitTest
         }
 
         //page 66
+        /// <summary>
+        /// checks combinations of median type and type operation. Type operation 4 - divided 
+        /// highway must have a median type that is not 0 - no-median. Also if median type is not equal to 0, then type operation must be 4.
+        /// 
+        /// </summary>
+        /// <param name="medianType">Median Type coded value as a string object</param>
+        /// <param name="typeOperation">Type Operation coded value as a string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1", "4" , true)]
         [InlineData("2", "4", true)]
@@ -1105,6 +1313,12 @@ namespace roadInvUnitTest
             }
         }
 
+        /// <summary>
+        /// Year reconstructed must not be less than 1900 or greater than 2100. Its just a reasonabless range for inputs.
+        /// Method tests different year based on this rule.
+        /// </summary>
+        /// <param name="yearRecon">Year road was last reconstructed (example overlay, fog seal, rebuild)</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1900", true)]
         [InlineData("1966", true)]
@@ -1149,6 +1363,12 @@ namespace roadInvUnitTest
 
         }
 
+        /// <summary>
+        /// Year reconstructed must not be less than 1900 or greater than 2100. Its just a reasonabless range for inputs.
+        /// Method tests different year based on this rule.
+        /// </summary>
+        /// <param name="yearBuilt">Year First Built as string object</param>
+        /// <param name="expected">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
         [Theory]
         [InlineData("1900", true)]
         [InlineData("1966", true)]
@@ -1194,6 +1414,9 @@ namespace roadInvUnitTest
 
         }
 
+        /// <summary>
+        /// Testing for situation where there is no median where meidan type and median width are filled in. There should not be any validation errors thrown.
+        /// </summary>
         [Fact]
         public void NoMedianCombo()
         {
@@ -1215,6 +1438,11 @@ namespace roadInvUnitTest
             Assert.Empty(results);
         }
 
+        /// <summary>
+        /// This is a test that is designed to fail every time. You specify a record id and then it runs validation against it.
+        /// I generally use this as a debugging tool when I find a troublesome record in the main interface but I want to drill 
+        /// down further as to why was an error caused in the first place.
+        /// </summary>
         [Fact]
         public void SpecificRecorTest()
         {

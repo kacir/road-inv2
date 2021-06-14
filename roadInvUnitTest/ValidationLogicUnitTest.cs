@@ -273,7 +273,11 @@ namespace roadInvUnitTest
             var errorFields = AffectedFields(results);
 
             Assert.True(results.Count == erroCount, AffectedFieldsMessage(errorFields));
-            Assert.True(errorFields.Contains(FieldsListModel.AH_BLM) | errorFields.Contains(FieldsListModel.AH_ELM));
+            if (erroCount > 0)
+            {
+                Assert.True(errorFields.Contains(FieldsListModel.AH_BLM) | errorFields.Contains(FieldsListModel.AH_ELM));
+            }
+            
         }
 
 
@@ -888,6 +892,13 @@ namespace roadInvUnitTest
         }
 
         //exception case about SectionCode x as one-way couplet
+        /// <summary>
+        /// Tests the exception case about one-way couplets and section codes. One way couplets have x in the section code.
+        /// All one-way couplets are antilog roads. If the road has both an x in the section number and its a listed as
+        /// a A log record, it needs to be raised as an error.
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="expected"></param>
         [Theory]
         [InlineData("B", true)]
         [InlineData("A", false)]
@@ -917,9 +928,19 @@ namespace roadInvUnitTest
             }
         }
 
-        //One way couplet TypeOperation
+        //
+        /// <summary>
+        /// Checks One way couplet and TypeOperation combination.
+        /// All one-way couplets have an x in the section number. If a record has an x in the section number but
+        /// The typeOperation is something other than 3 one way couplet, launch an error.
+        /// </summary>
+        /// <param name="TypeOperation"></param>
+        /// <param name="expected"></param>
         [Theory]
+        [InlineData("1", false)]
+        [InlineData("2", false)]
         [InlineData("3", true)]
+        [InlineData("4", false)]
         public void OneWayCoupletTypeOperation(string TypeOperation, bool expected)
         {
             var segment = new RoadInv.DB.RoadInv();
@@ -947,8 +968,5 @@ namespace roadInvUnitTest
             }
         }
 
-
-        //NHS Functional Class Pair
-        //page24
     }
 }
