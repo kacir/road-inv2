@@ -937,7 +937,7 @@ namespace roadInvUnitTest
         [InlineData("0", true)]
         public void ValidCharacters(string testString, bool expected)
         {
-            var invalidChars = ValidationModel.checkInvalidCharacters(testString);
+            var invalidChars = ValidationModel.CheckInvalidCharacters(testString);
 
             if (expected)
             {

@@ -59,7 +59,7 @@ namespace roadInvUnitTest
         /// </summary>
         /// <param name="rawList">a string list object containing field names</param>
         /// <returns>a sting version of the inptu rawList object in a comma delinated format</returns>
-        private static List<string> AffectedFields(List<RoadInv.Models.ErrorItemModel> rawList)
+        private static List<string> AffectedFields(List<RoadInv.Models.SingleSegmentErrorItemModel> rawList)
         {
             var resultList = new List<string>();
             foreach (var error in rawList)

@@ -7,7 +7,7 @@ namespace RoadInv.Models
 {
     public class BulkValidationItemModel
     {
-        public List<ErrorItemModel> errors = new();
+        public List<SingleSegmentErrorItemModel> errors = new();
         public DB.RoadInv segment;
     }
 }

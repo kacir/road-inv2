@@ -67,7 +67,7 @@ namespace roadInvUnitTest
         /// </summary>
         /// <param name="countyString">County coded value as a string. Non-zero padded</param>
         /// <param name="expectedResult">Boolean value. True is the result is expected to return no errors. false is the expected result includes errors</param>
-        private static List<string> AffectedFields(List<RoadInv.Models.ErrorItemModel> rawList)
+        private static List<string> AffectedFields(List<RoadInv.Models.SingleSegmentErrorItemModel> rawList)
         {
             var resultList = new List<string>();
             foreach (var error in rawList)
