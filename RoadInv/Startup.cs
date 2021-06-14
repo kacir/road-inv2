@@ -33,20 +33,34 @@ namespace RoadInv
             
             services.AddMvc();
 
-            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-              .AddMicrosoftIdentityWebApp(configuration.GetSection("AzureAd")); //we need to be using an ssl certificate for this to work right in chrome
-            services.AddControllers(options =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
+            #region oidc security
+            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme) //Comment out this region, UseAuthentication() and UseAuthorization()
+              .AddMicrosoftIdentityWebApp(configuration.GetSection("AzureAd"));    //to disable SSO. Make sure anonymous authentication is enabled in IIS.
+            services.AddControllers(options =>                                     //We need to be using an ssl certificate for this to work right in chrome.
+            {                                                                      //Configure URI redirects in portal.azure.com under App Registrations->
+                var policy = new AuthorizationPolicyBuilder()                      //->RoadwayInventory->Authentication once authenticaion is enabled again 
+                    .RequireAuthenticatedUser()                                    //Authorization seems to need a different registration method
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
 
             //services.ConfigureNonBreakingSameSiteCookies();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("admin-only", p =>
+                {
+                    p.RequireClaim("groups", this.configuration["SystemInformationOID"]); //system information group object ID, should probably put GUID in appsettings
+                    //portal.azure.com => App Registrations => RoadwayInventory => Manifest, then set "groupMembershipClaims": "SecurityGroup"
+                    //portal.azure.com => Active Directory => find the group you want to allow => copy and paste the group's Object ID
+                    //add the [Authorize("admin-only")] to classes/functions you want to require authorization
+                });
+            });
+
             services.AddRazorPages()
                 .AddMicrosoftIdentityUI();
+            #endregion
+
 
             services.AddDbContext<roadinvContext>
                 (options => options.UseSqlServer(this.configuration["EntityConnectinString"]));
@@ -66,10 +80,6 @@ namespace RoadInv
 
             // Add this before any other middleware that might write cookies
             app.UseCookiePolicy();
-            //app.UseCookiePolicy(new CookiePolicyOptions()
-            //{
-            //    MinimumSameSitePolicy = SameSiteMode.None
-            //});
             app.UseFileServer();
             //app.UseHttpsRedirection();
             app.UseRouting();

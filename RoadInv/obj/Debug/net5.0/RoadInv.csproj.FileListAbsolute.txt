@@ -332,7 +332,6 @@ C:\Users\MW42705\Source\Repos\road-inv2\RoadInv\bin\Debug\net5.0\X.PagedList.Web
 C:\Users\MW42705\Source\Repos\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\Details.cshtml.g.cs
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\Razor\Views\Shared\system_changes_special.cshtml.g.cs
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.csprojAssemblyReference.cache
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.AspNetCore.Razor.Language.dll
 E:\scratch\RoadInv_Overhaul\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -434,3 +433,13 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Ident
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Identity.Web.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Identity.Web.UI.Views.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Identity.Web.UI.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.csproj.AssemblyReference.cache
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\libman.json
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\WebClientAPI.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\AHTD.Security.STSWeb.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\ArDOT_UserProv.Client.API.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Elmah.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\System.Net.Http.Formatting.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.IdentityModel.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Web.XmlTransform.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\NuGet.Core.dll

@@ -9,10 +9,12 @@ using System.Collections;
 using RoadInv.Models;
 using RoadInv.DB;
 using Z.EntityFramework.Plus;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RoadInv.Controllers
 {
 
+    [Authorize("admin-only")]
     public class HomeController : Controller
     {
         private roadinvContext _dbContext;
@@ -29,7 +31,7 @@ namespace RoadInv.Controllers
             return View("error");
         }
 
-
+        
         [Route("segments.html")]
         [Route("segments")]
         public IActionResult SearchTable(string district= "", string county = "", string route = "", string section = "", string direction = "", decimal logmile = -1, string typeroad = "")

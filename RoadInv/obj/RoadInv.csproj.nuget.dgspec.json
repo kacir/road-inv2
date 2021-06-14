@@ -50,6 +50,18 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AHTDAppLogWebClientAPI": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "AHTDSTSWebClient": {
+              "target": "Package",
+              "version": "[6.0.24, )"
+            },
+            "ArDOT_UserProv.Client.API": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
             "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
               "target": "Package",
               "version": "[5.0.6, )"

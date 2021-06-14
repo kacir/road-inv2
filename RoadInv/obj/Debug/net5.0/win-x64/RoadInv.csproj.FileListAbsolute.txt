@@ -149,7 +149,6 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\ref\RoadInv.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.pdb
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.genruntimeconfig.cache
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.csprojAssemblyReference.cache
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\bulk_validate.cshtml.g.cs
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\edit_segment.cshtml.g.cs
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\Razor\Views\Shared\new_segment.cshtml.g.cs
@@ -164,3 +163,4 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microso
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.Identity.Web.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.Identity.Web.UI.Views.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.Identity.Web.UI.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.csproj.AssemblyReference.cache
