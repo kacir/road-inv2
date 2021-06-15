@@ -1,4 +1,5 @@
-﻿@using X.PagedList.Mvc.Core;
+﻿
+@using X.PagedList.Mvc.Core;
 @model RoadInv.Models.SystemChangesPageModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @*Need to addTagHelper globally*@
@@ -6,36 +7,54 @@
 @section nav_apnh {
     active
 }
-<link rel="stylesheet" href="/css/micromodal.css" >
+@{
+    ViewData["Title"] = "APHN";
+    ViewData["slash"] = "/";
+    ViewBag.Title = "APHN";
+
+}
+
+<link href="~/css/micromodal.css" rel="stylesheet">
 <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
 
-<h1>Preview Changes</h1>
-
 <div id="Segment-search-main-content master-grid">
-    <div class="master-grid grid-container" style="align-content: center; text-align: center;">
-        <div>
-            County: @Html.DisplayFor(Model => Model.County)
+   
+    <div class='split-right'>
+        <div class="master-grid grid-container" style="align-content: center; text-align: center;">
+            <div><h1>System Change: APHN</h1> </div>
         </div>
-            Route: @Html.DisplayFor(Model => Model.Route)
-        <div>
-            Section: @Html.DisplayFor(Model => Model.Section)
-        </div>
-            Direction: @Html.DisplayFor(Model => Model.Direction)
-        <div>
-            BLM: @Html.DisplayFor(Model => Model.BLM)
-        </div>
-        <div>
-            ELM: @Html.DisplayFor(Model => Model.ELM)
-        </div>
-        <div>
-            Total Miles to be Modified: @ViewBag.lenModified
-        </div>
-        <div>
-            Total Miles of Roadway on APHN: @ViewBag.TotalLengthOnAPHN
-        </div>
-        <div>
-            Total Miles of Roadway off APHN: @ViewBag.TotalLengthOffAPHN
-        </div>
-
+        <section>
+            <h5>Validation Report</h5>
+            <table>
+                 <tr>
+                    <td>
+                        County: @Html.DisplayFor(Model => Model.County)
+                    </td>
+                        Route: @Html.DisplayFor(Model => Model.Route)
+                    <td>
+                        Section: @Html.DisplayFor(Model => Model.Section)
+                    <td/>
+                        Direction: @Html.DisplayFor(Model => Model.Direction)
+                    <td>
+                        BLM: @Html.DisplayFor(Model => Model.BLM)
+                    </td>
+                    <td>
+                        ELM: @Html.DisplayFor(Model => Model.ELM)
+                    </td>
+                    <td>
+                        Total Miles to be Modified: @ViewBag.lenModified
+                    </td>
+                    <td>
+                        Total Miles of Roadway on APHN: @ViewBag.TotalLengthOnAPHN
+                    </td>
+                    <td>
+                        Total Miles of Roadway off APHN: @ViewBag.TotalLengthOffAPHN
+                    </td>
+                </tr>
+            </table>
+        </section>
     </div>
 </div>
+
+
+
