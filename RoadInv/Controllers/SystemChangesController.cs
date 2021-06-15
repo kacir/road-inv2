@@ -10,6 +10,7 @@ using X.PagedList;
 using RoadInv.Models;
 using System.Dynamic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace RoadInv.Controllers
 {
@@ -446,21 +447,27 @@ namespace RoadInv.Controllers
                 }
                 else if (pageModel.NHS != null)
                 {
+                    var result = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM);//removed pageModel.NHS
+                    string json = JsonConvert.SerializeObject(result, Formatting.Indented); //testing
                     ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
                     return RedirectToAction("system_changes_nhs", pageModel);
                 }
                 else if (pageModel.APHN != null)
                 {
+                    var result = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM); //removed pageModel.APHN
+                    string json = JsonConvert.SerializeObject(result, Formatting.Indented); //testing
                     ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
                     return RedirectToAction("system_changes_aphn", pageModel);
                 }
                 else if (pageModel.FuncClass != null)
                 {
+                    ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM);//removed pageModel.FuncClass
                     ApiController.ImplementBulkEditFuncClass(roadID, pageModel.BLM, pageModel.ELM, pageModel.FuncClass);
                     return RedirectToAction("system_changes_func", pageModel);
                 }
                 else if (pageModel.SpecialSystem != null)
                 {
+                    ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM);//removed pageModel.SpecialSystem
                     ApiController.ImplementBulkEditSpecial(roadID, pageModel.BLM, pageModel.ELM, pageModel.SpecialSystem);
                     return RedirectToAction("system_changes_special", pageModel);
                 }

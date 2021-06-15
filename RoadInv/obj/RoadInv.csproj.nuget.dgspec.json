@@ -1,26 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MW42705\\source\\repos\\road-inv2\\RoadInv\\RoadInv.csproj": {}
+    "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\RoadInv.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MW42705\\source\\repos\\road-inv2\\RoadInv\\RoadInv.csproj": {
+    "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\RoadInv.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MW42705\\source\\repos\\road-inv2\\RoadInv\\RoadInv.csproj",
+        "projectUniqueName": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\RoadInv.csproj",
         "projectName": "RoadInv",
-        "projectPath": "C:\\Users\\MW42705\\source\\repos\\road-inv2\\RoadInv\\RoadInv.csproj",
-        "packagesPath": "C:\\Users\\MW42705\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MW42705\\source\\repos\\road-inv2\\RoadInv\\obj\\",
+        "projectPath": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\RoadInv.csproj",
+        "packagesPath": "C:\\Users\\rk42861\\.nuget\\packages\\",
+        "outputPath": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\MW42705\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\MicroFocus.VisualStudio.Offline.config",
+          "C:\\Users\\rk42861\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -29,9 +27,8 @@
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Micro Focus\\Visual COBOL\\NuGetPackages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "\\\\csd1\\appdev\\Nuget": {},
+          "C:\\Users\\rk42861\\AppData\\Local\\Esri\\NuGet": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -50,6 +47,22 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AHTDAppLogWebClientAPI": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "AHTDSTSWebClient": {
+              "target": "Package",
+              "version": "[6.0.24, )"
+            },
+            "ArDOT_UserProv.Client.API": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.5, )"
@@ -69,6 +82,14 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[5.0.4, )"
+            },
+            "Microsoft.Identity.Web": {
+              "target": "Package",
+              "version": "[1.12.0, )"
+            },
+            "Microsoft.Identity.Web.UI": {
+              "target": "Package",
+              "version": "[1.12.0, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -109,7 +130,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

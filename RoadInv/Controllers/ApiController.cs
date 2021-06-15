@@ -327,17 +327,11 @@ namespace RoadInv.Controllers
         }
 
         [Route("api/validate_bulk")]
-        public IActionResult ValidateBulk(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string NHS)
+        public IActionResult ValidateBulk(string AH_RoadID, decimal AH_BLM, decimal AH_ELM)
         {
             var overlappingRecords = from record in this._dbContext.RoadInvs
-                         where record.AhRoadId == AH_RoadID & (record.AhBlm < AH_BLM &  record.AhElm > AH_BLM) | (record.AhBlm < AH_ELM & record.AhElm > AH_ELM)
-                         select record;
-
-            foreach(var row in overlappingRecords)
-            {
-                row.Nhs = NHS;
-            }
-
+                         where record.AhRoadId == AH_RoadID & ((record.AhBlm < AH_BLM &  record.AhElm > AH_BLM) | (record.AhBlm < AH_ELM & record.AhElm > AH_ELM)) 
+                         select record; //added parenthesis. please look at this.
 
             var bulkErrors = new ErrorItemBulkModel(this._dbContext, AH_BLM, AH_ELM, overlappingRecords);
 
@@ -350,12 +344,12 @@ namespace RoadInv.Controllers
             // - find number of out of range miles
 
             var bulkErrorsErrors = Json(bulkErrors);
-
+            
             return bulkErrorsErrors;
         }
 
         [Route("api/edit_bulk/nhs")]
-        public IActionResult ImplementBulkEditNHS(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string NHS)
+        public IActionResult ImplementBulkEditNHS(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string NHS) //string NHS
         {
             //split records that partly overlap the designation into multiple pieces
             var ajustedSegments  = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);

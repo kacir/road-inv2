@@ -67,7 +67,7 @@
 
                     </div>
                     <footer class="modal__footer" id="modal_footer">
-                        <button class="modal__btn modal__btn-primary" type="submit" value="Update" onclick="AlertFunction()">Submit for Validation</button>
+                        <button class="modal__btn modal__btn-primary" value="Update" onclick="AlertFunction()">Submit for Validation</button>
                         <button class="modal__btn" aria-label="Close this dialog window" data-micromodal-close>Close</button>
                     </footer>
                 }
@@ -282,6 +282,93 @@ new
     function clearall() {
         document.getElementById("Search").reset();
     }
+    var subjectAttributes = ["@Model.District", "@Model.County", "@Model.Section", "@Model.Route",
+        "@Model.Section", "@Model.Direction", "@Model.BLM", "@Model.ELM", "@Model.FuncClass", "@Model.NHS",
+        "@Model.APHN", "@Model.SpecialSystem", "@Model.RoadID"];
+
+        function gatherInput() {
+        inputs = {};
+
+        var i;
+        for (i = 0; i < subjectAttributes.length; i++) {
+            var raw = $("#" + subjectAttributes[i]).val();
+            inputs[subjectAttributes[i]] = raw;
+        }
+
+            inputs["ID"] = @Model.RoadID
+
+
+
+        return inputs;
+    }
+
+    //trigger committ changes when submit inputs occurs
+    $("input, select, textarea").on("keyup, change", submitInputs);
+
+
+    //General function to check to see if the inputs are valid
+    function submitInputs() {
+        console.log("SubmitInputs");
+        var inputs = gatherInput();
+        var constructString = "";
+
+        //fill in the ID attribute because the user has no control over this variable. Hidden from user
+
+        $.post("api/validate_bulk", inputs, errorPost, "json");
+
+        //find the original input values and check to see if anything changed
+        $("#save-changes, #reset-changes").attr("disabled", "");
+        subjectAttributes.forEach(function (x) {
+            if (originalValues[x] == inputs[x]) {
+                //do nothing
+            } else {
+                $("#save-changes, #reset-changes").removeAttr("disabled");
+            }
+        });
+    }
+    //apply tag class error-flag to everything that has an error asscoaited with it.
+    function errorPost(data) {
+        if (!$("#manual-override").hasClass("override-active")) {
+            console.log(data);
+            //zero out all attributes errors
+            $(".error-flag")
+                .removeAttr("title")
+                .tooltip('disable');
+
+            for (i = 0; i < subjectAttributes.length; i++) {
+                var raw = $("#" + subjectAttributes[i]).removeClass("error-flag");
+            }
+            data.forEach(function (item) {
+                item.fields.forEach(function (field) {
+                    console.log(item);
+                    $("#" + field)
+                        .addClass("error-flag")
+                        .attr("title", item.errorMessageLong)
+                        .attr("data-placement", "bottom")
+                        .tooltip('enable');
+                });
+
+            });
+
+            //change style of save change button if there area errors
+            if (data.length > 0) {
+                $("#save-changes").addClass("override-active").text("Can't Save, Errors");
+            } else {
+                $("#save-changes").removeClass("override-active").text("Save");
+            }
+
+        } else {
+            // logic goes here^
+            $("#save-changes").removeClass("override-active").text("Save");
+            subjectAttributes.forEach(function (item) {
+                $("#" + item)
+                    .removeClass("error-flag")
+                    .removeAttr("title")
+                    .removeAttr("data-placement")
+                    .tooltip("disable");
+            });
+        }
+    }
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -356,5 +443,4 @@ new
         }
 
     }
-
 </script>
