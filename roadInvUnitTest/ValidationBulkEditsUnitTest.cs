@@ -194,7 +194,7 @@ namespace roadInvUnitTest
                 counter += 1;
             }
         }
-
+        
         /// <summary>
         /// Tests a specific bulk edit that only effects one record where the bulk specificed range exactly matches the record's range.
         /// In this specific case the middle record in a seris is selected.

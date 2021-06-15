@@ -10,6 +10,7 @@ using X.PagedList;
 using RoadInv.Models;
 using System.Dynamic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace RoadInv.Controllers
 {
@@ -446,13 +447,15 @@ namespace RoadInv.Controllers
                 }
                 else if (pageModel.NHS != null)
                 {
-                    ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM);//removed pageModel.NHS
+                    var result = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM);//removed pageModel.NHS
+                    string json = JsonConvert.SerializeObject(result, Formatting.Indented); //testing
                     ApiController.ImplementBulkEditNHS(roadID, pageModel.BLM, pageModel.ELM, pageModel.NHS);
                     return RedirectToAction("system_changes_nhs", pageModel);
                 }
                 else if (pageModel.APHN != null)
                 {
-                    ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM); //removed pageModel.APHN
+                    var result = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM); //removed pageModel.APHN
+                    string json = JsonConvert.SerializeObject(result, Formatting.Indented); //testing
                     ApiController.ImplementBulkEditAPHN(roadID, pageModel.BLM, pageModel.ELM, pageModel.APHN);
                     return RedirectToAction("system_changes_aphn", pageModel);
                 }

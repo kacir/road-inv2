@@ -33,7 +33,7 @@ namespace RoadInv
             
             services.AddMvc();
 
-            #region oidc security
+            //Authentication and Authorization using Azure AD
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme) //Comment out this region, UseAuthentication() and UseAuthorization()
               .AddMicrosoftIdentityWebApp(configuration.GetSection("AzureAd"));    //to disable SSO. Make sure anonymous authentication is enabled in IIS.
             services.AddControllers(options =>                                     //We need to be using an ssl certificate for this to work right in chrome.
@@ -72,7 +72,6 @@ namespace RoadInv
 
             services.AddRazorPages()
                 .AddMicrosoftIdentityUI();
-            #endregion
 
 
             services.AddDbContext<roadinvContext>
