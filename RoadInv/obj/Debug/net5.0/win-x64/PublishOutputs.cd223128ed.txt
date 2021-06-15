@@ -26,9 +26,6 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\README.md
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\RI_Cheat_Sheet.pdf
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\scripts\gatherinput.js
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\scripts\set_submit_search.js
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\scripts\unit_tests.js
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\scripts\validate.js
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\system_changes\aphn1.html
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\system_changes\func1.html
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\system_changes\nhs1.html
@@ -39,7 +36,13 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\RoadInv.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\RoadInv.runtimeconfig.json
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\RoadInv.pdb
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Azure.Core.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Azure.Identity.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Azure.Security.KeyVault.Certificates.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Azure.Security.KeyVault.Secrets.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Humanizer.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.Bcl.AsyncInterfaces.dll
@@ -57,6 +60,10 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.Extensions.DependencyModel.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.Identity.Client.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.Identity.Web.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.Identity.Web.UI.Views.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.Identity.Web.UI.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.IdentityModel.Logging.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.IdentityModel.Protocols.dll

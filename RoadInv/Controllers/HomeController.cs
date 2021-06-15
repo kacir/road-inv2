@@ -9,10 +9,12 @@ using System.Collections;
 using RoadInv.Models;
 using RoadInv.DB;
 using Z.EntityFramework.Plus;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RoadInv.Controllers
 {
 
+    [Authorize("admin-only")]
     public class HomeController : Controller
     {
         private roadinvContext _dbContext;
@@ -29,7 +31,7 @@ namespace RoadInv.Controllers
             return View("error");
         }
 
-
+        
         [Route("segments.html")]
         [Route("segments")]
         public IActionResult SearchTable(string district= "", string county = "", string route = "", string section = "", string direction = "", decimal logmile = -1, string typeroad = "")
@@ -99,21 +101,21 @@ namespace RoadInv.Controllers
             return View("index");
         }
 
-        [Route("new_segement.html")]
-        [Route("new_segement")]
+        [Route("new_Segment.html")]
+        [Route("new_Segment")]
         public IActionResult new_segment()
         {
             var segmentDetails = new DB.RoadInv();
             segmentDetails.Id = -1;
             var val = new ValidationModel(this._dbContext);
 
-            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.newSegment);
+            var SegmentPageObj = new SegmentDetailPageModel(segmentDetails, val, SegmentDetailPageModel.newSegment);
 
-            return View("edit_segement", segementPageObj);
+            return View("edit_Segment", SegmentPageObj);
         }
 
-        [Route("dup_segement")]
-        [Route("dup_segement.html")]
+        [Route("dup_Segment")]
+        [Route("dup_Segment.html")]
         public IActionResult DuplicateSegment(int ID)
         {
             
@@ -121,20 +123,20 @@ namespace RoadInv.Controllers
             segmentDetails.Id = -1;
             var val = new ValidationModel(this._dbContext);
 
-            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.duplicateSegment);
+            var SegmentPageObj = new SegmentDetailPageModel(segmentDetails, val, SegmentDetailPageModel.duplicateSegment);
 
-            return View("edit_segement", segementPageObj);
+            return View("edit_Segment", SegmentPageObj);
         }
 
-        [Route("edit_segement")]
-        [Route("edit_segement.html")]
-        public IActionResult edit_segement(int ID = -1)
+        [Route("edit_Segment")]
+        [Route("edit_Segment.html")]
+        public IActionResult edit_Segment(int ID = -1)
         {
             var segmentDetails = this._dbContext.RoadInvs.Find(ID);
             var val = new ValidationModel(this._dbContext);
-            var segementPageObj = new SegementDetailPageModel(segmentDetails, val, SegementDetailPageModel.editSegment);
+            var SegmentPageObj = new SegmentDetailPageModel(segmentDetails, val, SegmentDetailPageModel.editSegment);
 
-            return View("edit_segement", segementPageObj);
+            return View("edit_Segment", SegmentPageObj);
         }
 
         [Route("quality_control")]

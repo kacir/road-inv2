@@ -67,8 +67,8 @@ namespace RoadInv.Models
         //total legth of records effected even if its outside of the re-designation length
         public decimal effectedLength;
         public int effectedRecordCount;
-        public decimal effectedBLM;
-        public decimal effectedELM;
+        public decimal? effectedBLM;
+        public decimal? effectedELM;
 
         //stats associated with errors that got caught by error validation
         public decimal errorLength;
@@ -80,13 +80,11 @@ namespace RoadInv.Models
             AH_BLM = aH_BLM;
             AH_ELM = aH_ELM;
             this.bulkDistance = AH_ELM - AH_BLM;
-
             this.effectedRecords = effectedRecords;
-
             this.effectedLength = (decimal)this.effectedRecords.Select(x => x.AhLength).Sum();
             this.effectedRecordCount = this.effectedRecords.Count();
-            this.effectedBLM = (decimal)this.effectedRecords.Select(x => x.AhLength).Min();
-            this.effectedELM = (decimal)this.effectedRecords.Select(x => x.AhLength).Max();
+            this.effectedBLM = (decimal?)this.effectedRecords.Select(x => x.AhLength).Min();
+            this.effectedELM = (decimal?)this.effectedRecords.Select(x => x.AhLength).Max();
 
             var errorRecords = new List<DB.RoadInv>();
             foreach (var row in this.effectedRecords)
