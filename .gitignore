@@ -31,6 +31,12 @@ RoadInv/obj/Debug/net5.0/RoadInv.pdb
 ####################
 UpgradeLog.XML
 _UpgradeReport_Files/
+###############
+# Directories #
+###############
+bin/
+obj/
+TestResults/
 ###################
 # Web publish log #
 ###################
