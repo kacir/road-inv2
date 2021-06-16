@@ -33,6 +33,7 @@ namespace RoadInv
             
             services.AddMvc();
 
+            #region Authentication and Authorization
             //Authentication and Authorization using Azure AD
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme) //Comment out this region, UseAuthentication() and UseAuthorization()
               .AddMicrosoftIdentityWebApp(configuration.GetSection("AzureAd"));    //to disable SSO. Make sure anonymous authentication is enabled in IIS.
@@ -69,6 +70,7 @@ namespace RoadInv
 
                 });
             });
+            #endregion
 
             services.AddRazorPages()
                 .AddMicrosoftIdentityUI();
@@ -97,14 +99,11 @@ namespace RoadInv
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
-
             app.UseEndpoints(endpoints => 
             {
                endpoints.MapControllerRoute(
                name: "default",
                pattern: "{controller=Home}/{action=Index}/{id?}");
-
                endpoints.MapControllers();
             });
         }

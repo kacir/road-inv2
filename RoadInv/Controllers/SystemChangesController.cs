@@ -406,40 +406,11 @@ namespace RoadInv.Controllers
             if (ModelState.IsValid)
             {
                 //pageModel.PreviewChanges = false;
-                var roads = from r in _context.RoadInvs //query is defined but not running against the database
-                            select r;
 
                 var ApiController = new ApiController(_context);
 
-                if (!String.IsNullOrEmpty(pageModel.County))
-                {
-                    roads = roads.Where(r => r.AhCounty.Equals(pageModel.County));
-                }
-                if (!String.IsNullOrEmpty(pageModel.Route))
-                {
-                    roads = roads.Where(r => r.AhRoute.Equals(pageModel.Route));
-                }
-                if (!pageModel.Section.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhSection.Equals(pageModel.Section));
-                }
-                if (!String.IsNullOrEmpty(pageModel.Direction))
-                {
-                    roads = roads.Where(r => r.LogDirect.Equals(pageModel.Direction));
-                }
-                if (!pageModel.BLM.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.BLM));
-                }
-                if (!pageModel.ELM.Equals(null))
-                {
-                    roads = roads.Where(r => r.AhBlm.Equals(pageModel.ELM));
-                }
-                //==========================================================
-                //======================Bulk Edits Begin====================
-                //==========================================================
                 var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
-                
+
                 ViewData["County"] = pageModel.County;
                 if (pageModel.PreviewChanges == true)
                 {
@@ -477,10 +448,10 @@ namespace RoadInv.Controllers
             return Redirect(baseUrl);//need to figure out how to go back to previous screen on close
         }
 
-        [HttpGet]
+        //[HttpPost]
         [Route("system_changes/preview_changes")]
         [Route("system_changes/preview_changes.html")]
-        public async Task<IActionResult> preview_changes(SystemChangesPageModel pageModel)
+        public IActionResult preview_changes(SystemChangesPageModel pageModel)
         {
             
             var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
@@ -500,14 +471,13 @@ namespace RoadInv.Controllers
             ViewBag.TotalLengthOffAPHN = (from r in _context.RoadInvs
                                           where r.Aphn == "0"
                                           select r.AhLength).Sum();
+            //Bulk_Update(pageModel);
             
             //right now, the editor will have to push the back button to get back to the previous action.
             //the page model will be saved and the values will return in the forms
             return View(pageModel);
         }
-
-
-
+        
         private bool RoadInvExists(int id)
         {
             return _context.RoadInvs.Any(e => e.Id == id);

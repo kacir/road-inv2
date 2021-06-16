@@ -31,7 +31,7 @@
                 <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
             </header>
             <main class="modal__content" id="modal-1-content">
-                @using (Html.BeginForm("bulk_update", "system_changes", FormMethod.Post))
+                @using (Html.BeginForm("preview_changes", "system_changes", FormMethod.Post))
                 {
                     <div class='form-group'>
                         <label>County</label>
@@ -60,11 +60,6 @@
                     <div class="form-group">
                         <label for='form-district'>APHN</label>
                         @Html.DropDownListFor(m => m.APHN, Model.APHN_vals, " ", new { @class = "form-control" })
-                    </div>
-                    <div class='form-group'>
-                        <label>Preview Changes</label>
-                        @Html.CheckBoxFor(m => m.PreviewChanges, Model.PreviewChanges)
-
                     </div>
                     <footer class="modal__footer" id="modal_footer">
                         <button class="modal__btn modal__btn-primary" value="Update" onclick="AlertFunction()">Submit for Validation</button>

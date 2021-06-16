@@ -25,33 +25,51 @@
         </div>
         <section>
             <h5>Validation Report</h5>
-            <table>
-                 <tr>
-                    <td>
-                        County: @Html.DisplayFor(Model => Model.County)
-                    </td>
-                        Route: @Html.DisplayFor(Model => Model.Route)
-                    <td>
-                        Section: @Html.DisplayFor(Model => Model.Section)
-                    <td/>
-                        Direction: @Html.DisplayFor(Model => Model.Direction)
-                    <td>
-                        BLM: @Html.DisplayFor(Model => Model.BLM)
-                    </td>
-                    <td>
-                        ELM: @Html.DisplayFor(Model => Model.ELM)
-                    </td>
-                    <td>
-                        Total Miles to be Modified: @ViewBag.lenModified
-                    </td>
-                    <td>
-                        Total Miles of Roadway on APHN: @ViewBag.TotalLengthOnAPHN
-                    </td>
-                    <td>
-                        Total Miles of Roadway off APHN: @ViewBag.TotalLengthOffAPHN
-                    </td>
-                </tr>
-            </table>
+            @using (Html.BeginForm("bulk_update", "system_changes", FormMethod.Post))
+            {
+        <table>
+            <tr>
+                <td>
+                    County: @Html.DisplayFor(Model => Model.County)
+                </td>
+                Route: @Html.DisplayFor(Model => Model.Route)
+                <td>
+                    Section: @Html.DisplayFor(Model => Model.Section)
+                <td />
+                Direction: @Html.DisplayFor(Model => Model.Direction)
+                <td>
+                    BLM: @Html.DisplayFor(Model => Model.BLM)
+                </td>
+                <td>
+                    ELM: @Html.DisplayFor(Model => Model.ELM)
+                </td>
+                <td>
+                    Total Miles to be Modified: @ViewBag.lenModified
+                </td>
+                <td>
+                    Total Miles of Roadway on APHN: @ViewBag.TotalLengthOnAPHN
+                </td>
+                <td>
+                    Total Miles of Roadway off APHN: @ViewBag.TotalLengthOffAPHN
+                </td>
+            </tr>
+            @Html.HiddenFor(Model => Model.County) 
+            @Html.HiddenFor(Model => Model.Route)
+            @Html.HiddenFor(Model => Model.Section)
+            @Html.HiddenFor(Model => Model.Direction)
+            @Html.HiddenFor(Model => Model.BLM)
+            @Html.HiddenFor(Model => Model.ELM)
+            @Html.HiddenFor(Model => Model.NHS)
+            @Html.HiddenFor(Model => Model.FuncClass)
+            @Html.HiddenFor(Model => Model.APHN)
+            @Html.HiddenFor(Model => Model.SpecialSystem)
+        </table>
+
+                <div class='form-group'>
+                    @*@Html.CheckBoxFor(m => m.SubmitChanges, Model.SubmitChanges)*@
+                    <button class="modal__btn modal__btn-primary" value="Submit">Submit Changes</button>
+                </div>
+            }
         </section>
     </div>
 </div>
