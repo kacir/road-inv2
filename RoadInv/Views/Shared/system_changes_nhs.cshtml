@@ -163,7 +163,7 @@
                         elm = Model.ELM,
                         nhs = Model.NHS,
                         dissolve = Model.Dissolve
-                    }), new X.PagedList.Web.Common.PagedListRenderOptionsBase
+                    }), new X.PagedList.Web.Common.PagedListRenderOptions
                     {
                         DisplayItemSliceAndTotal = false,
                         ContainerDivClasses = new[] { "navigation" },
@@ -221,7 +221,7 @@
                 elm = Model.ELM,
                 nhs = Model.NHS,
                 dissolve = Model.Dissolve
-            }), new X.PagedList.Web.Common.PagedListRenderOptionsBase
+            }), new X.PagedList.Web.Common.PagedListRenderOptions
             {
                 DisplayItemSliceAndTotal = false,
                 ContainerDivClasses = new[] { "navigation" },
@@ -336,6 +336,26 @@
         }
 
     }
+    var subjectAttributes = ["@Model.District", "@Model.County", "@Model.Section", "@Model.Route", "@Model.Direction", "@Model.BLM", "@Model.ELM"];
+    //General function to check to see if the inputs are valid
+    function submitInputs() {
+        console.log("SubmitInputs");
+        var inputs = gatherInput();
+        var constructString = "";
 
+        //fill in the ID attribute because the user has no control over this variable. Hidden from user
+
+        $.post("api/validate", inputs, errorPost, "json");
+
+        //find the original input values and check to see if anything changed
+        $("#save-changes, #reset-changes").attr("disabled", "");
+        subjectAttributes.forEach(function (x) {
+            if (originalValues[x] == inputs[x]) {
+                //do nothing
+            } else {
+                $("#save-changes, #reset-changes").removeAttr("disabled");
+            }
+        });
+    }
 
 </script>

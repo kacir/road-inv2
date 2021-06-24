@@ -33,47 +33,47 @@ namespace RoadInv
             
             services.AddMvc();
 
-            #region Authentication and Authorization
-            //Authentication and Authorization using Azure AD
-            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme) //Comment out this region, UseAuthentication() and UseAuthorization()
-              .AddMicrosoftIdentityWebApp(configuration.GetSection("AzureAd"));    //to disable SSO. Make sure anonymous authentication is enabled in IIS.
-            services.AddControllers(options =>                                     //We need to be using an ssl certificate for this to work right in chrome.
-            {                                                                      //Configure URI redirects in portal.azure.com under App Registrations->
-                var policy = new AuthorizationPolicyBuilder()                      //->RoadwayInventory->Authentication once authenticaion is enabled again 
-                    .RequireAuthenticatedUser()                                    //Authorization seems to need a different registration method
-                    .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            });
+            //#region Authentication and Authorization
+            ////Authentication and Authorization using Azure AD
+            //services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme) //Comment out this region, UseAuthentication() and UseAuthorization()
+            //  .AddMicrosoftIdentityWebApp(configuration.GetSection("AzureAd"));    //to disable SSO. Make sure anonymous authentication is enabled in IIS.
+            //services.AddControllers(options =>                                     //We need to be using an ssl certificate for this to work right in chrome.
+            //{                                                                      //Configure URI redirects in portal.azure.com under App Registrations->
+            //    var policy = new AuthorizationPolicyBuilder()                      //->RoadwayInventory->Authentication once authenticaion is enabled again 
+            //        .RequireAuthenticatedUser()                                    //Authorization seems to need a different registration method
+            //        .Build();
+            //    options.Filters.Add(new AuthorizeFilter(policy));
+            //});
 
-            //services.ConfigureNonBreakingSameSiteCookies();
+            ////services.ConfigureNonBreakingSameSiteCookies();
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("admin-only", p =>
-                {
-                    /*To implement, go to portal.azure.com
-                     * => App Registrations
-                     * => RoadwayInventory
-                     * => Manifest, then set "groupMembershipClaims" to SecurityGroup
-                     * To find groups to add, to to portal.azure.com
-                     * => Active Directory
-                     * => Groups, find the group you want to allow, click and copy/paste the group's object ID
-                     * Add the [Authorize("admin-only")] attribute to classes/functions you want to require authorization
-                     * */
-                    p.RequireAssertion(context =>
-                        context.User.HasClaim(c =>
-                            c.Value == this.configuration["TrafficInformationSys"] ||  //system information and research - traffic information systems
-                            c.Value == this.configuration["SystemInformation"] ||      //system information and research - system information
-                            c.Value == this.configuration["TrafficInformation"] ||     //system information and research - traffic information
-                            c.Value == this.configuration["SystemInfoGIS"] ||          //system information and research - gis
-                            c.Value == this.configuration["TrafficDataCollection"]));  //system information and research - traffic data collection
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("admin-only", p =>
+            //    {
+            //        /*To implement, go to portal.azure.com
+            //         * => App Registrations
+            //         * => RoadwayInventory
+            //         * => Manifest, then set "groupMembershipClaims" to SecurityGroup
+            //         * To find groups to add, to to portal.azure.com
+            //         * => Active Directory
+            //         * => Groups, find the group you want to allow, click and copy/paste the group's object ID
+            //         * Add the [Authorize("admin-only")] attribute to classes/functions you want to require authorization
+            //         * */
+            //        p.RequireAssertion(context =>
+            //            context.User.HasClaim(c =>
+            //                c.Value == this.configuration["TrafficInformationSys"] ||  //system information and research - traffic information systems
+            //                c.Value == this.configuration["SystemInformation"] ||      //system information and research - system information
+            //                c.Value == this.configuration["TrafficInformation"] ||     //system information and research - traffic information
+            //                c.Value == this.configuration["SystemInfoGIS"] ||          //system information and research - gis
+            //                c.Value == this.configuration["TrafficDataCollection"]));  //system information and research - traffic data collection
 
-                });
-            });
-            #endregion
+            //    });
+            //});
+            //#endregion
 
-            services.AddRazorPages()
-                .AddMicrosoftIdentityUI();
+            //services.AddRazorPages()
+            //    .AddMicrosoftIdentityUI();
 
 
             services.AddDbContext<roadinvContext>
@@ -95,10 +95,10 @@ namespace RoadInv
             // Add this before any other middleware that might write cookies
             app.UseCookiePolicy();
             app.UseFileServer();
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
             app.UseEndpoints(endpoints => 
             {
                endpoints.MapControllerRoute(

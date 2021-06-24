@@ -53,8 +53,8 @@
                     Total Miles of Roadway off APHN: @ViewBag.TotalLengthOffAPHN
                 </td>
             </tr>
-            @Html.HiddenFor(Model => Model.County) 
-            @Html.HiddenFor(Model => Model.Route)
+            @Html.HiddenFor(Model => Model.County) @*Must add hidden fields in form for pageModel to persist coming from system changes page!*@
+            @Html.HiddenFor(Model => Model.Route)  @*This allows us to use these values in the bulk update function within the controller*@
             @Html.HiddenFor(Model => Model.Section)
             @Html.HiddenFor(Model => Model.Direction)
             @Html.HiddenFor(Model => Model.BLM)

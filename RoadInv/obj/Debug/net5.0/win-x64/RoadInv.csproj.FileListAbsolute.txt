@@ -11,7 +11,6 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\RoadInv
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\RoadInv.Views.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\RoadInv.Views.pdb
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Humanizer.dll
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.CodeAnalysis.dll
@@ -20,13 +19,11 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microso
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.CodeAnalysis.Razor.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.CodeAnalysis.Workspaces.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.Data.SqlClient.dll
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.EntityFrameworkCore.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.EntityFrameworkCore.SqlServer.dll
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.Extensions.DependencyModel.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.Identity.Client.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.IdentityModel.Logging.dll
@@ -42,7 +39,6 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microso
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Newtonsoft.Json.dll
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Newtonsoft.Json.Bson.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\System.Composition.AttributedModel.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\System.Composition.Convention.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\System.Composition.Hosting.dll
@@ -55,7 +51,6 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\System.
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\System.Security.Cryptography.ProtectedData.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\X.PagedList.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\X.PagedList.Mvc.Core.dll
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\X.PagedList.Web.Common.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Z.EntityFramework.Extensions.EFCore.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Z.EntityFramework.Plus.EFCore.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Z.Expressions.Eval.dll
@@ -164,3 +159,5 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microso
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.Identity.Web.UI.Views.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\Microsoft.Identity.Web.UI.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\RoadInv.csproj.AssemblyReference.cache
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\libman.json
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\win-x64\JetBrains.Annotations.dll

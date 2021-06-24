@@ -20,7 +20,6 @@
         ],
         "configFilePaths": [
           "C:\\Users\\MW42705\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\MicroFocus.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -29,7 +28,6 @@
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Micro Focus\\Visual COBOL\\NuGetPackages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "\\\\csd1\\appdev\\Nuget": {},
           "https://api.nuget.org/v3/index.json": {}
@@ -50,18 +48,6 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
-            "AHTDAppLogWebClientAPI": {
-              "target": "Package",
-              "version": "[1.0.0, )"
-            },
-            "AHTDSTSWebClient": {
-              "target": "Package",
-              "version": "[6.0.24, )"
-            },
-            "ArDOT_UserProv.Client.API": {
-              "target": "Package",
-              "version": "[1.0.0, )"
-            },
             "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
               "target": "Package",
               "version": "[5.0.6, )"
@@ -108,7 +94,7 @@
             },
             "X.PagedList.Mvc.Core": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[8.1.0, )"
             },
             "Z.EntityFramework.Plus.EFCore": {
               "target": "Package",

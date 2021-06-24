@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace RoadInv.Controllers
 {
 
-    [Authorize("admin-only")]
+    //[Authorize("admin-only")]
     public class HomeController : Controller
     {
         private roadinvContext _dbContext;

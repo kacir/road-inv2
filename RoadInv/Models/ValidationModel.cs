@@ -1722,6 +1722,15 @@ This means the road has a median. Only multilane divided highway have medians. P
                 masterErrorsList.Add(error);
             }
 
+            if (segment.TypeOperation == "2" & segment.BothDirectionNumLanes == "1") //if its supposed to be two-way undivided but only has one lane
+            {
+                List<string> temp = new List<string>();
+                temp.Add(FieldsListModel.TypeOperation);
+                var error = new SingleSegmentErrorItemModel("Type Operation is invalid","Two-way undivided roads must have more than one lane",temp);
+                masterErrorsList.Add(error);
+                
+            }
+
             return masterErrorsList;
         }
 

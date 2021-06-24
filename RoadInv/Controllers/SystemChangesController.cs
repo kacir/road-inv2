@@ -58,7 +58,7 @@ namespace RoadInv.Controllers
 
             ViewBag.CurrentSort = pageModel.SortOrder;
 
-            roads = roads.OrderBy(r => r.Nhs);
+            roads = roads.OrderBy(r => r.AhRoute).ThenBy(r=> r.AhBlm);
 
             if (!String.IsNullOrEmpty(pageModel.District))
             {
@@ -92,10 +92,10 @@ namespace RoadInv.Controllers
             switch (pageModel.SortOrder)
             {
                 case "name_desc":
-                    roads = roads.OrderByDescending(r => r.Nhs);
+                    roads = roads.OrderBy(r => r.AhRoute).ThenBy(r => r.AhBlm);
                     break;
                 default:
-                    roads = roads.OrderBy(r => r.Nhs);
+                    roads = roads.OrderBy(r => r.AhRoute).ThenBy(r => r.AhBlm);
                     break;
             }
             pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
@@ -412,11 +412,7 @@ namespace RoadInv.Controllers
                 var roadID = pageModel.County + 'x' + pageModel.Route + 'x' + pageModel.Section + 'x' + pageModel.Direction;
 
                 ViewData["County"] = pageModel.County;
-                if (pageModel.PreviewChanges == true)
-                {
-                    return RedirectToAction("preview_changes", pageModel);
-                }
-                else if (pageModel.NHS != null)
+                if (pageModel.NHS != null)
                 {
                     var result = ApiController.ValidateBulk(roadID, pageModel.BLM, pageModel.ELM);//removed pageModel.NHS
                     string json = JsonConvert.SerializeObject(result, Formatting.Indented); //testing
@@ -463,17 +459,17 @@ namespace RoadInv.Controllers
             pageModel.APHN_Length = (from r in _context.RoadInvs //page model demonstrates flexibility in case we want to use this value again                           
                                      where r.Aphn != "0" && r.AhRoadId == roadID //we could just as easily use a viewbag like below
                                      select r.AhLength).Sum();
+
             ViewBag.lenModified = pageModel.ELM - pageModel.BLM;
+
             ViewBag.TotalLengthOnAPHN = (from r in _context.RoadInvs 
-                                     where r.Aphn != "0"
-                                     select r.AhLength).Sum();
+                                     where r.Aphn != "0" && r.AhRoadId == roadID
+                                         select r.AhLength).Sum();
             
             ViewBag.TotalLengthOffAPHN = (from r in _context.RoadInvs
-                                          where r.Aphn == "0"
+                                          where r.Aphn == "0" && r.AhRoadId == roadID
                                           select r.AhLength).Sum();
-            //Bulk_Update(pageModel);
-            
-            //right now, the editor will have to push the back button to get back to the previous action.
+
             //the page model will be saved and the values will return in the forms
             return View(pageModel);
         }
