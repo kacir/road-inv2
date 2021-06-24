@@ -1244,7 +1244,7 @@ road is divided so it should have a median but the median type indicates there i
 
                 if (this.ValidTypeOperation(segment))
                 {
-                    if (segment.Access == "1" & segment.TypeOperation != "4")
+                    if (segment.Access == "1" & segment.TypeOperation != "4" & segment.TypeRoad != "6") //MHW 06/24/2021 added ramp exception
                     {
                         List<string> temp = new List<string>();
                         temp.Add(FieldsListModel.TypeOperation);
@@ -1284,7 +1284,7 @@ road is divided so it should have a median but the median type indicates there i
 
 
 
-            if (!(segment.Aphn is null) & segment.Aphn != "" & ! this.ValidAPHN(segment))
+            if (!(segment.Aphn is null) & segment.Aphn != "" & ! this.ValidAPHN(segment) & segment.TypeRoad !="6") //MHW 06/04/2021 added ramp exception
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.APHN);
@@ -1292,7 +1292,7 @@ road is divided so it should have a median but the median type indicates there i
                 masterErrorsList.Add(error);
             }
 
-            if (!(segment.Nhs is null) & segment.Nhs != "" & !this.ValidNHS(segment))
+            if (!(segment.Nhs is null) & segment.Nhs != "" & !this.ValidNHS(segment) & segment.TypeRoad != "6") //MHW 06/04/2021 added ramp exception
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.NHS);
@@ -1301,9 +1301,9 @@ road is divided so it should have a median but the median type indicates there i
             }
 
             //Highy compound check on a few attributes
-            if (segment.RouteSign == "1" & segment.TypeRoad == "1")
+            if (segment.RouteSign == "1" & segment.TypeRoad == "1" & segment.TypeRoad != "6") //MHW 06/04/2021 added ramp exception
             {
-                if (this.ValidNHS(segment) & segment.Nhs != "1")
+                if (this.ValidNHS(segment) & segment.Nhs != "1" & segment.TypeRoad != "6") //MHW 06/04/2021 added ramp exception
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.NHS);
@@ -1313,7 +1313,7 @@ road is divided so it should have a median but the median type indicates there i
                     //Yellow All
                 }
 
-                if (this.ValidAPHN(segment) & segment.Aphn != "1")
+                if (this.ValidAPHN(segment) & segment.Aphn != "1" & segment.TypeRoad != "6") //MHW 06/04/2021 added ramp exception
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.APHN);
@@ -1323,7 +1323,7 @@ road is divided so it should have a median but the median type indicates there i
                 }
             }
 
-            if (segment.RouteSign == "2" | segment.RouteSign == "3" & segment.TypeRoad == "1" && segment.Nhs != "0" & this.ValidNHS(segment) & segment.Aphn != "1" & this.ValidAPHN(segment))
+            if (segment.RouteSign == "2" | segment.RouteSign == "3" & segment.TypeRoad == "1" && segment.Nhs != "0" & this.ValidNHS(segment) & segment.Aphn != "1" & this.ValidAPHN(segment) & segment.TypeRoad != "6") //MHW 06/24/2021 added ramp exception
             {
                 List<string> temp = new List<string>();
                 temp.Add(FieldsListModel.RouteSign);
@@ -1334,9 +1334,9 @@ road is divided so it should have a median but the median type indicates there i
                 masterErrorsList.Add(error);
             }
 
-            if (this.ValidAPHN(segment) & segment.Aphn != "" & this.ValidNHS(segment) & segment.Nhs != "")
+            if (this.ValidAPHN(segment) & segment.Aphn != "" & this.ValidNHS(segment) & segment.Nhs != "" & segment.TypeRoad != "6") //MHW 06/24/2021 added ramp exception
             {
-                if (!(segment.Nhs == "1" & segment.Aphn == "1") & !(segment.Aphn == "2" & segment.Nhs != "0"))
+                if (!(segment.Nhs == "1" & segment.Aphn == "1") & !(segment.Aphn == "2" & segment.Nhs != "0")) 
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.NHS);
@@ -1361,7 +1361,7 @@ road is divided so it should have a median but the median type indicates there i
                     }
                 } 
                 
-                if (segment.Aphn == "2" & segment.Nhs != "0")
+                if (segment.Aphn == "2" & segment.Nhs != "0" & segment.TypeRoad != "6") //MHW 06/24/2021 added ramp exception
                 {
                     List<string> temp = new List<string>();
                     temp.Add(FieldsListModel.NHS);
@@ -1372,11 +1372,9 @@ road is divided so it should have a median but the median type indicates there i
                     masterErrorsList.Add(Error);
                 }
 
-
-
             }
 
-            if (this.ValidFuncClass(segment) & this.ValidAPHN(segment) )
+            if (this.ValidFuncClass(segment) & this.ValidAPHN(segment) & segment.TypeRoad !="6") //MHW 06/24/2021 added ramp exception
             {
                 List<string> selctedFunctionalClass = new List<string>();
                 selctedFunctionalClass.Add("1");
@@ -1400,7 +1398,7 @@ road is divided so it should have a median but the median type indicates there i
                 temp.Add(FieldsListModel.SpecialSystems);
                 SingleSegmentErrorItemModel error = new SingleSegmentErrorItemModel("Special Systems not valid", "SpecialSystems is not valid", temp);
                 masterErrorsList.Add(error);
-            } else if (ValidNHS(segment) & ValidSpecialSystems(segment))
+            } else if (ValidNHS(segment) & ValidSpecialSystems(segment) & segment.TypeRoad !="6") //MHW 06/24/2021 added ramp exception
             {
                 if (segment.SpecialSystems == "9" & segment.Nhs != "1")
                 {
@@ -1728,7 +1726,6 @@ This means the road has a median. Only multilane divided highway have medians. P
                 temp.Add(FieldsListModel.TypeOperation);
                 var error = new SingleSegmentErrorItemModel("Type Operation is invalid","Two-way undivided roads must have more than one lane",temp);
                 masterErrorsList.Add(error);
-                
             }
 
             return masterErrorsList;
