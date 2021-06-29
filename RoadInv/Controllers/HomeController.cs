@@ -105,8 +105,31 @@ namespace RoadInv.Controllers
         [Route("new_Segment")]
         public IActionResult new_segment()
         {
-            var segmentDetails = new DB.RoadInv();
+            //=============Create Empty Segment================
+            var new_road = from r in _dbContext.RoadInvs
+                        where r.AhRoute == "NEW_ROAD_SEGMENT" 
+                        select r;         
+
+            var newSegment = new DB.RoadInv();
+
+            if (new_road.Any() == false)                 //if the query doesn't return anything
+            {
+                newSegment.AhRoute = "NEW_ROAD_SEGMENT";
+                newSegment.AhDistrict = "1";
+                newSegment.AhSection = "0";
+                newSegment.AhBlm = 0.00m;
+                newSegment.AhElm = 0.00m;
+                this._dbContext.RoadInvs.Add(newSegment);
+                this._dbContext.SaveChanges();           //add the "NEW_ROAD_SEGMENT" segment
+            }
+            //=================================================
+
+            var ID = new_road.FirstOrDefault().Id;       // find the first ID of the first entry in the query 
+
+            var segmentDetails = this._dbContext.RoadInvs.Find(ID); 
+
             segmentDetails.Id = -1;
+            
             var val = new ValidationModel(this._dbContext);
 
             var SegmentPageObj = new SegmentDetailPageModel(segmentDetails, val, SegmentDetailPageModel.newSegment);

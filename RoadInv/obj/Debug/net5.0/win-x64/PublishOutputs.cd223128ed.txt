@@ -27,6 +27,9 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\README.md
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\RI_Cheat_Sheet.pdf
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\scripts\gatherinput.js
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\scripts\set_submit_search.js
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\scripts\unit_tests.js
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\scripts\validate.js
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\system_changes\aphn1.html
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\system_changes\func1.html
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\wwwroot\system_changes\nhs1.html

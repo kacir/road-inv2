@@ -33,14 +33,14 @@ namespace RoadInv
             
             services.AddMvc();
 
-            //#region Authentication and Authorization
+            #region Authentication and Authorization
             ////Authentication and Authorization using Azure AD
             //services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme) //Comment out this region, UseAuthentication() and UseAuthorization()
             //  .AddMicrosoftIdentityWebApp(configuration.GetSection("AzureAd"));    //to disable SSO. Make sure anonymous authentication is enabled in IIS.
             //services.AddControllers(options =>                                     //We need to be using an ssl certificate for this to work right in chrome.
             //{                                                                      //Configure URI redirects in portal.azure.com under App Registrations->
             //    var policy = new AuthorizationPolicyBuilder()                      //->RoadwayInventory->Authentication once authenticaion is enabled again 
-            //        .RequireAuthenticatedUser()                                    //Authorization seems to need a different registration method
+            //        .RequireAuthenticatedUser()                                    
             //        .Build();
             //    options.Filters.Add(new AuthorizeFilter(policy));
             //});
@@ -70,10 +70,10 @@ namespace RoadInv
 
             //    });
             //});
-            //#endregion
+            #endregion
 
-            //services.AddRazorPages()
-            //    .AddMicrosoftIdentityUI();
+            services.AddRazorPages()
+                .AddMicrosoftIdentityUI();
 
 
             services.AddDbContext<roadinvContext>
