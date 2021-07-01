@@ -27,52 +27,167 @@
             <h5>Validation Report</h5>
             @using (Html.BeginForm("bulk_update", "system_changes", FormMethod.Post))
             {
-        <table>
-            <tr>
-                <td>
-                    County: @Html.DisplayFor(Model => Model.County)
-                </td>
-                Route: @Html.DisplayFor(Model => Model.Route)
-                <td>
-                    Section: @Html.DisplayFor(Model => Model.Section)
-                <td />
-                Direction: @Html.DisplayFor(Model => Model.Direction)
-                <td>
-                    BLM: @Html.DisplayFor(Model => Model.BLM)
-                </td>
-                <td>
-                    ELM: @Html.DisplayFor(Model => Model.ELM)
-                </td>
-                <td>
-                    Total Miles to be Modified: @ViewBag.lenModified
-                </td>
-                <td>
-                    Total Miles of Roadway on APHN: @ViewBag.TotalLengthOnAPHN
-                </td>
-                <td>
-                    Total Miles of Roadway off APHN: @ViewBag.TotalLengthOffAPHN
-                </td>
-            </tr>
-            @Html.HiddenFor(Model => Model.County) @*Must add hidden fields in form for pageModel to persist coming from system changes page!*@
-            @Html.HiddenFor(Model => Model.Route)  @*This allows us to use these values in the bulk update function within the controller*@
-            @Html.HiddenFor(Model => Model.Section)
-            @Html.HiddenFor(Model => Model.Direction)
-            @Html.HiddenFor(Model => Model.BLM)
-            @Html.HiddenFor(Model => Model.ELM)
-            @Html.HiddenFor(Model => Model.NHS)
-            @Html.HiddenFor(Model => Model.FuncClass)
-            @Html.HiddenFor(Model => Model.APHN)
-            @Html.HiddenFor(Model => Model.SpecialSystem)
-        </table>
-
+                <table>
+                    <tr>
+                        <td>
+                            County: @Html.DisplayFor(Model => Model.County)
+                        </td>
+                        Route: @Html.DisplayFor(Model => Model.Route)
+                        <td>
+                            Section: @Html.DisplayFor(Model => Model.Section)
+                        <td />
+                        Direction: @Html.DisplayFor(Model => Model.Direction)
+                        <td>
+                            BLM: @Html.DisplayFor(Model => Model.BLM)
+                        </td>
+                        <td>
+                            ELM: @Html.DisplayFor(Model => Model.ELM)
+                        </td>
+                        <td>
+                            Total Miles to be Modified: @ViewBag.lenModified
+                        </td>
+                        <td>
+                            Total Miles of Roadway on APHN: @ViewBag.TotalLengthOnAPHN
+                        </td>
+                        <td>
+                            Total Miles of Roadway off APHN: @ViewBag.TotalLengthOffAPHN
+                        </td>
+                    </tr>
+                    @Html.HiddenFor(Model => Model.County) @*Must add hidden fields in form for pageModel to persist coming from system changes page!*@
+                    @Html.HiddenFor(Model => Model.Route)  @*This allows us to use these values in the bulk update function within the controller*@
+                    @Html.HiddenFor(Model => Model.Section)
+                    @Html.HiddenFor(Model => Model.Direction)
+                    @Html.HiddenFor(Model => Model.BLM)
+                    @Html.HiddenFor(Model => Model.ELM)
+                    @Html.HiddenFor(Model => Model.NHS)
+                    @Html.HiddenFor(Model => Model.FuncClass)
+                    @Html.HiddenFor(Model => Model.APHN)
+                    @Html.HiddenFor(Model => Model.SpecialSystem)
+                </table>
+                <br>
                 <div class='form-group'>
                     @*@Html.CheckBoxFor(m => m.SubmitChanges, Model.SubmitChanges)*@
-                    <button class="modal__btn modal__btn-primary" value="Submit">Submit Changes</button>
+                    <button data-toggle="tooltip" class="modal__btn modal__btn-primary" id="save-changes" value="Submit">Submit Changes</button>
                 </div>
+
             }
+            <div>
+                <button data-toggle="tooltip" data-placement="bottom"
+                        title="disables validation error handeling. Please only use in rare and nuanced situations" id="manual-override" class="segment-button">
+                    Manual Override
+                </button>
+            </div>
         </section>
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script>
+        var subjectAttributes = ["@Model.District", "@Model.County", "@Model.Section", "@Model.Route", "@Model.Direction", "@Model.BLM", "@Model.ELM"];
+
+    function gatherInput() {
+        inputs = {};
+
+        var i;
+        for (i = 0; i < subjectAttributes.length; i++) {
+            var raw = $("#" + subjectAttributes[i]).val();
+            inputs[subjectAttributes[i]] = raw;
+        }
+
+        inputs["ID"] = @Model.RoadID;
+
+
+
+        return inputs;
+    }
+
+    $("input, select, textarea").on("keyup, change", submitInputs);
+
+    //General function to check to see if the inputs are valid
+    function submitInputs() {
+        console.log("SubmitInputs");
+        var inputs = gatherInput();
+        var constructString = "";
+
+        //fill in the ID attribute because the user has no control over this variable. Hidden from user
+
+        $.post("api/validate_bulk", inputs, errorPost, "json");
+
+        //find the original input values and check to see if anything changed
+        $("#save-changes, #reset-changes").attr("disabled", "");
+        subjectAttributes.forEach(function (x) {
+            if (originalValues[x] == inputs[x]) {
+                //do nothing
+            } else {
+                $("#save-changes, #reset-changes").removeAttr("disabled");
+            }
+        });
+    }
+
+    //apply tag class error-flag to everything that has an error asscoaited with it.
+    function errorPost(data) {
+        if (!$("#manual-override").hasClass("override-active")) {
+            console.log(data);
+            //zero out all attributes errors
+            $(".error-flag")
+                .removeAttr("title")
+                .tooltip('disable');
+
+            for (i = 0; i < subjectAttributes.length; i++) {
+                var raw = $("#" + subjectAttributes[i]).removeClass("error-flag");
+            }
+            data.forEach(function (item) {
+                item.fields.forEach(function (field) {
+                    console.log(item);
+                    $("#" + field)
+                        .addClass("error-flag")
+                        .attr("title", item.errorMessageLong)
+                        .attr("data-placement", "bottom")
+                        .tooltip('enable');
+                });
+
+            });
+
+            //change style of save change button if there area errors
+            if (data.length > 0) {
+                $("#save-changes").addClass("override-active").text("Can't Save, Errors");
+            } else {
+                $("#save-changes").removeClass("override-active").text("Save");
+            }
+
+        } else {
+            // logic goes here^
+            $("#save-changes").removeClass("override-active").text("Save");
+            subjectAttributes.forEach(function (item) {
+                $("#" + item)
+                    .removeClass("error-flag")
+                    .removeAttr("title")
+                    .removeAttr("data-placement")
+                    .tooltip("disable");
+            });
+        }
+    }
+    //allow enable and disable of manual override ^
+    $("#manual-override").click(function () {
+        var button = $("#manual-override");
+
+        if (button.hasClass("override-active")) {
+            button.removeClass("override-active");
+            submitInputs();
+        } else {
+            button.addClass("override-active");
+            submitInputs();
+        }
+    });
+
+
+    //run validation on all data after its been loaded even if its in the database
+    submitInputs();
+</script>
 
 
