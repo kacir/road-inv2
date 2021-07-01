@@ -107,7 +107,7 @@ namespace RoadInv.Controllers
         {
             var segmentDetails = new DB.RoadInv();
             segmentDetails.Id = -1;
-            segmentDetails.AhRoute = "NEW_ROAD_SEGMENT";
+            segmentDetails.AhRoute = "NEW_ROAD_SEGMENT";               //have to preload values in order for this to work
             segmentDetails.AhDistrict = "1";
             segmentDetails.AhSection = "0";
             segmentDetails.AhBlm = 0.00m;
@@ -119,7 +119,7 @@ namespace RoadInv.Controllers
             return View("edit_Segment", SegmentPageObj);
         }
 
-        //public IActionResult new_segment()                          //manual overrides work for this solution
+        //public IActionResult new_segment()                         //trying something new but the override still doesnt work
         //{
         //    //=============Create Empty Segment================
         //    var new_road = from r in _dbContext.RoadInvs
