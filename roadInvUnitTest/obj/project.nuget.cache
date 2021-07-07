@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ORNCIfzsA/NXlacb5MC42/CiexZ9N1BIGkEMzDt/Tuf8bFfTpHLktKLvNSDa7WBMGIuprI6zWYO1PoybSsTgwQ==",
+  "dgSpecHash": "DVbRbncln1zBqzQToMgBOxbm+hqmj7Zy793wjYLzjlfwobzM9+fjcq7oOiGWlO9k4LZVXrQPIc5jmbLgdHMm6g==",
   "success": true,
   "projectFilePath": "C:\\Users\\MW42705\\source\\repos\\road-inv2\\roadInvUnitTest\\roadInvUnitTest.csproj",
   "expectedPackageFiles": [
@@ -79,6 +79,9 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\MW42705\\.nuget\\packages\\selenium.chrome.webdriver\\85.0.0\\selenium.chrome.webdriver.85.0.0.nupkg.sha512",
+    "C:\\Users\\MW42705\\.nuget\\packages\\selenium.firefox.webdriver\\0.27.0\\selenium.firefox.webdriver.0.27.0.nupkg.sha512",
+    "C:\\Users\\MW42705\\.nuget\\packages\\selenium.webdriver\\3.141.0\\selenium.webdriver.3.141.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\MW42705\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\MW42705\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",

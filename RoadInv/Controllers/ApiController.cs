@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RoadInv.DB;
@@ -24,7 +25,7 @@ namespace RoadInv.Controllers
             _bulkEdits = new BulkEditModel(this._dbContext);
         }
 
-
+        [Authorize(Policy = "admin-only")]
         [Route("api/update")]
         public IActionResult Update(int ID,
             string AH_District = "",
@@ -111,7 +112,7 @@ namespace RoadInv.Controllers
             return Json(newRecordCount);
         }
 
-
+        [Authorize(Policy = "admin-only")]
         [Route("api/delete")]
         public IActionResult Delete(int ID)
         {
@@ -123,6 +124,7 @@ namespace RoadInv.Controllers
             return Json(1);
         }
 
+        [Authorize(Policy = "admin-only")]
         [Route("api/dup_Segment")]
         [Route("api/dup_Segment.html")]
         public IActionResult DuplicateSegment(int ID, string AH_County = "",
@@ -210,6 +212,7 @@ namespace RoadInv.Controllers
             return Json(newID);
         }
 
+        [Authorize(Policy = "admin-only")]
         [Route("api/new_Segment")]
         public IActionResult SaveNew(string AH_District = "",
             string AH_County = "",
@@ -296,6 +299,7 @@ namespace RoadInv.Controllers
             return Json(newID);
         }
 
+        [Authorize(Policy = "admin-only")]
         [Route("api/mirror_Segment")]
         public IActionResult MirrorSegment(int ID, string AH_County = "",
             string AH_Route = "",
@@ -363,6 +367,7 @@ namespace RoadInv.Controllers
             return null;
         }
 
+        [Authorize(Policy = "admin-only")]
         [Route("api/edit_bulk/aphn")]
         public IActionResult ImplementBulkEditAPHN(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string APHN)
         {
@@ -378,6 +383,7 @@ namespace RoadInv.Controllers
             return null;
         }
 
+        [Authorize(Policy = "admin-only")]
         [Route("api/edit_bulk/functional")]
         public IActionResult ImplementBulkEditFuncClass(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string FuncClass)
         {
@@ -393,6 +399,7 @@ namespace RoadInv.Controllers
             return null;
         }
 
+        [Authorize(Policy = "admin-only")]
         [Route("api/edit_bulk/special")]
         public IActionResult ImplementBulkEditSpecial(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string Special)
         {
@@ -407,6 +414,7 @@ namespace RoadInv.Controllers
 
             return null;
         }
+
         [Route("api/segmentOrder")]
         public IActionResult SegmentOrder(int sourceSegmentID)
         {

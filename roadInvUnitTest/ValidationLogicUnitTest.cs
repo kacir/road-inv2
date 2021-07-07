@@ -937,10 +937,10 @@ namespace roadInvUnitTest
         /// <param name="TypeOperation"></param>
         /// <param name="expected"></param>
         [Theory]
-        [InlineData("1", false)]
-        [InlineData("2", false)]
-        [InlineData("3", true)]
-        [InlineData("4", false)]
+        [InlineData("1", false)] //one-way
+        [InlineData("2", false)] //two-way undivided
+        [InlineData("3", true)]  //one-way couplet
+        [InlineData("4", false)] //multilane divided
         public void OneWayCoupletTypeOperation(string TypeOperation, bool expected)
         {
             var segment = new RoadInv.DB.RoadInv();

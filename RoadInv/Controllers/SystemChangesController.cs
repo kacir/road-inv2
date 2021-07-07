@@ -11,6 +11,7 @@ using RoadInv.Models;
 using System.Dynamic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RoadInv.Controllers
 {
@@ -28,11 +29,12 @@ namespace RoadInv.Controllers
             _context = context;
         }
 
-        // GET: 
+        [Authorize(Policy = "admin-only")]                                                      //policy is created in startup.cs under AddAuthorization
         [Route("system_changes/nhs")]
         [Route("system_changes/nhs.html")]
         public async Task<IActionResult> system_changes_nhs(SystemChangesPageModel pageModel)
         {
+            string NAME = HttpContext.User.Identity.Name;
             int pageSize = 50;
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
@@ -309,7 +311,9 @@ namespace RoadInv.Controllers
         [Route("system_changes/special.html")]
         public async Task<IActionResult> system_changes_special(SystemChangesPageModel pageModel)
         {
+
             int pageSize = 50;
+            string userid = HttpContext.User.Identity.Name;
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
             var roads = from r in _context.RoadInvs
@@ -397,7 +401,7 @@ namespace RoadInv.Controllers
             }
             return View(pageModel);
         }
-
+        [Authorize(Policy = "admin-only")]
         [HttpPost]
         [Route("system_changes/bulk_update")]
         [Route("system_changes/bulk_update.html")]
@@ -444,6 +448,7 @@ namespace RoadInv.Controllers
             return Redirect(baseUrl);//need to figure out how to go back to previous screen on close
         }
 
+        [Authorize(Policy = "admin-only")]
         //[HttpPost]
         [Route("system_changes/preview_changes")]
         [Route("system_changes/preview_changes.html")]

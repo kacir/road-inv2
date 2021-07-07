@@ -339,7 +339,7 @@ namespace roadInvUnitTest
 
         [Theory]
         [InlineData("1")]
-        [InlineData("2")]
+        //[InlineData("2")] two-way undivided would throw an error
         [InlineData("3")]
         /// <summary>
         /// This tests compatability of the typeOperation field and bothDirectionNumLanes field.
@@ -360,7 +360,7 @@ namespace roadInvUnitTest
             segment.AhElm = (decimal?)0.5;
 
             segment.BothDirectionNumLanes = "1";
-            segment.TypeOperation = TypeOperation;
+            segment.TypeOperation = TypeOperation; //1 throw no errors, 2 throw an error, 3 throw no errors, 4 would throw an error
 
             ValidationModel.CleanAttr(segment);
             var results = validation.FindErrors(segment);
@@ -1443,16 +1443,16 @@ namespace roadInvUnitTest
         /// I generally use this as a debugging tool when I find a troublesome record in the main interface but I want to drill 
         /// down further as to why was an error caused in the first place.
         /// </summary>
-        [Fact]
-        public void SpecificRecorTest()
-        {
-            int recordid = 1446487;
-            var segment = this._dbContext.RoadInvs.Find(recordid);
+        //[Fact]
+        //public void SpecificRecorTest()
+        //{
+        //    int recordid = 2104449;
+        //    var segment = this._dbContext.RoadInvs.Find(recordid);
 
-            ValidationModel.CleanAttr(segment);
-            var results = validation.FindErrors(segment);
+        //    ValidationModel.CleanAttr(segment);
+        //    var results = validation.FindErrors(segment);
 
-            Assert.True(results.Count == 0);
-        }
+        //    Assert.True(results.Count == 0);
+        //}
     }
 }

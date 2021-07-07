@@ -31,7 +31,6 @@ namespace RoadInv.Controllers
             return View("error");
         }
 
-        
         [Route("segments.html")]
         [Route("segments")]
         public IActionResult SearchTable(string district= "", string county = "", string route = "", string section = "", string direction = "", decimal logmile = -1, string typeroad = "")
@@ -98,14 +97,16 @@ namespace RoadInv.Controllers
         [Route("/index.html")]
         public IActionResult Index()
         {
+            //var name = User.Identity.Name;
             return View("index");
         }
 
+        [Authorize(Policy = "admin-only")]
         [Route("new_Segment.html")]
         [Route("new_Segment")]
         public IActionResult new_segment()                             //manual overrides currently dont work for this solution
-        {
-            var segmentDetails = new DB.RoadInv();
+        {                                                              //would have to create the entry following validation rules
+            var segmentDetails = new DB.RoadInv();                     //and then edit the entry to do an override
             segmentDetails.Id = -1;
             segmentDetails.AhRoute = "NEW_ROAD_SEGMENT";               //have to preload values in order for this to work
             segmentDetails.AhDistrict = "1";
@@ -130,7 +131,7 @@ namespace RoadInv.Controllers
 
         //    if (new_road.Any() == false)                 //if the query doesn't return anything
         //    {
-        //        newSegment.AhRoute = "NEW_ROAD_SEGMENT";
+        //        newSegment.AhRoute = "NEW_ROAD_SEGMENT"; //could pre-create a new segment following all the validation rules and then go in and edit it after creation
         //        newSegment.AhDistrict = "1";
         //        newSegment.AhSection = "0";
         //        newSegment.AhBlm = 0.00m;
@@ -153,6 +154,7 @@ namespace RoadInv.Controllers
         //    return View("edit_Segment", SegmentPageObj);
         //}
 
+        [Authorize(Policy = "admin-only")]
         [Route("dup_Segment")]
         [Route("dup_Segment.html")]
         public IActionResult DuplicateSegment(int ID)
@@ -167,6 +169,7 @@ namespace RoadInv.Controllers
             return View("edit_Segment", SegmentPageObj);
         }
 
+        [Authorize(Policy = "admin-only")]
         [Route("edit_Segment")]
         [Route("edit_Segment.html")]
         public IActionResult edit_Segment(int ID = -1)
