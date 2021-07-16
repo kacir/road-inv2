@@ -155,6 +155,8 @@
         </table>
     </div>
 </div>
+
+<!--Tooltips need to be initialized after the HTML elements are created-->
 <script>
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
@@ -162,6 +164,7 @@
 </script>
 <script>
 
+    //gathers input into a request string
     function submitEventLoop() {
         console.log("hello world!");
         var inputDistrict = $('#@FieldsListModel.AH_District option:selected').text();
@@ -224,6 +227,7 @@
         //$('#submit-search-link').attr("href", searchString);
     }
 
+    //checks to see if the enter key has been pressed
     $(".form-group").keypress(function (e) {
         if (e.which == 13) {
             submitEventLoop();

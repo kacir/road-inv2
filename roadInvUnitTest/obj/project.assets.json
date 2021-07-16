@@ -2,45 +2,6 @@
   "version": 3,
   "targets": {
     "net5.0": {
-      "AHTDAppLogWebClientAPI/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "ELMAH": "1.2.2",
-          "Microsoft.AspNet.WebApi.Client": "4.0.20710"
-        },
-        "compile": {
-          "lib/net40/WebClientAPI.dll": {}
-        },
-        "runtime": {
-          "lib/net40/WebClientAPI.dll": {}
-        }
-      },
-      "AHTDSTSWebClient/6.0.24": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.IdentityModel": "6.1.7600.16394"
-        },
-        "compile": {
-          "lib/net45/AHTD.Security.STSWeb.dll": {}
-        },
-        "runtime": {
-          "lib/net45/AHTD.Security.STSWeb.dll": {}
-        }
-      },
-      "ArDOT_UserProv.Client.API/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Web.Xdt": "2.1.1",
-          "NuGet.Core": "2.14.0",
-          "NuGet.VisualStudio": "4.6.2"
-        },
-        "compile": {
-          "lib/net40-client/ArDOT_UserProv.Client.API.dll": {}
-        },
-        "runtime": {
-          "lib/net40-client/ArDOT_UserProv.Client.API.dll": {}
-        }
-      },
       "Azure.Core/1.6.0": {
         "type": "package",
         "dependencies": {
@@ -113,21 +74,6 @@
           "build/netstandard1.0/coverlet.collector.targets": {}
         }
       },
-      "elmah/1.2.2": {
-        "type": "package",
-        "dependencies": {
-          "elmah.corelibrary": "1.2.2"
-        }
-      },
-      "elmah.corelibrary/1.2.2": {
-        "type": "package",
-        "compile": {
-          "lib/Elmah.dll": {}
-        },
-        "runtime": {
-          "lib/Elmah.dll": {}
-        }
-      },
       "Humanizer.Core/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -138,19 +84,6 @@
         },
         "runtime": {
           "lib/netstandard1.0/Humanizer.dll": {}
-        }
-      },
-      "Microsoft.AspNet.WebApi.Client/4.0.20710": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Net.Http": "[2.0.20710, 2.1.0)",
-          "Newtonsoft.Json": "4.5.6"
-        },
-        "compile": {
-          "lib/net40/System.Net.Http.Formatting.dll": {}
-        },
-        "runtime": {
-          "lib/net40/System.Net.Http.Formatting.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/2.2.0": {
@@ -1328,15 +1261,6 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Microsoft.IdentityModel/6.1.7600.16394": {
-        "type": "package",
-        "compile": {
-          "lib/net35/Microsoft.IdentityModel.dll": {}
-        },
-        "runtime": {
-          "lib/net35/Microsoft.IdentityModel.dll": {}
-        }
-      },
       "Microsoft.IdentityModel.JsonWebTokens/6.10.2": {
         "type": "package",
         "dependencies": {
@@ -1396,15 +1320,6 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.dll": {}
-        }
-      },
-      "Microsoft.Net.Http/2.0.20710": {
-        "type": "package",
-        "compile": {
-          "lib/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
         }
       },
       "Microsoft.Net.Http.Headers/2.2.0": {
@@ -1807,15 +1722,6 @@
           "lib/net5.0/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll": {}
         }
       },
-      "Microsoft.Web.Xdt/2.1.1": {
-        "type": "package",
-        "compile": {
-          "lib/net40/Microsoft.Web.XmlTransform.dll": {}
-        },
-        "runtime": {
-          "lib/net40/Microsoft.Web.XmlTransform.dll": {}
-        }
-      },
       "Microsoft.Win32.Registry/4.7.0": {
         "type": "package",
         "dependencies": {
@@ -1894,18 +1800,6 @@
           "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
         }
       },
-      "NuGet.Core/2.14.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Web.Xdt": "2.1.0"
-        },
-        "compile": {
-          "lib/net40-Client/NuGet.Core.dll": {}
-        },
-        "runtime": {
-          "lib/net40-Client/NuGet.Core.dll": {}
-        }
-      },
       "NuGet.Frameworks/5.0.0": {
         "type": "package",
         "compile": {
@@ -1913,12 +1807,6 @@
         },
         "runtime": {
           "lib/netstandard2.0/NuGet.Frameworks.dll": {}
-        }
-      },
-      "NuGet.VisualStudio/4.6.2": {
-        "type": "package",
-        "build": {
-          "build/_._": {}
         }
       },
       "runtime.native.System/4.0.0": {
@@ -3165,56 +3053,6 @@
     }
   },
   "libraries": {
-    "AHTDAppLogWebClientAPI/1.0.0": {
-      "sha512": "cnu+iOT514NpOaoDtrqM4sc4vFdzohxHnH8wRZ4TB6beSGm0sfU1bh4U4U9k6rYaKgdtfIHkjDHCFJqmLx/SCQ==",
-      "type": "package",
-      "path": "ahtdapplogwebclientapi/1.0.0",
-      "files": [
-        ".nupkg.metadata",
-        "ahtdapplogwebclientapi.1.0.0.nupkg.sha512",
-        "ahtdapplogwebclientapi.nuspec",
-        "content/web.config.transform",
-        "lib/net40/WebClientAPI.dll"
-      ]
-    },
-    "AHTDSTSWebClient/6.0.24": {
-      "sha512": "1dsVkQKo6kKriCeWq7QElCqmpLo5JuwZeolQedGM7inZXUQv7ujaVuPMii9SnCNAI5F+zA2H7MtN8aOkvgPwUA==",
-      "type": "package",
-      "path": "ahtdstswebclient/6.0.24",
-      "files": [
-        ".nupkg.metadata",
-        "ahtdstswebclient.6.0.24.nupkg.sha512",
-        "ahtdstswebclient.nuspec",
-        "content/Authorization.cs",
-        "content/ClaimTypes.cs",
-        "content/ClientClaim.cs",
-        "content/CustomRequestValidator.cs",
-        "content/DefaultEncryptingCertificate.pfx",
-        "content/DefaultSigningCertificate.pfx",
-        "content/Security/AHTDRoleProvider.cs.pp",
-        "content/Security/CurrentUser.cs.pp",
-        "content/Security/Roles.cs.pp",
-        "content/UserInfoBase.cs",
-        "content/web.Debug.config.transform",
-        "content/web.Release.config.transform",
-        "content/web.config.transform",
-        "lib/net45/AHTD.Security.STSWeb.dll",
-        "lib/net45/AHTD.Security.STSWeb.pdb",
-        "lib/net45/AHTD.Security.STSWeb.xml",
-        "src/Properties/AssemblyInfo.cs"
-      ]
-    },
-    "ArDOT_UserProv.Client.API/1.0.0": {
-      "sha512": "OPBpuJ2jkdF62WtdqUERdftbXUG3wKWY+IKRk2gOnaBp6hIQT9OB1+QbIHaha3ooEJROy7kSGoayuR/dPdAocw==",
-      "type": "package",
-      "path": "ardot_userprov.client.api/1.0.0",
-      "files": [
-        ".nupkg.metadata",
-        "ardot_userprov.client.api.1.0.0.nupkg.sha512",
-        "ardot_userprov.client.api.nuspec",
-        "lib/net40-client/ArDOT_UserProv.Client.API.dll"
-      ]
-    },
     "Azure.Core/1.6.0": {
       "sha512": "kI4m2NsODPOrxo0OoKjk6B3ADbdovhDQIEmI4039upjjZKRaewVLx/Uz4DfRa/NtnIRZQPUALe1yvdHWAoRt4w==",
       "type": "package",
@@ -3313,32 +3151,6 @@
         "coverlet.collector.nuspec"
       ]
     },
-    "elmah/1.2.2": {
-      "sha512": "UGnc/NHz0SHNc5eWaW+NynuYWFn+KM2NEoBJbavDt6s8pSBZQgDkKaaqvEV43TiF5GB1uDVjXLx1yjdfP78UPQ==",
-      "type": "package",
-      "path": "elmah/1.2.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Readme.txt",
-        "content/App_Readme/Elmah.txt",
-        "content/web.config.transform",
-        "elmah.1.2.2.nupkg.sha512",
-        "elmah.nuspec"
-      ]
-    },
-    "elmah.corelibrary/1.2.2": {
-      "sha512": "OEx4ds9r2bw2/45VZwfw11lLv4y+mC2FUZxp7LsjmauFxj92K1kx8hafSBvls+V9s0WH0wv84B1LfWN/EaGfkg==",
-      "type": "package",
-      "path": "elmah.corelibrary/1.2.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "elmah.corelibrary.1.2.2.nupkg.sha512",
-        "elmah.corelibrary.nuspec",
-        "lib/Elmah.dll"
-      ]
-    },
     "Humanizer.Core/2.2.0": {
       "sha512": "rsYXB7+iUPP8AHgQ8JP2UZI2xK2KhjcdGr9E6zX3CsZaTLCaw8M35vaAJRo1rfxeaZEVMuXeaquLVCkZ7JcZ5Q==",
       "type": "package",
@@ -3349,19 +3161,6 @@
         "humanizer.core.2.2.0.nupkg.sha512",
         "humanizer.core.nuspec",
         "lib/netstandard1.0/Humanizer.dll"
-      ]
-    },
-    "Microsoft.AspNet.WebApi.Client/4.0.20710": {
-      "sha512": "BwFtW0cGr8tg02XalvF8MmznOpYrhquD2eXWI0oF3LLSqLMFoFkb8Pmke/7SnqkiNc+YfsaUqdXEKbjhv1Ctrw==",
-      "type": "package",
-      "path": "microsoft.aspnet.webapi.client/4.0.20710",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net40/System.Net.Http.Formatting.dll",
-        "lib/net40/System.Net.Http.Formatting.xml",
-        "microsoft.aspnet.webapi.client.4.0.20710.nupkg.sha512",
-        "microsoft.aspnet.webapi.client.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Antiforgery/2.2.0": {
@@ -4845,18 +4644,6 @@
         "microsoft.identity.web.ui.nuspec"
       ]
     },
-    "Microsoft.IdentityModel/6.1.7600.16394": {
-      "sha512": "qsst2HALUxXdDVmOEk6GJ8U7LNbrQIpIiPesdD+k99TuRc5zy+J4zK4fNpiX+hiMd4cCGoY9WIT3f021Syocdw==",
-      "type": "package",
-      "path": "microsoft.identitymodel/6.1.7600.16394",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net35/Microsoft.IdentityModel.dll",
-        "microsoft.identitymodel.6.1.7600.16394.nupkg.sha512",
-        "microsoft.identitymodel.nuspec"
-      ]
-    },
     "Microsoft.IdentityModel.JsonWebTokens/6.10.2": {
       "sha512": "0pN+tRP4ceSOlwnFpJMW/g/JuhPABCe9Sg83YSf0axigUAtAbkuO7RD642aQdqj7q4YrIsazbblIJNB1aC5Kcg==",
       "type": "package",
@@ -4950,22 +4737,6 @@
         "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.xml",
         "microsoft.identitymodel.tokens.6.10.2.nupkg.sha512",
         "microsoft.identitymodel.tokens.nuspec"
-      ]
-    },
-    "Microsoft.Net.Http/2.0.20710": {
-      "sha512": "OsB/5QO9tYJRLYIgBOhRl4Tssh3pw7+UAO9tMGMBg63f98GfjsniVIwLWRC0vcRr/F6HLP/NvRlHyGBhtD7Bmw==",
-      "type": "package",
-      "path": "microsoft.net.http/2.0.20710",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net40/System.Net.Http.WebRequest.dll",
-        "lib/net40/System.Net.Http.WebRequest.xml",
-        "lib/net40/System.Net.Http.dll",
-        "lib/net40/System.Net.Http.xml",
-        "lib/net45/_._",
-        "microsoft.net.http.2.0.20710.nupkg.sha512",
-        "microsoft.net.http.nuspec"
       ]
     },
     "Microsoft.Net.Http.Headers/2.2.0": {
@@ -5663,18 +5434,6 @@
         "microsoft.visualstudio.web.codegenerators.mvc.nuspec"
       ]
     },
-    "Microsoft.Web.Xdt/2.1.1": {
-      "sha512": "PHoqib4d+f2lmnluVwMFM8M4AF8Z7y2g18hUTi5UCKkjNQIzkNnB1uyqnS5od2sMsRcI/9mexQjDO6e5dL/MeA==",
-      "type": "package",
-      "path": "microsoft.web.xdt/2.1.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net40/Microsoft.Web.XmlTransform.dll",
-        "microsoft.web.xdt.2.1.1.nupkg.sha512",
-        "microsoft.web.xdt.nuspec"
-      ]
-    },
     "Microsoft.Win32.Registry/4.7.0": {
       "sha512": "KSrRMb5vNi0CWSGG1++id2ZOs/1QhRqROt+qgbEAdQuGjGrFcl4AOl4/exGPUYz2wUnU42nvJqon1T3U0kPXLA==",
       "type": "package",
@@ -5922,18 +5681,6 @@
         "newtonsoft.json.bson.nuspec"
       ]
     },
-    "NuGet.Core/2.14.0": {
-      "sha512": "UDXFLVRDepqVqyYxQuxujfaAc7XePdw+Lsey+q36iqTm0nuSU1n9laIGqjokvBl0unifYtjSai7fqBQKKd9BUg==",
-      "type": "package",
-      "path": "nuget.core/2.14.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net40-Client/NuGet.Core.dll",
-        "nuget.core.2.14.0.nupkg.sha512",
-        "nuget.core.nuspec"
-      ]
-    },
     "NuGet.Frameworks/5.0.0": {
       "sha512": "c5JVjuVAm4f7E9Vj+v09Z9s2ZsqFDjBpcsyS3M9xRo0bEdm/LVZSzLxxNvfvAwRiiE8nwe1h2G4OwiwlzFKXlA==",
       "type": "package",
@@ -5949,20 +5696,6 @@
         "lib/netstandard2.0/NuGet.Frameworks.xml",
         "nuget.frameworks.5.0.0.nupkg.sha512",
         "nuget.frameworks.nuspec"
-      ]
-    },
-    "NuGet.VisualStudio/4.6.2": {
-      "sha512": "yFr8249khEc85RnBYbdxMCTA3Wo3LXZrrmyFlLYA+5NsP8RXvEjZZgNPKvGTaD3y9wt5qGpVmyZIV4MhYc4o2g==",
-      "type": "package",
-      "path": "nuget.visualstudio/4.6.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "build/NuGet.VisualStudio.targets",
-        "lib/net46/NuGet.VisualStudio.dll",
-        "lib/net46/NuGet.VisualStudio.xml",
-        "nuget.visualstudio.4.6.2.nupkg.sha512",
-        "nuget.visualstudio.nuspec"
       ]
     },
     "runtime.native.System/4.0.0": {
@@ -9659,28 +9392,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\MW42705\\.nuget\\packages\\": {},
+    "C:\\Users\\rk42861\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\MW42705\\source\\repos\\road-inv2\\roadInvUnitTest\\roadInvUnitTest.csproj",
+      "projectUniqueName": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\roadInvUnitTest\\roadInvUnitTest.csproj",
       "projectName": "roadInvUnitTest",
-      "projectPath": "C:\\Users\\MW42705\\source\\repos\\road-inv2\\roadInvUnitTest\\roadInvUnitTest.csproj",
-      "packagesPath": "C:\\Users\\MW42705\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\MW42705\\source\\repos\\road-inv2\\roadInvUnitTest\\obj\\",
+      "projectPath": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\roadInvUnitTest\\roadInvUnitTest.csproj",
+      "packagesPath": "C:\\Users\\rk42861\\.nuget\\packages\\",
+      "outputPath": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\roadInvUnitTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\MW42705\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\MicroFocus.VisualStudio.Offline.config",
+        "C:\\Users\\rk42861\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -9689,17 +9419,16 @@
         "net5.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Micro Focus\\Visual COBOL\\NuGetPackages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "\\\\csd1\\appdev\\Nuget": {},
+        "C:\\Users\\rk42861\\AppData\\Local\\Esri\\NuGet": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\MW42705\\source\\repos\\road-inv2\\RoadInv\\RoadInv.csproj": {
-              "projectPath": "C:\\Users\\MW42705\\source\\repos\\road-inv2\\RoadInv\\RoadInv.csproj"
+            "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\RoadInv.csproj": {
+              "projectPath": "E:\\scratch\\RoadInv_Overhaul\\road-inv2\\RoadInv\\RoadInv.csproj"
             }
           }
         }
@@ -9760,97 +9489,28 @@
   },
   "logs": [
     {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\MW42705\\source\\repos\\road-inv2\\roadInvUnitTest\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'AHTDAppLogWebClientAPI 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package AHTDAppLogWebClientAPI. No packages exist with this id in source(s): Esri, Microsoft Visual Studio Offline Packages, nuget.org",
       "libraryId": "AHTDAppLogWebClientAPI",
       "targetGraphs": [
         "net5.0"
       ]
     },
     {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'AHTDSTSWebClient 6.0.24' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package AHTDSTSWebClient. No packages exist with this id in source(s): Esri, Microsoft Visual Studio Offline Packages, nuget.org",
       "libraryId": "AHTDSTSWebClient",
       "targetGraphs": [
         "net5.0"
       ]
     },
     {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'ArDOT_UserProv.Client.API 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package ArDOT_UserProv.Client.API. No packages exist with this id in source(s): Esri, Microsoft Visual Studio Offline Packages, nuget.org",
       "libraryId": "ArDOT_UserProv.Client.API",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'elmah.corelibrary 1.2.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "elmah.corelibrary",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.WebApi.Client 4.0.20710' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.AspNet.WebApi.Client",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.IdentityModel 6.1.7600.16394' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.IdentityModel",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.Net.Http 2.0.20710' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.Net.Http",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.Web.Xdt 2.1.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.Web.Xdt",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'NuGet.Core 2.14.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "NuGet.Core",
       "targetGraphs": [
         "net5.0"
       ]

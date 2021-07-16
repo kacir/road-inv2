@@ -28,6 +28,7 @@
 
 </style>
 
+<!-- modal window appears after record has been deleted. is only shown for 2 seconds.-->
 <div class="modal micromodal-slide" id="modal-delete" aria-hidden="true">
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
@@ -46,6 +47,7 @@
 </div>
 
 
+<!-- modal window appears on click when records have to be mirrored-->
 <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
@@ -110,6 +112,7 @@
     </div>
 </div>
 
+<!--window needed to copy an entire segment -->
 <div class="modal micromodal-slide" id="modal-2" aria-hidden="true">
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
@@ -168,10 +171,12 @@
     </div>
 </div>
 
+<!-- method needs to be run in order for modal windows to function. Must be called after the modal window HTML is built -->
 <script>
     MicroModal.init();
 </script>
 
+<!-- page title -->
 <div class="segment-title-holder">
     <button id="left-arrow" class="arrow-button">&#x2190;</button>
     <div class="segment-title ">
@@ -200,6 +205,8 @@
     </div>
     <button id="right-arrow" class="arrow-button">&#8594;</button>
 </div>
+
+<!-- body of the HTML -->
 <div class="main-content">
     <div class="master-grid">
         <div id="box-coreChar" class='property-box'>
@@ -862,13 +869,24 @@
 
 
 <script>
+    /*
+     * There is a jquery tooltip plugin that is used to get all of the 
+     * explanatory tooltips for each of the fields. The method can't be called until the entire web document is rendered to the browser.
+     * If its called before then, the tooptips will not work. The script will try to add toolips to HTML elements that do not exist yet.
+     * */
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
             });
 </script>
 
 <script>
+    /*
+     I wanted each of the "Field" names or attribute names in both C-sharp and javascript to be the same. its really easy to misspell an attribute name
+     in javascript. If the backend and frontend names do not match correctly it will not necessarily show in a runtime error. It might end up becomeing
+     some kind of semantic error caused by a null or missing value. In order to avoid this the FieldsListModel class is used to hold common the attribute names
+     */
 
+    /*List of attributes that will be requested from the backend, and submitted to the backend for validation*/
     var subjectAttributes = ["@FieldsListModel.AH_District", "@FieldsListModel.AH_County", "@FieldsListModel.AH_Section", "@FieldsListModel.AH_Route",
         "@FieldsListModel.AH_Section", "@FieldsListModel.LOG_DIRECT", "@FieldsListModel.AH_BLM", "@FieldsListModel.AH_ELM", "@FieldsListModel.RouteSign",
             "@FieldsListModel.TypeRoad", "@FieldsListModel.RuralUrbanArea", "@FieldsListModel.UrbanAreaCode", "@FieldsListModel.LeftShoulderWidth",
@@ -880,6 +898,13 @@
         "@FieldsListModel.RoadwayWidth", "@FieldsListModel.Comment1", "@FieldsListModel.YearBuilt", "@FieldsListModel.yearRecon", "@FieldsListModel.ID",
         "@FieldsListModel.Alternative_Route_Name"];
 
+    /*The gatherInput method simply looks gathers user input values from every single dropbox box, textbox or other input. 
+     This method is used by a variety of different other functions which need information about what different fields are but
+     each of the other function does not need to know how to fetch each individual attribute.
+
+    this loops over the subjectAttributes object so it makes it really easy to add more fields to the gathering process
+
+     */
     function gatherInput() {
         inputs = {};
 
@@ -889,13 +914,13 @@
             inputs[subjectAttributes[i]] = raw;
         }
 
-        inputs["ID"] = @Model.details.Id;
+        inputs["ID"] = @Model.details.Id;//record id
 
-        var altNames = $("#box-alternate div input").map((_, el) => el.value).get();
+        var altNames = $("#box-alternate div input").map((_, el) => el.value).get();//get alternative names into a list
         console.log(altNames);
         inputs["@FieldsListModel.Alternative_Route_Name"] = "";
 
-
+        //construct the alternative route names list into a string
         if (altNames.length > 0) {
             var i;
             for (i = 0; i < altNames.length; i++) {
@@ -909,27 +934,21 @@
             }
         }
 
-
-
-
         return inputs;
     }
 
-    //trigger committ changes when submit inputs occurs
+    //trigger submitInputs whenever, the user changes an input or presses a key. part of event loop to get validation triggered in the interface.
     $("input, select, textarea").on("keyup, change", submitInputs);
 
 
-    //General function to check to see if the inputs are valid
+    //General function to check to see if the inputs are valid and change the disabled state of some editing buttons
     function submitInputs() {
         console.log("SubmitInputs");
         var inputs = gatherInput();
-        var constructString = "";
-
-        //fill in the ID attribute because the user has no control over this variable. Hidden from user
 
         $.post("api/validate", inputs, errorPost, "json");
 
-        //find the original input values and check to see if anything changed
+        //find the original input values from when the page was loaded or the last time the record was saved and check to see if anything changed
         $("#save-changes, #reset-changes").attr("disabled", "");
         subjectAttributes.forEach(function (x) {
             if (originalValues[x] == inputs[x]) {
@@ -940,8 +959,10 @@
         });
     }
 
-    //apply tag class error-flag to everything that has an error asscoaited with it.
+    //apply tag class error-flag to everything that has an error associated with it.
+    //method is called after validate results have been returned from the backend server
     function errorPost(data) {
+        //if the manual override is off, apply the errors according
         if (!$("#manual-override").hasClass("override-active")) {
             console.log(data);
             //zero out all attributes errors
@@ -949,6 +970,7 @@
                 .removeAttr("title")
                 .tooltip('disable');
 
+            //apply error to relivant parts
             for (i = 0; i < subjectAttributes.length; i++) {
                 var raw = $("#" + subjectAttributes[i]).removeClass("error-flag");
             }
@@ -972,7 +994,7 @@
             }
 
         } else {
-            // logic goes here^
+            //if the manual override is off, get rid of all the error flags
             $("#save-changes").removeClass("override-active").text("Save");
             subjectAttributes.forEach(function (item) {
                 $("#" + item)
@@ -985,7 +1007,7 @@
     }
 
 
-    //submit so save the changes
+    //submit button click so save the changes
     $("#save-changes").click(function () {
         var inputs = gatherInput();
         $("#save-changes").fadeOut();
@@ -996,7 +1018,7 @@
             $.post("api/new_Segment", inputs, function (data) {
                 console.log("new results have been saved");
                 console.log(data);
-                originalValues = gatherInput();//update values used to determine if changes have been made
+                originalValues = gatherInput();//update static values used to determine if changes have been made
                 $("#save-changes").text("Changes saved!").fadeIn(1000, function () {
                     $("#save-changes").text("Save");
                     window.location.href = "edit_Segment.html?ID=" + String(data);
@@ -1018,11 +1040,11 @@
 
 
 
-    //contrain these corrections to Manual Override mode off
+    //contrain these corrections to Manual Override mode on
     //make sure BLM and ELM always have 3 digit
     $("#@FieldsListModel.AH_BLM").focusout(function () {
         if (!$("#manual-override").hasClass("override-active")) {
-            //force BLM and ELM to be zero decimal places
+            //force BLM and ELM to be three decimal places
             var BLM = $("#@FieldsListModel.AH_BLM").val();
             if (!isNaN(BLM) && BLM != "" && BLM != null && BLM != undefined) {
                 console.log(BLM);
@@ -1035,7 +1057,7 @@
 
     $("#@FieldsListModel.AH_ELM").focusout(function () {
         if(!$("#manual-override").hasClass("override-active")){
-            //force BLM and ELM to be zero decimal places
+            //force BLM and ELM to be three decimal places
             var ELM = $("#@FieldsListModel.AH_ELM").val();
             if (!isNaN(ELM) && ELM != "" && ELM != null && ELM != undefined) {
                 //console.log(ELM);
@@ -1055,11 +1077,8 @@
         $("#@FieldsListModel.AH_Length").html(length);
     });
 
-    $(document).ready(function () {
-        //$("#button-save").click(parameterCheckEventLoop);
 
-    })
-
+    //change the record title if the inputs fields for BLM and ELM change
     $("#@FieldsListModel.AH_ELM, #@FieldsListModel.AH_BLM").change(function () {
         console.log("ELM and BLM changing")
         $("#m-@FieldsListModel.AH_ELM, #d-@FieldsListModel.AH_ELM").val( $("#@FieldsListModel.AH_ELM").val() );
@@ -1141,7 +1160,7 @@
     });
 
 
-    //allow enable and disable of manual override ^
+    //allow enable and disable of manual override
     $("#manual-override").click(function () {
         var button = $("#manual-override");
 
@@ -1155,7 +1174,7 @@
     });
 
     //Need to gather inputs the first time directly from the database to avoid keeping saved attributes
-    //var originalValues = gatherInput();
+    //do not use gatherInput() function because it will modify the values a bit as its imported.
 
     var originalValues = {
         "@FieldsListModel.AH_District": "@Model.details.AhDistrict",
@@ -1220,7 +1239,7 @@
         "@FieldsListModel.Alternative_Route_Name": "@Model.details.AlternativeRouteName"
     };
 
-
+    //cooresponds to the rerest change button
     $("#reset-changes").click(function () {
         //reset values in the main form
         subjectAttributes.forEach(function (x) {
@@ -1248,7 +1267,7 @@
 
     });
 
-    //logic to delete segment
+    //logic to delete segment button
     $("#delete-segment").click(function () {
         //submit id to be deleted
         //show a confirmation page
@@ -1266,7 +1285,7 @@
         }, "json");
     });
 
-    //logic to duplicate segment
+    //logic to duplicate segment button
     $("#continue-duplicate").click(function () {
         var AH_County = $("#d-@FieldsListModel.AH_County").val();
         var AH_Route = $("#d-@FieldsListModel.AH_Route").val();
@@ -1291,6 +1310,7 @@
 
     });
 
+    //logic to mirror segment button
     $("#continue-mirror").click(function () {
         var AH_County = $("#m-@FieldsListModel.AH_County").val();
         var AH_Route = $("#m-@FieldsListModel.AH_Route").val();
@@ -1317,7 +1337,7 @@
 
     });
 
-    //deal with changes in alternate route name
+    //deal with changes in alternate route name to add a route route name
     $("#new-alt-name").click(function () {
         //add new items to its siblings
         var newElementText = '<div><button class="alt-route-name-item">-</button><input type="text" /></div>';
@@ -1328,15 +1348,17 @@
             $(this).parent().remove();
         });
 
-        $("#box-alternate div input").on("keyup, change", submitInputs);
+        $("#box-alternate div input").on("keyup, change", submitInputs);//submit element for validation every time its the user presses a key in the alternative route name text box.
 
     });
 
+    //rebind every time elements are added
     $(".alt-route-name-item").click(function () {
         $(this).parent().remove();
     });
     $("#box-alternate div input").on("keyup, change", submitInputs);
 
+    //navigate to record before current record
     $("#left-arrow").click(function () {
         var inputs = { "sourceSegmentID" : "@Model.details.Id"};
         $.post("api/segmentOrder", inputs, function (data) {
@@ -1350,6 +1372,7 @@
 
     });
 
+    //navigate to record after current record
     $("#right-arrow").click(function () {
         var inputs = { "sourceSegmentID": "@Model.details.Id" };
         $.post("api/segmentOrder", inputs, function (data) {
