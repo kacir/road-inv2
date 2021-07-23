@@ -7,12 +7,15 @@ using Microsoft.Extensions.Configuration;
 using RoadInv.DB;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Web;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Identity.Web.UI;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace RoadInv
 {
@@ -49,35 +52,49 @@ namespace RoadInv
 
             services.AddAuthorization(options =>
             {
-            options.AddPolicy("admin-only", p =>
-            {
-                    /*To implement, go to portal.azure.com
-                     * => App Registrations
-                     * => RoadwayInventory
-                     * => Manifest, then set "groupMembershipClaims" to SecurityGroup
-                     * To find groups to add, to to portal.azure.com
-                     * => Active Directory
-                     * => Groups, find the group you want to allow, click and copy/paste the group's object ID
-                     * Add the [Authorize("admin-only")] attribute to classes/functions you want to require authorization
-                     * */
+                //options.AddPolicy(AuthorizationPolicy.AssignmentToUserReaderRoleRequired, policy => policy.RequireRole(AppRole.UserReaders));
+                options.AddPolicy("admin-only", p =>
+                {
+                /*To implement, go to portal.azure.com
+                 * => App Registrations
+                 * => RoadwayInventory
+                 * => Manifest, then set "groupMembershipClaims" to SecurityGroup
+                 * To find groups to add, to to portal.azure.com
+                 * => Active Directory
+                 * => Groups, find the group you want to allow, click and copy/paste the group's object ID
+                 * Add the [Authorize("admin-only")] attribute to classes/functions you want to require authorization
+                 * When decorating classes/actions with the [Authorize(Roles="")], need to remember that
+                 * => we are using the role's Value attribute in the Azure AD app Manifest and not the displayName*/
 
-                p.RequireAssertion(context =>
-                    context.User.HasClaim(c =>
-                        c.Value == this.configuration["TrafficInformationSys"] ||  //system information and research - traffic information systems
-                        c.Value == this.configuration["SystemInformation"] ||      //system information and research - system information
-                        c.Value == this.configuration["TrafficInformation"] ||     //system information and research - traffic information
-                        c.Value == this.configuration["SystemInfoGIS"] ||          //system information and research - gis
-                        c.Value == this.configuration["TrafficDataCollection"]     //system information and research - traffic data collection
-                        )
-                    );
-                
-                    //p.RequireUserName(configuration.GetSection("User0").Value);      //can set policy to only allow specific users
+                    p.RequireAssertion(context =>
+                        context.User.HasClaim(c =>
+                            c.Value == this.configuration["TrafficInformationSys"] ||  //system information and research - traffic information systems
+                            c.Value == this.configuration["SystemInformation"] ||      //system information and research - system information
+                            c.Value == this.configuration["TrafficInformation"] ||     //system information and research - traffic information
+                            c.Value == this.configuration["SystemInfoGIS"] ||          //system information and research - gis
+                            c.Value == this.configuration["TrafficDataCollection"]     //system information and research - traffic data collection
+                            )
+                        );
+                    //p.RequireAssertion(context =>
+                    //{
+                    //    string strUserId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    //    var user = await userManager.FindByIdAsync(strUserId);
+                    //    string[] roles = (await userManager.GetRolesAsync(user)).ToArray();
+                    //    return roles.Contains("Admin");
+                    //};
+
+                    //p.RequireUserName(configuration.GetSection("User0").Value);     //can set policy to only allow specific users
                     //p.RequireUserName(configuration.GetSection("User1").Value);      //configured in appsettings.json
-                });
-            //options.AddPolicy("super-user0", p => { p.RequireUserName(configuration.GetSection("User0").Value); });
-            //options.AddPolicy("super-user1", p => { p.RequireUserName(configuration.GetSection("User1").Value); });
-            
+                    
             });
+                //options.AddPolicy("RequireWriter",
+                //    policy => policy.RequireRole("Writer"));
+
+                //options.AddPolicy("super-user0", p => { p.RequireUserName(configuration.GetSection("User0").Value); });
+                //options.AddPolicy("super-user1", p => { p.RequireUserName(configuration.GetSection("User1").Value); });
+
+            });
+            
             #endregion
 
             services.AddRazorPages()

@@ -168,8 +168,8 @@ namespace RoadInv.Controllers
 
             return View("edit_Segment", SegmentPageObj);
         }
-
-        [Authorize(Policy = "admin-only")]
+        //[Authorize(Roles = "Readonly")]
+        //[Authorize(Policy = "admin-only")]
         [Route("edit_Segment")]
         [Route("edit_Segment.html")]
         public IActionResult edit_Segment(int ID = -1)

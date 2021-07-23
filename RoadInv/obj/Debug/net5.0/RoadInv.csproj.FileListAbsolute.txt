@@ -430,5 +430,7 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Ident
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.Identity.Web.UI.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\libman.json
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\JetBrains.Annotations.dll
-C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.csproj.AssemblyReference.cache
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\WebDriver.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.AzureAD.UI.Views.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.AzureAD.UI.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\RoadInv.csproj.AssemblyReference.cache

@@ -12,6 +12,19 @@ using System.Dynamic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity.Web.Resource;
+
+
+/* Want to add concurrency. Could do this by adding a rowversion attribute.
+ * Would need to run the following commands in the package manager console:
+ * Scaffold-DbContext "Server=INVSQL-DEV;Database=roadinv;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir DB -Force
+ * This will scaffold the DB Context to reflect changes made to the database
+ * See the following: https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/handling-concurrency-with-the-entity-framework-in-an-asp-net-mvc-application
+ * 
+ * There were also a few fields that I need to ask Robert about adding. I 
+ * can't remember what they were exactly. They currently exsist in the old
+ * road inventory but not the new.
+ */
 
 namespace RoadInv.Controllers
 {
@@ -29,7 +42,8 @@ namespace RoadInv.Controllers
             _context = context;
         }
 
-        [Authorize(Policy = "admin-only")]                                                      //policy is created in startup.cs under AddAuthorization
+        [Authorize(Roles="Task.Write")] //need to remember that we're checking for the value and not the displayName in AzureAD
+        //[Authorize(Policy = "admin-only")]                                                      //policy is created in startup.cs under AddAuthorization
         [Route("system_changes/nhs")]
         [Route("system_changes/nhs.html")]
         public async Task<IActionResult> system_changes_nhs(SystemChangesPageModel pageModel)
@@ -127,10 +141,12 @@ namespace RoadInv.Controllers
             return View(pageModel);
         }
 
+        [Authorize(Roles = "Task.Write")] 
         [Route("system_changes/aphn")]
         [Route("system_changes/aphn.html")]
         public async Task<IActionResult> system_changes_aphn(SystemChangesPageModel pageModel)
         {
+            //HttpContext.ValidateAppRole("Writer");
             int pageSize = 50;
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
