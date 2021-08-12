@@ -46,10 +46,11 @@ namespace RoadInv.Controllers
         //[Authorize(Policy = "admin-only")]                                                      //policy is created in startup.cs under AddAuthorization
         [Route("system_changes/nhs")]
         [Route("system_changes/nhs.html")]
+        [Route("SystemChanges/system_changes_nhs")]
         public async Task<IActionResult> system_changes_nhs(SystemChangesPageModel pageModel)
         {
             string NAME = HttpContext.User.Identity.Name;
-            int pageSize = 50;
+            int pageSize = 100;
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
             var roads = from r in _context.RoadInvs
@@ -144,10 +145,11 @@ namespace RoadInv.Controllers
         [Authorize(Roles = "Task.Write")] 
         [Route("system_changes/aphn")]
         [Route("system_changes/aphn.html")]
+        [Route("SystemChanges/system_changes_aphn")]
         public async Task<IActionResult> system_changes_aphn(SystemChangesPageModel pageModel)
         {
             //HttpContext.ValidateAppRole("Writer");
-            int pageSize = 50;
+            int pageSize = 100;
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
             var roads = from r in _context.RoadInvs
@@ -239,6 +241,7 @@ namespace RoadInv.Controllers
 
         [Route("system_changes/func")]
         [Route("system_changes/func.html")]
+        [Route("SystemChanges/system_changes_func")]
         public async Task<IActionResult> system_changes_func(SystemChangesPageModel pageModel)
         {
             int pageSize = 50;
@@ -325,6 +328,7 @@ namespace RoadInv.Controllers
 
         [Route("system_changes/special")]
         [Route("system_changes/special.html")]
+        [Route("SystemChanges/system_changes_special")]
         public async Task<IActionResult> system_changes_special(SystemChangesPageModel pageModel)
         {
 

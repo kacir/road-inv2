@@ -44,6 +44,8 @@ C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Azure.Security.KeyVault.Secrets.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Humanizer.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\JetBrains.Annotations.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.AspNetCore.Authentication.AzureAD.UI.Views.dll
+C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.AspNetCore.Authentication.AzureAD.UI.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
 C:\Users\MW42705\source\repos\road-inv2\RoadInv\obj\Debug\net5.0\win-x64\PubTmp\Out\Microsoft.AspNetCore.Razor.Language.dll

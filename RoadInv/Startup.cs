@@ -33,7 +33,7 @@ namespace RoadInv
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddMvc();
 
             #region Authentication and Authorization
@@ -55,16 +55,17 @@ namespace RoadInv
                 //options.AddPolicy(AuthorizationPolicy.AssignmentToUserReaderRoleRequired, policy => policy.RequireRole(AppRole.UserReaders));
                 options.AddPolicy("admin-only", p =>
                 {
-                /*To implement, go to portal.azure.com
-                 * => App Registrations
-                 * => RoadwayInventory
-                 * => Manifest, then set "groupMembershipClaims" to SecurityGroup
-                 * To find groups to add, to to portal.azure.com
-                 * => Active Directory
-                 * => Groups, find the group you want to allow, click and copy/paste the group's object ID
-                 * Add the [Authorize("admin-only")] attribute to classes/functions you want to require authorization
-                 * When decorating classes/actions with the [Authorize(Roles="")], need to remember that
-                 * => we are using the role's Value attribute in the Azure AD app Manifest and not the displayName*/
+                    /*To implement, go to portal.azure.com
+                     * => App Registrations
+                     * => RoadwayInventory
+                     * => Manifest, then set "groupMembershipClaims" to SecurityGroup
+                     * To find groups to add, to to portal.azure.com
+                     * => Active Directory
+                     * => Groups, find the group you want to allow, click and copy/paste the group's object ID
+                     * Add the [Authorize("admin-only")] attribute to classes/functions you want to require authorization
+                     * When decorating classes/actions with the [Authorize(Roles="")], need to remember that
+                     * => we are using the role's Value attribute in the Azure AD app Manifest and not the displayName
+                      Also, make sure authentication is set to 'Allow Anonymous'*/
 
                     p.RequireAssertion(context =>
                         context.User.HasClaim(c =>
@@ -72,7 +73,8 @@ namespace RoadInv
                             c.Value == this.configuration["SystemInformation"] ||      //system information and research - system information
                             c.Value == this.configuration["TrafficInformation"] ||     //system information and research - traffic information
                             c.Value == this.configuration["SystemInfoGIS"] ||          //system information and research - gis
-                            c.Value == this.configuration["TrafficDataCollection"]     //system information and research - traffic data collection
+                            c.Value == this.configuration["TrafficDataCollection"] ||  //system information and research - traffic data collection
+                            c.Value == this.configuration["ITSecurity"]                
                             )
                         );
                     //p.RequireAssertion(context =>
@@ -87,10 +89,8 @@ namespace RoadInv
                     //p.RequireUserName(configuration.GetSection("User1").Value);      //configured in appsettings.json
                     
             });
-                //options.AddPolicy("RequireWriter",
-                //    policy => policy.RequireRole("Writer"));
 
-                //options.AddPolicy("super-user0", p => { p.RequireUserName(configuration.GetSection("User0").Value); });
+                //options.AddPolicy("super-user0", p => { p.RequireUserName(configuration.GetSection("User0").Value); }); //individual users
                 //options.AddPolicy("super-user1", p => { p.RequireUserName(configuration.GetSection("User1").Value); });
 
             });
@@ -99,7 +99,6 @@ namespace RoadInv
 
             services.AddRazorPages()
                 .AddMicrosoftIdentityUI();
-
 
             services.AddDbContext<roadinvContext>
                 (options => options.UseSqlServer(this.configuration["EntityConnectinString"]));
@@ -127,10 +126,11 @@ namespace RoadInv
             app.UseEndpoints(endpoints => 
             {
                endpoints.MapControllerRoute(
-               name: "default",
-               pattern: "{controller=Home}/{action=Index}/{id?}");
-               endpoints.MapControllers();
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+               
             });
+            
         }
     }
 }
