@@ -35,10 +35,10 @@ namespace RoadInv.Models
         /// <returns>
         /// a linq queryable object containing only the records within the specificed into BLM and ELM
         /// </returns>
-        public IQueryable<DB.RoadInv> BulkEdit(string AH_RoadID, decimal AH_BLM, decimal AH_ELM)
+        public IQueryable<DB.RoadInv> BulkEdit(string AH_RoadID, decimal? AH_BLM, decimal? AH_ELM)
         {
 
-            decimal[] spliterLogmileList = {AH_BLM, AH_ELM };
+            decimal[] spliterLogmileList = {AH_BLM.Value, AH_ELM.Value };
 
             foreach(var splitLogmile in spliterLogmileList)
             {

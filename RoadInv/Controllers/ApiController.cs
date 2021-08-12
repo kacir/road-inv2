@@ -353,7 +353,7 @@ namespace RoadInv.Controllers
         }
 
         [Route("api/edit_bulk/nhs")]
-        public IActionResult ImplementBulkEditNHS(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string NHS) //string NHS
+        public IActionResult ImplementBulkEditNHS(string AH_RoadID, decimal? AH_BLM, decimal? AH_ELM, string NHS) //string NHS
         {
             //split records that partly overlap the designation into multiple pieces
             var ajustedSegments  = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);
@@ -369,7 +369,7 @@ namespace RoadInv.Controllers
 
         [Authorize(Policy = "admin-only")]
         [Route("api/edit_bulk/aphn")]
-        public IActionResult ImplementBulkEditAPHN(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string APHN)
+        public IActionResult ImplementBulkEditAPHN(string AH_RoadID, decimal? AH_BLM, decimal? AH_ELM, string APHN)
         {
             //split records that partly overlap the designation into multiple pieces
             var ajustedSegments = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);
@@ -385,7 +385,7 @@ namespace RoadInv.Controllers
 
         [Authorize(Policy = "admin-only")]
         [Route("api/edit_bulk/functional")]
-        public IActionResult ImplementBulkEditFuncClass(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string FuncClass)
+        public IActionResult ImplementBulkEditFuncClass(string AH_RoadID, decimal? AH_BLM, decimal? AH_ELM, string FuncClass)
         {
             //split records that partly overlap the designation into multiple pieces
             var ajustedSegments = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);
@@ -401,7 +401,7 @@ namespace RoadInv.Controllers
 
         [Authorize(Policy = "admin-only")]
         [Route("api/edit_bulk/special")]
-        public IActionResult ImplementBulkEditSpecial(string AH_RoadID, decimal AH_BLM, decimal AH_ELM, string Special)
+        public IActionResult ImplementBulkEditSpecial(string AH_RoadID, decimal? AH_BLM, decimal? AH_ELM, string Special)
         {
             //split records that partly overlap the designation into multiple pieces
             var ajustedSegments = _bulkEdits.BulkEdit(AH_RoadID, AH_BLM, AH_ELM);

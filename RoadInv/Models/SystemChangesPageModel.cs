@@ -36,8 +36,8 @@ namespace RoadInv.Models
         public string SortOrder { get; set; }
         public string Dissolve { get; set; }
         public string Direction { get; set; }
-        public decimal BLM { get; set; }
-        public decimal ELM { get; set; }
+        public decimal? BLM { get; set; }
+        public decimal? ELM { get; set; }
         public int? Page { get; set; }
         public string NHS { get; set; }
         public string SpecialSystem { get; set; }
