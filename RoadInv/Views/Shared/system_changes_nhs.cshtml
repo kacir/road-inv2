@@ -28,6 +28,10 @@
                 @using (Html.BeginForm("preview_changes", "system_changes", FormMethod.Post))
                 {
                     <div class='form-group'>
+                        <label>District</label>
+                        @Html.DropDownListFor(m => m.District, Model.Districts, " ", new { @class = "form-control", })
+                    </div>
+                    <div class='form-group'>
                         <label>County</label>
                         @Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })
                     </div>
@@ -56,7 +60,7 @@
                         @Html.DropDownListFor(m => m.NHS, Model.NHS_vals, " ", new { @class = "form-control" })
                     </div>
                     <footer class="modal__footer">
-                        
+
                         <button class="modal__btn modal__btn-primary" type="submit" value="Update" onclick="AlertFunction()">Submit for Validation</button>
                         @*<input class="modal__btn modal__btn-primary" type="button" value="Submit for Validation" onclick="location.href='@Url.Action("nhs_update", "system_changes")'" />*@
                         @*<button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>*@

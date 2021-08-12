@@ -34,6 +34,10 @@
                 @using (Html.BeginForm("preview_changes", "system_changes", FormMethod.Post))
                 {
                     <div class='form-group'>
+                        <label>District</label>
+                        @Html.DropDownListFor(m => m.District, Model.Districts, " ", new { @class = "form-control", })
+                    </div>
+                    <div class='form-group'>
                         <label>County</label>
                         @Html.DropDownListFor(m => m.County, Model.Counties, " ", new { @class = "form-control", })
                     </div>

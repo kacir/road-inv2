@@ -472,3 +472,5 @@ C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Microso
 C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\obj\Debug\net5.0\roadInvUnitTest.csproj.AssemblyReference.cache
 C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\bin\Debug\net5.0\JetBrains.Annotations.dll
 C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\bin\Debug\net5.0\WebDriver.dll
+C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.AzureAD.UI.Views.dll
+C:\Users\MW42705\source\repos\road-inv2\roadInvUnitTest\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.AzureAD.UI.dll
