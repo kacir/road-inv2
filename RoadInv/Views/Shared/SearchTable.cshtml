@@ -19,7 +19,7 @@
 <div id="segment-search-main-content master-grid">
     <div id="side-panel" class='split left'>
         <h3>Search</h3>
-        <div >
+        <div>
             <div class="form-group">
                 <label for='form-district'>District Number</label>
                 <select class="form-control" id='@FieldsListModel.AH_District'>
@@ -51,22 +51,22 @@
             </div>
             <div class='form-group'>
                 <label>Direction</label>
-                <select id="@FieldsListModel.LOG_DIRECT" class="form-control" >
+                <select id="@FieldsListModel.LOG_DIRECT" class="form-control">
                     <option value=""></option>
-                    @foreach(var u in Model.con.LOG_DIRECT)
-            {
-                <option @if (Model.filterDirection == u.Domainvalue) {<text>selected</text>} value="@u.Domainvalue">@u.Domainvalue - @u.Label </option>
-            }
+                    @foreach (var u in Model.con.LOG_DIRECT)
+                    {
+                        <option @if (Model.filterDirection == u.Domainvalue) { <text> selected</text>} value="@u.Domainvalue">@u.Domainvalue - @u.Label </option>
+                    }
                 </select>
             </div>
             <div>
                 <label>Road Type</label>
                 <select id="@FieldsListModel.TypeRoad" class="form-control">
                     <option value=""></option>
-                    @foreach(var u in Model.con.TypeRoad)
-            {
-                <option @if (Model.filterTypeRoad == u.Domainvalue) { <text> selected</text> } value="@u.Domainvalue">@u.Domainvalue - @u.Label </option>
-            }
+                    @foreach (var u in Model.con.TypeRoad)
+                    {
+                        <option @if (Model.filterTypeRoad == u.Domainvalue) { <text> selected</text> } value="@u.Domainvalue">@u.Domainvalue - @u.Label </option>
+                    }
                 </select>
             </div>
             <div class='form-group'>
@@ -113,55 +113,67 @@
                         if (item.Domainvalue == u.SystemStatus){
                             <text>@item.Domainvalue - @item.Label</text>
                         }
-                    }">@u.SystemStatus</td>
-                    <td data-toggle="tooltip" data-placement="top" title="ArDOT District @u.AhDistrict">@u.AhDistrict</td>
-                    <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.AH_County){
+                    }">
+                        @u.SystemStatus
+                </td>
+                <td data-toggle="tooltip" data-placement="top" title="ArDOT District @u.AhDistrict">@u.AhDistrict</td>
+                <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.AH_County){
                         if (item.CountyNumber == u.AhCounty){
                             <text>@item.CountyNumber - @item.County</text>
                         }
-                    }">@u.AhCounty</td>
-                    <td>@u.AhRoute</td>
-                    <td>@u.AhSection</td>
-                    <td>@u.LogDirect</td>
-                    <td>@u.AhBlm</td>
-                    <td>@u.AhElm</td>
-                    <td>@u.AhLength</td>
-                    <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.RouteSign){
+                    }">
+                    @u.AhCounty
+                </td>
+                <td>@u.AhRoute</td>
+                <td>@u.AhSection</td>
+                <td>@u.LogDirect</td>
+                <td>@u.AhBlm</td>
+                <td>@u.AhElm</td>
+                <td>@u.AhLength</td>
+                <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.RouteSign){
                         if (item.Domainvalue == u.RouteSign){
                             <text>@item.Domainvalue - @item.Label</text>
                         }
                     }">
-                    @u.RouteSign</td>
-                    <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.TypeRoad){
+                    @u.RouteSign
+                </td>
+                <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.TypeRoad){
                         if (item.Domainvalue == u.TypeRoad){
                             <text>@item.Domainvalue - @item.Label</text>
                         }
-                    }">@u.TypeRoad</td>
-                    <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.FuncClass){
+                    }">
+                    @u.TypeRoad
+                </td>
+                <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.FuncClass){
                         if (item.Domainvalue == u.FuncClass){
                             <text>@item.Domainvalue - @item.Label</text>
                         }
-                    }">@u.FuncClass</td>
-                    <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.NHS){
+                    }">
+                    @u.FuncClass
+                </td>
+                <td data-toggle="tooltip" data-placement="top" title="@foreach(var item in Model.con.NHS){
                         if (item.Domainvalue == u.Nhs){
                             <text>@item.Domainvalue - @item.Label</text>
                         }
-                    }">@u.Nhs</td>
+                    }">
+                    @u.Nhs
+                </td>
 
-                </tr>
-            }
+            </tr>
+        }
 
 
         </table>
     </div>
 </div>
+<!--Tooltips need to be initialized after the HTML elements are created-->
 <script>
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
-            });
+    });
 </script>
 <script>
-
+    //gathers input into a request string
     function submitEventLoop() {
         console.log("hello world!");
         var inputDistrict = $('#@FieldsListModel.AH_District option:selected').text();
@@ -169,39 +181,29 @@
         var inputRoute = $('#@FieldsListModel.AH_Route').val();
         var inputSection = $('#@FieldsListModel.AH_Section').val();
         var inputLogmile = $('#@FieldsListModel.AH_BLM').val();
-
         var inputRoadtype = $("#@FieldsListModel.TypeRoad").val();
         var inputDirection = $("#@FieldsListModel.LOG_DIRECT").val();
-
         if (inputDistrict === undefined) {
             inputDistrict = "";
         }
-
         if (inputCounty === undefined) {
             inputCounty = "";
         }
-
         if (inputRoute === undefined) {
             inputRoute = "";
         }
-
         if (inputSection === undefined) {
             inputSection = "";
         }
-
         if (inputLogmile === undefined) {
             inputLogmile = -1;
         }
-
         if (inputRoadtype === undefined) {
             inputRoadtype = "";
         }
-
         if (inputDirection === undefined) {
             inputDirection = "";
         }
-
-
         console.log(inputDistrict);
         console.log(inputCounty);
         console.log(inputRoute);
@@ -209,7 +211,6 @@
         console.log(inputLogmile);
         console.log(inputRoadtype);
         console.log(inputDirection);
-
         inputDistrict = 'district=' + inputDistrict.trim() + '&';
         inputCounty = 'county=' + inputCounty.trim() + '&';
         inputRoute = 'route=' + inputRoute.trim() + '&';
@@ -217,20 +218,18 @@
         inputLogmile = 'logmile=' + inputLogmile.trim() + '&';
         inputRoadType = "typeroad=" + inputRoadtype.trim() + '&';
         inputDirection = "direction=" + inputDirection.trim();
-
         var searchString = "/segments?" + inputDistrict + inputCounty + inputRoute + inputSection + inputLogmile + inputRoadType + inputDirection;
         window.location.href = searchString;
         console.log(searchString);
         //$('#submit-search-link').attr("href", searchString);
     }
-
+    //checks to see if the enter key has been pressed
     $(".form-group").keypress(function (e) {
         if (e.which == 13) {
             submitEventLoop();
             return false;
         }
     });
-
     // Re-add clear attributes option
     $("#clear-all").click(function () {
         $("#@FieldsListModel.AH_District").val("");

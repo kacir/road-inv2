@@ -109,10 +109,10 @@ namespace RoadInv.Controllers
             switch (pageModel.SortOrder)
             {
                 case "name_desc":
-                    roads = roads.OrderBy(r => r.AhRoute).ThenBy(r => r.AhBlm);
+                    roads = roads.OrderBy(r => r.AhCounty).ThenBy(r => r.AhRoute).ThenBy(r => r.AhSection).ThenBy(r => r.LogDirect).ThenBy(r => r.AhBlm);
                     break;
                 default:
-                    roads = roads.OrderBy(r => r.AhRoute).ThenBy(r => r.AhBlm);
+                    roads = roads.OrderBy(r => r.AhCounty).ThenBy(r => r.AhRoute).ThenBy(r => r.AhSection).ThenBy(r => r.LogDirect).ThenBy(r => r.AhBlm);
                     break;
             }
             pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
@@ -204,10 +204,10 @@ namespace RoadInv.Controllers
             switch (pageModel.SortOrder)
             {
                 case "name_desc":
-                    roads = roads.OrderByDescending(r => r.Aphn);
+                    roads = roads.OrderBy(r => r.AhCounty).ThenBy(r => r.AhRoute).ThenBy(r => r.AhSection).ThenBy(r => r.LogDirect).ThenBy(r => r.AhBlm);
                     break;
                 default:
-                    roads = roads.OrderBy(r => r.Aphn);
+                    roads = roads.OrderBy(r => r.AhCounty).ThenBy(r => r.AhRoute).ThenBy(r => r.AhSection).ThenBy(r => r.LogDirect).ThenBy(r => r.AhBlm);
                     break;
             }
             ViewBag.CurrentSort = pageModel.SortOrder;
@@ -244,7 +244,7 @@ namespace RoadInv.Controllers
         [Route("SystemChanges/system_changes_func")]
         public async Task<IActionResult> system_changes_func(SystemChangesPageModel pageModel)
         {
-            int pageSize = 50;
+            int pageSize = 100;
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
             var roads = from r in _context.RoadInvs
@@ -295,10 +295,10 @@ namespace RoadInv.Controllers
             switch (pageModel.SortOrder)
             {
                 case "name_desc":
-                    roads = roads.OrderByDescending(r => r.FuncClass);
+                    roads = roads.OrderBy(r => r.AhCounty).ThenBy(r => r.AhRoute).ThenBy(r => r.AhSection).ThenBy(r => r.LogDirect).ThenBy(r => r.AhBlm);
                     break;
                 default:
-                    roads = roads.OrderBy(r => r.FuncClass);
+                    roads = roads.OrderBy(r => r.AhCounty).ThenBy(r => r.AhRoute).ThenBy(r => r.AhSection).ThenBy(r => r.LogDirect).ThenBy(r => r.AhBlm);
                     break;
             }
             roads = roads.OrderBy(r => r.FuncClass);
@@ -332,7 +332,7 @@ namespace RoadInv.Controllers
         public async Task<IActionResult> system_changes_special(SystemChangesPageModel pageModel)
         {
 
-            int pageSize = 50;
+            int pageSize = 100;
             string userid = HttpContext.User.Identity.Name;
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
@@ -387,10 +387,10 @@ namespace RoadInv.Controllers
             switch (pageModel.SortOrder)
             {
                 case "name_desc":
-                    roads = roads.OrderByDescending(r => r.SpecialSystems);
+                    roads = roads.OrderBy(r => r.AhCounty).ThenBy(r => r.AhRoute).ThenBy(r => r.AhSection).ThenBy(r => r.LogDirect).ThenBy(r => r.AhBlm);
                     break;
                 default:
-                    roads = roads.OrderBy(r => r.SpecialSystems);
+                    roads = roads.OrderBy(r => r.AhCounty).ThenBy(r => r.AhRoute).ThenBy(r => r.AhSection).ThenBy(r => r.LogDirect).ThenBy(r => r.AhBlm);
                     break;
             }
 
