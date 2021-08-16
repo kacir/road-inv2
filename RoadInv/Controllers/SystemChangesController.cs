@@ -212,7 +212,7 @@ namespace RoadInv.Controllers
             }
             ViewBag.CurrentSort = pageModel.SortOrder;
 
-            roads = roads.OrderBy(r => r.Aphn);
+            //roads = roads.OrderBy(r => r.Aphn);
             pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
             pageModel.ExcludeAphn = await excAp.ToPagedListAsync(pageNumber, pageSize);
             if (pageModel.Dissolve == "Segment")
@@ -301,7 +301,7 @@ namespace RoadInv.Controllers
                     roads = roads.OrderBy(r => r.AhCounty).ThenBy(r => r.AhRoute).ThenBy(r => r.AhSection).ThenBy(r => r.LogDirect).ThenBy(r => r.AhBlm);
                     break;
             }
-            roads = roads.OrderBy(r => r.FuncClass);
+            //roads = roads.OrderBy(r => r.FuncClass);
             pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
             if (pageModel.Dissolve == "Segment")
             {
@@ -333,7 +333,7 @@ namespace RoadInv.Controllers
         {
 
             int pageSize = 100;
-            string userid = HttpContext.User.Identity.Name;
+            //string userid = HttpContext.User.Identity.Name;
             int pageNumber = (pageModel.Page ?? 1); //TODO: separate paging for excludeNHS table
 
             var roads = from r in _context.RoadInvs
@@ -396,7 +396,7 @@ namespace RoadInv.Controllers
 
             ViewBag.CurrentSort = pageModel.SortOrder;
 
-            roads = roads.OrderBy(r => r.FuncClass);
+            //roads = roads.OrderBy(r => r.FuncClass);
             pageModel.roadInvs = await roads.ToPagedListAsync(pageNumber, pageSize);
             pageModel.ExcludeSpecials = await excNh.ToPagedListAsync(pageNumber, pageSize);
             if (pageModel.Dissolve == "Segment")
