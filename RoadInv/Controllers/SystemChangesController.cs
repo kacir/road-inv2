@@ -120,6 +120,7 @@ namespace RoadInv.Controllers
             
             if (pageModel.Dissolve == "Segment")
             {
+                pageSize = 1000;
 
                 if (!String.IsNullOrEmpty(pageModel.County))
                 {
